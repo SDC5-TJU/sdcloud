@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import net.sf.json.JSON;
 import net.sf.json.JSONArray;
-import scs.pojo.TableSystemresourceusage;
+import scs.pojo.ResourceUsage;
+import scs.pojo.SystemResourceUsageBean;
 import scs.service.jobSchedul.JobSchedulService; 
 
 /**
@@ -243,11 +244,16 @@ public class JobSchedulController {
 		}
 	}
 	@RequestMapping("/getPhyResourceUse.do")
-	public void getPhy1ResourceUse(HttpServletRequest request,HttpServletResponse response,Model model){
+	public void getPhyResourceUse(HttpServletRequest request,HttpServletResponse response,Model model){
 		try{ 
-			TableSystemresourceusage bean=new TableSystemresourceusage();
-			//bean.setCollecttime(collecttime); 
-			response.getWriter().print(rand.nextInt(100));   
+			SystemResourceUsageBean bean=new SystemResourceUsageBean();
+			bean.setCollectTime(System.currentTimeMillis()); 
+			bean.setCpuUsageRate((float) (rand.nextInt(100)));
+			bean.setMemUsageRate((float) rand.nextInt(100));
+			bean.setIoUsageRate((float) rand.nextInt(100));
+			bean.setNetUsageRate((float) rand.nextInt(100));
+			
+			response.getWriter().print(JSONArray.fromObject(bean));    
 		}catch(Exception e){
 			logger.error("add Operator error"+e);
 			e.printStackTrace();

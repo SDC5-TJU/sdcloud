@@ -21,10 +21,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 <form method="post" action="" id="listform">
     <div class="panel admin-panel">
-        <div class="panel-head"><strong class="icon-reorder"> 设备列表</strong> <a href="" style="float:right; display:none;">添加字段</a></div>
+        <div class="panel-head"><strong class="icon-reorder"> 测试记录</strong> <a href="" style="float:right; display:none;">添加字段</a></div>
         <div class="padding border-bottom">
             <ul class="search" style="padding-left:10px;">
-                <li> <a class="button border-main icon-plus-square-o" href="deviceAdd.do"> 添加设备</a> </li>
+                <li> <a class="button border-main icon-plus-square-o" href="deviceAdd.do"> 添加测试</a> </li>
                 <li>
                     <input type="text" placeholder="请输入搜索关键字" name="keywords" class="input" style="width:250px; line-height:17px;display:inline-block" />
                     <a href="javascript:void(0)" class="button border-main icon-search" onclick="changesearch()" > 搜索</a>
@@ -40,36 +40,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <th width="20%">截止时间</th>
                 <th width="10%">操作</th>
                 <th width="10%"></th>
-            </tr><tr>
-            <td >1</td>
-            <td >FDA50693-A4E2-4FB1-AFCF-C6EB07647825</td>
-            <td >2017-08-15 18:07:12</td>
-            <td >2017-08-15 18:10:12</td>
-            <td ><a href="jobControl.do"><input type="button" class="editButton" onclick="updateDevice();" value="配置"></a></td>
-            <td><input type="button" class="viewButton" onclick="" value="查看"></td>
-        </tr><tr>
-            <td >2</td>
-            <td >FDA50693-A4E2-4FB1-AFCF-C6EB07647825</td>
-            <td >2017-08-15 18:07:12</td>
-            <td >2017-08-15 18:10:12</td>
-            <td ><a href="jobControl.do"><input type="button" class="editButton" onclick="updateDevice();" value="配置"></a></td>
-            <td><input type="button" class="viewButton" onclick="" value="查看"></td>
-        </tr>
+            </tr>
+            <c:forEach var="item" items="${recordList}">
             <tr>
-                <td >3</td>
-                <td >FDA50693-A4E2-4FB1-AFCF-C6EB07647825</td>
-                <td >2017-08-15 18:07:12</td>
-                <td >2017-08-15 18:10:12</td>
-                <td ><a href="jobControl.do"><input type="button" class="editButton" onclick="updateDevice();" value="配置"></a></td>
-                <td><input type="button" class="viewButton" onclick="" value="查看"></td>
-            </tr><tr>
-            <td >4</td>
-            <td >FDA50693-A4E2-4FB1-AFCF-C6EB07647825</td>
-            <td >2017-08-15 18:07:12</td>
-            <td >2017-08-15 18:10:12</td>
+            <td >${item.autoId }</td>
+            <td >${item.recordDesc }</td>
+            <td >${item.startTime }</td>
+            <td >${item.endTime }</td>
             <td ><a href="jobControl.do"><input type="button" class="editButton" onclick="updateDevice();" value="配置"></a></td>
             <td><input type="button" class="viewButton" onclick="" value="查看"></td>
-        </tr>
+            </tr>
+            </c:forEach>
             <tr>
                 <td colspan="8"><div class="pagelist"> <a href="">上一页</a>&nbsp;&nbsp;2/3&nbsp;&nbsp;<a href="">下一页</a><a href="">尾页</a> </div></td>
             </tr>
