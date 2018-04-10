@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="scs.dao.monitor.DAOmapper.TableAppresourceusageMapper" >
+  <resultMap id="BaseResultMap" type="scs.pojo.TableAppresourceusage" >
+    <id column="autoId" property="autoid" jdbcType="INTEGER" />
+    <result column="applicationName" property="applicationname" jdbcType="VARCHAR" />
+    <result column="cpuUsageRate" property="cpuusagerate" jdbcType="REAL" />
+    <result column="memUsageRate" property="memusagerate" jdbcType="REAL" />
+    <result column="memUsageAmount" property="memusageamount" jdbcType="REAL" />
+    <result column="netUsageRate" property="netusagerate" jdbcType="REAL" />
+    <result column="ioUsageRate" property="iousagerate" jdbcType="REAL" />
+    <result column="blockIo" property="blockio" jdbcType="REAL" />
+    <result column="collectTime" property="collecttime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    autoId, applicationName, cpuUsageRate, memUsageRate, memUsageAmount, netUsageRate, 
+    ioUsageRate, blockIo, collectTime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="scs.pojo.TableAppresourceusageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from table_appresourceusage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from table_appresourceusage
+    where autoId = #{autoid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from table_appresourceusage
+    where autoId = #{autoid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="scs.pojo.TableAppresourceusageExample" >
+    delete from table_appresourceusage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="scs.pojo.TableAppresourceusage" >
+    insert into table_appresourceusage (autoId, applicationName, cpuUsageRate, 
+      memUsageRate, memUsageAmount, netUsageRate, 
+      ioUsageRate, blockIo, collectTime
+      )
+    values (#{autoid,jdbcType=INTEGER}, #{applicationname,jdbcType=VARCHAR}, #{cpuusagerate,jdbcType=REAL}, 
+      #{memusagerate,jdbcType=REAL}, #{memusageamount,jdbcType=REAL}, #{netusagerate,jdbcType=REAL}, 
+      #{iousagerate,jdbcType=REAL}, #{blockio,jdbcType=REAL}, #{collecttime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="scs.pojo.TableAppresourceusage" >
+    insert into table_appresourceusage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="autoid != null" >
+        autoId,
+      </if>
+      <if test="applicationname != null" >
+        applicationName,
+      </if>
+      <if test="cpuusagerate != null" >
+        cpuUsageRate,
+      </if>
+      <if test="memusagerate != null" >
+        memUsageRate,
+      </if>
+      <if test="memusageamount != null" >
+        memUsageAmount,
+      </if>
+      <if test="netusagerate != null" >
+        netUsageRate,
+      </if>
+      <if test="iousagerate != null" >
+        ioUsageRate,
+      </if>
+      <if test="blockio != null" >
+        blockIo,
+      </if>
+      <if test="collecttime != null" >
+        collectTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="autoid != null" >
+        #{autoid,jdbcType=INTEGER},
+      </if>
+      <if test="applicationname != null" >
+        #{applicationname,jdbcType=VARCHAR},
+      </if>
+      <if test="cpuusagerate != null" >
+        #{cpuusagerate,jdbcType=REAL},
+      </if>
+      <if test="memusagerate != null" >
+        #{memusagerate,jdbcType=REAL},
+      </if>
+      <if test="memusageamount != null" >
+        #{memusageamount,jdbcType=REAL},
+      </if>
+      <if test="netusagerate != null" >
+        #{netusagerate,jdbcType=REAL},
+      </if>
+      <if test="iousagerate != null" >
+        #{iousagerate,jdbcType=REAL},
+      </if>
+      <if test="blockio != null" >
+        #{blockio,jdbcType=REAL},
+      </if>
+      <if test="collecttime != null" >
+        #{collecttime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="scs.pojo.TableAppresourceusageExample" resultType="java.lang.Integer" >
+    select count(*) from table_appresourceusage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update table_appresourceusage
+    <set >
+      <if test="record.autoid != null" >
+        autoId = #{record.autoid,jdbcType=INTEGER},
+      </if>
+      <if test="record.applicationname != null" >
+        applicationName = #{record.applicationname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cpuusagerate != null" >
+        cpuUsageRate = #{record.cpuusagerate,jdbcType=REAL},
+      </if>
+      <if test="record.memusagerate != null" >
+        memUsageRate = #{record.memusagerate,jdbcType=REAL},
+      </if>
+      <if test="record.memusageamount != null" >
+        memUsageAmount = #{record.memusageamount,jdbcType=REAL},
+      </if>
+      <if test="record.netusagerate != null" >
+        netUsageRate = #{record.netusagerate,jdbcType=REAL},
+      </if>
+      <if test="record.iousagerate != null" >
+        ioUsageRate = #{record.iousagerate,jdbcType=REAL},
+      </if>
+      <if test="record.blockio != null" >
+        blockIo = #{record.blockio,jdbcType=REAL},
+      </if>
+      <if test="record.collecttime != null" >
+        collectTime = #{record.collecttime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update table_appresourceusage
+    set autoId = #{record.autoid,jdbcType=INTEGER},
+      applicationName = #{record.applicationname,jdbcType=VARCHAR},
+      cpuUsageRate = #{record.cpuusagerate,jdbcType=REAL},
+      memUsageRate = #{record.memusagerate,jdbcType=REAL},
+      memUsageAmount = #{record.memusageamount,jdbcType=REAL},
+      netUsageRate = #{record.netusagerate,jdbcType=REAL},
+      ioUsageRate = #{record.iousagerate,jdbcType=REAL},
+      blockIo = #{record.blockio,jdbcType=REAL},
+      collectTime = #{record.collecttime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="scs.pojo.TableAppresourceusage" >
+    update table_appresourceusage
+    <set >
+      <if test="applicationname != null" >
+        applicationName = #{applicationname,jdbcType=VARCHAR},
+      </if>
+      <if test="cpuusagerate != null" >
+        cpuUsageRate = #{cpuusagerate,jdbcType=REAL},
+      </if>
+      <if test="memusagerate != null" >
+        memUsageRate = #{memusagerate,jdbcType=REAL},
+      </if>
+      <if test="memusageamount != null" >
+        memUsageAmount = #{memusageamount,jdbcType=REAL},
+      </if>
+      <if test="netusagerate != null" >
+        netUsageRate = #{netusagerate,jdbcType=REAL},
+      </if>
+      <if test="iousagerate != null" >
+        ioUsageRate = #{iousagerate,jdbcType=REAL},
+      </if>
+      <if test="blockio != null" >
+        blockIo = #{blockio,jdbcType=REAL},
+      </if>
+      <if test="collecttime != null" >
+        collectTime = #{collecttime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where autoId = #{autoid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="scs.pojo.TableAppresourceusage" >
+    update table_appresourceusage
+    set applicationName = #{applicationname,jdbcType=VARCHAR},
+      cpuUsageRate = #{cpuusagerate,jdbcType=REAL},
+      memUsageRate = #{memusagerate,jdbcType=REAL},
+      memUsageAmount = #{memusageamount,jdbcType=REAL},
+      netUsageRate = #{netusagerate,jdbcType=REAL},
+      ioUsageRate = #{iousagerate,jdbcType=REAL},
+      blockIo = #{blockio,jdbcType=REAL},
+      collectTime = #{collecttime,jdbcType=TIMESTAMP}
+    where autoId = #{autoid,jdbcType=INTEGER}
+  </update>
+</mapper>
