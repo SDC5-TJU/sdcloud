@@ -8,17 +8,24 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import ch.ethz.ssh2.Connection;
 import ch.ethz.ssh2.Session;
 import ch.ethz.ssh2.StreamGobbler;
 import scs.dao.monitor.DAOmapper.TableContainerresourceusageMapper;
+import scs.pojo.TableAppresourceusage;
 import scs.pojo.TableContainerresourceusage;
+import scs.service.monitor.app.AppMonitor;
 import scs.service.monitor.containers.ContainerMonitor;
+import scs.util.repository.Repository;
 
-//@Service("containerMonitor")
+@Service("containerMonitor")
 public class ContainerMonitorImpl implements ContainerMonitor {
 	
 	// public static String DOCKER_COMMAND = "sudo docker info";
@@ -68,8 +75,6 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 
 			sess.execCommand(
 					"sudo docker stats --no-stream --format \"{{.Name}}:{{.CPUPerc}}:{{.MemUsage}}:{{.MemPerc}}:{{.NetIO}}:{{.BlockIO}}\"");
-
-			System.out.println("Here is some information about the remote host:");
 
 			/*
 			 * This basic example does not handle stderr, which is sometimes
@@ -131,17 +136,4 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 
 		return arrayList;
 	}
-
-	public void testCron() {
-		String hostname = "192.168.1.128";
-		String username = "tank";
-		String password = "tanklab";
-		InputStream containerInfoStream = this.getContainerInfoStream(hostname, username, password);
-		ArrayList<TableContainerresourceusage> containersPOJO = this.getContainersPOJO(containerInfoStream);
-		
-		this.testInsert(containersPOJO);
-//		System.out.println(this.testInsert(containersPOJO));
-		System.out.println(new Date().toString());
-	}
-	
 }

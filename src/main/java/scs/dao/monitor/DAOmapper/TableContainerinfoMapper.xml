@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="scs.dao.monitor.DAOmapper.TableContainerinfoMapper" >
+  <resultMap id="BaseResultMap" type="scs.pojo.TableContainerinfo" >
+    <id column="containerName" property="containername" jdbcType="VARCHAR" />
+    <result column="containerId" property="containerid" jdbcType="CHAR" />
+    <result column="containerIp" property="containerip" jdbcType="VARCHAR" />
+    <result column="containerHostName" property="containerhostname" jdbcType="VARCHAR" />
+    <result column="containerCommand" property="containercommand" jdbcType="VARCHAR" />
+    <result column="containerImageName" property="containerimagename" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    containerName, containerId, containerIp, containerHostName, containerCommand, containerImageName
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="scs.pojo.TableContainerinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from table_containerinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from table_containerinfo
+    where containerName = #{containername,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from table_containerinfo
+    where containerName = #{containername,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="scs.pojo.TableContainerinfoExample" >
+    delete from table_containerinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="scs.pojo.TableContainerinfo" >
+    insert into table_containerinfo (containerName, containerId, containerIp, 
+      containerHostName, containerCommand, containerImageName
+      )
+    values (#{containername,jdbcType=VARCHAR}, #{containerid,jdbcType=CHAR}, #{containerip,jdbcType=VARCHAR}, 
+      #{containerhostname,jdbcType=VARCHAR}, #{containercommand,jdbcType=VARCHAR}, #{containerimagename,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="scs.pojo.TableContainerinfo" >
+    insert into table_containerinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="containername != null" >
+        containerName,
+      </if>
+      <if test="containerid != null" >
+        containerId,
+      </if>
+      <if test="containerip != null" >
+        containerIp,
+      </if>
+      <if test="containerhostname != null" >
+        containerHostName,
+      </if>
+      <if test="containercommand != null" >
+        containerCommand,
+      </if>
+      <if test="containerimagename != null" >
+        containerImageName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="containername != null" >
+        #{containername,jdbcType=VARCHAR},
+      </if>
+      <if test="containerid != null" >
+        #{containerid,jdbcType=CHAR},
+      </if>
+      <if test="containerip != null" >
+        #{containerip,jdbcType=VARCHAR},
+      </if>
+      <if test="containerhostname != null" >
+        #{containerhostname,jdbcType=VARCHAR},
+      </if>
+      <if test="containercommand != null" >
+        #{containercommand,jdbcType=VARCHAR},
+      </if>
+      <if test="containerimagename != null" >
+        #{containerimagename,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="scs.pojo.TableContainerinfoExample" resultType="java.lang.Integer" >
+    select count(*) from table_containerinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update table_containerinfo
+    <set >
+      <if test="record.containername != null" >
+        containerName = #{record.containername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.containerid != null" >
+        containerId = #{record.containerid,jdbcType=CHAR},
+      </if>
+      <if test="record.containerip != null" >
+        containerIp = #{record.containerip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.containerhostname != null" >
+        containerHostName = #{record.containerhostname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.containercommand != null" >
+        containerCommand = #{record.containercommand,jdbcType=VARCHAR},
+      </if>
+      <if test="record.containerimagename != null" >
+        containerImageName = #{record.containerimagename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update table_containerinfo
+    set containerName = #{record.containername,jdbcType=VARCHAR},
+      containerId = #{record.containerid,jdbcType=CHAR},
+      containerIp = #{record.containerip,jdbcType=VARCHAR},
+      containerHostName = #{record.containerhostname,jdbcType=VARCHAR},
+      containerCommand = #{record.containercommand,jdbcType=VARCHAR},
+      containerImageName = #{record.containerimagename,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="scs.pojo.TableContainerinfo" >
+    update table_containerinfo
+    <set >
+      <if test="containerid != null" >
+        containerId = #{containerid,jdbcType=CHAR},
+      </if>
+      <if test="containerip != null" >
+        containerIp = #{containerip,jdbcType=VARCHAR},
+      </if>
+      <if test="containerhostname != null" >
+        containerHostName = #{containerhostname,jdbcType=VARCHAR},
+      </if>
+      <if test="containercommand != null" >
+        containerCommand = #{containercommand,jdbcType=VARCHAR},
+      </if>
+      <if test="containerimagename != null" >
+        containerImageName = #{containerimagename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where containerName = #{containername,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="scs.pojo.TableContainerinfo" >
+    update table_containerinfo
+    set containerId = #{containerid,jdbcType=CHAR},
+      containerIp = #{containerip,jdbcType=VARCHAR},
+      containerHostName = #{containerhostname,jdbcType=VARCHAR},
+      containerCommand = #{containercommand,jdbcType=VARCHAR},
+      containerImageName = #{containerimagename,jdbcType=VARCHAR}
+    where containerName = #{containername,jdbcType=VARCHAR}
+  </update>
+</mapper>

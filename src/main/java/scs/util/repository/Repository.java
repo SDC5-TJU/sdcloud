@@ -12,6 +12,9 @@ import scs.pojo.AppInfoBean;
 import scs.pojo.ContainerInfoBean;
 import scs.pojo.MemcachedDataBean;
 import scs.pojo.SiloDataBean;
+import scs.pojo.TableAppresourceusage;
+import scs.pojo.TableContainerresourceusage;
+import scs.pojo.TableSystemresourceusage;
 import scs.pojo.TwoTuple; 
  
 public class Repository{ 
@@ -42,6 +45,14 @@ public class Repository{
 	public static List<TwoTuple<Long, Integer>> webServerBaseDataList=new ArrayList<TwoTuple<Long, Integer>>();
 	public static List<TwoTuple<Long, Integer>> webSearchDataList=new ArrayList<TwoTuple<Long, Integer>>();
 	public static List<TwoTuple<Long, Integer>> webSearchBaseDataList=new ArrayList<TwoTuple<Long, Integer>>();
+	
+	/*
+	 * 物理机/容器/服务 资源监控数组
+	 */
+	public static Map<String,TableContainerresourceusage> containerRealUsageMap=new HashMap<String,TableContainerresourceusage>();
+	public static Map<String,TableAppresourceusage> appRealUsageMap=new HashMap<String,TableAppresourceusage>();
+	public static Map<String,TableSystemresourceusage> systemRealUsageMap=new HashMap<String,TableSystemresourceusage>();
+	public static int cronFlag = 1;
 	
 	static {
 		containerInfoMap=RepositoryDao.initContainerInfoMap();//初始化容器信息map 

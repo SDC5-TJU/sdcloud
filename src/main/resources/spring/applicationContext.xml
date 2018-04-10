@@ -49,10 +49,11 @@
 		<property name="configLocation" value="classpath:database/mybatis.xml"></property>
 	</bean>
 	<mybatis:scan base-package="scs.dao.monitor.DAOmapper" />
+	<context:component-scan base-package="scs.service.monitor" />
 	<!-- 数据库配置-前期关闭 -->
 	<!-- 定时器 -->
 	<bean id="SpringQtzJob"
-		class="scs.service.monitor.containers.impl.ContainerMonitorImpl" />
+		class="scs.service.monitor.cron.CronTasks" />
 	<bean id="SpringQtzJobMethod"
 		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject">
@@ -73,7 +74,7 @@
 		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
-				 <!--  <ref bean="CronTriggerBean" />   -->
+				 <ref bean="CronTriggerBean" />
 			</list>
 		</property>
 	</bean>
