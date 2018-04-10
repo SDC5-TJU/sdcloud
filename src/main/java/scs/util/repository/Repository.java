@@ -64,7 +64,6 @@ public class Repository{
 			appStatusMap.put(appName,false);//系统初始化,所有应用默认为未执行
 			System.out.println("初始化app执行状态 "+appName+"=false");
 		}
-		
 	}
 	/**
 	 * 对外提供的app状态查询接口

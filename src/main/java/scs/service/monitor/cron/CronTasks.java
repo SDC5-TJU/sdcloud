@@ -31,11 +31,11 @@ public class CronTasks {
 	
 	
 	public void testCron() {
-		Map<String, List<String>> appNames = appMonitor.getAPPName(Repository.appInfoMap);
 		if (Repository.cronFlag != 1) {
 			System.out.println("停止");
 			return;
 		}
+		Repository.cronFlag = 0;
 		String[] hosts = {"192.168.1.128","192.168.1.147"};
 		String hostname = "192.168.1.128";
 		String username = "tank";
@@ -46,25 +46,22 @@ public class CronTasks {
 			hostname = hosts[i];
 			InputStream containerInfoStream = containerMonitor.getContainerInfoStream(hostname, username, password);
 			ArrayList<TableContainerresourceusage> containersPOJO = containerMonitor.getContainersPOJO(containerInfoStream);
-			System.out.println(containersPOJO.size());
 			combineList.addAll(containersPOJO);
-			System.out.println(combineList.size());
 			containerMonitor.testInsert(containersPOJO);
 			Iterator<TableContainerresourceusage> iterator = containersPOJO.iterator();
 			// 添加进全局 containerRealUsageMap 变量
 			while (iterator.hasNext()) {
 				TableContainerresourceusage tableContainerresourceusage = (TableContainerresourceusage) iterator.next();
+				//containerName：Hadoop1 container类对象最新的资源使用情况
 				Repository.containerRealUsageMap.put(tableContainerresourceusage.getContainername(), tableContainerresourceusage);
 			}
 		}
-		System.out.println(combineList.size());
 		//统计
-		
+		Map<String, List<String>> appNames = appMonitor.getAPPName(Repository.appInfoMap);
 		Map<String, TableAppresourceusage> aggregateAPPResourceUsage = appMonitor.aggregateAPP(combineList, appNames);
 		appMonitor.testInsert(aggregateAPPResourceUsage);
-		
-		System.out.println(new Date().toString());
-		Repository.cronFlag = 0;
+		// 添加进全局 appRealUsageMap 变量
+		Repository.appRealUsageMap = aggregateAPPResourceUsage;
 	}
 	
 	
