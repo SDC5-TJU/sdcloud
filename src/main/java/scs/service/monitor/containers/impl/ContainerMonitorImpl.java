@@ -8,11 +8,8 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import ch.ethz.ssh2.Connection;
@@ -29,7 +26,6 @@ import scs.util.repository.Repository;
 public class ContainerMonitorImpl implements ContainerMonitor {
 	
 	// public static String DOCKER_COMMAND = "sudo docker info";
-
 	@Autowired
 	public TableContainerresourceusageMapper containerresourceusageMapper;
 

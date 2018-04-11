@@ -18,6 +18,8 @@
 		http://www.springframework.org/schema/util/spring-util-4.2.xsd
 	">
  	<context:component-scan base-package="scs.service.monitor.containers" />
+ 	<context:component-scan base-package="scs.service.monitor.app" />
+ 	<context:component-scan base-package="scs.service.monitor.system" />
 	
 	<bean id="datasource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
