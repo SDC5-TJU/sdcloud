@@ -27,7 +27,7 @@ public class AppConfigDaoImpl extends MySQLBaseDao implements AppConfigDao {
 
 	@Override
 	public int modifyAppConfig(Map<String,AppConfigBean> map) {
-		String sql="update table_appconfig set requestCount=?,warmUpCount=?,pattern=?,intensity=?,enable=? where testRecordId=? and pplicationName=?";
+		String sql="update table_appconfig set requestCount=?,warmUpCount=?,pattern=?,intensity=?,enable=? where testRecordId=? and applicationName=?";
 		int result=0;
 		for (AppConfigBean bean : map.values()) {  
 			result+=this.jt.update(sql,new Object[]{bean.getRequestCount(),bean.getWarmUpCount(),bean.getPattern(),bean.getIntensity(),bean.getEnable(),bean.getTestRecordId(),bean.getApplicationName()});
@@ -50,6 +50,7 @@ public class AppConfigDaoImpl extends MySQLBaseDao implements AppConfigDao {
 					bean.setPattern(rs.getString(5));
 					bean.setIntensity(rs.getString(6));
 					bean.setEnable(rs.getInt(7));
+					bean.setTestRecordId(testRecordId);
 					list.add(bean);
 				}
 				return list;

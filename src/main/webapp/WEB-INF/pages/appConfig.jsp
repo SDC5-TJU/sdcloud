@@ -43,65 +43,75 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
 <div>
     <div class="new-page-container" >
-        <form action="" method="post" class="form form-horizontal" id="form-article-add">
+        <form action="modifyAppConfig.do" method="post" class="form form-horizontal" id="appConfig-form">
            <!--在线-->
             <div id="online">
                <div class="row cl">
                    <label class="col-xs-4 col-sm-2 new-center"></label>
                    <label class="col-xs-4 col-sm-2 new-center" >请求总数</label>
-                   <label class="col-xs-4 col-sm-2 new-center">负载策略</label>
-                   <label class="col-xs-4 col-sm-2 new-center">单位/ms</label>
                    <label class="col-xs-4 col-sm-2 new-center">预热次数</label>
+                   <label class="col-xs-4 col-sm-2 new-center">请求策略</label>
+                   <label class="col-xs-4 col-sm-2 new-center">间隔单位/ms</label>
                    <label class="col-xs-4 col-sm-2 new-center">启用状态</label>
                </div>
                <div class="row cl">
-                   <label class="form-label col-xs-4 col-sm-2">web搜索：</label>
-                   <div class="formControls col-xs-8 col-sm-9">
-                       <input class="input new-w50" type="text"  value="" placeholder="5000" id="config1-1" name="" >
-                       <input class="input new-w50" type="text" value="" placeholder="随机/均匀" id="config1-2" name="">
-                      <input  class="input new-w50" type="text"  value="" placeholder="10" id="config1-3" name="" >
-                      <input  class="input new-w50" type="text"  value="" placeholder="2000" id="config1-4"name="">
-                       <input style="float: right;" type="button" class="config" onclick="" value="禁用" id="config1">
-                       <!--<input style="float: right;" type="button"  class="btn btn-primary radius " value="禁用" >-->
-                   </div>
-
+                   <label class="form-label col-xs-4 col-sm-2">web搜索：</label> 
+                   <div class="formControls col-xs-8 col-sm-9"> 
+                       <input class="input new-w50" type="text"  value="${webSearch.requestCount}" placeholder="" id="config1-1" name="requestCount" >
+                       <input  class="input new-w50" type="text"  value="${webSearch.warmUpCount}" placeholder="" id="config1-2" name="warmUpCount">
+                       <input  class="input new-w50" type="text"  value="${webSearch.pattern}" placeholder="定值/均匀/指数/泊松" id="config1-3" name="pattern" >
+                       <input class="input new-w50" type="text" value="${webSearch.intensity}" placeholder="" id="config1-4" name="intensity">
+                       <input  class="input new-w50" type="hidden"  value="${webSearch.testRecordId}" id="config1-5" name="testRecordId">
+                       <input  class="input new-w50" type="hidden"  value="${webSearch.applicationName}" id="config1-6" name="applicationName">
+                       <input  class="input new-w50" type="hidden"  value="${webSearch.enable}" id="config1-7" name="enable">
+                       <input style="float: right;" type="button" class="config" value="禁用" id="config1"> 
+                   </div> 
                </div>
                <div class="row cl">
                    <label class="form-label col-xs-4 col-sm-2">电商服务：</label>
                    <div class="formControls col-xs-8 col-sm-9">
-                       <input class="input new-w50" type="text"  value="" placeholder="5000" id="config2-1" name="">
-                       <input class="input new-w50" type="text" value="" placeholder="随机/均匀" id="config2-2" name="">
-                       <input  class="input new-w50" type="text"  value="" placeholder="10" id="config2-3" name="" >
-                       <input  class="input new-w50" type="text"  value="" placeholder="2000" id="config2-4" name="">
-                       <input style="float: right;" type="button" class="config" onclick="" value="禁用" id="config2">
+                       <input class="input new-w50" type="text"  value="${webServer.requestCount}" placeholder="" id="config2-1" name="requestCount" >
+                       <input  class="input new-w50" type="text"  value="${webServer.warmUpCount}" placeholder="" id="config2-2" name="warmUpCount">
+                       <input  class="input new-w50" type="text"  value="${webServer.pattern}" placeholder="定值/均匀/指数/泊松" id="config2-3" name="pattern" >
+                       <input class="input new-w50" type="text" value="${webServer.intensity}" placeholder="" id="config2-4" name="intensity">
+                       <input  class="input new-w50" type="hidden"  value="${webServer.testRecordId}" id="config2-5" name="testRecordId">
+                       <input  class="input new-w50" type="hidden"  value="${webServer.applicationName}" id="config2-6" name="applicationName">
+                       <input  class="input new-w50" type="hidden"  value="${webServer.enable}" id="config2-7" name="enable">
+                       <input style="float: right;" type="button" class="config" value="禁用" id="config2"> 
                    </div>
                </div>
                <div class="row cl">
                    <label class="col-xs-4 col-sm-2 new-center"></label>
                    <label class="col-xs-4 col-sm-2 new-center" >请求总数</label>
-                   <label class="col-xs-4 col-sm-2 new-center">负载策略</label>
-                   <label class="col-xs-4 col-sm-2 new-center">QPS</label>
                    <label class="col-xs-4 col-sm-2 new-center">预热次数</label>
+                   <label class="col-xs-4 col-sm-2 new-center">请求策略</label>
+                   <label class="col-xs-4 col-sm-2 new-center">QPS</label>
                    <label class="col-xs-4 col-sm-2 new-center">启用状态</label>
                </div>
                <div class="row cl">
                    <label class="form-label col-xs-4 col-sm-2">memcached:</label>
                    <div class="formControls col-xs-8 col-sm-9">
-                       <input class="input new-w50" type="text"  value="" placeholder="20000" id="config3-1" name="" >
-                       <input class="input new-w50" type="text" value="均匀" placeholder="" id="" name="" disabled="disabled">
-                       <input  class="input new-w50" type="text"  value="" placeholder="2000" id="config3-2" name="" >
-                       <input  class="input new-w50" type="text"  value="" placeholder="2000" id="config3-3" name="">
-                       <input style="float: right;" type="button" class="config" onclick="" value="禁用" id="config3">
+                      <input class="input new-w50" type="text"  value="${memcached.requestCount}" placeholder="" id="config3-1" name="requestCount" >
+                       <input class="input new-w50" type="text" value="${memcached.intensity}" placeholder="" id="config3-2" name="intensity">
+                       <input  class="input new-w50" type="text"  value="${memcached.pattern}" readonly="true" id="config3-3" name="pattern" >
+                       <input  class="input new-w50" type="text"  value="${memcached.warmUpCount}" placeholder="" id="config3-4" name="warmUpCount">
+                       <input  class="input new-w50" type="hidden"  value="${memcached.testRecordId}" id="config3-5" name="testRecordId">
+                       <input  class="input new-w50" type="hidden"  value="${memcached.applicationName}" id="config3-6" name="applicationName">
+                       <input  class="input new-w50" type="hidden"  value="${memcached.enable}" id="config3-7" name="enable">
+                        <input style="float: right;" type="button" class="config" value="禁用" id="config3">
                    </div>
                </div>
                <div class="row cl">
                    <label class="form-label col-xs-4 col-sm-2">silo:</label>
                    <div class="formControls col-xs-8 col-sm-9">
-                       <input class="input new-w50" type="text"  value="" placeholder="20000" id="config4-1" name="">
-                       <input class="input new-w50" type="text" value="均匀" placeholder="" id="" name="" disabled="disabled">
-                       <input  class="input new-w50" type="text"  value="" placeholder="2000" id="config4-2" name="" >
-                       <input  class="input new-w50" type="text"  value="" placeholder="2000" id="config4-3" name="">
-                       <input style="float: right;" type="button" class="config" onclick="" value="禁用" id="config4">
+                       <input class="input new-w50" type="text"  value="${silo.requestCount}" placeholder="" id="config4-1" name="requestCount" >
+                       <input  class="input new-w50" type="text"  value="${silo.warmUpCount}" placeholder="" id="config4-2" name="warmUpCount">
+                       <input  class="input new-w50" type="text"  value="${silo.pattern}" readonly="true" id="config4-3" name="pattern" >
+                       <input class="input new-w50" type="text" value="${silo.intensity}" placeholder="" id="config4-4" name="intensity">
+                       <input  class="input new-w50" type="hidden"  value="${silo.testRecordId}" id="config4-5" name="testRecordId">
+                       <input  class="input new-w50" type="hidden"  value="${silo.applicationName}" id="config4-6" name="applicationName">
+                       <input  class="input new-w50" type="hidden"  value="${silo.enable}" id="config4-7" name="enable">
+                        <input style="float: right;" type="button" class="config" value="禁用" id="config4">
                    </div>
                </div>
            </div>
@@ -109,69 +119,89 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <!--离线-->
             <div id="offline" style="display:none;">
                 <div class="row cl">
-                    <label class="col-xs-4 col-sm-2 new-center"></label>
+                    <label class="col-xs-4 col-sm-2 new-center"></label> 
+                    <label class="col-xs-4 col-sm-2 new-center" >读取操作</label>
+                    <label class="col-xs-4 col-sm-2 new-center">写入操作</label>
                     <label class="col-xs-4 col-sm-2 new-center">负载策略</label>
-                    <label class="col-xs-4 col-sm-2 new-center">读写块大小</label>
-                    <label class="col-xs-4 col-sm-2 new-center"></label>
-                    <label class="col-xs-4 col-sm-2 new-center"></label>
+                    <label class="col-xs-4 col-sm-2 new-center">读写块大小/MB</label>
                     <label class="col-xs-4 col-sm-2 new-center">启用状态</label>
                 </div>
                 <div class="row cl">
                     <label class="form-label col-xs-4 col-sm-2">Bonnie：</label>
                     <div class="formControls col-xs-8 col-sm-9">
-                        <input class="input new-w50" type="text"  value="循环" placeholder="" id="" name="" disabled="disabled">
-                        <input class="input new-w50" type="text" value="" placeholder="4096" id="config5-1" name="" >
-                        <input  class="input new-w50" type="text"  value="" placeholder="" id="" name="" disabled="disabled">
-                        <input  class="input new-w50" type="text"  value="" placeholder="" id="" name="" disabled="disabled">
-                        <input style="float: right;" type="button" class="config" onclick="" value="禁用" id="config5">
-                    </div>
+                       <input  class="input new-w50" type="text"  value="${bonnie.requestCount}" readonly="true" placeholder="按块读取" id="config5-1" name="requestCount" >
+                       <input  class="input new-w50" type="text"  value="${bonnie.warmUpCount}" readonly="true" placeholder="按块写入" id="config5-2" name="warmUpCount">
+                       <input  class="input new-w50" type="text"  value="${bonnie.pattern}" readonly="true" id="config5-3" name="pattern" >
+                       <input  class="input new-w50" type="text" value="${bonnie.intensity}" placeholder="单位:MB" id="config5-4" name="intensity">
+                       <input  class="input new-w50" type="hidden"  value="${bonnie.testRecordId}" id="config5-5" name="testRecordId">
+                       <input  class="input new-w50" type="hidden"  value="${bonnie.applicationName}" id="config5-6" name="applicationName">
+                       <input  class="input new-w50" type="hidden"  value="${bonnie.enable}" id="config5-7" name="enable">
+                        <input style="float: right;" type="button" class="config" value="禁用" id="config5">
+                   </div>
                 </div>
                 <div class="row cl">
                     <label class="col-xs-4 col-sm-2 new-center"></label>
+                    <label class="col-xs-4 col-sm-2 new-center" >请求总数</label>
+                    <label class="col-xs-4 col-sm-2 new-center">预热次数</label>
                     <label class="col-xs-4 col-sm-2 new-center">负载策略</label>
                     <label class="col-xs-4 col-sm-2 new-center">线程数量</label>
-                    <label class="col-xs-4 col-sm-2 new-center"></label>
-                    <label class="col-xs-4 col-sm-2 new-center"></label>
                     <label class="col-xs-4 col-sm-2 new-center">启用状态</label>
                 </div>
                 <div class="row cl">
                     <label class="form-label col-xs-4 col-sm-2">scimark：</label>
                     <div class="formControls col-xs-8 col-sm-9">
-                        <input class="input new-w50" type="text"  value="循环" placeholder="" id="" name="" disabled="disabled">
-                        <input class="input new-w50" type="text" value="" placeholder="4" id="config6-1" name="" >
-                        <input  class="input new-w50" type="text"  value="" placeholder="" id="" name="" disabled="disabled">
-                        <input  class="input new-w50" type="text"  value="" placeholder="" id="" name="" disabled="disabled">
-                        <input style="float: right;" type="button" class="config" onclick="" value="禁用" id="config6">
+                       <input  class="input new-w50" type="text"  value="${scimark.requestCount}" readonly="true" placeholder="" id="config6-1" name="requestCount" >
+                       <input  class="input new-w50" type="text"  value="${scimark.warmUpCount}" readonly="true" placeholder="" id="config6-2" name="warmUpCount">
+                       <input  class="input new-w50" type="text"  value="${scimark.pattern}" readonly="true" id="config6-3" name="pattern" >
+                       <input  class="input new-w50" type="text" value="${scimark.intensity}" placeholder="" id="config6-4" name="intensity">
+                       <input  class="input new-w50" type="hidden"  value="${scimark.testRecordId}" id="config6-5" name="testRecordId">
+                       <input  class="input new-w50" type="hidden"  value="${scimark.applicationName}" id="config6-6" name="applicationName">
+                       <input  class="input new-w50" type="hidden"  value="${scimark.enable}" id="config6-7" name="enable">
+                        <input style="float: right;" type="button" class="config" value="禁用" id="config6">
                     </div>
                 </div>
                 <div class="row cl">
                     <label class="col-xs-4 col-sm-2 new-center"></label>
-                    <label class="col-xs-4 col-sm-2 new-center">任务类型</label>
+                    <label class="col-xs-4 col-sm-2 new-center"></label>
+                    <label class="col-xs-4 col-sm-2 new-center"></label>
+                    <label class="col-xs-4 col-sm-2 new-center">负载类型</label>
                     <label class="col-xs-4 col-sm-2 new-center">reduce数</label>
-                    <label class="col-xs-4 col-sm-2 new-center"></label>
-                    <label class="col-xs-4 col-sm-2 new-center"></label>
                     <label class="col-xs-4 col-sm-2 new-center">启用状态</label>
                 </div>
                 <div class="row cl">
                     <label class="form-label col-xs-4 col-sm-2">Hadoop：</label>
                     <div class="formControls col-xs-8 col-sm-9">
-                        <input class="input new-w50" type="text"  value="" placeholder="IO/CPU/综合" id="config7-1" name="" >
-                        <input class="input new-w50" type="text" value="" placeholder="4" id="config7-2" name="" >
-                        <input  class="input new-w50" type="text"  value="" placeholder="" id="" name="" disabled="disabled">
-                        <input  class="input new-w50" type="text"  value="" placeholder="" id="" name="" disabled="disabled">
-                        <input style="float: right;" type="button" class="config" onclick="" value="禁用" id="config7">
+                       <input  class="input new-w50" type="text"  value="${hadoop.requestCount}" readonly="true" placeholder="" id="config7-1" name="requestCount" >
+                       <input  class="input new-w50" type="text"  value="${hadoop.warmUpCount}" readonly="true" placeholder="" id="config7-2" name="warmUpCount">
+                       <input  class="input new-w50" type="text"  value="${hadoop.pattern}" placeholder="IO密集型/CPU密集型/综合" id="config7-3" name="pattern" >
+                       <input  class="input new-w50" type="text" value="${hadoop.intensity}" placeholder="" id="config7-4" name="intensity">
+                       <input  class="input new-w50" type="hidden"  value="${hadoop.testRecordId}" id="config7-5" name="testRecordId">
+                       <input  class="input new-w50" type="hidden"  value="${hadoop.applicationName}" id="config7-6" name="applicationName">
+                       <input  class="input new-w50" type="hidden"  value="${hadoop.enable}" id="config7-7" name="enable">
+                        <input style="float: right;" type="button" class="config" value="禁用" id="config7">
                     </div>
+                </div>
+                  <div class="row cl">
+                    <label class="col-xs-4 col-sm-2 new-center"></label>
+                    <label class="col-xs-4 col-sm-2 new-center">请求总数</label>
+                    <label class="col-xs-4 col-sm-2 new-center">预热总数</label>
+                    <label class="col-xs-4 col-sm-2 new-center">负载策略</label>
+                    <label class="col-xs-4 col-sm-2 new-center">间隔单位/ms</label>
+                    <label class="col-xs-4 col-sm-2 new-center">启用状态</label>
                 </div>
                 <div class="row cl">
                     <label class="form-label col-xs-4 col-sm-2">Cassandra：</label>
                     <div class="formControls col-xs-8 col-sm-9">
-                        <input class="input new-w50" type="text"  value="" placeholder="IO/CPU/综合" id="config8-1" name="" >
-                        <input class="input new-w50" type="text" value="" placeholder="4" id="config8-2" name="" >
-                        <input  class="input new-w50" type="text"  value="" placeholder="" id="" name="" disabled="disabled">
-                        <input  class="input new-w50" type="text"  value="" placeholder="" id="" name="" disabled="disabled">
-                        <input style="float: right;" type="button" class="config" onclick="" value="禁用" id="config8">
+                        <input  class="input new-w50" type="text"  value="${cassandra.requestCount}" readonly="true" placeholder="" id="config8-1" name="requestCount" >
+                       <input  class="input new-w50" type="text"  value="${cassandra.warmUpCount}" readonly="true" placeholder="" id="config8-2" name="warmUpCount">
+                       <input  class="input new-w50" type="text"  value="${cassandra.pattern}" readonly="true" id="config8-3" name="pattern" >
+                       <input  class="input new-w50" type="text" value="${cassandra.intensity}" placeholder="" id="config8-4" name="intensity">
+                       <input  class="input new-w50" type="hidden"  value="${cassandra.testRecordId}" id="config8-5" name="testRecordId">
+                       <input  class="input new-w50" type="hidden"  value="${cassandra.applicationName}" id="config8-6" name="applicationName">
+                       <input  class="input new-w50" type="hidden"  value="${cassandra.enable}" id="config8-7" name="enable">
+                        <input style="float: right;" type="button" class="config" value="禁用" id="config8">
                     </div>
-                </div>
+                </div> 
                 <div class="row cl">
                     <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
                         <button style="float: right;" onclick="save();" class="btn btn-primary radius" ><i class="Hui-iconfont">&#xe632;</i>保存</button>
@@ -201,143 +231,119 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         //禁用与启动部分
         $("#config1").click(function(){
             if ($("#config1").val()=="禁用")
-            {
-                $("#config1-1").attr("disabled","disabled");
-                $("#config1-2").attr("disabled","disabled");
-                $("#config1-3").attr("disabled","disabled");
-                $("#config1-4").attr("disabled","disabled");
-                $("#config1").css("background","#61d38f");
+            { 
+            	$("#config1").css("background","#61d38f");
                 $("#config1").val("开启");
+                $("#config1-7").val("0"); 
             }
             else if ($("#config1").val()=="开启")
-            {
-                $("#config1").css("background","#21A1D3");
-                $("#config1").val("禁用");
-                $("#config1-1").removeAttr("disabled");
-                $("#config1-2").removeAttr("disabled");
-                $("#config1-3").removeAttr("disabled");
-                $("#config1-4").removeAttr("disabled");
+            { 
+            	$("#config1").css("background","#21A1D3");
+                $("#config1").val("禁用"); 
+                $("#config1-7").val("1");
             }
         })
         $("#config2").click(function(){
             if ($("#config2").val()=="禁用")
-            {
-                $("#config2-1").attr("disabled","disabled");
-                $("#config2-2").attr("disabled","disabled");
-                $("#config2-3").attr("disabled","disabled");
-                $("#config2-4").attr("disabled","disabled");
-                $("#config2").css("background","#61d38f");
+            { 
+            	$("#config2").css("background","#61d38f");
                 $("#config2").val("开启");
+                $("#config2-7").val("0");
             }
             else if ($("#config2").val()=="开启")
-            {
-                $("#config2").css("background","#21A1D3");
-                $("#config2").val("禁用");
-                $("#config2-1").removeAttr("disabled");
-                $("#config2-2").removeAttr("disabled");
-                $("#config2-3").removeAttr("disabled");
-                $("#config2-4").removeAttr("disabled");
+            { 
+            	$("#config2").css("background","#21A1D3");
+                $("#config2").val("禁用"); 
+                $("#config2-7").val("1");
             }
         })
         $("#config3").click(function(){
             if ($("#config3").val()=="禁用")
-            {
-                $("#config3-1").attr("disabled","disabled");
-                $("#config3-2").attr("disabled","disabled");
-                $("#config3-3").attr("disabled","disabled");
-                $("#config3").css("background","#61d38f");
+            { 
+            	$("#config3").css("background","#61d38f");
                 $("#config3").val("开启");
+                $("#config3-7").val("0");
             }
             else if ($("#config3").val()=="开启")
-            {
-                $("#config3").css("background","#21A1D3");
-                $("#config3").val("禁用");
-                $("#config3-1").removeAttr("disabled");
-                $("#config3-2").removeAttr("disabled");
-                $("#config3-3").removeAttr("disabled");
+            { 
+            	$("#config3").css("background","#21A1D3");
+                $("#config3").val("禁用"); 
+                $("#config3-7").val("1");
             }
         })
         $("#config4").click(function(){
             if ($("#config4").val()=="禁用")
-            {
-                $("#config4-1").attr("disabled","disabled");
-                $("#config4-2").attr("disabled","disabled");
-                $("#config4-3").attr("disabled","disabled");
-                $("#config4").css("background","#61d38f");
+            { 
+            	$("#config4").css("background","#61d38f");
                 $("#config4").val("开启");
+                $("#config4-7").val("0");
             }
             else if ($("#config4").val()=="开启")
-            {
-                $("#config4").css("background","#21A1D3");
-                $("#config4").val("禁用");
-                $("#config4-1").removeAttr("disabled");
-                $("#config4-2").removeAttr("disabled");
-                $("#config4-3").removeAttr("disabled");
+            { 
+            	$("#config4").css("background","#21A1D3");
+                $("#config4").val("禁用"); 
+                $("#config4-7").val("1");
             }
         })
         $("#config5").click(function(){
             if ($("#config5").val()=="禁用")
-            {
-                $("#config5-1").attr("disabled","disabled");
-                $("#config5").css("background","#61d38f");
+            { 
+            	$("#config5").css("background","#61d38f");
                 $("#config5").val("开启");
+                $("#config5-7").val("0");
             }
             else if ($("#config5").val()=="开启")
-            {
-                $("#config5").css("background","#21A1D3");
-                $("#config5").val("禁用");
-                $("#config5-1").removeAttr("disabled");
+            { 
+            	$("#config5").css("background","#21A1D3");
+                $("#config5").val("禁用"); 
+                $("#config5-7").val("1");
             }
         })
         $("#config6").click(function(){
             if ($("#config6").val()=="禁用")
-            {
-                $("#config6-1").attr("disabled","disabled");
-                $("#config6").css("background","#61d38f");
+            { 
+            	$("#config6").css("background","#61d38f");
                 $("#config6").val("开启");
+                $("#config6-7").val("0");
             }
             else if ($("#config6").val()=="开启")
-            {
-                $("#config6").css("background","#21A1D3");
-                $("#config6").val("禁用");
-                $("#config6-1").removeAttr("disabled");
+            { 
+            	$("#config6").css("background","#21A1D3");
+                $("#config6").val("禁用"); 
+                $("#config6-7").val("1");
             }
         })
         $("#config7").click(function(){
             if ($("#config7").val()=="禁用")
-            {
-                $("#config7-1").attr("disabled","disabled");
-                $("#config7-2").attr("disabled","disabled");
-                $("#config7").css("background","#61d38f");
+            { 
+            	$("#config7").css("background","#61d38f");
                 $("#config7").val("开启");
+                $("#config7-7").val("0");
             }
             else if ($("#config7").val()=="开启")
-            {
-                $("#config7").css("background","#21A1D3");
-                $("#config7").val("禁用");
-                $("#config7-1").removeAttr("disabled");
-                $("#config7-2").removeAttr("disabled");
+            { 
+            	$("#config7").css("background","#21A1D3");
+                $("#config7").val("禁用"); 
+                $("#config7-7").val("1");
             }
         })
         $("#config8").click(function(){
             if ($("#config8").val()=="禁用")
-            {
-                $("#config8-1").attr("disabled","disabled");
-                $("#config8-2").attr("disabled","disabled");
-                $("#config8").css("background","#61d38f");
+            { 
+            	$("#config8").css("background","#61d38f");
                 $("#config8").val("开启");
+                $("#config8-7").val("0");
             }
             else if ($("#config8").val()=="开启")
-            {
-                $("#config8").css("background","#21A1D3");
-                $("#config8").val("禁用");
-                $("#config8-1").removeAttr("disabled");
-                $("#config8-2").removeAttr("disabled");
+            { 
+            	$("#config8").css("background","#21A1D3");
+                $("#config8").val("禁用"); 
+                $("#config8-7").val("1");
             }
         })
     });
     function save(){
-        alert("已保存");
+    	$("#appConfig-form").submit();
 
     }
 </script>

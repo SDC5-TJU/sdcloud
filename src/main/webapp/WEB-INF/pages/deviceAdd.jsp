@@ -31,14 +31,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <body>
 <div class="page-container">
-	<form action="" method="post" class="form form-horizontal" id="form-article-add">
+	<form action="addRecord.do" method="post" class="form form-horizontal" id="form-article-add">
 	
 
 
 		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>设备描述：</label>
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>测试描述：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input style="width:80%;height:300px;" type="text" class="input w50" value="" placeholder="请输入设备描述" id="" name="">
+				<input style="width:80%;height:300px;" type="text" class="input w50" value="" placeholder="请输入测试描述" id="" name="">
 			</div>
 		</div>
 
@@ -54,10 +54,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <script src="statics/js/jquery.js"></script>
 <script type="text/javascript">
-
-/*$(function(){
-	var ue = UE.getEditor('editor');
-});*/
+ 
 function goback(){
     alert("添加成功");
 

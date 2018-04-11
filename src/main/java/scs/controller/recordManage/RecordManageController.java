@@ -28,7 +28,11 @@ public class RecordManageController {
 	private static Logger logger = Logger.getLogger(RecordManageController.class.getName());
 
 	@Resource RecordManageService service;
-
+	
+	@RequestMapping("/addRecordBefore.do")
+	public String addRecordBefore(HttpServletRequest request,HttpServletResponse response){
+		 return "redirect:/deviceAdd";
+	}
 	@RequestMapping("/addRecord.do")
 	public void addRecord(HttpServletRequest request,HttpServletResponse response, 
 			@RequestParam(value="recordDesc",required=false) String recordDesc){
