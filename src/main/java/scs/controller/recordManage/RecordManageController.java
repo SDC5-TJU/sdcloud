@@ -66,7 +66,6 @@ public class RecordManageController {
 	public String searchRecord(HttpServletRequest request,Model model, 
 			@RequestParam(value="page",required=false) int page){
 		try{ 
-
 			int totalCount=service.getRecordCount();  //查询该用户拥有的设备总数
 			int pageSize=10;						  			   				   //每页显示大小
 			int maxPage=(totalCount%pageSize==0)?totalCount/pageSize:totalCount/pageSize+1;//最大页数
@@ -74,7 +73,9 @@ public class RecordManageController {
 			int start=(page-1)*pageSize;	
 			List<TestRecordBean> recordList=service.searchRecord(start, pageSize);
 			model.addAttribute("recordList",recordList);
-
+			model.addAttribute("totalCount",totalCount);
+			model.addAttribute("curPage",page);
+			model.addAttribute("maxPage",maxPage);
 			page=maxPage==0?0:page;
 			if(page>1){
 				model.addAttribute("prePageHref","searchRecord.do?page="+(page-1));
@@ -83,7 +84,7 @@ public class RecordManageController {
 				model.addAttribute("nextPageHref","searchRecord.do?page="+(page+1));
 			}
 		}catch(Exception e){
-			logger.error("add Operator error"+e);
+			logger.error("search record error"+e);
 			e.printStackTrace();
 		}
 		return "RecordManage";
