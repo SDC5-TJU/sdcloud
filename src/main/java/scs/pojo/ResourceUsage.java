@@ -1,7 +1,5 @@
 package scs.pojo;
-
-import java.sql.Date;
-
+  
 /**
  * 资源使用抽象类
  * @author yanan
@@ -9,7 +7,7 @@ import java.sql.Date;
  */
 public abstract class ResourceUsage {
 	protected int autoId;    //数据库自增id
-	protected Date collectTime;     //收集时间
+	protected Long collectTime;     //收集时间
 	protected Float cpuUsageRate;   //%
 	protected Float memUsageRate;   //%
 	protected Float memUsageAmount; //MB
@@ -23,10 +21,10 @@ public abstract class ResourceUsage {
 	public void setAutoId(int autoId) {
 		this.autoId = autoId;
 	}
-	public Date getCollectTime() {
+	public Long getCollectTime() {
 		return collectTime;
 	}
-	public void setCollectTime(Date collectTime) {
+	public void setCollectTime(Long collectTime) {
 		this.collectTime = collectTime;
 	}
 	public Float getCpuUsageRate() {

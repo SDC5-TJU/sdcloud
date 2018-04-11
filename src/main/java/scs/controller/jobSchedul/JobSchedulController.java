@@ -2,6 +2,7 @@ package scs.controller.jobSchedul;
 
 import org.apache.log4j.Logger;
 
+import java.util.List;
 import java.util.Random;
 
 import javax.annotation.Resource;
@@ -14,8 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import net.sf.json.JSON;
 import net.sf.json.JSONArray;
-import scs.pojo.TableSystemresourceusage;
-import scs.service.jobSchedul.JobSchedulService; 
+import scs.pojo.AppConfigBean;
+import scs.pojo.ResourceUsage;
+import scs.pojo.SystemResourceUsageBean;
+import scs.service.appConfig.AppConfigService;
+import scs.service.jobSchedul.JobSchedulService;
+import scs.util.repository.Repository; 
 
 /**
  * 应用执行控制类
@@ -27,9 +32,19 @@ import scs.service.jobSchedul.JobSchedulService;
 public class JobSchedulController {
 	private static Logger logger = Logger.getLogger(JobSchedulController.class.getName());
 
-	@Resource JobSchedulService service;
+	@Resource JobSchedulService service; 
 	Random rand=new Random();
 	
+	@RequestMapping("/jobSchedulBefore.do")
+	public void jobSchedulBefore(HttpServletRequest request,HttpServletResponse response,
+			@RequestParam(value="testRecordId",required=true) int testRecordId){
+		/*List<AppConfigBean> enableList=service.
+		for(AppConfigBean bean:Repository.appConfigMap){ 
+			model.addAttribute(bean.getApplicationName(),bean);
+			model.addAttribute("testRecordId",testRecordId);
+		}*/
+
+	}
 	@RequestMapping("/executeMemcachedApp.do")
 	public void executeMemcachedApp(HttpServletRequest request,HttpServletResponse response,
 			@RequestParam(value="isBase",required=true) int isBase){
@@ -243,11 +258,16 @@ public class JobSchedulController {
 		}
 	}
 	@RequestMapping("/getPhyResourceUse.do")
-	public void getPhy1ResourceUse(HttpServletRequest request,HttpServletResponse response,Model model){
+	public void getPhyResourceUse(HttpServletRequest request,HttpServletResponse response,Model model){
 		try{ 
-			TableSystemresourceusage bean=new TableSystemresourceusage();
-			//bean.setCollecttime(collecttime); 
-			response.getWriter().print(rand.nextInt(100));   
+			SystemResourceUsageBean bean=new SystemResourceUsageBean();
+			bean.setCollectTime(System.currentTimeMillis()); 
+			bean.setCpuUsageRate((float) (rand.nextInt(100)));
+			bean.setMemUsageRate((float) rand.nextInt(100));
+			bean.setIoUsageRate((float) rand.nextInt(100));
+			bean.setNetUsageRate((float) rand.nextInt(100));
+			
+			response.getWriter().print(JSONArray.fromObject(bean));    
 		}catch(Exception e){
 			logger.error("add Operator error"+e);
 			e.printStackTrace();

@@ -27,10 +27,8 @@ public class AppConfigServiceImpl implements AppConfigService {
 		// TODO Auto-generated method stub
 		int result=dao.modifyAppConfig(map);
 		if(result!=0){ 
-			Repository.appConfigMap.clear(); 
-			System.out.println("修改appConfig size="+Repository.appConfigMap.size());
-			Repository.appConfigMap=map; 
-			System.out.println("修改appConfig size="+Repository.appConfigMap.size());
+			Repository.appConfigMap.clear();  
+			Repository.appConfigMap=map;  
 		}
 		return result;
 	}

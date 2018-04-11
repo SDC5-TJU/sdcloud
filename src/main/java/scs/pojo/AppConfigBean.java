@@ -80,4 +80,11 @@ public class AppConfigBean {
 		this.enable = enable;
 	}
 
+	@Override
+	public String toString() {
+		return "AppConfigBean [applicationName=" + applicationName + ", applicationType=" + applicationType
+				+ ", requestCount=" + requestCount + ", warmUpCount=" + warmUpCount + ", pattern=" + pattern
+				+ ", intensity=" + intensity + ", testRecordId=" + testRecordId + ", enable=" + enable + "]";
+	}
+
 }

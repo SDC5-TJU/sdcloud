@@ -29,14 +29,16 @@ public class RecordManageServiceImpl implements RecordManageService {
 		int result=dao.addRecord(latestRecordId,recordDesc);
 		if(result!=0){
 			Map<String,AppConfigBean> map=new HashMap<String,AppConfigBean>();
-			AppConfigBean webSearch=new AppConfigBean("webSearch","autoStop","500","200","泊松","10",latestRecordId,1);
-			AppConfigBean webServer=new AppConfigBean("webServer","autoStop","500","200","泊松","10",latestRecordId,1);
-			AppConfigBean silo=new AppConfigBean("silo","autoStop","20000","20000","均匀","500",latestRecordId,1);
+			AppConfigBean webSearch=new AppConfigBean("webSearch","autoStop","2000","1000","泊松","10",latestRecordId,1);
+			AppConfigBean webServer=new AppConfigBean("webServer","autoStop","2000","1000","泊松","10",latestRecordId,1);
 			AppConfigBean memcached=new AppConfigBean("memcached","autoStop","200000","200000","均匀","20000",latestRecordId,1);
+			AppConfigBean silo=new AppConfigBean("silo","autoStop","20000","20000","均匀","500",latestRecordId,1);
+			
+			AppConfigBean bonnie=new AppConfigBean("bonnie","manuStop","","","循环","4096",latestRecordId,1);
+			AppConfigBean scimark=new AppConfigBean("scimark","autoStop","","","单次","4",latestRecordId,1);
 			AppConfigBean hadoop=new AppConfigBean("hadoop","autoStop","","","IO密集型","4",latestRecordId,1);
 			AppConfigBean cassandra=new AppConfigBean("cassandra","autoStop","","","","",latestRecordId,1);
-			AppConfigBean bonnie=new AppConfigBean("bonnie","manuStop","","","循环","4096",latestRecordId,1);
-			AppConfigBean scimark=new AppConfigBean("scimark","autoStop","","","循环","2",latestRecordId,1);
+			
 			map.put(webSearch.getApplicationName(),webSearch);
 			map.put(webServer.getApplicationName(),webServer);
 			map.put(silo.getApplicationName(),silo);
