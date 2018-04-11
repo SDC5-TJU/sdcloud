@@ -33,7 +33,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div >
     <ul class="nav nav-tabs" >
         <li class="active" style="float: left;">
-            <a  href="#home" id="onlineControl">在线服务</a>
+             <a  href="#home" id="onlineControl">在线服务</a>
         </li>
         <li class="" style="float: left;">
             <a  href="#" id="offlineControl">离线服务</a>
@@ -64,7 +64,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                        <input  class="input new-w50" type="hidden"  value="${webSearch.testRecordId}" id="config1-5" name="testRecordId">
                        <input  class="input new-w50" type="hidden"  value="${webSearch.applicationName}" id="config1-6" name="applicationName">
                        <input  class="input new-w50" type="hidden"  value="${webSearch.enable}" id="config1-7" name="enable">
-                       <input style="float: right;" type="button" class="config" value="禁用" id="config1"> 
+                          <c:choose>
+							<c:when test="${webSearch.enable==1}">
+								<input style="float: right;" type="button" class="config" value="禁用" id="config1">
+							</c:when>
+							<c:otherwise>
+								<input style="float: right; background:#61d38f;" type="button" class="config" value="开启" id="config1">
+							</c:otherwise>
+						</c:choose> 
                    </div> 
                </div>
                <div class="row cl">
@@ -77,8 +84,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                        <input  class="input new-w50" type="hidden"  value="${webServer.testRecordId}" id="config2-5" name="testRecordId">
                        <input  class="input new-w50" type="hidden"  value="${webServer.applicationName}" id="config2-6" name="applicationName">
                        <input  class="input new-w50" type="hidden"  value="${webServer.enable}" id="config2-7" name="enable">
-                       <input style="float: right;" type="button" class="config" value="禁用" id="config2"> 
-                   </div>
+                          <c:choose>
+							<c:when test="${webServer.enable==1}">
+								<input style="float: right;" type="button" class="config" value="禁用" id="config2">
+							</c:when>
+							<c:otherwise>
+								<input style="float: right; background:#61d38f;" type="button" class="config" value="开启" id="config2">
+							</c:otherwise>
+						</c:choose>                    
+						</div>
                </div>
                <div class="row cl">
                    <label class="col-xs-4 col-sm-2 new-center"></label>
@@ -98,8 +112,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                        <input  class="input new-w50" type="hidden"  value="${memcached.testRecordId}" id="config3-5" name="testRecordId">
                        <input  class="input new-w50" type="hidden"  value="${memcached.applicationName}" id="config3-6" name="applicationName">
                        <input  class="input new-w50" type="hidden"  value="${memcached.enable}" id="config3-7" name="enable">
-                        <input style="float: right;" type="button" class="config" value="禁用" id="config3">
-                   </div>
+                          <c:choose>
+							<c:when test="${memcached.enable==1}">
+								<input style="float: right;" type="button" class="config" value="禁用" id="config3">
+							</c:when>
+							<c:otherwise>
+								<input style="float: right; background:#61d38f;" type="button" class="config" value="开启" id="config3">
+							</c:otherwise>
+						</c:choose>                      
+					</div>
                </div>
                <div class="row cl">
                    <label class="form-label col-xs-4 col-sm-2">silo:</label>
@@ -111,8 +132,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                        <input  class="input new-w50" type="hidden"  value="${silo.testRecordId}" id="config4-5" name="testRecordId">
                        <input  class="input new-w50" type="hidden"  value="${silo.applicationName}" id="config4-6" name="applicationName">
                        <input  class="input new-w50" type="hidden"  value="${silo.enable}" id="config4-7" name="enable">
-                        <input style="float: right;" type="button" class="config" value="禁用" id="config4">
-                   </div>
+                          <c:choose>
+							<c:when test="${silo.enable==1}">
+								<input style="float: right;" type="button" class="config" value="禁用" id="config4">
+							</c:when>
+							<c:otherwise>
+								<input style="float: right; background:#61d38f;" type="button" class="config" value="开启" id="config4">
+							</c:otherwise>
+						</c:choose>   
+					</div>
                </div>
            </div>
 
@@ -136,7 +164,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                        <input  class="input new-w50" type="hidden"  value="${bonnie.testRecordId}" id="config5-5" name="testRecordId">
                        <input  class="input new-w50" type="hidden"  value="${bonnie.applicationName}" id="config5-6" name="applicationName">
                        <input  class="input new-w50" type="hidden"  value="${bonnie.enable}" id="config5-7" name="enable">
-                        <input style="float: right;" type="button" class="config" value="禁用" id="config5">
+                   <c:choose>
+							<c:when test="${bonnie.enable==1}">
+								<input style="float: right;" type="button" class="config" value="禁用" id="config5">
+							</c:when>
+							<c:otherwise>
+								<input style="float: right; background:#61d38f;" type="button" class="config" value="开启" id="config5">
+							</c:otherwise>
+						</c:choose>
                    </div>
                 </div>
                 <div class="row cl">
@@ -157,8 +192,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                        <input  class="input new-w50" type="hidden"  value="${scimark.testRecordId}" id="config6-5" name="testRecordId">
                        <input  class="input new-w50" type="hidden"  value="${scimark.applicationName}" id="config6-6" name="applicationName">
                        <input  class="input new-w50" type="hidden"  value="${scimark.enable}" id="config6-7" name="enable">
-                        <input style="float: right;" type="button" class="config" value="禁用" id="config6">
-                    </div>
+                          <c:choose>
+							<c:when test="${scimark.enable==1}">
+								<input style="float: right;" type="button" class="config" value="禁用" id="config6">
+							</c:when>
+							<c:otherwise>
+								<input style="float: right; background:#61d38f;" type="button" class="config" value="开启" id="config6">
+							</c:otherwise>
+						</c:choose>                     
+					</div>
                 </div>
                 <div class="row cl">
                     <label class="col-xs-4 col-sm-2 new-center"></label>
@@ -178,8 +220,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                        <input  class="input new-w50" type="hidden"  value="${hadoop.testRecordId}" id="config7-5" name="testRecordId">
                        <input  class="input new-w50" type="hidden"  value="${hadoop.applicationName}" id="config7-6" name="applicationName">
                        <input  class="input new-w50" type="hidden"  value="${hadoop.enable}" id="config7-7" name="enable">
-                        <input style="float: right;" type="button" class="config" value="禁用" id="config7">
-                    </div>
+                          <c:choose>
+							<c:when test="${hadoop.enable==1}">
+								<input style="float: right;" type="button" class="config" value="禁用" id="config7">
+							</c:when>
+							<c:otherwise>
+								<input style="float: right; background:#61d38f;" type="button" class="config" value="开启" id="config7">
+							</c:otherwise>
+						</c:choose>                         
+					</div>
                 </div>
                   <div class="row cl">
                     <label class="col-xs-4 col-sm-2 new-center"></label>
@@ -199,8 +248,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                        <input  class="input new-w50" type="hidden"  value="${cassandra.testRecordId}" id="config8-5" name="testRecordId">
                        <input  class="input new-w50" type="hidden"  value="${cassandra.applicationName}" id="config8-6" name="applicationName">
                        <input  class="input new-w50" type="hidden"  value="${cassandra.enable}" id="config8-7" name="enable">
-                        <input style="float: right;" type="button" class="config" value="禁用" id="config8">
-                    </div>
+                          <c:choose>
+							<c:when test="${cassandra.enable==1}">
+								<input style="float: right;" type="button" class="config" value="禁用" id="config8">
+							</c:when>
+							<c:otherwise>
+								<input style="float: right; background:#61d38f;" type="button" class="config" value="开启" id="config8">
+							</c:otherwise>
+						</c:choose>                    
+					</div>
                 </div> 
                 <div class="row cl">
                     <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
@@ -218,6 +274,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src="statics/js/jquery.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
+   	
         $('#offlineControl').click(function(){
             $("#online").hide();   //隐藏
             $("#offline").show();
@@ -227,6 +284,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 $("#online").show();   //隐藏
                 $("#offline").hide();
             })
+            
+
 
         //禁用与启动部分
         $("#config1").click(function(){
@@ -341,6 +400,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 $("#config8-7").val("1");
             }
         })
+        
+        //a();
     });
     function save(){
     	$("#appConfig-form").submit();
