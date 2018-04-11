@@ -44,10 +44,39 @@ public class JobSchedulController {
 			@RequestParam(value="testRecordId",required=true) int testRecordId){
 		List<AppConfigBean> appConfiglist=aService.getAppConfig(testRecordId);
 		for(AppConfigBean bean:appConfiglist){ 
+			System.out.println(bean.getApplicationName()+" "+bean.getRequestCount());
 			model.addAttribute(bean.getApplicationName(),bean);
 		}
 		TestRecordBean recordBean=rService.getRecordById(testRecordId);
 		model.addAttribute("recordBean",recordBean);
+		StringBuffer strName=new StringBuffer();
+		StringBuffer strData=new StringBuffer();
+		StringBuffer HSeries=new StringBuffer();
+		strName.append("{name:'solrCloud',");//type: 'area',
+		strData.append("data:[");
+		int time=rand.nextInt(100);
+		for(int i=0;i<59;i++){
+			strData.append("[").append(System.currentTimeMillis()).append(",").append(time).append("],");
+		}
+		strData.append("[").append(System.currentTimeMillis()).append(",").append(time).append("]]");
+		HSeries.append(strName).append(strData).append(",marker: {enabled: true}}");
+
+		model.addAttribute("solrCloudStr",HSeries.toString());
+		/**
+		 * 图2 webServer
+		 */
+		strName.setLength(0);
+		strData.setLength(0);
+		HSeries.setLength(0);
+		strName.append("{name:'webServer',");//type: 'area',
+		strData.append("data:[");
+		time=rand.nextInt(500);
+		for(int i=0;i<59;i++){
+			strData.append("[").append(System.currentTimeMillis()).append(",").append(time).append("],");
+		}
+		strData.append("[").append(System.currentTimeMillis()).append(",").append(time).append("]]");
+		HSeries.append(strName).append(strData).append(",marker: {enabled: true}}");
+		model.addAttribute("webServerStr",HSeries.toString());
 		return "jobControl";
 
 	}
@@ -100,7 +129,19 @@ public class JobSchedulController {
 		}
 
 	}
+	@RequestMapping("/executeCassandraApp.do")
+	public void executeCassandraApp(HttpServletRequest request,HttpServletResponse response,
+			@RequestParam(value="isBase",required=true) int isBase){
+		try{ 
+			int result=0;
+			response.getWriter().print(result);
 
+		}catch(Exception e){
+			logger.error("add Operator error"+e);
+			e.printStackTrace();
+		}
+
+	}
 	@RequestMapping("/executeBonnieApp.do")
 	public void executeBonnieApp(HttpServletRequest request,HttpServletResponse response){
 		try{ 

@@ -67,7 +67,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </div>
 
                 </div>
-                <div class="row cl">
+               <div class="row cl">
                     <label class="form-label col-xs-4 col-sm-2">电商服务：</label>
                     <div class="formControls col-xs-8 col-sm-9">
                         <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="${webServer.requestCount}" placeholder="5000" id="config2-1" name="requestCount">
@@ -128,7 +128,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="循环" placeholder="" id="" name="" disabled="disabled">
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${bonnie.intensity}" placeholder="" id="" name="intensity" >
                         <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="startBonnie">
-                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="停止" id="shutdownBonnin">
+                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="停止" id="shutdownBonnie">
                     </div>
                 </div>
                 <div class="row cl">
@@ -145,7 +145,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="" placeholder="" id="" name="" disabled="disabled">
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="" placeholder="" id="config6-1" name="" disabled="disabled">
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="循环" placeholder="" id="" name="" disabled="disabled">
-                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${scimark.intensity}" placeholder="" id="scimark" name="intensity" >
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${scimark.intensity}" placeholder="" id="" name="intensity" >
                         <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="scimark">
                     </div>
                 </div>
@@ -193,12 +193,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div id="time" style="position: absolute; top:90px;right: 70px; width: 27%; ">
         <div class="row cl">
             <label style="width: 30%; float: left;text-align: right;" >开始时间：</label>
-                <input style="margin-left:10px; width: 35%;" class="input new-w50 new-col-sm-2 " type="text"  value="${recordBean.startTime}" placeholder="" id="startTime" name="" >
+                <input style="margin-left:10px; width: 35%;" class="input new-w50 new-col-sm-2 " type="text"  value="${recordBean.startTime}" id="startTime" name="" >
                 <input style="width:20%；" class="input new-w50" type="button" value="点击开始" id="startButton" >
         </div>
         <div class="row cl" style="margin-top: 30px;">
             <label style="width: 30%; float: left;text-align: right;" >结束时间：</label>
-            <input style="margin-left:10px; width: 35%;" class="input new-w50 new-col-sm-2 " type="text"  value="${recordBean.endTime}" placeholder="" id="endTime" name="" >
+            <input style="margin-left:10px; width: 35%;" class="input new-w50 new-col-sm-2 " type="text"  value="${recordBean.endTime}" id="endTime" name="" >
             <input style="width:20%；" class="input new-w50" type="button" value="点击结束" id="endButton" >
         </div>
     </div>
@@ -223,11 +223,9 @@ $("#startButton").click(function(){
 			type:"post",
 			url:"modifyStartTime.do",
 			data:{testRecordId:testRecordId},
-			dataType:"json",
+			dataType:"text",
 			success:function(returned){
-				if(returned!=0){
-					alert("添加开始时间成功");
-				} 
+				 $("#startTime").val(returned);
 			}	
 		});
 });
@@ -238,11 +236,9 @@ $("#endButton").click(function(){
 			type:"post",
 			url:"modifyEndTime.do",
 			data:{testRecordId:testRecordId},
-			dataType:"json",
+			dataType:"text",
 			success:function(returned){
-				if(returned!=0){
-					alert("添加结束时间成功");
-				} 
+				$("#endTime").val(returned);
 			}	
 		});
 });
@@ -374,8 +370,8 @@ $("#startBonnie").click(function(){
 				}	
 			});
 });
-//shutdownBonnin
-$("#shutdownBonnin").click(function(){
+//shutdownBonnie
+$("#shutdownBonnie").click(function(){
 		    $.ajax({
 				async:true,
 				type:"post",
@@ -424,174 +420,152 @@ $("#Cassandra").click(function(){
 });
 </script>
 <script type="text/javascript">
-   $(document).ready(function() {
- /* $('#offlineControl').click(function(){
-            $("#online").hide();   //隐藏
-            $("#offline").show();
-        })
-
-        $("#onlineControl").click(function(){
-            $("#online").show();   //隐藏
-            $("#offline").hide();
-        })*/
-/*        $('#startTime').click(function(){
-           var mydate = new Date();
-           var t=mydate.toLocaleString();
-           $("#startTime").val(t);
-       })
-       $('#endTime').click(function(){
-           var mydate1 = new Date();
-           var t1=mydate1.toLocaleString();
-           $("#endTime").val(t1);
-       }) */
-
-       //绘图
-       Highcharts.setOptions({
-           global: {
-               useUTC: false
-           }
-       });
-       Highcharts.chart('chart1', {
-           chart: {
-               zoomType: 'x'
-           },
-           title: {
-               text: 'webServer query benchmark'
-           },
-
-           xAxis: {
-               type: 'datetime',
-               // maxZoom:24 * 3600 * 1000, // x轴总共显示的时间
-               //min:<?=strtotime(date('Y-m-d'))?>,
-               dateTimeLabelFormats: {
-//                  minute: '%H:%M'
-                   day: '%H:%M'
-               }
-           },
-           yAxis: {
-               title: {
-                   text: 'query time'
-               },
-               min:0
-
-           },
-           legend: {
-               layout: 'vertical',
-               align: 'left',
-               verticalAlign: 'top',
-               x: 100,
-               y: 70,
-               floating: true,
-               backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF',
-               borderWidth: 1
-           },
-           plotOptions: {
-               area: {
-                   /*fillColor: {
-                       linearGradient: {
-                           x1: 0,
-                           y1: 0,
-                           x2: 0,
-                           y2: 1
-                       },
-                       stops: [
-                           [0, Highcharts.getOptions().colors[0]],
-                           [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                       ]
-                   },*/
-                   marker: {
-                       radius: 5
-                   },
-                   lineWidth: 1,
-                   states: {
-                       hover: {
-                           lineWidth: 0
-                       }
-                   },
-                   threshold: null
-               }
-           },
-
-           series: [{
-               type: 'scatter',
-               name:'测试一下',
-               data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,214,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,22,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,99,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-               ],
-               pointInterval: 306000,
-               pointStart: Date.UTC(2014, 6, 10,0,0,0),
-               pointEnd:Date.UTC(2014,6,10,23,59,59),
-               // pointEnd:Date.UTC(<?php date('Y , m, d',strtotime('-1 month'))?>, 0, 0, 0;?>)
-           }]
-       });
-
-       Highcharts.chart('chart2', {
-           chart: {
-               zoomType: 'x'
-           },
-           title: {
-               text: 'solrCloud query benchmark'
-           },
-
-           xAxis: {
-               type: 'datetime',
-               // maxZoom:24 * 3600 * 1000, // x轴总共显示的时间
-               //min:<?=strtotime(date('Y-m-d'))?>,
-               dateTimeLabelFormats: {
-//                  minute: '%H:%M'
-                   day: '%H:%M'
-               }
-           },
-           yAxis: {
-               title: {
-                   text: 'query time'
-               },
-               min:0
-
-           },
-           legend: {
-               layout: 'vertical',
-               align: 'right',
-               verticalAlign: 'middle'
-           },
-           plotOptions: {
-               area: {
-                   fillColor: {
-                       linearGradient: {
-                           x1: 0,
-                           y1: 0,
-                           x2: 0,
-                           y2: 1
-                       },
-                       stops: [
-                           [0, Highcharts.getOptions().colors[0]],
-                           [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                       ]
-                   },
-                   marker: {
-                       radius: 2
-                   },
-                   lineWidth: 1,
-                   states: {
-                       hover: {
-                           lineWidth: 1
-                       }
-                   },
-                   threshold: null
-               }
-           },
-
-           series: [{
-               type: 'area',
-               name:'测试一下',
-               data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,214,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,22,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,99,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-               ],
-               pointInterval: 306000,
-               pointStart: Date.UTC(2014, 6, 10,0,0,0),
-               pointEnd:Date.UTC(2014,6,10,23,59,59),
-               // pointEnd:Date.UTC(<?php date('Y , m, d',strtotime('-1 month'))?>, 0, 0, 0;?>)
-           }]
-       });
-
+var flag=false;
+$(document).ready(function (){
+    Highcharts.setOptions({
+        global: {
+            useUTC: false
+        }
+    });
+    /**
+    * solrCloud
+    */
+    Highcharts.chart('chart1', {
+        chart: {
+            type: 'scatter',
+            animation: Highcharts.svg, // don't animate in old IE
+            marginRight: 10,
+            events: {
+                load: function () {
+                    // set up the updating of the chart each second
+                    var series = this.series[0];
+                    var a=null;
+                    setInterval(function (){
+                    	if(flag==true){  
+			                $.ajax({
+								async:true,
+								type:"post",
+								url:"getWebSearchQueryTime.do",
+								data:{},
+								dataType:"text",
+								success:function(returned){
+									 a=returned;
+								}	
+							});
+			               if(a!=null){
+			            		x=(new Date()).getTime(); // current time
+	  							y=parseFloat(a);           
+				                series.addPoint([x,y], true, true); 
+			               }
+                    	}
+                    },1000);
+                    }
+                }
+        },
+        title: {
+            text: 'solrCloud query benchmark'
+        },
+        xAxis: {
+            type: 'datetime',
+            tickPixelInterval: 150
+        },
+        yAxis: {
+            title: {
+                text: 'queryTime'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+           
+        },
+        tooltip: {
+            formatter: function () {
+                return '<b>' + this.series.name + '</b><br/>' +
+                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                    Highcharts.numberFormat(this.y,0)+'ms';
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        exporting: {
+            enabled: false
+        },
+        series:[${solrCloudStr}]
+    });
+    /**
+     * webServer
+     */
+    Highcharts.chart('chart2', {
+        chart: {
+            type: 'scatter',
+            animation: Highcharts.svg, // don't animate in old IE
+            marginRight: 10,
+            events: {
+                load: function () {
+                    // set up the updating of the chart each second
+                    var series = this.series[0];
+                    var a=null;
+                    setInterval(function (){
+                    	if(flag==true){  
+			                $.ajax({
+								async:true,
+								type:"post",
+								url:"getWebServerQueryTime.do",
+								data:{},
+								dataType:"text",
+								success:function(returned){
+									 a=returned;
+								}	
+							});
+			                if(a!=null){
+			            		x=(new Date()).getTime(); // current time
+	  							y=parseFloat(a);    
+			            		if(y>0){
+			            			 series.addPoint([x,y], true, true); 
+			            		}
+				              
+			               }
+                    	}
+                    },1000);
+                    }
+                }
+        },
+        title: {
+            text: 'webServer query benchmark'
+        },
+        xAxis: {
+            type: 'datetime',
+            tickPixelInterval: 150,
+        },
+        yAxis: {
+            title: {
+                text: 'queryTime'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+           
+        },
+        tooltip: {
+            formatter: function () {
+                return '<b>' + this.series.name + '</b><br/>' +
+                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                    Highcharts.numberFormat(this.y,0)+'ms';
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        exporting: {
+            enabled: false
+        },
+        series:[${webServerStr}]
+    });
     });
 
 

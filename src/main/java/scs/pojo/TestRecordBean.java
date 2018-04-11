@@ -10,18 +10,18 @@ import java.util.Date;
 public class TestRecordBean {
 	private int autoId;  //数据库自增id
 	private String recordDesc; //记录描述
-	private Date startTime;  //开始时间
-	private Date endTime;    //结束时间
-	
+	private String startTime;  //开始时间
+	private String endTime;    //结束时间
+
 	public TestRecordBean(){}
-	
-	public TestRecordBean(int autoId,String recordDesc,Date startTime,Date endTime){
+
+	public TestRecordBean(int autoId,String recordDesc,String startTime,String endTime){
 		this.autoId=autoId;
 		this.recordDesc=recordDesc;
 		this.startTime=startTime;
 		this.endTime=endTime;
 	}
-	
+
 	public int getAutoId() {
 		return autoId;
 	}
@@ -34,17 +34,23 @@ public class TestRecordBean {
 	public void setRecordDesc(String recordDesc) {
 		this.recordDesc = recordDesc;
 	}
-	public Date getStartTime() {
+	public String getStartTime() {
 		return startTime;
 	}
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
+	public void setStartTime(String startTime) {
+		if(startTime!=null&&startTime.length()>=19)
+			this.startTime = startTime.substring(0,19);
+		else
+			this.startTime = startTime; 
 	}
-	public Date getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
+	public void setEndTime(String endTime) {
+		if(endTime!=null&&endTime.length()>=19)
+			this.endTime = endTime.substring(0,19);
+		else
+			this.endTime = endTime; 
 	}
 
 	@Override

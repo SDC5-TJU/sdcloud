@@ -1,16 +1,10 @@
 package scs.service.jobSchedul;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import javax.annotation.Resource;
-
+  
+import javax.annotation.Resource; 
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.springframework.stereotype.Service; 
 import scs.dao.jobSchedul.JobSchedulDao;
-import scs.dao.recordManage.RecordManageDao;
-import scs.pojo.AppConfigBean;
+import scs.dao.recordManage.RecordManageDao; 
 import scs.util.jobSchedul.JobSchedulDriver;
 import scs.util.repository.Repository;
 import scs.util.tools.HttpClientPool;
@@ -123,13 +117,19 @@ public class JobSchedulServiceImpl implements JobSchedulService {
 	@Override
 	public int getWebSearchQueryTime() {
 		// TODO Auto-generated method stub
-		return HttpClientPool.getResponseTime(httpclient,"http://www.baidu.com");
+		return HttpClientPool.getResponseTime(httpclient,1);
 	}
 
 	@Override
 	public int getWebServerQueryTime() {
 		// TODO Auto-generated method stub
-		return HttpClientPool.getResponseTime(httpclient,"http://www.baidu.com");
+		return HttpClientPool.getResponseTime(httpclient,0);
+	}
+
+	@Override
+	public int executeCassandraApp(int isBase) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
  
 }
