@@ -1,8 +1,14 @@
 package scs.pojo;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class TableSystemresourceusage {
+public class TableSystemresourceusage implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
     private Integer autoid;
 
     private String hostname;

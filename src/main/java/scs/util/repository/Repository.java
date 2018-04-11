@@ -12,6 +12,7 @@ import scs.pojo.AppInfoBean;
 import scs.pojo.ContainerInfoBean;
 import scs.pojo.MemcachedDataBean;
 import scs.pojo.SiloDataBean;
+import scs.pojo.SystemInfoBean;
 import scs.pojo.TableAppresourceusage;
 import scs.pojo.TableContainerresourceusage;
 import scs.pojo.TableSystemresourceusage;
@@ -33,6 +34,7 @@ public class Repository{
 	public static Map<String,AppInfoBean> appInfoMap=new HashMap<String,AppInfoBean>();
 	public static Map<String,Boolean> appStatusMap=new HashMap<String,Boolean>();
 	public static Map<String,ContainerInfoBean> containerInfoMap=new HashMap<String,ContainerInfoBean>();
+	public static Map<String,SystemInfoBean> systemInfoMap=new HashMap<String,SystemInfoBean>();
 	
 	/**
 	 * 应用数据存储数组
@@ -64,6 +66,7 @@ public class Repository{
 			appStatusMap.put(appName,false);//系统初始化,所有应用默认为未执行
 			System.out.println("初始化app执行状态 "+appName+"=false");
 		}
+		systemInfoMap=RepositoryDao.initSystemInfoMap();
 	}
 	/**
 	 * 对外提供的app状态查询接口
