@@ -49,18 +49,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="row cl">
                     <label class="col-xs-4 new-col-sm-2 new-center1"></label>
                     <label class="col-xs-4 new-col-sm-2 new-center1" >请求总数</label>
-                    <label class="col-xs-4 new-col-sm-2 new-center1">负载策略</label>
-                    <label class="col-xs-4 new-col-sm-2 new-center1">单位/ms</label>
                     <label class="col-xs-4 new-col-sm-2 new-center1">预热次数</label>
+                    <label class="col-xs-4 new-col-sm-2 new-center1">请求策略</label>
+                    <label class="col-xs-4 new-col-sm-2 new-center1">间隔单位</label>
                     <label class="col-xs-4 new-col-sm-2 new-center1"></label>
                 </div>
                 <div class="row cl">
                     <label class="form-label col-xs-4 col-sm-2">web搜索：</label>
                     <div class="formControls col-xs-8 col-sm-9">
-                        <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="" placeholder="5000" id="config1-1" name="" >
-                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="" placeholder="随机/均匀" id="config1-2" name="">
-                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="" placeholder="10" id="config1-3" name="" >
-                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="" placeholder="2000" id="config1-4"name="">
+                        <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="${webSearch.requestCount}" placeholder="5000" id="config1-1" name="requestCount" >
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="${webSearch.warmUpCount}" placeholder="" id="config1-2" name="warmUpCount">
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${webSearch.pattern}" placeholder="定值/均匀/指数/泊松" id="config1-3" name="pattern" >
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${webSearch.intensity}" placeholder="2000" id="config1-4"name="intensity">
                         <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="">
                         <input style="margin-left:20px; " type="button"  class="config" onclick="" value="基准采集" id="">
                         <!--<input style="float: right;" type="button"  class="btn btn-primary radius " value="禁用" >-->
@@ -70,10 +70,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="row cl">
                     <label class="form-label col-xs-4 col-sm-2">电商服务：</label>
                     <div class="formControls col-xs-8 col-sm-9">
-                        <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="" placeholder="5000" id="config2-1" name="">
-                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="" placeholder="随机/均匀" id="config2-2" name="">
-                        <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="" placeholder="10" id="config2-3" name="" >
-                        <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="" placeholder="2000" id="config2-4" name="">
+                        <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="${webServer.requestCount}" placeholder="5000" id="config2-1" name="requestCount">
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="${webServer.warmUpCount}" placeholder="" id="config2-2" name="warmUpCount">
+                        <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${webServer.pattern}" placeholder="10" id="config2-3" name="pattern" >
+                        <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${webServer.intensity}" placeholder="2000" id="config2-4" name="intensity">
                         <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="">
                         <input style="margin-left:20px; " type="button"  class="config" onclick="" value="基准采集" id="">
                     </div>
@@ -81,18 +81,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="row cl">
                     <label class="col-xs-4 new-col-sm-2 new-center1"></label>
                     <label class="col-xs-4 new-col-sm-2 new-center1" >请求总数</label>
-                    <label class="col-xs-4 new-col-sm-2 new-center1">负载策略</label>
-                    <label class="col-xs-4 new-col-sm-2 new-center1">QPS</label>
                     <label class="col-xs-4 new-col-sm-2 new-center1">预热次数</label>
+                    <label class="col-xs-4 new-col-sm-2 new-center1">请求策略</label>
+                    <label class="col-xs-4 new-col-sm-2 new-center1">QPS</label>
                     <label class="col-xs-4 new-col-sm-2 new-center1"></label>
                 </div>
                 <div class="row cl">
                     <label class="form-label col-xs-4 col-sm-2">memcached:</label>
                     <div class="formControls col-xs-8 col-sm-9">
-                        <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="" placeholder="20000" id="config3-1" name="" >
+                        <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="${memcached.requestCount}" placeholder="20000" id="config3-1" name="requestCount" >
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${memcached.intensity}" placeholder="2000" id="config3-2" name="intensity" >
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="均匀" placeholder="" id="" name="" disabled="disabled">
-                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="" placeholder="2000" id="config3-2" name="" >
-                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="" placeholder="2000" id="config3-3" name="">
+						<input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${memcached.warmUpCount}" placeholder="2000" id="config3-3" name="warmUpCount">
                         <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="">
                         <input style="margin-left:20px; " type="button"  class="config" onclick="" value="基准采集" id="">
                     </div>
@@ -100,10 +100,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="row cl">
                     <label class="form-label col-xs-4 col-sm-2">silo:</label>
                     <div class="formControls col-xs-8 col-sm-9">
-                        <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="" placeholder="20000" id="config4-1" name="">
+                        <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="${silo.requestCount}" placeholder="20000" id="config4-1" name="requestCount">
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${silo.warmUpCount}" placeholder="2000" id="config4-2" name="warmUpCount" >
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="均匀" placeholder="" id="" name="" disabled="disabled">
-                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="" placeholder="2000" id="config4-2" name="" >
-                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="" placeholder="2000" id="config4-3" name="">
+						<input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${silo.intensity}" placeholder="2000" id="config4-3" name="intensity">
                         <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="">
                         <input style="margin-left:20px; " type="button"  class="config" onclick="" value="基准采集" id="">
                     </div>
@@ -113,67 +113,75 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <!--离线-->
             <div id="offline">
                 <div class="row cl">
-                    <label class="col-xs-4 new-col-sm-2 new-center1"></label>
-                    <label class="col-xs-4 new-col-sm-2 new-center1" >负载策略</label>
+                    <label class="col-xs-4 new-col-sm-2 new-center1">读取操作</label>
+                    <label class="col-xs-4 new-col-sm-2 new-center1" >写入操作</label>
+                    <label class="col-xs-4 new-col-sm-2 new-center1">负载策略</label>
                     <label class="col-xs-4 new-col-sm-2 new-center1">读写块大小</label>
-                    <label class="col-xs-4 new-col-sm-2 new-center1"></label>
-                    <label class="col-xs-4 new-col-sm-2 new-center1"></label>
+					<label class="col-xs-4 new-col-sm-2 new-center1"></label>
                     <label class="col-xs-4 new-col-sm-2 new-center1"></label>
                 </div>
                 <div class="row cl">
                     <label class="form-label col-xs-4 col-sm-2">Bonnie：</label>
                     <div class="formControls col-xs-8 col-sm-9">
-                        <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="循环" placeholder="" id="" name="" disabled="disabled">
-                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="" placeholder="4096" id="config5-1" name="" >
-                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="" placeholder="" id="" name="" disabled="disabled">
-                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="" placeholder="" id="" name="" disabled="disabled">
+                        <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="" placeholder="" id="" name="" disabled="disabled">
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="" placeholder="4096" id="config5-1" name="" disabled="disabled">
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="循环" placeholder="" id="" name="" disabled="disabled">
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${bonnie.intensity}" placeholder="" id="" name="intensity" >
                         <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="">
                         <input style="margin-left:20px; " type="button"  class="config " onclick="" value="停止" id="">
                     </div>
                 </div>
                 <div class="row cl">
                     <label class="col-xs-4 new-col-sm-2 new-center1"></label>
-                    <label class="col-xs-4 new-col-sm-2 new-center1" >负载策略</label>
+                    <label class="col-xs-4 new-col-sm-2 new-center1" >请求总数</label>
+                    <label class="col-xs-4 new-col-sm-2 new-center1">预热次数</label>
+                    <label class="col-xs-4 new-col-sm-2 new-center1">负载策略</label>
                     <label class="col-xs-4 new-col-sm-2 new-center1">线程数量</label>
-                    <label class="col-xs-4 new-col-sm-2 new-center1"></label>
-                    <label class="col-xs-4 new-col-sm-2 new-center1"></label>
                     <label class="col-xs-4 new-col-sm-2 new-center1"></label>
                 </div>
                 <div class="row cl">
                     <label class="form-label col-xs-4 col-sm-2">scimark：</label>
                     <div class="formControls col-xs-8 col-sm-9">
-                        <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="循环" placeholder="" id="" name="" disabled="disabled">
-                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="" placeholder="4" id="config6-1" name="" >
-                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="" placeholder="" id="" name="" disabled="disabled">
-                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="" placeholder="" id="" name="" disabled="disabled">
+                        <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="" placeholder="" id="" name="" disabled="disabled">
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="" placeholder="4" id="config6-1" name="" disabled="disabled">
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="循环" placeholder="" id="" name="" disabled="disabled">
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${scimark.intensity}" placeholder="" id="" name="intensity" >
                         <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="">
                     </div>
                 </div>
                 <div class="row cl">
                     <label class="col-xs-4 new-col-sm-2 new-center1"></label>
-                    <label class="col-xs-4 new-col-sm-2 new-center1" >任务类型</label>
+                    <label class="col-xs-4 new-col-sm-2 new-center1"></label>
+                    <label class="col-xs-4 new-col-sm-2 new-center1"></label>
+                    <label class="col-xs-4 new-col-sm-2 new-center1">负载类型</label>
                     <label class="col-xs-4 new-col-sm-2 new-center1">reduce数</label>
-                    <label class="col-xs-4 new-col-sm-2 new-center1"></label>
-                    <label class="col-xs-4 new-col-sm-2 new-center1"></label>
                     <label class="col-xs-4 new-col-sm-2 new-center1"></label>
                 </div>
                 <div class="row cl">
                     <label class="form-label col-xs-4 col-sm-2">Hadoop：</label>
                     <div class="formControls col-xs-8 col-sm-9">
-                        <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="" placeholder="IO/CPU/综合" id="config7-1" name="" >
-                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="" placeholder="4" id="config7-2" name="" >
-                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="" placeholder="" id="" name="" disabled="disabled">
-                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="" placeholder="" id="" name="" disabled="disabled">
+                        <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="" placeholder="IO/CPU/综合" id="config7-1" name="" disabled="disabled">
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="" placeholder="4" id="config7-2" name="" disabled="disabled">
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${hadoop.pattern}" placeholder="IO密集型/CPU密集型/综合" id="" name="pattern" >
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${hadoop.intensity}" placeholder="" id="" name="intensity" >
                         <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="">
                     </div>
+                </div>
+				<div class="row cl">
+                    <label class="col-xs-4 new-col-sm-2 new-center1"></label>
+                    <label class="col-xs-4 new-col-sm-2 new-center1">请求总数</label>
+                    <label class="col-xs-4 new-col-sm-2 new-center1">预热总数</label>
+                    <label class="col-xs-4 new-col-sm-2 new-center1">负载策略</label>
+                    <label class="col-xs-4 new-col-sm-2 new-center1">间隔单位/ms</label>
+                    <label class="col-xs-4 new-col-sm-2 new-center1"></label>
                 </div>
                 <div class="row cl">
                     <label class="form-label col-xs-4 col-sm-2">Cassandra：</label>
                     <div class="formControls col-xs-8 col-sm-9">
-                        <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="" placeholder="IO/CPU/综合" id="config8-1" name="" >
-                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="" placeholder="4" id="config8-2" name="" >
+                        <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="${cassandra.requestCount}" placeholder="" id="config8-1" name="requestCount" disabled="disabled">
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="" placeholder="4" id="config8-2" name="" disabled="disabled">
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="" placeholder="" id="" name="" disabled="disabled">
-                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="" placeholder="" id="" name="" disabled="disabled">
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${cassandra.intensity}" placeholder="" id="" name="intensity" >
                         <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="">
                     </div>
                 </div>
@@ -185,12 +193,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div id="time" style="position: absolute; top:90px;right: 70px; width: 27%; ">
         <div class="row cl">
             <label style="width: 30%; float: left;text-align: right;" >开始时间：</label>
-                <input style="margin-left:10px; width: 60%;" class="input new-w50 new-col-sm-2 " type="text"  value="" placeholder="2018-4-10 10:38:39" id="startTime" name="" >
+                <input style="margin-left:10px; width: 60%;" class="input new-w50 new-col-sm-2 " type="text"  value="${recordBean.startTime}" placeholder="" id="startTime" name="" >
 
         </div>
         <div class="row cl" style="margin-top: 30px;">
             <label style="width: 30%; float: left;text-align: right;" >结束时间：</label>
-            <input style="margin-left:10px; width: 60%;" class="input new-w50 new-col-sm-2 " type="text"  value="" placeholder="2018-4-10 10:38:39" id="endTime" name="" >
+            <input style="margin-left:10px; width: 60%;" class="input new-w50 new-col-sm-2 " type="text"  value="${recordBean.endTime}" placeholder="" id="endTime" name="" >
 
         </div>
     </div>
@@ -217,7 +225,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             $("#online").show();   //隐藏
             $("#offline").hide();
         })*/
-       $('#startTime').click(function(){
+/*        $('#startTime').click(function(){
            var mydate = new Date();
            var t=mydate.toLocaleString();
            $("#startTime").val(t);
@@ -226,7 +234,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
            var mydate1 = new Date();
            var t1=mydate1.toLocaleString();
            $("#endTime").val(t1);
-       })
+       }) */
 
        //绘图
        Highcharts.setOptions({
