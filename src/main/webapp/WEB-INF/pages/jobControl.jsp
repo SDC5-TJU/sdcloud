@@ -90,9 +90,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <label class="form-label col-xs-4 col-sm-2">memcached:</label>
                     <div class="formControls col-xs-8 col-sm-9">
                         <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="${memcached.requestCount}" placeholder="20000" id="config3-1" name="requestCount" >
-                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${memcached.intensity}" placeholder="2000" id="config3-2" name="intensity" >
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${memcached.warmUpCount}" placeholder="2000" id="config3-2" name="intensity" >
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="均匀" placeholder="" id="" name="" disabled="disabled">
-						<input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${memcached.warmUpCount}" placeholder="2000" id="config3-3" name="warmUpCount">
+						<input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${memcached.intensity}" placeholder="2000" id="config3-3" name="warmUpCount">
                         <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="">
                         <input style="margin-left:20px; " type="button"  class="config" onclick="" value="基准采集" id="">
                     </div>
@@ -123,8 +123,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="row cl">
                     <label class="form-label col-xs-4 col-sm-2">Bonnie：</label>
                     <div class="formControls col-xs-8 col-sm-9">
-                        <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="" placeholder="" id="" name="" disabled="disabled">
-                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="" placeholder="4096" id="config5-1" name="" disabled="disabled">
+                        <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="" placeholder="按块读取" id="" name="" disabled="disabled">
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="" placeholder="按块写入" id="config5-1" name="" disabled="disabled">
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="循环" placeholder="" id="" name="" disabled="disabled">
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${bonnie.intensity}" placeholder="" id="" name="intensity" >
                         <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="">
@@ -143,7 +143,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <label class="form-label col-xs-4 col-sm-2">scimark：</label>
                     <div class="formControls col-xs-8 col-sm-9">
                         <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="" placeholder="" id="" name="" disabled="disabled">
-                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="" placeholder="4" id="config6-1" name="" disabled="disabled">
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="" placeholder="" id="config6-1" name="" disabled="disabled">
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="循环" placeholder="" id="" name="" disabled="disabled">
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${scimark.intensity}" placeholder="" id="" name="intensity" >
                         <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="">
@@ -160,8 +160,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="row cl">
                     <label class="form-label col-xs-4 col-sm-2">Hadoop：</label>
                     <div class="formControls col-xs-8 col-sm-9">
-                        <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="" placeholder="IO/CPU/综合" id="config7-1" name="" disabled="disabled">
-                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="" placeholder="4" id="config7-2" name="" disabled="disabled">
+                        <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="" placeholder="" id="config7-1" name="" disabled="disabled">
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="" placeholder="" id="config7-2" name="" disabled="disabled">
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${hadoop.pattern}" placeholder="IO密集型/CPU密集型/综合" id="" name="pattern" >
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${hadoop.intensity}" placeholder="" id="" name="intensity" >
                         <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="">
@@ -179,7 +179,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <label class="form-label col-xs-4 col-sm-2">Cassandra：</label>
                     <div class="formControls col-xs-8 col-sm-9">
                         <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="${cassandra.requestCount}" placeholder="" id="config8-1" name="requestCount" disabled="disabled">
-                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="" placeholder="4" id="config8-2" name="" disabled="disabled">
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="" placeholder="" id="config8-2" name="" disabled="disabled">
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="" placeholder="" id="" name="" disabled="disabled">
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${cassandra.intensity}" placeholder="" id="" name="intensity" >
                         <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="">
@@ -214,6 +214,54 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src="statics/js/pintuer.js"></script>
 <script type="text/javascript" src="statics/js/highcharts.js"></script>
 <script type="text/javascript" src="statics/js/highcharts-more.js"></script>
+<script type="text/javascript">
+/**
+ * ajax控制判断所有按钮的状态 enable/disable
+ */
+ setInterval(function() {
+		$.ajax({
+			async:true,
+			type:"post",
+			url:"getPhyResourceUse.do",
+			data:{},
+			dataType:"json",
+			success:function(returned){
+				if(returned!=null&&returned!=""&&returned!="null"){
+					returnedData = returned;
+					console.log(returned);
+					//to do
+					/*遍历json数组，获取并判断每个应有的状态，为true 则disable的按钮 为false 则相反*/
+				}
+			}	
+		});
+},5000);
+ 
+/**
+ * 8个应用正式测试和基准测试的控制按钮动作
+ */
+$("#addButton").click(function(){
+		    $.ajax({
+				async:true,
+				type:"post",
+				url:"executeWebSearchApp.do",
+				data:{isBase:0},
+				dataType:"text",
+				success:function(returned){ 
+				}	
+			});
+});
+$("#addButton").click(function(){
+    $.ajax({
+		async:true,
+		type:"post",
+		url:"executeWebSearchApp.do",
+		data:{isBase:1},
+		dataType:"text",
+		success:function(returned){ 
+		}	
+	});
+});
+</script>
 <script type="text/javascript">
    $(document).ready(function() {
  /* $('#offlineControl').click(function(){

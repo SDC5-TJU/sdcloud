@@ -40,15 +40,15 @@ public class JobSchedulController {
 	Random rand=new Random();
 	
 	@RequestMapping("/jobSchedulBefore.do")
-	public void jobSchedulBefore(HttpServletRequest request,HttpServletResponse response,Model model,
+	public String jobSchedulBefore(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="testRecordId",required=true) int testRecordId){
 		List<AppConfigBean> appConfiglist=aService.getAppConfig(testRecordId);
 		for(AppConfigBean bean:appConfiglist){ 
-			model.addAttribute(bean.getApplicationName(),bean); 
+			model.addAttribute(bean.getApplicationName(),bean);
 		}
 		TestRecordBean recordBean=rService.getRecordById(testRecordId);
 		model.addAttribute("recordBean",recordBean);
-		
+		return "jobControl";
 
 	}
 	@RequestMapping("/executeMemcachedApp.do")
@@ -280,7 +280,7 @@ public class JobSchedulController {
 		}
 	}
 	@RequestMapping("/test.do")
-	public String index(HttpServletRequest request,HttpServletResponse response,Model model){
+	public String test(HttpServletRequest request,HttpServletResponse response,Model model){
 		try{
 			/**
 			 * 图1 solrCloud

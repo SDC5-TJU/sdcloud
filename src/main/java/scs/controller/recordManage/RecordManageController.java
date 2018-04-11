@@ -45,7 +45,7 @@ public class RecordManageController {
 		}
 	}
 	@RequestMapping("/modifyStartTime.do")
-	public void updateStartTime(HttpServletRequest request,HttpServletResponse response, 
+	public void modifyStartTime(HttpServletRequest request,HttpServletResponse response, 
 			@RequestParam(value="testRecordId",required=true) int testRecordId){
 		try{
 			int result=service.modifyStartTime(testRecordId,new Date());//添加当前系统时间
