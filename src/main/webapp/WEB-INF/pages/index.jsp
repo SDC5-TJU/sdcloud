@@ -72,7 +72,7 @@ $(function(){
   <!--<li><b>当前用户：</b><span style="color:red;">yanan</span>-->
 </ul>
 <div class="admin">
-  <iframe scrolling="auto" rameborder="0" src="RecordManage.do" name="right" width="100%" height="100%"></iframe>
+  <iframe scrolling="auto" rameborder="0" src="searchRecord.do?page=1" name="right" width="100%" height="100%"></iframe>
 </div>
 </body>
 </html>

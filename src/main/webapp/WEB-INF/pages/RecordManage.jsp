@@ -29,7 +29,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <input type="text" placeholder="请输入搜索关键字" name="keywords" class="input" style="width:250px; line-height:17px;display:inline-block" />
                     <a href="javascript:void(0)" class="button border-main icon-search" onclick="changesearch()" > 搜索</a>
                 </li>
-                <li style="padding-right:10px;"><span class="r">共有数据：<strong>4</strong> 条</span></li>
+                <li style="padding-right:10px;"><span class="r">共有数据：<strong>${totalCount}</strong> 条</span></li>
             </ul>
         </div>
         <table class="table table-hover text-center">
@@ -38,8 +38,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <th width="30%x">描述</th>
                 <th width="20%">开始时间</th>
                 <th width="20%">截止时间</th>
-                <th width="10%">操作</th>
-                <th width="10%"></th>
+                <th width="20%">操作</th>
+                
             </tr>
             <c:forEach var="item" items="${recordList}">
             <tr>
@@ -47,12 +47,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <td >${item.recordDesc }</td>
             <td >${item.startTime }</td>
             <td >${item.endTime }</td>
-            <td ><a href="jobControl.do"><input type="button" class="editButton" onclick="updateDevice();" value="配置"></a></td>
-            <td><input type="button" class="viewButton" onclick="" value="查看"></td>
+            <td ><a href="jobControl.do"><input type="button" class="editButton" onclick="updateDevice();" value="配置"></a>
+            <a href=""><input type="button" class="viewButton" onclick="" value="查看"></a></td>
+            
             </tr>
             </c:forEach>
             <tr>
-                <td colspan="8"><div class="pagelist"> <a href="">上一页</a>&nbsp;&nbsp;2/3&nbsp;&nbsp;<a href="">下一页</a><a href="">尾页</a> </div></td>
+                <td colspan="8"><div class="pagelist"> 
+<c:choose>
+							<c:when test="${curPage==1}">
+								<a>上一页</a>
+							</c:when>
+							<c:otherwise>
+								<a href="${prePageHref}">上一页</a>
+							</c:otherwise>
+						</c:choose>
+						&nbsp;&nbsp;${curPage}/${maxPage}&nbsp;&nbsp;
+						<c:choose>
+							<c:when test="${curPage==maxPage}">
+								<a>下一页</a>
+							</c:when>
+							<c:otherwise>
+								<a href="${nextPageHref}">下一页</a>
+							</c:otherwise>
+						</c:choose>
+						                </div></td>
             </tr>
         </table>
     </div>
