@@ -88,5 +88,13 @@ public class RecordManageServiceImpl implements RecordManageService {
 
 
 
+	@Override
+	public TestRecordBean getRecordById(int testRecordId) {
+		// TODO Auto-generated method stub
+		return dao.getRecordById(testRecordId);
+	}
+
+
+
 
 }

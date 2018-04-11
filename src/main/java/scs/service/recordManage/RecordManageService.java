@@ -16,6 +16,7 @@ public interface RecordManageService {
 	public int modifyStartTime(int testRecordId,Date startTime); 
 	public int modifyEndTime(int testRecordId,Date startTime);
 	public int getRecordCount();
+	public TestRecordBean getRecordById(int testRecordId);
 	public List<TestRecordBean> searchRecord(int start,int pageSize);
  
 }

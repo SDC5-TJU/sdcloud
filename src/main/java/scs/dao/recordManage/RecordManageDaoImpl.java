@@ -84,6 +84,22 @@ public class RecordManageDaoImpl extends MySQLBaseDao implements RecordManageDao
 		}
 		return result;
 	}
+
+	@Override
+	public TestRecordBean getRecordById(int testRecordId) {
+		String sql="select startTime,endTime from table_testrecord where autoId=?";
+		 TestRecordBean bean=jt.query(sql,new Object[]{testRecordId},new ResultSetExtractor<TestRecordBean>() {
+			public TestRecordBean extractData(ResultSet rs) throws SQLException, DataAccessException {
+				TestRecordBean bean=new TestRecordBean();
+				if (rs.next()) {  
+					bean.setStartTime(rs.getDate(1));
+					bean.setEndTime(rs.getDate(1)); 
+				}
+				return bean;
+			}
+		});
+		return bean;
+	}
  
 
 	 

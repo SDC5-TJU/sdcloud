@@ -131,22 +131,5 @@ public class JobSchedulServiceImpl implements JobSchedulService {
 		// TODO Auto-generated method stub
 		return HttpClientPool.getResponseTime(httpclient,"http://www.baidu.com");
 	}
-
-	@Override
-	public List<AppConfigBean> getEnableAppConfigList() {
-		// TODO Auto-generated method stub
-		List<AppConfigBean> enableList=new ArrayList<AppConfigBean>();
-		Set<String> keySet=Repository.appConfigMap.keySet();
-		for(String key:keySet){
-			if(Repository.appConfigMap.get(key).getEnable()==1){ //判断获取所有启用的app配置信息
-				enableList.add(Repository.appConfigMap.get(key));
-			}
-		}
-		return enableList;
-	}
-
-
-
-
-
+ 
 }
