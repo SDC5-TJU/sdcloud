@@ -61,8 +61,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="${webSearch.warmUpCount}" placeholder="" id="config1-2" name="warmUpCount">
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${webSearch.pattern}" placeholder="定值/均匀/指数/泊松" id="config1-3" name="pattern" >
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${webSearch.intensity}" placeholder="2000" id="config1-4"name="intensity">
-                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="">
-                        <input style="margin-left:20px; " type="button"  class="config" onclick="" value="基准采集" id="">
+                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="webSearch">
+                        <input style="margin-left:20px; " type="button"  class="config" onclick="" value="基准采集" id="webSearchAver">
                         <!--<input style="float: right;" type="button"  class="btn btn-primary radius " value="禁用" >-->
                     </div>
 
@@ -74,8 +74,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="${webServer.warmUpCount}" placeholder="" id="config2-2" name="warmUpCount">
                         <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${webServer.pattern}" placeholder="10" id="config2-3" name="pattern" >
                         <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${webServer.intensity}" placeholder="2000" id="config2-4" name="intensity">
-                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="">
-                        <input style="margin-left:20px; " type="button"  class="config" onclick="" value="基准采集" id="">
+                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="webServer">
+                        <input style="margin-left:20px; " type="button"  class="config" onclick="" value="基准采集" id="webServerAver">
                     </div>
                 </div>
                 <div class="row cl">
@@ -93,8 +93,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${memcached.warmUpCount}" placeholder="2000" id="config3-2" name="intensity" >
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="均匀" placeholder="" id="" name="" disabled="disabled">
 						<input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${memcached.intensity}" placeholder="2000" id="config3-3" name="warmUpCount">
-                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="">
-                        <input style="margin-left:20px; " type="button"  class="config" onclick="" value="基准采集" id="">
+                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="memcached">
+                        <input style="margin-left:20px; " type="button"  class="config" onclick="" value="基准采集" id="memcachedAver">
                     </div>
                 </div>
                 <div class="row cl">
@@ -104,8 +104,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${silo.warmUpCount}" placeholder="2000" id="config4-2" name="warmUpCount" >
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="均匀" placeholder="" id="" name="" disabled="disabled">
 						<input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${silo.intensity}" placeholder="2000" id="config4-3" name="intensity">
-                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="">
-                        <input style="margin-left:20px; " type="button"  class="config" onclick="" value="基准采集" id="">
+                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="silo">
+                        <input style="margin-left:20px; " type="button"  class="config" onclick="" value="基准采集" id="siloAver">
                     </div>
                 </div>
             </div>
@@ -127,8 +127,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="" placeholder="按块写入" id="config5-1" name="" disabled="disabled">
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="循环" placeholder="" id="" name="" disabled="disabled">
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${bonnie.intensity}" placeholder="" id="" name="intensity" >
-                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="">
-                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="停止" id="">
+                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="startBonnie">
+                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="停止" id="shutdownBonnin">
                     </div>
                 </div>
                 <div class="row cl">
@@ -145,8 +145,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="" placeholder="" id="" name="" disabled="disabled">
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="" placeholder="" id="config6-1" name="" disabled="disabled">
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="循环" placeholder="" id="" name="" disabled="disabled">
-                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${scimark.intensity}" placeholder="" id="" name="intensity" >
-                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="">
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${scimark.intensity}" placeholder="" id="scimark" name="intensity" >
+                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="scimark">
                     </div>
                 </div>
                 <div class="row cl">
@@ -164,7 +164,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="" placeholder="" id="config7-2" name="" disabled="disabled">
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${hadoop.pattern}" placeholder="IO密集型/CPU密集型/综合" id="" name="pattern" >
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${hadoop.intensity}" placeholder="" id="" name="intensity" >
-                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="">
+                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="Hadoop">
                     </div>
                 </div>
 				<div class="row cl">
@@ -182,7 +182,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="" placeholder="" id="config8-2" name="" disabled="disabled">
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="" placeholder="" id="" name="" disabled="disabled">
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${cassandra.intensity}" placeholder="" id="" name="intensity" >
-                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="">
+                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="Cassandra">
                     </div>
                 </div>
             </div>
@@ -193,13 +193,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div id="time" style="position: absolute; top:90px;right: 70px; width: 27%; ">
         <div class="row cl">
             <label style="width: 30%; float: left;text-align: right;" >开始时间：</label>
-                <input style="margin-left:10px; width: 60%;" class="input new-w50 new-col-sm-2 " type="text"  value="${recordBean.startTime}" placeholder="" id="startTime" name="" >
-
+                <input style="margin-left:10px; width: 35%;" class="input new-w50 new-col-sm-2 " type="text"  value="${recordBean.startTime}" placeholder="" id="startTime" name="" >
+                <input style="width:20%；" class="input new-w50" type="button" value="点击开始" id="startButton" >
         </div>
         <div class="row cl" style="margin-top: 30px;">
             <label style="width: 30%; float: left;text-align: right;" >结束时间：</label>
-            <input style="margin-left:10px; width: 60%;" class="input new-w50 new-col-sm-2 " type="text"  value="${recordBean.endTime}" placeholder="" id="endTime" name="" >
-
+            <input style="margin-left:10px; width: 35%;" class="input new-w50 new-col-sm-2 " type="text"  value="${recordBean.endTime}" placeholder="" id="endTime" name="" >
+            <input style="width:20%；" class="input new-w50" type="button" value="点击结束" id="endButton" >
         </div>
     </div>
 
@@ -215,6 +215,37 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="statics/js/highcharts.js"></script>
 <script type="text/javascript" src="statics/js/highcharts-more.js"></script>
 <script type="text/javascript">
+//获取开始时间和结束时间
+$("#startButton").click(function(){
+	 var testRecordId=${webSearch.testRecordId};
+	 $.ajax({
+			async:true,
+			type:"post",
+			url:"modifyStartTime.do",
+			data:{testRecordId:testRecordId},
+			dataType:"json",
+			success:function(returned){
+				if(returned!=0){
+					alert("添加开始时间成功");
+				} 
+			}	
+		});
+});
+$("#endButton").click(function(){
+	 var testRecordId=${webSearch.testRecordId};
+	 $.ajax({
+			async:true,
+			type:"post",
+			url:"modifyEndTime.do",
+			data:{testRecordId:testRecordId},
+			dataType:"json",
+			success:function(returned){
+				if(returned!=0){
+					alert("添加结束时间成功");
+				} 
+			}	
+		});
+});
 /**
  * ajax控制判断所有按钮的状态 enable/disable
  */
@@ -239,7 +270,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 /**
  * 8个应用正式测试和基准测试的控制按钮动作
  */
-$("#addButton").click(function(){
+ //webSearch
+$("#webSearch").click(function(){
 		    $.ajax({
 				async:true,
 				type:"post",
@@ -250,7 +282,7 @@ $("#addButton").click(function(){
 				}	
 			});
 });
-$("#addButton").click(function(){
+$("#webSearchAver").click(function(){
     $.ajax({
 		async:true,
 		type:"post",
@@ -260,6 +292,135 @@ $("#addButton").click(function(){
 		success:function(returned){ 
 		}	
 	});
+});
+//webServer
+$("#webServer").click(function(){
+		    $.ajax({
+				async:true,
+				type:"post",
+				url:"executeWebServerApp.do",
+				data:{isBase:0},
+				dataType:"text",
+				success:function(returned){ 
+				}	
+			});
+});
+$("#webServerAver").click(function(){
+    $.ajax({
+		async:true,
+		type:"post",
+		url:"executeWebServerApp.do",
+		data:{isBase:1},
+		dataType:"text",
+		success:function(returned){ 
+		}	
+	});
+});
+//memcached
+$("#memcached").click(function(){
+		    $.ajax({
+				async:true,
+				type:"post",
+				url:"executeMemcachedApp.do",
+				data:{isBase:0},
+				dataType:"text",
+				success:function(returned){ 
+				}	
+			});
+});
+$("#memcachedAver").click(function(){
+    $.ajax({
+		async:true,
+		type:"post",
+		url:"executeMemcachedApp.do",
+		data:{isBase:1},
+		dataType:"text",
+		success:function(returned){ 
+		}	
+	});
+});
+//silo
+$("#silo").click(function(){
+		    $.ajax({
+				async:true,
+				type:"post",
+				url:"executeSiloApp.do",
+				data:{isBase:0},
+				dataType:"text",
+				success:function(returned){ 
+				}	
+			});
+});
+$("#siloAver").click(function(){
+    $.ajax({
+		async:true,
+		type:"post",
+		url:"executeSiloApp.do",
+		data:{isBase:1},
+		dataType:"text",
+		success:function(returned){ 
+		}	
+	});
+});
+//startBonnie
+$("#startBonnie").click(function(){
+		    $.ajax({
+				async:true,
+				type:"post",
+				url:"executeBonnieApp.do",
+				data:{},
+				dataType:"text",
+				success:function(returned){ 
+				}	
+			});
+});
+//shutdownBonnin
+$("#shutdownBonnin").click(function(){
+		    $.ajax({
+				async:true,
+				type:"post",
+				url:"shutdownBonnieApp.do",
+				data:{},
+				dataType:"text",
+				success:function(returned){ 
+				}	
+			});
+});
+//scimark
+$("#scimark").click(function(){
+		    $.ajax({
+				async:true,
+				type:"post",
+				url:"executeScimarkApp.do",
+				data:{},
+				dataType:"text",
+				success:function(returned){ 
+				}	
+			});
+});
+//Hadoop
+$("#Hadoop").click(function(){
+		    $.ajax({
+				async:true,
+				type:"post",
+				url:"executeHadoopApp.do",
+				data:{},
+				dataType:"text",
+				success:function(returned){ 
+				}	
+			});
+});
+//Cassandra
+$("#Cassandra").click(function(){
+		    $.ajax({
+				async:true,
+				type:"post",
+				url:"executeCassandraApp.do",
+				data:{},
+				dataType:"text",
+				success:function(returned){ 
+				}	
+			});
 });
 </script>
 <script type="text/javascript">
