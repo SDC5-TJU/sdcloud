@@ -10,8 +10,7 @@ import scs.pojo.AppConfigBean;
  * @desc
  * @date 2017-8-18
  */
-public interface JobSchedulService { 
-	public List<AppConfigBean> getEnableAppConfigList();
+public interface JobSchedulService {  
 	public int executeMemcachedApp(int isBase); 
 	public int executeWebSearchApp(int isBase);
 	public int executeWebServerApp(int isBase);

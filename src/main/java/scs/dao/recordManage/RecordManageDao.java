@@ -11,5 +11,6 @@ public interface RecordManageDao {
 	public int modifyEndTime(int testRecordId,Date startTime);
 	public List<TestRecordBean> searchRecord(int start,int pageSize);
 	public int getRecordCount();
+	public TestRecordBean getRecordById(int testRecordId);
 	public int getLatestRecordId();
 }

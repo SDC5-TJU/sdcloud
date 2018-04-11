@@ -46,9 +46,9 @@ public class AppConfigController {
 		try{
 			List<AppConfigBean> appConfiglist=service.getAppConfig(testRecordId);
 			for(AppConfigBean bean:appConfiglist){ 
-				model.addAttribute(bean.getApplicationName(),bean);
-				model.addAttribute("testRecordId",testRecordId);
+				model.addAttribute(bean.getApplicationName(),bean); 
 			}
+			
 
 		}catch(Exception e){
 			logger.error("add Operator error"+e);

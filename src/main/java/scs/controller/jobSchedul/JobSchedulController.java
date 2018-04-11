@@ -18,8 +18,10 @@ import net.sf.json.JSONArray;
 import scs.pojo.AppConfigBean;
 import scs.pojo.ResourceUsage;
 import scs.pojo.SystemResourceUsageBean;
+import scs.pojo.TestRecordBean;
 import scs.service.appConfig.AppConfigService;
 import scs.service.jobSchedul.JobSchedulService;
+import scs.service.recordManage.RecordManageService;
 import scs.util.repository.Repository; 
 
 /**
@@ -33,16 +35,20 @@ public class JobSchedulController {
 	private static Logger logger = Logger.getLogger(JobSchedulController.class.getName());
 
 	@Resource JobSchedulService service; 
+	@Resource AppConfigService aService;
+	@Resource RecordManageService rService;
 	Random rand=new Random();
 	
 	@RequestMapping("/jobSchedulBefore.do")
-	public void jobSchedulBefore(HttpServletRequest request,HttpServletResponse response,
+	public void jobSchedulBefore(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="testRecordId",required=true) int testRecordId){
-		/*List<AppConfigBean> enableList=service.
-		for(AppConfigBean bean:Repository.appConfigMap){ 
-			model.addAttribute(bean.getApplicationName(),bean);
-			model.addAttribute("testRecordId",testRecordId);
-		}*/
+		List<AppConfigBean> appConfiglist=aService.getAppConfig(testRecordId);
+		for(AppConfigBean bean:appConfiglist){ 
+			model.addAttribute(bean.getApplicationName(),bean); 
+		}
+		TestRecordBean recordBean=rService.getRecordById(testRecordId);
+		model.addAttribute("recordBean",recordBean);
+		
 
 	}
 	@RequestMapping("/executeMemcachedApp.do")
