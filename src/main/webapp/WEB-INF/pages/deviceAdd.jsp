@@ -15,7 +15,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 <!--<link rel="Bookmark" href="/favicon.ico" >
 <link rel="Shortcut Icon" href="/favicon.ico" />-->
-
+<link rel="stylesheet" href="statics/css/showBo.css"/>
 <link rel="stylesheet" href="statics/css/pintuer.css">
 <link rel="stylesheet" href="statics/css/admin.css">
 
@@ -25,40 +25,49 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <link rel="stylesheet" type="text/css" href="statics/css/skin.css" id="skin" />
 <link rel="stylesheet" type="text/css" href="statics/css/style.css" />
-
-<link href="statics/css/webuploader.css" rel="stylesheet" type="text/css" />
-
+  
 </head>
 <body>
 <div class="page-container">
-	<form action="addRecord.do" method="post" class="form form-horizontal" id="form-article-add">
+	<form action="" method="post" class="form form-horizontal" id="recordAdd-form">
 	
 
 
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>测试描述：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input style="width:80%;height:300px;" type="text" class="input w50" value="" placeholder="请输入测试描述" id="" name="">
+				<input style="width:80%;height:100px;" type="text" class="input w50" value="" placeholder="请输入测试描述" id="recordDesc" name="recordDesc">
 			</div>
 		</div>
 
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-				<button onclick="goback();" class="btn btn-primary radius" type="button"><i class="Hui-iconfont">&#xe632;</i>确认添加</button>
-				<button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+				<button class="btn btn-primary radius" type="button" id="addButton"><i class="Hui-iconfont">&#xe632;</i>确认添加</button>
+				<button class="btn btn-default radius" type="reset">&nbsp;&nbsp;重置&nbsp;&nbsp;</button>
 			</div>
 		</div>
 	</form>
 </div>
 
 
-<script src="statics/js/jquery.js"></script>
+<script type="text/javascript" src="statics/js/jquery.js"></script>
+<script type="text/javascript" src="statics/js/showBo.js"></script>
 <script type="text/javascript">
- 
-function goback(){
-    alert("添加成功");
-
-}
+$("#addButton").click(function(){
+     	var recordDesc=$("#recordDesc").val();
+		    $.ajax({
+				async:true,
+				type:"post",
+				url:"addRecord.do",
+				data:{recordDesc:recordDesc},
+				dataType:"text",
+				success:function(returned){
+					if(returned!=0){
+						Showbo.Msg.alert("添加成功!",function(){window.location='searchRecord.do?page=1';}); 
+					}
+				}	
+			});
+});
 </script>
 </body>
 </html>

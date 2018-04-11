@@ -1,5 +1,9 @@
 package scs.service.jobSchedul;
-  
+
+import java.util.List;
+
+import scs.pojo.AppConfigBean;
+
 /**
  * 登录service层接口
  * @author YangYanan
@@ -7,6 +11,7 @@ package scs.service.jobSchedul;
  * @date 2017-8-18
  */
 public interface JobSchedulService { 
+	public List<AppConfigBean> getEnableAppConfigList();
 	public int executeMemcachedApp(int isBase); 
 	public int executeWebSearchApp(int isBase);
 	public int executeWebServerApp(int isBase);

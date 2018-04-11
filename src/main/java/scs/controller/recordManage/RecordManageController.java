@@ -31,12 +31,12 @@ public class RecordManageController {
 	
 	@RequestMapping("/addRecordBefore.do")
 	public String addRecordBefore(HttpServletRequest request,HttpServletResponse response){
-		 return "redirect:/deviceAdd";
+		 return "deviceAdd";
 	}
 	@RequestMapping("/addRecord.do")
 	public void addRecord(HttpServletRequest request,HttpServletResponse response, 
 			@RequestParam(value="recordDesc",required=false) String recordDesc){
-		try{
+		try{ 
 			int result=service.addRecord(recordDesc);//只需要填写记录描述和开始时间
 			response.getWriter().print(result);
 		}catch(Exception e){

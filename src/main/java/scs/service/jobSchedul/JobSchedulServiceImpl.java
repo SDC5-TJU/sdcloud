@@ -1,11 +1,16 @@
 package scs.service.jobSchedul;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 import javax.annotation.Resource;
 
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.springframework.stereotype.Service; 
 import scs.dao.jobSchedul.JobSchedulDao;
 import scs.dao.recordManage.RecordManageDao;
+import scs.pojo.AppConfigBean;
 import scs.util.jobSchedul.JobSchedulDriver;
 import scs.util.repository.Repository;
 import scs.util.tools.HttpClientPool;
@@ -125,6 +130,19 @@ public class JobSchedulServiceImpl implements JobSchedulService {
 	public int getWebServerQueryTime() {
 		// TODO Auto-generated method stub
 		return HttpClientPool.getResponseTime(httpclient,"http://www.baidu.com");
+	}
+
+	@Override
+	public List<AppConfigBean> getEnableAppConfigList() {
+		// TODO Auto-generated method stub
+		List<AppConfigBean> enableList=new ArrayList<AppConfigBean>();
+		Set<String> keySet=Repository.appConfigMap.keySet();
+		for(String key:keySet){
+			if(Repository.appConfigMap.get(key).getEnable()==1){ //判断获取所有启用的app配置信息
+				enableList.add(Repository.appConfigMap.get(key));
+			}
+		}
+		return enableList;
 	}
 
 
