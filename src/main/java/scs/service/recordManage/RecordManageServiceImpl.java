@@ -73,7 +73,7 @@ public class RecordManageServiceImpl implements RecordManageService {
 
 
 	@Override
-	public int modifyStartTime(int testRecordId,Date startTime) {
+	public String modifyStartTime(int testRecordId,String startTime) {
 		// TODO Auto-generated method stub
 		return dao.modifyStartTime(testRecordId, startTime);
 	}
@@ -81,7 +81,7 @@ public class RecordManageServiceImpl implements RecordManageService {
 
 
 	@Override
-	public int modifyEndTime(int testRecordId,Date startTime) {
+	public String modifyEndTime(int testRecordId,String startTime) {
 		// TODO Auto-generated method stub
 		return dao.modifyEndTime(testRecordId, startTime);
 	}

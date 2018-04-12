@@ -34,12 +34,18 @@ public class JobSchedulDriver {
 		if(Repository.appStatusMap.get(appName)==true) return 0;//如果应用正在运行,说明系统异常,返回0  
 	
 		Repository.appStatusMap.put(appName,true);//标记该作业执行状态为正在执行 
-		JobInterface instance=this.getJobExecuteInstance(appName);
-		instance.init(isBase);//初始化各种参数,读取配置文件等
-		instance.start(isBase);
-
-		System.out.println("执行execute"+appName);
-		resultSize=instance.processResult(isBase);//返回结果数量给调用者
+		//JobInterface instance=this.getJobExecuteInstance(appName);
+		//instance.init(isBase);//初始化各种参数,读取配置文件等
+		//instance.start(isBase);
+		System.out.println("执行 execute "+appName);
+		try {
+			Thread.sleep(20000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("执行 execute完毕 "+appName);
+		//resultSize=instance.processResult(isBase);//返回结果数量给调用者
 		if(Repository.appConfigMap.get(appName).getApplicationType().equals("autoStop")){
 			Repository.appStatusMap.put(appName,false);//执行完毕,标记该作业执行状态为未执行
 		} 
@@ -54,10 +60,16 @@ public class JobSchedulDriver {
 	 */
 	public int shutdown(String appName){  
 		if(Repository.appStatusMap.get(appName)==false) return 1;//如果应用正在运行,说明没有运行,返回1 
-		JobInterface instance=this.getJobExecuteInstance(appName);
-		 
-		System.out.println("执行shutdown"+appName);
-		instance.shutdown(); 
+		System.out.println("执行shutdown "+appName);
+		//JobInterface instance=this.getJobExecuteInstance(appName);
+		//instance.shutdown(); 
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("执行shutdown完毕 "+appName);
 		Repository.appStatusMap.put(appName,false);//执行完毕,标记该作业执行状态为未执行
 	
 		return 1;

@@ -1,27 +1,27 @@
 package scs.util.jobSchedul.jobImpl.webServer;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.rmi.Naming;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
+import java.io.InputStream; 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties; 
+import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import scs.pojo.AppConfigBean;
 import scs.pojo.TwoTuple;
 import scs.util.jobSchedul.JobInterface; 
-import scs.util.repository.Repository;
-import scs.util.rmi.WorkerInterface; 
+import scs.util.repository.Repository; 
 /**
  * WebServer应用控制实现类
  * @author 
  *
  */
 public class WebServerJobImpl implements JobInterface{
+	private final int WORKER_COUNT=2;
 	private AppConfigBean config;   
-	private String rmiUrl;  //rmi url
-	
+	private String[] rmiUrl=new String[WORKER_COUNT];  //rmi url worker01 
+
 	private static WebServerJobImpl instance=null; 
 	private WebServerJobImpl(){}
 	public synchronized static WebServerJobImpl getInstance() {
@@ -39,7 +39,8 @@ public class WebServerJobImpl implements JobInterface{
 		} catch (IOException e) { 
 			e.printStackTrace();
 		}
-		this.rmiUrl=prop.getProperty("rmi_worker_url").trim();//读取cassandra脚本的路径 
+		this.rmiUrl[0]=prop.getProperty("rmi_worker01_url").trim();//读取worker rmi url的路径 
+		this.rmiUrl[1]=prop.getProperty("rmi_worker02_url").trim();//读取worker rmi url的路径 
 		this.config=Repository.appConfigMap.get("webServer");  
 		if(isBase==1){
 			Repository.webServerBaseDataList.clear();//基准测试 
@@ -56,35 +57,44 @@ public class WebServerJobImpl implements JobInterface{
 		int warmUpCount=Integer.parseInt(config.getWarmUpCount());
 		String pattern=config.getPattern();
 		int intensity=Integer.parseInt(config.getIntensity()); 
-		try {
-			System.out.println(rmiUrl);
-			WorkerInterface worker=(WorkerInterface) Naming.lookup(rmiUrl);
-			List<TwoTuple<Long, Integer>> list=worker.execute(applicationName,requestCount,warmUpCount,pattern,intensity);
-			System.out.println("result="+list.size());
-			if(list.size()!=0){
-				if(isBase==1){
-					Repository.webServerBaseDataList.addAll(list);//基准测试 
-					System.out.println("赋值 webServer Basedata size="+Repository.webServerBaseDataList.size());
-				}else{
-					Repository.webServerDataList.addAll(list);//正式测试
-					System.out.println("赋值 webServer data size="+Repository.webServerDataList.size());
-				}  
-			}
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NotBoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+		long start=System.currentTimeMillis();
+		List<TwoTuple<Long, Integer>> list=new ArrayList<TwoTuple<Long, Integer>>();
+		ExecutorService executor = Executors.newFixedThreadPool(WORKER_COUNT);
+		for(int i=0;i<WORKER_COUNT;i++){
+			System.out.println(rmiUrl[i]);
+			executor.execute(new ExecuteThread(list,rmiUrl[i],applicationName,requestCount,warmUpCount,pattern,intensity));
 		}
+		executor.shutdown();//停止提交任务 
+		//检测全部的线程是否都已经运行结束
+		long nowTime=System.currentTimeMillis();
+		while(!executor.isTerminated()&&((nowTime-start)<300000)){
+			try {
+				Thread.sleep(5000);
+			} catch(InterruptedException e){
+				e.printStackTrace();
+			}
+			nowTime=System.currentTimeMillis();
+		}
+		executor.shutdownNow();  
+		System.out.println("结束啦");
+
+		System.out.println("result="+list.size());
+		if(list.size()!=0){
+			if(isBase==1){
+				Repository.webServerBaseDataList.addAll(list);//基准测试 
+				System.out.println("赋值 webServer Basedata size="+Repository.webServerBaseDataList.size());
+			}else{
+				Repository.webServerDataList.addAll(list);//正式测试
+				System.out.println("赋值 webServer data size="+Repository.webServerDataList.size());
+			}  
+		}
+
 	}
 
 	@Override
 	public void shutdown() {
-		
+
 	}
 
 
@@ -99,5 +109,5 @@ public class WebServerJobImpl implements JobInterface{
 		}  
 		return resultSize;
 	}
- 
+
 }

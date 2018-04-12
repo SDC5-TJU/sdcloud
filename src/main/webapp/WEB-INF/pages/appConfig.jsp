@@ -106,9 +106,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                    <label class="form-label col-xs-4 col-sm-2">memcached:</label>
                    <div class="formControls col-xs-8 col-sm-9">
                       <input class="input new-w50" type="text"  value="${memcached.requestCount}" placeholder="" id="config3-1" name="requestCount" >
-                       <input class="input new-w50" type="text" value="${memcached.intensity}" placeholder="" id="config3-2" name="intensity">
+                       <input class="input new-w50" type="text" value="${memcached.warmUpCount}" placeholder="" id="config3-2" name="intensity">
                        <input  class="input new-w50" type="text"  value="${memcached.pattern}" readonly="true" id="config3-3" name="pattern" >
-                       <input  class="input new-w50" type="text"  value="${memcached.warmUpCount}" placeholder="" id="config3-4" name="warmUpCount">
+                       <input  class="input new-w50" type="text"  value="${memcached.intensity}" placeholder="" id="config3-4" name="warmUpCount">
                        <input  class="input new-w50" type="hidden"  value="${memcached.testRecordId}" id="config3-5" name="testRecordId">
                        <input  class="input new-w50" type="hidden"  value="${memcached.applicationName}" id="config3-6" name="applicationName">
                        <input  class="input new-w50" type="hidden"  value="${memcached.enable}" id="config3-7" name="enable">

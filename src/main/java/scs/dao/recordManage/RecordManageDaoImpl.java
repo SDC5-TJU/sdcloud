@@ -1,8 +1,9 @@
 package scs.dao.recordManage;
- 
+
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Repository;
- 
+
 import scs.pojo.TestRecordBean;
 import scs.dao.MySQLBaseDao;
 
@@ -33,8 +34,8 @@ public class RecordManageDaoImpl extends MySQLBaseDao implements RecordManageDao
 					TestRecordBean bean=new TestRecordBean();
 					bean.setAutoId(rs.getInt(1));
 					bean.setRecordDesc(rs.getString(2));
-					bean.setStartTime(rs.getDate(3));
-					bean.setEndTime(rs.getDate(4));
+					bean.setStartTime(rs.getString(3));
+					bean.setEndTime(rs.getString(4));
 					list.add(bean);
 				}
 				return list;
@@ -58,29 +59,33 @@ public class RecordManageDaoImpl extends MySQLBaseDao implements RecordManageDao
 	}
 
 	@Override
-	public int modifyStartTime(int testRecordId,Date startTime) { 
-		int result=0;
+	public String modifyStartTime(int testRecordId,String startTime) { 
+		String result="";
 		String sql="select startTime from table_testrecord where autoId=?";
 		String curStartTime=this.jt.queryForObject(sql,new Object[]{testRecordId},String.class);
 		if(curStartTime==null||curStartTime.equals("")){
 			sql="update table_testrecord set startTime=? where autoId=?";
-			result=this.jt.update(sql,new Object[]{startTime,testRecordId});
+			if(this.jt.update(sql,new Object[]{startTime,testRecordId})!=0){
+				result=startTime;
+			}
 		}else{
-			result=1;
+			result=curStartTime.substring(0,19);
 		}
 		return result;
 	}
 
 	@Override
-	public int modifyEndTime(int testRecordId,Date endTime) {
-		int result=0;
+	public String modifyEndTime(int testRecordId,String endTime) {
+		String result="";
 		String sql="select endTime from table_testrecord where autoId=?";
 		String curStartTime=this.jt.queryForObject(sql,new Object[]{testRecordId},String.class);
 		if(curStartTime==null||curStartTime.equals("")){
 			sql="update table_testrecord set endTime=? where autoId=?";
-			result=this.jt.update(sql,new Object[]{endTime,testRecordId});
+			if(this.jt.update(sql,new Object[]{endTime,testRecordId})!=0){
+				result=endTime;
+			}
 		}else{
-			result=1;
+			result=curStartTime.substring(0,19);
 		}
 		return result;
 	}
@@ -88,21 +93,21 @@ public class RecordManageDaoImpl extends MySQLBaseDao implements RecordManageDao
 	@Override
 	public TestRecordBean getRecordById(int testRecordId) {
 		String sql="select startTime,endTime from table_testrecord where autoId=?";
-		 TestRecordBean bean=jt.query(sql,new Object[]{testRecordId},new ResultSetExtractor<TestRecordBean>() {
+		TestRecordBean bean=jt.query(sql,new Object[]{testRecordId},new ResultSetExtractor<TestRecordBean>() {
 			public TestRecordBean extractData(ResultSet rs) throws SQLException, DataAccessException {
 				TestRecordBean bean=new TestRecordBean();
 				if (rs.next()) {  
-					bean.setStartTime(rs.getDate(1));
-					bean.setEndTime(rs.getDate(1)); 
+					bean.setStartTime(rs.getString(1));
+					bean.setEndTime(rs.getString(2)); 
 				}
 				return bean;
 			}
 		});
 		return bean;
 	}
- 
 
-	 
+
+
 
 
 

@@ -1,6 +1,9 @@
 package scs.util.tools;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+import java.util.Random;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
@@ -19,6 +22,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.ssl.SSLContexts;
+
+import scs.util.jobSchedul.jobImpl.bonnie.BonnieJobImpl;
  /**
   * httpclient池配置类
   * @author yanan
@@ -31,6 +36,10 @@ public class HttpClientPool {
 	private final int socketTimeout = 15000;
 	private final int connectionRequestTimeout = 15000;
 	private final int connectTimeout = 15000;
+	private static String serverBaseURL="";
+	private static String searchBaseURL="";
+	private static String url=""; 
+	private static Random rand=new Random();
 	/**
 	 * 单例模式
 	 */
@@ -68,6 +77,15 @@ public class HttpClientPool {
 		} catch (Exception e) {  
 				e.printStackTrace();
 		}  
+		Properties prop = new Properties();
+		InputStream is = BonnieJobImpl.class.getResourceAsStream("/conf/sys.properties");
+		try {
+			prop.load(is);
+		} catch (IOException e) { 
+			e.printStackTrace();
+		}
+		this.serverBaseURL=prop.getProperty("serverBaseURL").trim();//读取webServer观察链接的路径
+		this.searchBaseURL=prop.getProperty("searchBaseURL").trim();//读取webSearch观察链接的路径
 	}
 	/**
 	 * 获取一个可用的连接
@@ -90,10 +108,16 @@ public class HttpClientPool {
 	 * @param URL 要访问的链接
 	 * @return 响应耗费的毫秒数
 	 */
-	public static int getResponseTime(CloseableHttpClient httpclient,String URL){
+	public static int getResponseTime(CloseableHttpClient httpclient,int type){
+		if(type==0){
+			 url=serverBaseURL+RandomString.generateString(2);
+		}else{
+			url=searchBaseURL+rand.nextInt(9999);
+		}
+		 System.out.println(url);
 		int costTime=65535;
 		long begin=0L,end=0L;
-		HttpGet httpget=new HttpGet(URL);
+		HttpGet httpget=new HttpGet(url);
 		try {
 			begin=System.currentTimeMillis();
 			HttpResponse response=httpclient.execute(httpget); 

@@ -6,11 +6,16 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import scs.pojo.AppConfigBean;
 import scs.pojo.TwoTuple;
-import scs.util.jobSchedul.JobInterface; 
+import scs.util.jobSchedul.JobInterface;
+import scs.util.jobSchedul.jobImpl.webServer.ExecuteThread;
 import scs.util.jobSchedul.jobImpl.webServer.WebServerJobImpl;
 import scs.util.repository.Repository;
 import scs.util.rmi.WorkerInterface; 
@@ -20,9 +25,10 @@ import scs.util.rmi.WorkerInterface;
  *
  */
 public class WebSearchJobImpl implements JobInterface{
+	private final int WORKER_COUNT=2;
 	private AppConfigBean config;   
-	private String rmiUrl;
-
+	private String[] rmiUrl=new String[WORKER_COUNT];  //rmi url worker01 
+ 
 	private static WebSearchJobImpl instance=null; 
 	private WebSearchJobImpl(){}
 	public synchronized static WebSearchJobImpl getInstance() {
@@ -40,7 +46,8 @@ public class WebSearchJobImpl implements JobInterface{
 		} catch (IOException e) { 
 			e.printStackTrace();
 		}
-		this.rmiUrl=prop.getProperty("rmi_worker_url").trim();//读取cassandra脚本的路径 
+		this.rmiUrl[0]=prop.getProperty("rmi_worker01_url").trim();//读取worker rmi url的路径 
+		this.rmiUrl[1]=prop.getProperty("rmi_worker02_url").trim();//读取worker rmi url的路径 
 		this.config=Repository.appConfigMap.get("webSearch");
 
 		if(isBase==1){
@@ -52,16 +59,35 @@ public class WebSearchJobImpl implements JobInterface{
 		} 
 	}
 	@Override
-	public void start(int isBase) {  
+	public void start(int isBase) {
 		String applicationName=config.getApplicationName();
 		int requestCount=Integer.parseInt(config.getRequestCount());
 		int warmUpCount=Integer.parseInt(config.getWarmUpCount());
 		String pattern=config.getPattern();
 		int intensity=Integer.parseInt(config.getIntensity()); 
-		try { 
-			WorkerInterface worker =(WorkerInterface) Naming.lookup(rmiUrl);
-			List<TwoTuple<Long, Integer>> list=worker.execute(applicationName,requestCount,warmUpCount,pattern,intensity);
-			if(list.size()!=0){
+		
+		long start=System.currentTimeMillis();
+		List<TwoTuple<Long, Integer>> list=new ArrayList<TwoTuple<Long, Integer>>();
+		ExecutorService executor = Executors.newFixedThreadPool(WORKER_COUNT);
+		for(int i=0;i<WORKER_COUNT;i++){
+			System.out.println(rmiUrl[i]);
+			executor.execute(new ExecuteThread(list,rmiUrl[i],applicationName,requestCount,warmUpCount,pattern,intensity));
+		}
+		executor.shutdown();//停止提交任务
+
+		//检测全部的线程是否都已经运行结束
+		long nowTime=System.currentTimeMillis();
+		while(!executor.isTerminated()&&((nowTime-start)<300000)){
+			try {
+				Thread.sleep(5000);
+			} catch(InterruptedException e){
+				e.printStackTrace();
+			}
+			nowTime=System.currentTimeMillis();
+		}
+		executor.shutdownNow();  
+		System.out.println("结束啦");
+		 	if(list.size()!=0){
 				if(isBase==1){
 					Repository.webSearchBaseDataList.addAll(list);//基准测试 
 					System.out.println("赋值 webSearch Basedata size="+Repository.webSearchBaseDataList.size());
@@ -70,16 +96,6 @@ public class WebSearchJobImpl implements JobInterface{
 					System.out.println("赋值 webSearch data size="+Repository.webSearchDataList.size());
 				}  
 			}
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NotBoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	@Override

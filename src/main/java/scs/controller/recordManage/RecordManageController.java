@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import scs.pojo.TestRecordBean;
-import scs.service.recordManage.RecordManageService; 
+import scs.service.recordManage.RecordManageService;
+import scs.util.format.DateFormats; 
 
 /**
  * 评测记录管理控制类
@@ -45,10 +46,10 @@ public class RecordManageController {
 		}
 	}
 	@RequestMapping("/modifyStartTime.do")
-	public void updateStartTime(HttpServletRequest request,HttpServletResponse response, 
+	public void modifyStartTime(HttpServletRequest request,HttpServletResponse response, 
 			@RequestParam(value="testRecordId",required=true) int testRecordId){
 		try{
-			int result=service.modifyStartTime(testRecordId,new Date());//添加当前系统时间
+			String result=service.modifyStartTime(testRecordId,DateFormats.getInstance().getNowDate());//添加当前系统时间
 			response.getWriter().print(result);
 		}catch(Exception e){
 			logger.error("add Operator error"+e);
@@ -59,7 +60,7 @@ public class RecordManageController {
 	public void modifyEndTime(HttpServletRequest request,HttpServletResponse response, 
 			@RequestParam(value="testRecordId",required=true) int testRecordId){
 		try{
-			int result=service.modifyEndTime(testRecordId,new Date());//添加当前系统时间
+			String result=service.modifyEndTime(testRecordId,DateFormats.getInstance().getNowDate());//添加当前系统时间
 			response.getWriter().print(result);
 		}catch(Exception e){
 			logger.error("add Operator error"+e);
@@ -93,6 +94,12 @@ public class RecordManageController {
 		}
 		return "RecordManage";
 	}
+	@RequestMapping("/resultAnalysis.do")
+	public String resultAnalysis(HttpServletRequest request,Model model,
+			@RequestParam(value="testRecordId",required=true) int testRecordId){
+		return "resultAnalysis";
+	}
+	
 	@RequestMapping("/index.do")
 	public String index(HttpServletRequest request,Model model){	 
 		return "index";
