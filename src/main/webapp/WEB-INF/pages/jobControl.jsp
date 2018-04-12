@@ -46,7 +46,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <form action="" method="post" class="form form-horizontal" id="form-article-add">
             <!--在线-->
             <div id="online">
-            <c:if test="${webSearch.enable==1}">
+            <c:if test="${webSearch.enable+webServer.enable>=1}">
                 <div class="row cl">
                     <label class="col-xs-4 new-col-sm-2 new-center1"></label>
                     <label class="col-xs-4 new-col-sm-2 new-center1" >请求总数</label>
@@ -55,6 +55,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <label class="col-xs-4 new-col-sm-2 new-center1">间隔单位</label>
                     <label class="col-xs-4 new-col-sm-2 new-center1"></label>
                 </div>
+            </c:if>    
+                <c:if test="${webSearch.enable==1}">
+
                 <div class="row cl">
                     <label class="form-label col-xs-4 col-sm-2">web搜索：</label>
                     <div class="formControls col-xs-8 col-sm-9">
@@ -79,7 +82,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <input style="margin-left:20px; " type="button"  class="config" onclick="" value="基准采集" id="webServerAverButton">
                     </div>
                 </div>
-                <div class="row cl">
+                </c:if>
+                <c:if test="${memcached.enable+silo.enable>=1}">
+                <div class="row cl" id="title2">
                     <label class="col-xs-4 new-col-sm-2 new-center1"></label>
                     <label class="col-xs-4 new-col-sm-2 new-center1" >请求总数</label>
                     <label class="col-xs-4 new-col-sm-2 new-center1">预热次数</label>
@@ -88,6 +93,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <label class="col-xs-4 new-col-sm-2 new-center1"></label>
                 </div>
                 </c:if>
+                <c:if test="${memcached.enable==1}">
                 <div class="row cl">
                     <label class="form-label col-xs-4 col-sm-2">memcached:</label>
                     <div class="formControls col-xs-8 col-sm-9">
@@ -99,6 +105,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <input style="margin-left:20px; " type="button"  class="config" onclick="" value="基准采集" id="memcachedAverButton">
                     </div>
                 </div>
+                </c:if>
+                <c:if test="${silo.enable==1}">
                 <div class="row cl">
                     <label class="form-label col-xs-4 col-sm-2">silo:</label>
                     <div class="formControls col-xs-8 col-sm-9">
@@ -110,11 +118,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <input style="margin-left:20px; " type="button"  class="config" onclick="" value="基准采集" id="siloAverButton">
                     </div>
                 </div>
+                </c:if>
             </div>
 
             <!--离线-->
             <div id="offline">
+               <c:if test="${bonnie.enable==1}">
                 <div class="row cl">
+                    <label class="col-xs-4 new-col-sm-2 new-center1"></label>
                     <label class="col-xs-4 new-col-sm-2 new-center1">读取操作</label>
                     <label class="col-xs-4 new-col-sm-2 new-center1" >写入操作</label>
                     <label class="col-xs-4 new-col-sm-2 new-center1">负载策略</label>
@@ -133,6 +144,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <input style="margin-left:20px; " type="button"  class="config " onclick="" value="停止" disabled="disabled" id="bonnieAverButton">
                     </div>
                 </div>
+                </c:if>
+                <c:if test="${scimark.enable==1}">
                 <div class="row cl">
                     <label class="col-xs-4 new-col-sm-2 new-center1"></label>
                     <label class="col-xs-4 new-col-sm-2 new-center1" >请求总数</label>
@@ -151,6 +164,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="scimarkButton">
                     </div>
                 </div>
+                </c:if>
+                <c:if test="${hadoop.enable==1}">
                 <div class="row cl">
                     <label class="col-xs-4 new-col-sm-2 new-center1"></label>
                     <label class="col-xs-4 new-col-sm-2 new-center1"></label>
@@ -169,6 +184,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="hadoopButton">
                     </div>
                 </div>
+                </c:if>
+                <c:if test="${hadoop.enable==1}">
 				<div class="row cl">
                     <label class="col-xs-4 new-col-sm-2 new-center1"></label>
                     <label class="col-xs-4 new-col-sm-2 new-center1">请求总数</label>
@@ -187,6 +204,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="cassandraButton">
                     </div>
                 </div>
+                </c:if>
             </div>
 
         </form>
@@ -195,14 +213,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div id="time" style="position: absolute; top:90px;right: 70px; width: 27%; ">
         <div class="row cl">
             <label style="width: 30%; float: left;text-align: right;" >开始时间：</label>
-                <input style="margin-left:10px; width: 35%;" class="input new-w50 new-col-sm-2 " type="text"  value="${recordBean.startTime}" id="startTime" name="" >
+                <input style="margin-left:10px; width: 40%;" class="input new-w50 new-col-sm-2 " type="text"  value="${recordBean.startTime}" id="startTime" name="" >
                 <input style="width:20%；" class="input new-w50" type="button" value="点击开始" id="startButton" >
         </div>
         <div class="row cl" style="margin-top: 30px;">
             <label style="width: 30%; float: left;text-align: right;" >结束时间：</label>
-            <input style="margin-left:10px; width: 35%;" class="input new-w50 new-col-sm-2 " type="text"  value="${recordBean.endTime}" id="endTime" name="" >
+            <input style="margin-left:10px; width: 40%;" class="input new-w50 new-col-sm-2 " type="text"  value="${recordBean.endTime}" id="endTime" name="" >
             <input style="width:20%；" class="input new-w50" type="button" value="点击结束" id="endButton" >
         </div>
+    </div>
+    <div style="position: absolute; top:240px;right: 70px; width: 27%;">
+       <label style="font-size: 18px; float: left;text-align: right; " >观察窗口</label>
+       <input type="button" id="startChartButton" class="editButton" style="float:right;" value="开始">
+       <label style="font-size: 14px; float: right;text-align: middle;" >执行：</label>
     </div>
 
     <div id="chart1" style="position: absolute; top:290px;right: 70px; width: 400px; height: 200px;"></div>
@@ -217,6 +240,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="statics/js/highcharts.js"></script>
 <script type="text/javascript" src="statics/js/highcharts-more.js"></script>
 <script type="text/javascript">
+//开启chart按钮
+	var flag=false;
+ 
+	$("#startChartButton").click(function(){
+		if(flag==true){
+			flag=false;
+			$("#startChartButton").val("继续");
+		}else{
+			flag=true;
+			$("#startChartButton").val("暂停");
+		}
+	});
+
+var isDoingStop=false;//定义标记 如果bonnie执行了stop按钮，则设置为true
 //获取开始时间和结束时间
 $("#startButton").click(function(){
 	 var testRecordId=${webSearch.testRecordId};
@@ -264,8 +301,10 @@ $("#endButton").click(function(){
 							$("#memcachedAverButton").attr("disabled", returned[0].memcached);
 							$("#siloButton").attr("disabled", returned[0].silo);
 							$("#siloAverButton").attr("disabled", returned[0].silo);
-							$("#bonnieButton").attr("disabled", returned[0].bonnie);
-							$("#bonnieAverButton").attr("disabled",!returned[0].bonnie);
+							if(isDoingStop==false){ 
+								$("#bonnieButton").attr("disabled", returned[0].bonnie);
+								$("#bonnieAverButton").attr("disabled",!returned[0].bonnie);
+							}
 							$("#scimarkButton").attr("disabled", returned[0].scimark);
 							$("#hadoopButton").attr("disabled", returned[0].hadoop);
 							$("#cassandraButton").attr("disabled", returned[0].cassandra);
@@ -405,6 +444,7 @@ $("#bonnieButton").click(function(){
 $("#bonnieAverButton").click(function(){ 
 	$("#bonnieAverButton").attr("disabled",true);
 	$("#bonnieButton").attr("disabled",false);
+	isDoingStop=true;
 		    $.ajax({
 				async:true,
 				type:"post",
