@@ -4,9 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
 
 import ch.ethz.ssh2.Connection;
 import ch.ethz.ssh2.Session;
@@ -14,20 +12,7 @@ import ch.ethz.ssh2.StreamGobbler;
 
 public class TestSSH {
 
-	public static void main(String[] args) {
-
-//		for (int i = 0; i < 5; i++) {
-//			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//			long lt = new Long(System.currentTimeMillis());
-//			Date date = new Date(lt);
-//			System.out.println(simpleDateFormat.format(date));
-			InputStream dockerDataStream = dockerDataStream("192.168.1.147","tank","tanklab");
-			process(dockerDataStream);
-//			dockerMonitor();
-//		}
-	}
-
-	private static void dockerMonitor() {
+	public static void dockerMonitor() {
 		String hostname = "192.168.1.147";
 		String username = "tank";
 		String password = "tanklab";
@@ -102,7 +87,7 @@ public class TestSSH {
 		}
 	}
 	
-	private static InputStream dockerDataStream(String hostname, String username, String password) {
+	public static InputStream dockerDataStream(String hostname, String username, String password) {
 		String host = hostname;
 		String user = username;
 		String passwd = password;
@@ -150,7 +135,7 @@ public class TestSSH {
 		} 
 	}
 	
-	private static int process(InputStream in){
+	public static int process(InputStream in){
 		if (in == null) {
 			return -1;
 		}

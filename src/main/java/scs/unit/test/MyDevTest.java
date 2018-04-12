@@ -128,4 +128,12 @@ public class MyDevTest {
 			Repository.systemRealUsageMap.put(tableSystemresourceusage.getHostname(), tableSystemresourceusage);
 		}
 	}
+	
+	@Test
+	public void testSelect60(){
+//		int testSelect = systemMonitor.testSelect2(1);
+//		System.out.println(testSelect);
+		
+	}
+	
 }

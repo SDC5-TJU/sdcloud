@@ -16,11 +16,8 @@ import ch.ethz.ssh2.Connection;
 import ch.ethz.ssh2.Session;
 import ch.ethz.ssh2.StreamGobbler;
 import scs.dao.monitor.DAOmapper.TableContainerresourceusageMapper;
-import scs.pojo.TableAppresourceusage;
 import scs.pojo.TableContainerresourceusage;
-import scs.service.monitor.app.AppMonitor;
 import scs.service.monitor.containers.ContainerMonitor;
-import scs.util.repository.Repository;
 
 @Service("containerMonitor")
 public class ContainerMonitorImpl implements ContainerMonitor {

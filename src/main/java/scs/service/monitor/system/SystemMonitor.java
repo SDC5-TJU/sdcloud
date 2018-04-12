@@ -1,6 +1,7 @@
 package scs.service.monitor.system;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import scs.pojo.SystemInfoBean;
@@ -22,4 +23,10 @@ public interface SystemMonitor {
 	 * @return 成功插入的条数
 	 */
 	public int testInsert(ArrayList<TableSystemresourceusage> tableSystemresourceusageList);
+	
+	public List<TableSystemresourceusage> testSelect(int number);
+	
+	public int testSelect2(int number);
+	
+	public TableSystemresourceusage getRealSystemResourceFromStaticData(int number);
 }
