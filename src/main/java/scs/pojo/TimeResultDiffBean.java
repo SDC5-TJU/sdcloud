@@ -30,10 +30,11 @@ public class TimeResultDiffBean {
 	private float meanDiff;//响应时间平均值差异
 	private float minDiff; //响应时间最小值差异
 	private float maxDiff; //响应时间最大值差异
+	private float missRateDiff;//缺失率差异
 	
 	public TimeResultDiffBean(){}
 	public TimeResultDiffBean(TimeResultBean baseResult, TimeResultBean result, float nintythDiff,
-			float nintyFiveThDiff, float nintyNineThDiff, float varDiff, float meanDiff, float minDiff, float maxDiff) {
+			float nintyFiveThDiff, float nintyNineThDiff, float varDiff, float meanDiff, float minDiff, float maxDiff, float missRateDiff) {
 		super();
 		this.baseResult = baseResult;
 		this.result = result;
@@ -44,6 +45,7 @@ public class TimeResultDiffBean {
 		this.meanDiff = meanDiff;
 		this.minDiff = minDiff;
 		this.maxDiff = maxDiff;
+		this.missRateDiff = missRateDiff;
 	}
 	public TimeResultBean getBaseResult() {
 		return baseResult;
@@ -98,6 +100,12 @@ public class TimeResultDiffBean {
 	}
 	public void setMaxDiff(float maxDiff) {
 		this.maxDiff = maxDiff;
+	}
+	public float getMissRateDiff() {
+		return missRateDiff;
+	}
+	public void setMissRateDiff(float missRateDiff) {
+		this.missRateDiff = missRateDiff;
 	}
 	@Override
 	public String toString() {
