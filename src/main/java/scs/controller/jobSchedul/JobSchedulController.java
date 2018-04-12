@@ -333,7 +333,7 @@ public class JobSchedulController {
 			e.printStackTrace();
 		}
 	}
-	@RequestMapping("/getPhyResourceUse.do")
+	//@RequestMapping("/getPhyResourceUse.do")
 	public void getPhyResourceUse(HttpServletRequest request,HttpServletResponse response,Model model){
 		try{ 
 			SystemResourceUsageBean bean=new SystemResourceUsageBean();

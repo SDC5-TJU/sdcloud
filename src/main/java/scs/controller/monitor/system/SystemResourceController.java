@@ -34,7 +34,7 @@ public class SystemResourceController {
 	 * @param number 根据主机名对应的标号查找静态数组最近一次的查询信息
 	 * @return 由最近一次的资源使用信息封装起来的数据对象
 	 */
-	@RequestMapping(value="/getPhyResourceUse.do?no=[no]", method = RequestMethod.GET)
+	@RequestMapping(value="/getPhyResourceUse.do", method = RequestMethod.GET)
 	@ResponseBody
 	public String getSystemReal(@RequestParam("no") int number) {
 		TableSystemresourceusage realSystemData = systemMonitor.getRealSystemResourceFromStaticData(number);
@@ -120,6 +120,6 @@ public class SystemResourceController {
 			logger.error("login error" + e);
 			e.printStackTrace();
 		}
-		return "?页面";
+		return "index";
 	}
 }
