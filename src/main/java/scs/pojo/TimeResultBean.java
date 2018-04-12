@@ -15,10 +15,11 @@ public class TimeResultBean {
 	private float mean;//响应时间平均值
 	private float min; //响应时间最小值
 	private float max; //响应时间最大值
+	private float missRate;//缺失率
 	
 	public TimeResultBean(){}
 	public TimeResultBean(float nintyth, float nintyFiveTh, float nintyNineTh, List<TwoTuple<Float, Float>> cDF,
-			float var, float mean, float min, float max) {
+			float var, float mean, float min, float max, float missRate) {
 		this.nintyth = nintyth;
 		this.nintyFiveTh = nintyFiveTh;
 		this.nintyNineTh = nintyNineTh;
@@ -27,6 +28,7 @@ public class TimeResultBean {
 		this.mean = mean;
 		this.min = min;
 		this.max = max;
+		this.missRate = missRate;
 	}
 	public float getNintyth() {
 		return nintyth;
@@ -75,6 +77,12 @@ public class TimeResultBean {
 	}
 	public void setMax(float max) {
 		this.max = max;
+	}
+	public float getMissRate() {
+		return missRate;
+	}
+	public void setMissRate(float missRate) {
+		this.missRate = missRate;
 	}
 	@Override
 	public String toString() {

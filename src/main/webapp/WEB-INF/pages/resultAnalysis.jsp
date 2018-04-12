@@ -58,7 +58,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <tr>
                         <td >${webServerBaseResult.nintyth}</td>
                         <td >${webServerResult.nintyth}</td>
-                        <td >${diffBean.nintyth}</td>
+                        <td >${diffBean.nintythDiff}%</td>
                     </tr>
                 </table>
             </div>
@@ -78,7 +78,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <tr>
                         <td >${webServerBaseResult.nintyFiveTh}</td>
                         <td >${webServerResult.nintyFiveTh}</td>
-                        <td >${diffBean.nintyFiveTh}</td>
+                        <td >${diffBean.nintyFiveThDiff}%</td>
                     </tr>
                 </table>
             </div>
@@ -98,7 +98,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <tr>
                         <td >${webServerBaseResult.nintyNineTh}</td>
                         <td >${webServerResult.nintyNineTh}</td>
-                        <td >${diffBean.nintyNineTh}</td>
+                        <td >${diffBean.nintyNineThDiff}%</td>
                     </tr>
                 </table>
             </div>
@@ -118,7 +118,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <tr>
                         <td >${webServerBaseResult.var}</td>
                         <td >${webServerResult.var}</td>
-                        <td >${diffBean.var}</td>
+                        <td >${diffBean.varDiff}%</td>
                     </tr>
                 </table>
             </div>
@@ -138,7 +138,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <tr>
                         <td >${webServerBaseResult.mean}</td>
                         <td >${webServerResult.mean}</td>
-                        <td >${diffBean.mean}</td>
+                        <td >${diffBean.meanDiff}%</td>
                     </tr>
                 </table>
             </div>
@@ -158,7 +158,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <tr>
                         <td >${webServerBaseResult.min}</td>
                         <td >${webServerResult.min}</td>
-                        <td >${diffBean.min}</td>
+                        <td >${diffBean.minDiff}%</td>
                     </tr>
                 </table>
             </div>
@@ -178,7 +178,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <tr>
                         <td >${webServerBaseResult.max}</td>
                         <td >${webServerResult.max}</td>
-                        <td >${diffBean.max}</td>
+                        <td >${diffBean.maxDiff}%</td>
                     </tr>
                 </table>
             </div>
@@ -198,7 +198,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <tr>
                         <td >${webServerBaseResult.missRate}</td>
                         <td >${webServerResult.missRate}</td>
-                        <td >${diffBean.missRate}</td>
+                        <td >${diffBean.missRateDiff}%</td>
                     </tr>
                 </table>
             </div>

@@ -1,20 +1,17 @@
 package scs.util.tools;
-
-import java.util.List;
-
+  
 import scs.pojo.TimeResultBean;
-import scs.pojo.TimeResultDiffBean;
-import scs.pojo.TwoTuple;
+import scs.pojo.TimeResultDiffBean; 
 
-public class ResultDiffParse {
+public class ResultDiffAnalysis {
 	/**
 	 * 单例模式
 	 */
-	private static ResultDiffParse parse=null;
-	private ResultDiffParse(){}
-	public synchronized static ResultDiffParse getInstance() {
+	private static ResultDiffAnalysis parse=null;
+	private ResultDiffAnalysis(){}
+	public synchronized static ResultDiffAnalysis getInstance() {
 		if (parse == null) {  
-			parse = new ResultDiffParse();
+			parse = new ResultDiffAnalysis();
 		}  
 		return parse;
 	}
@@ -39,6 +36,7 @@ public class ResultDiffParse {
 		float meanDiff=0;
 		float minDiff=0;
 		float maxDiff=0;
+		float missRateDiff=0;
 		//计算90分位数
 		if(baseBean.getNintyth()!=0){
 			nintythDiff=(bean.getNintyth()-baseBean.getNintyth())/baseBean.getNintyth()*100;
@@ -54,21 +52,31 @@ public class ResultDiffParse {
 			nintyNineThDiff=(bean.getNintyNineTh()-baseBean.getNintyNineTh())/baseBean.getNintyNineTh()*100;
 		}  
 		diffBean.setNintyNineThDiff(nintyNineThDiff);
-		//计算90分位数
+		//计算方差
 		if(baseBean.getVar()!=0){
 			varDiff=(bean.getVar()-baseBean.getVar())/baseBean.getVar()*100;
 		}  
-		diffBean.setNintythDiff(nintythDiff);
-		//计算90分位数
-		if(baseBean.getNintyth()!=0){
-			nintythDiff=(bean.getNintyth()-baseBean.getNintyth())/baseBean.getNintyth()*100;
+		diffBean.setVarDiff(varDiff);
+		//计算平均值
+		if(baseBean.getMean()!=0){
+			meanDiff=(bean.getMean()-baseBean.getMean())/baseBean.getMean()*100;
 		}  
-		diffBean.setNintythDiff(nintythDiff);
-		//计算90分位数
-		if(baseBean.getNintyth()!=0){
-			nintythDiff=(bean.getNintyth()-baseBean.getNintyth())/baseBean.getNintyth()*100;
+		diffBean.setMeanDiff(meanDiff);
+		//计算最小值差异
+		if(baseBean.getMin()!=0){
+			minDiff=(bean.getMin()-baseBean.getMin())/baseBean.getMin()*100;
 		}  
-		diffBean.setNintythDiff(nintythDiff);
+		diffBean.setMinDiff(minDiff);
+		//计算最大值差异
+		if(baseBean.getMax()!=0){
+			maxDiff=(bean.getMax()-baseBean.getMax())/baseBean.getMax()*100;
+		}  
+		diffBean.setMaxDiff(maxDiff);
+		//计算缺失率差异
+		if(baseBean.getMissRate()!=0){
+			missRateDiff=(bean.getMissRate()-baseBean.getMissRate())/baseBean.getMissRate()*100;
+		}
+		diffBean.setMissRateDiff(missRateDiff);
 		return diffBean;
 	}
 

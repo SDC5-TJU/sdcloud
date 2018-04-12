@@ -19,10 +19,12 @@ import scs.pojo.AppConfigBean;
 import scs.pojo.SystemResourceUsageBean;
 import scs.pojo.TestRecordBean;
 import scs.pojo.TimeResultBean;
+import scs.pojo.TimeResultDiffBean;
 import scs.pojo.TwoTuple;
 import scs.service.appConfig.AppConfigService;
 import scs.service.jobSchedul.JobSchedulService;
-import scs.service.recordManage.RecordManageService; 
+import scs.service.recordManage.RecordManageService;
+import scs.util.tools.ResultDiffAnalysis; 
 
 /**
  * 应用执行控制类
@@ -212,7 +214,7 @@ public class JobSchedulController {
 		}
 	}
 	@RequestMapping("/getWebServerResult.do")
-	public void getWebServerResult(HttpServletRequest request,HttpServletResponse response,Model model){
+	public String getWebServerResult(HttpServletRequest request,HttpServletResponse response,Model model){
 		try{ 
 			TimeResultBean webServerBaseResult=new TimeResultBean();
 			List<TwoTuple<Float,Float>> cdfList=new ArrayList<TwoTuple<Float,Float>>();
@@ -227,6 +229,7 @@ public class JobSchedulController {
 			webServerBaseResult.setMax((float)688.0);
 			webServerBaseResult.setMean((float)134.0);
 			webServerBaseResult.setVar((float)1213.0);
+			webServerBaseResult.setMissRate((float)10.0);
 			
 			TimeResultBean webServerResult=new TimeResultBean();
 			cdfList.clear();
@@ -241,15 +244,17 @@ public class JobSchedulController {
 			webServerResult.setMax((float)888.0);
 			webServerResult.setMean((float)234.0);
 			webServerResult.setVar((float)2484.0);
+			webServerResult.setMissRate((float)10.0);
 			
-			
-			
-			String resultStr=service.getAppStatus();
-			response.getWriter().print(resultStr);  
+			model.addAttribute("webServerResult",webServerResult);
+			model.addAttribute("webServerBaseResult",webServerBaseResult);
+			TimeResultDiffBean diffBean=ResultDiffAnalysis.getInstance().getResultDiff(webServerBaseResult,webServerResult);
+			model.addAttribute("diffBean",diffBean);
 		}catch(Exception e){
 			logger.error("add Operator error"+e);
 			e.printStackTrace();
 		}
+		return "resultAnalysis";
 	}
 	@RequestMapping("/getWebSearchResult.do")
 	public void getWebSearchResult(HttpServletRequest request,HttpServletResponse response,Model model){

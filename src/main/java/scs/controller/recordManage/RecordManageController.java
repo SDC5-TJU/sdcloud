@@ -97,6 +97,7 @@ public class RecordManageController {
 	@RequestMapping("/resultAnalysis.do")
 	public String resultAnalysis(HttpServletRequest request,Model model,
 			@RequestParam(value="testRecordId",required=true) int testRecordId){
+		
 		return "resultAnalysis";
 	}
 	
