@@ -212,6 +212,7 @@
 				<span style="font-family: 微软雅黑; font-size: 14px;" id="res"></span>
 			</div>
 		</div>
+		 
 		<div id="container3"></div>
 		<div id="container4"></div>
 		<div id="container5"></div>
@@ -222,21 +223,20 @@
 		<script type="text/javascript" src="statics/js/highcharts-more.js"></script>
 		<script type="text/javascript">
 		//---实时曲线绘制---//
+		 
+		 
 		 setInterval(function() {
-	$.ajax({
-		async:true,
-		type:"post",
-		url:"getPhyResourceUse.do",
-		data:{},
-		dataType:"json",
-		success:function(returned){
-			if(returned!=null&&returned!=""&&returned!="null"){
-				returnedData = returned;
-				console.log(returned);
-			}
-		}	
-	});
-},5000);
+				$.ajax({
+					async:true,
+					type:"post",
+					url:"getAppStatus.do",
+					data:{},
+					dataType:"json",
+					success:function(returned){
+						console.log(returned);
+					}	
+				});
+		},5000);
   
 	var flag=false;
  

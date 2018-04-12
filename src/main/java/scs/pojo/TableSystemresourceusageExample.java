@@ -10,8 +10,18 @@ public class TableSystemresourceusageExample {
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
+    
+    protected int limit;
+    
+    public int getLimit() {
+		return limit;
+	}
 
-    public TableSystemresourceusageExample() {
+	public void setLimit(int limit) {
+		this.limit = limit;
+	}
+
+	public TableSystemresourceusageExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 

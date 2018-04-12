@@ -94,6 +94,12 @@ public class RecordManageController {
 		}
 		return "RecordManage";
 	}
+	@RequestMapping("/resultAnalysis.do")
+	public String resultAnalysis(HttpServletRequest request,Model model,
+			@RequestParam(value="testRecordId",required=true) int testRecordId){
+		return "resultAnalysis";
+	}
+	
 	@RequestMapping("/index.do")
 	public String index(HttpServletRequest request,Model model){	 
 		return "index";

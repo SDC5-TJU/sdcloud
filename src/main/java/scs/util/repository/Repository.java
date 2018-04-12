@@ -51,10 +51,21 @@ public class Repository{
 	/*
 	 * 物理机/容器/服务 资源监控数组
 	 */
+	/*
+	 * String:containerName
+	 */
 	public static Map<String,TableContainerresourceusage> containerRealUsageMap=new HashMap<String,TableContainerresourceusage>();
+	/*
+	 * String:applicationName
+	 */
 	public static Map<String,TableAppresourceusage> appRealUsageMap=new HashMap<String,TableAppresourceusage>();
+	/*
+	 * String:hostname
+	 */
 	public static Map<String,TableSystemresourceusage> systemRealUsageMap=new HashMap<String,TableSystemresourceusage>();
 	public static int cronFlag = 1;
+	public static int PhysicalMachine128 = 1;
+	public static int PhysicalMachine147 = 2;
 	
 	static {
 		containerInfoMap=RepositoryDao.initContainerInfoMap();//初始化容器信息map 

@@ -2,6 +2,7 @@ package scs.controller.jobSchedul;
 
 import org.apache.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -12,17 +13,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import net.sf.json.JSON;
+ 
 import net.sf.json.JSONArray;
-import scs.pojo.AppConfigBean;
-import scs.pojo.ResourceUsage;
+import scs.pojo.AppConfigBean; 
 import scs.pojo.SystemResourceUsageBean;
 import scs.pojo.TestRecordBean;
+import scs.pojo.TimeResultBean;
+import scs.pojo.TwoTuple;
 import scs.service.appConfig.AppConfigService;
 import scs.service.jobSchedul.JobSchedulService;
-import scs.service.recordManage.RecordManageService;
-import scs.util.repository.Repository; 
+import scs.service.recordManage.RecordManageService; 
 
 /**
  * 应用执行控制类
@@ -214,6 +214,36 @@ public class JobSchedulController {
 	@RequestMapping("/getWebServerResult.do")
 	public void getWebServerResult(HttpServletRequest request,HttpServletResponse response,Model model){
 		try{ 
+			TimeResultBean webServerBaseResult=new TimeResultBean();
+			List<TwoTuple<Float,Float>> cdfList=new ArrayList<TwoTuple<Float,Float>>();
+			for(int i=0;i<10;i++){
+				cdfList.add(new TwoTuple<Float,Float>((float)i,(float)(i*0.1)));
+			} 
+			webServerBaseResult.setCDF(cdfList);
+			webServerBaseResult.setNintyth(326);
+			webServerBaseResult.setNintyFiveTh(388);
+			webServerBaseResult.setNintyNineTh(466);
+			webServerBaseResult.setMin((float)26.0);
+			webServerBaseResult.setMax((float)688.0);
+			webServerBaseResult.setMean((float)134.0);
+			webServerBaseResult.setVar((float)1213.0);
+			
+			TimeResultBean webServerResult=new TimeResultBean();
+			cdfList.clear();
+			for(int i=0;i<10;i++){
+				cdfList.add(new TwoTuple<Float,Float>((float)i,(float)(i*i*0.01)));
+			} 
+			webServerResult.setCDF(cdfList);
+			webServerResult.setNintyth(526);
+			webServerResult.setNintyFiveTh(588);
+			webServerResult.setNintyNineTh(866);
+			webServerResult.setMin((float)23.0);
+			webServerResult.setMax((float)888.0);
+			webServerResult.setMean((float)234.0);
+			webServerResult.setVar((float)2484.0);
+			
+			
+			
 			String resultStr=service.getAppStatus();
 			response.getWriter().print(resultStr);  
 		}catch(Exception e){
