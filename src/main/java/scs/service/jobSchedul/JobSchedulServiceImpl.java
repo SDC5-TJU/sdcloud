@@ -73,7 +73,19 @@ public class JobSchedulServiceImpl implements JobSchedulService {
 		}
 		return result;
 	}
-
+	@Override
+	public int executeCassandraApp(int isBase) {
+		int result=0;
+		if(driver.execute("cassandra",isBase)!=0){
+			int testRecordId=rDao.getLatestRecordId();
+			if(isBase==1){
+				//result=dao.addSiloData(Repository.siloBaseDataList,testRecordId,isBase);
+			}else{
+				//result=dao.addSiloData(Repository.siloDataList,testRecordId,isBase);
+			}
+		}
+		return result;
+	}
 	@Override
 	public int executeBonnieApp() {
 		return driver.execute("bonnie",-1); 
@@ -88,12 +100,6 @@ public class JobSchedulServiceImpl implements JobSchedulService {
 	@Override
 	public int executeScimarkApp() {
 		return driver.execute("scimark",-1); 
-	}
-
-	@Override
-	public int shutdownScimarkApp() {
-		// TODO Auto-generated method stub
-		return driver.shutdown("scimark");
 	}
 
 	@Override
@@ -126,10 +132,6 @@ public class JobSchedulServiceImpl implements JobSchedulService {
 		return HttpClientPool.getResponseTime(httpclient,0);
 	}
 
-	@Override
-	public int executeCassandraApp(int isBase) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	
  
 }

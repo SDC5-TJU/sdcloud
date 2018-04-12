@@ -46,6 +46,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <form action="" method="post" class="form form-horizontal" id="form-article-add">
             <!--在线-->
             <div id="online">
+            <c:if test="${webSearch.enable==1}">
                 <div class="row cl">
                     <label class="col-xs-4 new-col-sm-2 new-center1"></label>
                     <label class="col-xs-4 new-col-sm-2 new-center1" >请求总数</label>
@@ -61,12 +62,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="${webSearch.warmUpCount}" placeholder="" id="config1-2" name="warmUpCount">
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${webSearch.pattern}" placeholder="定值/均匀/指数/泊松" id="config1-3" name="pattern" >
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${webSearch.intensity}" placeholder="2000" id="config1-4"name="intensity">
-                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="webSearch">
-                        <input style="margin-left:20px; " type="button"  class="config" onclick="" value="基准采集" id="webSearchAver">
-                        <!--<input style="float: right;" type="button"  class="btn btn-primary radius " value="禁用" >-->
+                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="webSearchButton">
+                        <input style="margin-left:20px; " type="button"  class="config" onclick="" value="基准采集" id="webSearchAverButton">
                     </div>
-
                 </div>
+                </c:if>
+                <c:if test="${webServer.enable==1}">
                <div class="row cl">
                     <label class="form-label col-xs-4 col-sm-2">电商服务：</label>
                     <div class="formControls col-xs-8 col-sm-9">
@@ -74,8 +75,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="${webServer.warmUpCount}" placeholder="" id="config2-2" name="warmUpCount">
                         <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${webServer.pattern}" placeholder="10" id="config2-3" name="pattern" >
                         <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${webServer.intensity}" placeholder="2000" id="config2-4" name="intensity">
-                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="webServer">
-                        <input style="margin-left:20px; " type="button"  class="config" onclick="" value="基准采集" id="webServerAver">
+                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="webServerButton">
+                        <input style="margin-left:20px; " type="button"  class="config" onclick="" value="基准采集" id="webServerAverButton">
                     </div>
                 </div>
                 <div class="row cl">
@@ -86,6 +87,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <label class="col-xs-4 new-col-sm-2 new-center1">QPS</label>
                     <label class="col-xs-4 new-col-sm-2 new-center1"></label>
                 </div>
+                </c:if>
                 <div class="row cl">
                     <label class="form-label col-xs-4 col-sm-2">memcached:</label>
                     <div class="formControls col-xs-8 col-sm-9">
@@ -93,8 +95,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${memcached.warmUpCount}" placeholder="2000" id="config3-2" name="intensity" >
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="均匀" placeholder="" id="" name="" disabled="disabled">
 						<input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${memcached.intensity}" placeholder="2000" id="config3-3" name="warmUpCount">
-                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="memcached">
-                        <input style="margin-left:20px; " type="button"  class="config" onclick="" value="基准采集" id="memcachedAver">
+                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="memcachedButton">
+                        <input style="margin-left:20px; " type="button"  class="config" onclick="" value="基准采集" id="memcachedAverButton">
                     </div>
                 </div>
                 <div class="row cl">
@@ -104,8 +106,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${silo.warmUpCount}" placeholder="2000" id="config4-2" name="warmUpCount" >
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="均匀" placeholder="" id="" name="" disabled="disabled">
 						<input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${silo.intensity}" placeholder="2000" id="config4-3" name="intensity">
-                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="silo">
-                        <input style="margin-left:20px; " type="button"  class="config" onclick="" value="基准采集" id="siloAver">
+                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="siloButton">
+                        <input style="margin-left:20px; " type="button"  class="config" onclick="" value="基准采集" id="siloAverButton">
                     </div>
                 </div>
             </div>
@@ -127,8 +129,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="" placeholder="按块写入" id="config5-1" name="" disabled="disabled">
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="循环" placeholder="" id="" name="" disabled="disabled">
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${bonnie.intensity}" placeholder="" id="" name="intensity" >
-                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="startBonnie">
-                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="停止" id="shutdownBonnie">
+                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="bonnieButton">
+                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="停止" disabled="disabled" id="bonnieAverButton">
                     </div>
                 </div>
                 <div class="row cl">
@@ -146,7 +148,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="" placeholder="" id="config6-1" name="" disabled="disabled">
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="循环" placeholder="" id="" name="" disabled="disabled">
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${scimark.intensity}" placeholder="" id="" name="intensity" >
-                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="scimark">
+                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="scimarkButton">
                     </div>
                 </div>
                 <div class="row cl">
@@ -164,7 +166,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="" placeholder="" id="config7-2" name="" disabled="disabled">
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${hadoop.pattern}" placeholder="IO密集型/CPU密集型/综合" id="" name="pattern" >
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${hadoop.intensity}" placeholder="" id="" name="intensity" >
-                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="Hadoop">
+                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="hadoopButton">
                     </div>
                 </div>
 				<div class="row cl">
@@ -182,7 +184,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="" placeholder="" id="config8-2" name="" disabled="disabled">
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="" placeholder="" id="" name="" disabled="disabled">
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${cassandra.intensity}" placeholder="" id="" name="intensity" >
-                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="Cassandra">
+                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="cassandraButton">
                     </div>
                 </div>
             </div>
@@ -249,25 +251,38 @@ $("#endButton").click(function(){
 		$.ajax({
 			async:true,
 			type:"post",
-			url:"getPhyResourceUse.do",
+			url:"getAppStatus.do",
 			data:{},
 			dataType:"json",
-			success:function(returned){
-				if(returned!=null&&returned!=""&&returned!="null"){
-					returnedData = returned;
-					console.log(returned);
+			success:function(returned){  
+					 if(returned.length==1){
+							$("#webSearchButton").attr("disabled", returned[0].webSearch);
+							$("#webSearchAverButton").attr("disabled", returned[0].webSearch);
+							$("#webServerButton").attr("disabled", returned[0].webServer); 
+							$("#webServerAverButton").attr("disabled", returned[0].webServer); 
+							$("#memcachedButton").attr("disabled", returned[0].memcached);
+							$("#memcachedAverButton").attr("disabled", returned[0].memcached);
+							$("#siloButton").attr("disabled", returned[0].silo);
+							$("#siloAverButton").attr("disabled", returned[0].silo);
+							$("#bonnieButton").attr("disabled", returned[0].bonnie);
+							$("#bonnieAverButton").attr("disabled",!returned[0].bonnie);
+							$("#scimarkButton").attr("disabled", returned[0].scimark);
+							$("#hadoopButton").attr("disabled", returned[0].hadoop);
+							$("#cassandraButton").attr("disabled", returned[0].cassandra);
+					 } 
 					//to do
-					/*遍历json数组，获取并判断每个应有的状态，为true 则disable的按钮 为false 则相反*/
-				}
+					/*遍历json数组，获取并判断每个应有的状态，为true 则disable的按钮 为false 则相反*/ 
 			}	
 		});
-},5000);
+},1000);
  
 /**
  * 8个应用正式测试和基准测试的控制按钮动作
  */
  //webSearch
-$("#webSearch").click(function(){
+$("#webSearchButton").click(function(){
+	$("#webSearchButton").attr("disabled",true);
+	$("#webSearchAverButton").attr("disabled",true);
 		    $.ajax({
 				async:true,
 				type:"post",
@@ -278,7 +293,9 @@ $("#webSearch").click(function(){
 				}	
 			});
 });
-$("#webSearchAver").click(function(){
+$("#webSearchAverButton").click(function(){
+	$("#webSearchButton").attr("disabled",true);
+	$("#webSearchAverButton").attr("disabled",true);
     $.ajax({
 		async:true,
 		type:"post",
@@ -290,7 +307,9 @@ $("#webSearchAver").click(function(){
 	});
 });
 //webServer
-$("#webServer").click(function(){
+$("#webServerButton").click(function(){
+	$("#webServerButton").attr("disabled",true);
+	$("#webServerAverButton").attr("disabled",true);
 		    $.ajax({
 				async:true,
 				type:"post",
@@ -301,7 +320,9 @@ $("#webServer").click(function(){
 				}	
 			});
 });
-$("#webServerAver").click(function(){
+$("#webServerAverButton").click(function(){
+	$("#webServerButton").attr("disabled",true);
+	$("#webServerAverButton").attr("disabled",true);
     $.ajax({
 		async:true,
 		type:"post",
@@ -313,7 +334,9 @@ $("#webServerAver").click(function(){
 	});
 });
 //memcached
-$("#memcached").click(function(){
+$("#memcachedButton").click(function(){
+	$("#memcachedButton").attr("disabled",true);
+	$("#memcachedAverButton").attr("disabled",true);
 		    $.ajax({
 				async:true,
 				type:"post",
@@ -324,7 +347,9 @@ $("#memcached").click(function(){
 				}	
 			});
 });
-$("#memcachedAver").click(function(){
+$("#memcachedAverButton").click(function(){
+	$("#memcachedButton").attr("disabled",true);
+	$("#memcachedAverButton").attr("disabled",true);
     $.ajax({
 		async:true,
 		type:"post",
@@ -336,7 +361,9 @@ $("#memcachedAver").click(function(){
 	});
 });
 //silo
-$("#silo").click(function(){
+$("#siloButton").click(function(){
+	$("#siloButton").attr("disabled",true);
+	$("#siloAverButton").attr("disabled",true);
 		    $.ajax({
 				async:true,
 				type:"post",
@@ -347,7 +374,9 @@ $("#silo").click(function(){
 				}	
 			});
 });
-$("#siloAver").click(function(){
+$("#siloAverButton").click(function(){
+	$("#siloAverButton").attr("disabled",true);
+	$("#siloAverButton").attr("disabled",true);
     $.ajax({
 		async:true,
 		type:"post",
@@ -359,7 +388,9 @@ $("#siloAver").click(function(){
 	});
 });
 //startBonnie
-$("#startBonnie").click(function(){
+$("#bonnieButton").click(function(){
+	$("#bonnieButton").attr("disabled",true);
+	$("#bonnieAverButton").attr("disabled",false);
 		    $.ajax({
 				async:true,
 				type:"post",
@@ -371,7 +402,9 @@ $("#startBonnie").click(function(){
 			});
 });
 //shutdownBonnie
-$("#shutdownBonnie").click(function(){
+$("#bonnieAverButton").click(function(){ 
+	$("#bonnieAverButton").attr("disabled",true);
+	$("#bonnieButton").attr("disabled",false);
 		    $.ajax({
 				async:true,
 				type:"post",
@@ -383,7 +416,8 @@ $("#shutdownBonnie").click(function(){
 			});
 });
 //scimark
-$("#scimark").click(function(){
+$("#scimarkButton").click(function(){
+	$("#scimarkButton").attr("disabled",true);
 		    $.ajax({
 				async:true,
 				type:"post",
@@ -395,7 +429,8 @@ $("#scimark").click(function(){
 			});
 });
 //Hadoop
-$("#Hadoop").click(function(){
+$("#hadoopButton").click(function(){
+	$("#hadoopButton").attr("disabled",true);
 		    $.ajax({
 				async:true,
 				type:"post",
@@ -407,16 +442,31 @@ $("#Hadoop").click(function(){
 			});
 });
 //Cassandra
-$("#Cassandra").click(function(){
+$("#cassandraButton").click(function(){
+	$("#cassandraButton").attr("disabled",true);
+	$("#cassandraAverButton").attr("disabled",true);
 		    $.ajax({
 				async:true,
 				type:"post",
 				url:"executeCassandraApp.do",
-				data:{},
+				data:{isBase:0},
 				dataType:"text",
 				success:function(returned){ 
 				}	
 			});
+});
+$("#cassandraAverButton").click(function(){
+	$("#cassandraButton").attr("disabled",true);
+	$("#cassandraAverButton").attr("disabled",true);
+	    $.ajax({
+			async:true,
+			type:"post",
+			url:"executeCassandraApp.do",
+			data:{isBase:1},
+			dataType:"text",
+			success:function(returned){ 
+			}	
+		});
 });
 </script>
 <script type="text/javascript">

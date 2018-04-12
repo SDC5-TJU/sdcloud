@@ -20,8 +20,7 @@ public interface JobSchedulService {
 	public int executeBonnieApp();  
 	public int shutdownBonnieApp(); 
 	
-	public int executeScimarkApp();
-	public int shutdownScimarkApp(); 
+	public int executeScimarkApp(); 
 	
 	public int executeHadoopApp();
 	public int executeCassandraApp();

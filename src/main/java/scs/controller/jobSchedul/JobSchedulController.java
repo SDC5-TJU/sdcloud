@@ -43,8 +43,7 @@ public class JobSchedulController {
 	public String jobSchedulBefore(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="testRecordId",required=true) int testRecordId){
 		List<AppConfigBean> appConfiglist=aService.getAppConfig(testRecordId);
-		for(AppConfigBean bean:appConfiglist){ 
-			System.out.println(bean.getApplicationName()+" "+bean.getRequestCount());
+		for(AppConfigBean bean:appConfiglist){  
 			model.addAttribute(bean.getApplicationName(),bean);
 		}
 		TestRecordBean recordBean=rService.getRecordById(testRecordId);
@@ -133,7 +132,7 @@ public class JobSchedulController {
 	public void executeCassandraApp(HttpServletRequest request,HttpServletResponse response,
 			@RequestParam(value="isBase",required=true) int isBase){
 		try{ 
-			int result=0;
+			int result=service.executeCassandraApp(isBase);
 			response.getWriter().print(result);
 
 		}catch(Exception e){

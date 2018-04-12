@@ -49,7 +49,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <td >${item.endTime}</td>
             <td >
             <a href="getAppConfig.do?testRecordId=${item.autoId}"><input type="button" class="editButton" value="配置"></a>
-            <a href="getAppConfig.do?testRecordId=${item.autoId}"><input type="button" class="controlButton" value="控制"></a>
+            <a href="jobSchedulBefore.do?testRecordId=${item.autoId}"><input type="button" class="controlButton" value="控制"></a>
             <a href=""><input type="button" class="viewButton" value="查看"></a>
             </td>
             
