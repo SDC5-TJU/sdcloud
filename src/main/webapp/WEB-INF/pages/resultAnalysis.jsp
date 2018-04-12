@@ -22,11 +22,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 <div >
     <ul class="nav nav-tabs" >
-        <li class="active" style="float: left;">
-            <a  href="#home" id="chartOn">图</a>
+        <li class="" style="float: left;">
+            <a  href="#" id="websearch">web搜索</a>
         </li>
         <li class="" style="float: left;">
-            <a  href="#" id="tableOn">表</a>
+            <a  href="#" id="webserver">电商服务</a>
+        </li>
+        <li class="" style="float: left;">
+            <a  href="#" id="silo">silo</a>
+        </li>
+        <li class="" style="float: left;">
+            <a  href="#" id="memcached">memcached</a>
         </li>
     </ul>
 
@@ -34,67 +40,212 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div>
     <!--图-->
     <div style="width: 900px;" id="chart">
-        <div id="solrChart" style="width: 400px;height: 200px; position: absolute;top: 50px;left:100px;"></div>
-        <div id="webChart" style="width: 400px;height: 200px;position: absolute; left:530px;top: 50px;"></div>
-        <div id="reChart1" style="width: 400px;height: 200px; position: absolute; top: 300px;left:100px;"></div>
-        <div id="reChart2" style="width: 400px;height: 200px; position: absolute; left:530px;top: 300px;"></div>
+        <div id="websearch1" style="width: 550px;height: 300px; position: absolute;top: 50px;left:50px;"></div>
+        <div id="websearch2" style="width: 550px;height: 300px;position: absolute; left:600px;top: 50px;"></div>
     </div>
     <!--表-->
-    <div style=" width: 70%; position: absolute; top: 100px;left: 150px; display:none;" id="table">
+    <div style=" width: 30%; position: absolute; top: 400px;left: 150px;" id="table">
         <form method="post" action="" id="">
             <div class="panel admin-panel">
-                <div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异</strong> <a href="" style="float:right; display:none;">添加字段</a></div>
+                <!--<div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:web搜索</strong> <a href="" style="float:right; display:none;">添加字段</a></div>-->
 
                 <table class="table table-hover text-center">
                     <tr>
-                        <th width="25%">应用名称</th>
-                        <th width="25%">无干扰平均响应时间</th>
-                        <th width="25%">干扰下平均响应时间</th>
-                        <th width="25%">变化率</th>
-                    </tr><tr>
-                    <td width="20%">Web搜索</td>
-                    <td width="15%">50%</td>
-                    <td width="20%">1.237MB/29.33GB</td>
-                    <td width="15%"><img src="statics/images/up.png">50%</td>
-                </tr><tr>
-                    <td width="20%">电商服务</td>
-                    <td width="15%">20%</td>
-                    <td width="20%">1.237MB/29.33GB</td>
-                    <td width="15%"><img src="statics/images/up.png">20%</td>
-                </tr><tr>
-                    <td width="20%">silo</td>
-                    <td width="15%">5%</td>
-                    <td width="20%">1.237MB/29.33GB</td>
-                    <td width="15%">5%</td>
-                </tr><tr>
-                    <td width="20%">memcached</td>
-                    <td width="15%">50%</td>
-                    <td width="20%">1.237MB/29.33GB</td>
-                    <td width="15%"><img src="statics/images/down.png">50%</td>
-                </tr>
+                        <th width="">无干扰 响应时间90分位数</th>
+                        <th width="">干扰下 响应时间90分位数</th>
+                        <th width="">变化率</th>
+                    </tr>
+                    <tr>
+                        <td >${webServerBaseResult.nintyth}</td>
+                        <td >${webServerResult.nintyth}</td>
+                        <td >${diffBean.nintyth}</td>
+                    </tr>
                 </table>
             </div>
         </form>
     </div>
+    <div style=" width: 30%; position: absolute; top: 400px;left: 600px;" id="table2">
+        <form method="post" action="" id="">
+            <div class="panel admin-panel">
+                <!--<div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:web搜索</strong> <a href="" style="float:right; display:none;">添加字段</a></div>-->
+
+                <table class="table table-hover text-center">
+                    <tr>
+                        <th width="">无干扰 响应时间95分位数</th>
+                        <th width="">干扰下 响应时间95分位数</th>
+                        <th width="">变化率</th>
+                    </tr>
+                    <tr>
+                        <td >${webServerBaseResult.nintyFiveTh}</td>
+                        <td >${webServerResult.nintyFiveTh}</td>
+                        <td >${diffBean.nintyFiveTh}</td>
+                    </tr>
+                </table>
+            </div>
+        </form>
     </div>
+    <div style=" width: 30%; position: absolute; top: 530px;left: 150px;" id="table3">
+        <form method="post" action="" id="">
+            <div class="panel admin-panel">
+                <!--<div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:电商服务</strong> <a href="" style="float:right; display:none;">添加字段</a></div>-->
+
+                <table class="table table-hover text-center">
+                    <tr>
+                        <th width="">无干扰 响应时间99分位数</th>
+                        <th width="">干扰下 响应时间99分位数</th>
+                        <th width="">变化率</th>
+                    </tr>
+                    <tr>
+                        <td >${webServerBaseResult.nintyNineTh}</td>
+                        <td >${webServerResult.nintyNineTh}</td>
+                        <td >${diffBean.nintyNineTh}</td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+    </div>
+    <div style=" width: 30%; position: absolute; top: 530px;left: 600px;" id="table4">
+        <form method="post" action="" id="">
+            <div class="panel admin-panel">
+                <!--<div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:web搜索</strong> <a href="" style="float:right; display:none;">添加字段</a></div>-->
+
+                <table class="table table-hover text-center">
+                    <tr>
+                        <th width="">无干扰 响应时间方差</th>
+                        <th width="">干扰下 响应时间方差</th>
+                        <th width="">变化率</th>
+                    </tr>
+                    <tr>
+                        <td >${webServerBaseResult.var}</td>
+                        <td >${webServerResult.var}</td>
+                        <td >${diffBean.var}</td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+    </div>
+    <div style=" width: 30%; position: absolute; top: 660px;left: 150px;" id="table5">
+        <form method="post" action="" id="">
+            <div class="panel admin-panel">
+                <!--<div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:web搜索</strong> <a href="" style="float:right; display:none;">添加字段</a></div>-->
+
+                <table class="table table-hover text-center">
+                    <tr>
+                        <th width="">无干扰 响应时间平均值</th>
+                        <th width="">干扰下 响应时间平均值</th>
+                        <th width="">变化率</th>
+                    </tr>
+                    <tr>
+                        <td >${webServerBaseResult.mean}</td>
+                        <td >${webServerResult.mean}</td>
+                        <td >${diffBean.mean}</td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+    </div>
+    <div style=" width: 30%; position: absolute; top: 660px;left: 600px;" id="table6">
+        <form method="post" action="" id="">
+            <div class="panel admin-panel">
+                <!--<div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:web搜索</strong> <a href="" style="float:right; display:none;">添加字段</a></div>-->
+
+                <table class="table table-hover text-center">
+                    <tr>
+                        <th width="">无干扰 响应时间最小值</th>
+                        <th width="">干扰下 响应时间最小值</th>
+                        <th width="">变化率</th>
+                    </tr>
+                    <tr>
+                        <td >${webServerBaseResult.min}</td>
+                        <td >${webServerResult.min}</td>
+                        <td >${diffBean.min}</td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+    </div>
+    <div style=" width: 30%; position: absolute; top: 790px;left: 150px;" id="table7">
+        <form method="post" action="" id="">
+            <div class="panel admin-panel">
+                <!--<div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:web搜索</strong> <a href="" style="float:right; display:none;">添加字段</a></div>-->
+
+                <table class="table table-hover text-center">
+                    <tr>
+                        <th width="">无干扰 响应时间最大值</th>
+                        <th width="">干扰下 响应时间最大值</th>
+                        <th width="">变化率</th>
+                    </tr>
+                    <tr>
+                        <td >${webServerBaseResult.max}</td>
+                        <td >${webServerResult.max}</td>
+                        <td >${diffBean.max}</td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+    </div>
+        <div style=" width: 30%; position: absolute; top: 790px;left: 150px;" id="table7">
+        <form method="post" action="" id="">
+            <div class="panel admin-panel">
+                <!--<div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:web搜索</strong> <a href="" style="float:right; display:none;">添加字段</a></div>-->
+
+                <table class="table table-hover text-center">
+                    <tr>
+                        <th width="">无干扰 缺失率</th>
+                        <th width="">干扰下 缺失率</th>
+                        <th width="">变化率</th>
+                    </tr>
+                    <tr>
+                        <td >${webServerBaseResult.missRate}</td>
+                        <td >${webServerResult.missRate}</td>
+                        <td >${diffBean.missRate}</td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+    </div>
+
+</div>
 </div>
 
-<script type="text/javascript" src="statics/js/jquery-1.9.1.js"></script>
-<script type="text/javascript" src="statics/js/highcharts.js"></script>
-<script type="text/javascript" src="statics/js/highcharts-more.js"></script>
+<script type="text/javascript" src="../statics/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="../statics/js/highcharts.js"></script>
+<script type="text/javascript" src="../statics/js/highcharts-more.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-            $('#tableOn').click(function () {
-                $("#chart").hide();   //隐藏
-                $("#table").show();
-            })
+        /*        $('#tableOn').click(function () {
+         $("#chart").hide();   //隐藏
+         $("#table").show();
+         })
 
-            $("#chartOn").click(function () {
-                $("#chart").show();   //隐藏
-                $("#table").hide();
-            })
+         $("#chartOn").click(function () {
+         $("#chart").show();   //隐藏
+         $("#table").hide();
+         })*/
+        Highcharts.chart('websearch2', {
+/*            chart: {
+                zoomType: 'x'
+            },*/
+            boost: {
+                useGPUTranslations: true
+            },
+            title: {
+                text: 'Highcharts drawing ' + n + ' points'
+            },
+            subtitle: {
+                text: 'Using the Boost module'
+            },
+            tooltip: {
+                valueDecimals: 2
+            },
+            series: [{
+                data:[12,12,32,34,2424,53,3223,23],
+            lineWidth: 0.5
+            }]
+        });
+        console.timeEnd('line');
 
-        Highcharts.chart('solrChart', {
+        Highcharts.chart('websearch1', {
             chart: {
                 zoomType: 'x'
             },
@@ -162,211 +313,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             }]
         });
 
-        Highcharts.chart('webChart', {
-            chart: {
-                zoomType: 'x'
-            },
-            title: {
-                text: 'cpu used(%)'
-            },
 
-            xAxis: {
-                type: 'datetime',
-                // maxZoom:24 * 3600 * 1000, // x轴总共显示的时间
-                //min:<?=strtotime(date('Y-m-d'))?>,
-                dateTimeLabelFormats: {
-//                  minute: '%H:%M'
-                    day: '%H:%M'
-                }
-            },
-            yAxis: {
-                title: {
-                    text: 'used rate'
-                },
-                min:0
-
-            },
-            legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'middle'
-            },
-            plotOptions: {
-                area: {
-                    fillColor: {
-                        linearGradient: {
-                            x1: 0,
-                            y1: 0,
-                            x2: 0,
-                            y2: 1
-                        },
-                        stops: [
-                            [0, Highcharts.getOptions().colors[0]],
-                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                        ]
-                    },
-                    marker: {
-                        radius: 2
-                    },
-                    lineWidth: 1,
-                    states: {
-                        hover: {
-                            lineWidth: 1
-                        }
-                    },
-                    threshold: null
-                }
-            },
-
-            series: [{
-                type: 'area',
-                name:'测试一下',
-                data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,214,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,22,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,99,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-                ],
-                pointInterval: 306000,
-                pointStart: Date.UTC(2014, 6, 10,0,0,0),
-                pointEnd:Date.UTC(2014,6,10,23,59,59),
-                // pointEnd:Date.UTC(<?php date('Y , m, d',strtotime('-1 month'))?>, 0, 0, 0;?>)
-            }]
-        });
-
-        Highcharts.chart('reChart1', {
-            chart: {
-                zoomType: 'x'
-            },
-            title: {
-                text: 'cpu used(%)'
-            },
-
-            xAxis: {
-                type: 'datetime',
-                // maxZoom:24 * 3600 * 1000, // x轴总共显示的时间
-                //min:<?=strtotime(date('Y-m-d'))?>,
-                dateTimeLabelFormats: {
-//                  minute: '%H:%M'
-                    day: '%H:%M'
-                }
-            },
-            yAxis: {
-                title: {
-                    text: 'used rate'
-                },
-                min:0
-
-            },
-            legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'middle'
-            },
-            plotOptions: {
-                area: {
-                    fillColor: {
-                        linearGradient: {
-                            x1: 0,
-                            y1: 0,
-                            x2: 0,
-                            y2: 1
-                        },
-                        stops: [
-                            [0, Highcharts.getOptions().colors[0]],
-                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                        ]
-                    },
-                    marker: {
-                        radius: 2
-                    },
-                    lineWidth: 1,
-                    states: {
-                        hover: {
-                            lineWidth: 1
-                        }
-                    },
-                    threshold: null
-                }
-            },
-
-            series: [{
-                type: 'area',
-                name:'测试一下',
-                data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,214,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,22,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,99,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-                ],
-                pointInterval: 306000,
-                pointStart: Date.UTC(2014, 6, 10,0,0,0),
-                pointEnd:Date.UTC(2014,6,10,23,59,59),
-                // pointEnd:Date.UTC(<?php date('Y , m, d',strtotime('-1 month'))?>, 0, 0, 0;?>)
-            }]
-        });
-
-        Highcharts.chart('reChart2', {
-            chart: {
-                zoomType: 'x'
-            },
-            title: {
-                text: 'cpu used(%)'
-            },
-
-            xAxis: {
-                type: 'datetime',
-                // maxZoom:24 * 3600 * 1000, // x轴总共显示的时间
-                //min:<?=strtotime(date('Y-m-d'))?>,
-                dateTimeLabelFormats: {
-//                  minute: '%H:%M'
-                    day: '%H:%M'
-                }
-            },
-            yAxis: {
-                title: {
-                    text: 'used rate'
-                },
-                min:0
-
-            },
-            legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'middle'
-            },
-            plotOptions: {
-                area: {
-                    fillColor: {
-                        linearGradient: {
-                            x1: 0,
-                            y1: 0,
-                            x2: 0,
-                            y2: 1
-                        },
-                        stops: [
-                            [0, Highcharts.getOptions().colors[0]],
-                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                        ]
-                    },
-                    marker: {
-                        radius: 2
-                    },
-                    lineWidth: 1,
-                    states: {
-                        hover: {
-                            lineWidth: 1
-                        }
-                    },
-                    threshold: null
-                }
-            },
-
-            series: [{
-                type: 'area',
-                name:'测试一下',
-                data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,214,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,22,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,99,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-                ],
-                pointInterval: 306000,
-                pointStart: Date.UTC(2014, 6, 10,0,0,0),
-                pointEnd:Date.UTC(2014,6,10,23,59,59),
-                // pointEnd:Date.UTC(<?php date('Y , m, d',strtotime('-1 month'))?>, 0, 0, 0;?>)
-            }]
-        });
-
-});
-    </script>
+    });
+</script>
 </body>
 </html>
