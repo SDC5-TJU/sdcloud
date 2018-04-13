@@ -132,19 +132,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
                 <table class="table table-hover text-center">
                     <tr>
-                        <th width="">无干扰 响应时间标准差</th>
-                        <th width="">干扰下 响应时间标准差</th>
+                        <th width="">无干扰 响应时间方差</th>
+                        <th width="">干扰下 响应时间方差</th>
                         <th width="">变化率</th>
                     </tr>
                     <tr>
-                        <td >${MemcachedBaseResult.std}</td>
-                        <td >${MemcachedResult.std}</td>
+                        <td >${MemcachedBaseResult.var}</td>
+                        <td >${MemcachedResult.var}</td>
                         <c:choose>
-                            <c:when test="${diffBean.stdDiff>0}">
-                                <td ><img src="statics/images/up.png"/>${diffBean.stdDiff}%</td>
+                            <c:when test="${diffBean.varDiff>0}">
+                                <td ><img src="statics/images/up.png"/>${diffBean.varDiff}%</td>
                             </c:when>
                             <c:otherwise>
-                                <td ><img src="statics/images/down.png"/>${diffBean.stdDiff}%</td>
+                                <td ><img src="statics/images/down.png"/>${diffBean.varDiff}%</td>
                             </c:otherwise>
                         </c:choose>
                     </tr>
@@ -164,14 +164,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <th width="">变化率</th>
                     </tr>
                     <tr>
-                        <td >${MemcachedBaseResult.avg_lat}</td>
-                        <td >${MemcachedResult.avg_lat}</td>
+                        <td >${MemcachedBaseResult.mean}</td>
+                        <td >${MemcachedResult.mean}</td>
                         <c:choose>
-                            <c:when test="${diffBean.avg_latDiff>0}">
-                                <td ><img src="statics/images/up.png"/>${diffBean.avg_latDiff}%</td>
+                            <c:when test="${diffBean.meanDiff>0}">
+                                <td ><img src="statics/images/up.png"/>${diffBean.meanDiff}%</td>
                             </c:when>
                             <c:otherwise>
-                                <td ><img src="statics/images/down.png"/>${diffBean.avg_latDiff}%</td>
+                                <td ><img src="statics/images/down.png"/>${diffBean.meanDiff}%</td>
                             </c:otherwise>
                         </c:choose>
                     </tr>
@@ -245,14 +245,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <th width="">变化率</th>
                     </tr>
                     <tr>
-                        <td >${MemcachedBaseResult.misses}</td>
-                        <td >${MemcachedResult.misses}</td>
+                        <td >${MemcachedBaseResult.missRate}</td>
+                        <td >${MemcachedResult.missRate}</td>
                         <c:choose>
-                            <c:when test="${diffBean.missesDiff>0}">
-                                <td ><img src="statics/images/up.png"/>${diffBean.missesDiff}%</td>
+                            <c:when test="${diffBean.missRateDiff>0}">
+                                <td ><img src="statics/images/up.png"/>${diffBean.missRateDiff}%</td>
                             </c:when>
                             <c:otherwise>
-                                <td ><img src="statics/images/down.png"/>${diffBean.missesDiff}%</td>
+                                <td ><img src="statics/images/down.png"/>${diffBean.missRateDiff}%</td>
                             </c:otherwise>
                         </c:choose>
                     </tr>
@@ -260,33 +260,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div>
         </form>
     </div>
-    <div style=" width: 30%; position: absolute; top: 620px;left: 150px;" id="table9">
-        <form method="post" action="" id="">
-            <div class="panel admin-panel">
-                <!--<div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:web搜索</strong> <a href="" style="float:right; display:none;">添加字段</a></div>-->
 
-                <table class="table table-hover text-center">
-                    <tr>
-                        <th width="">无干扰 命中次数</th>
-                        <th width="">干扰下 命中次数</th>
-                        <th width="">变化率</th>
-                    </tr>
-                    <tr>
-                        <td >${MemcachedBaseResult.hits}</td>
-                        <td >${MemcachedResult.hits}</td>
-                        <c:choose>
-                            <c:when test="${diffBean.hitsDiff>0}">
-                                <td ><img src="statics/images/up.png"/>${diffBean.hitsDiff}%</td>
-                            </c:when>
-                            <c:otherwise>
-                                <td ><img src="statics/images/down.png"/>${diffBean.hitsDiff}%</td>
-                            </c:otherwise>
-                        </c:choose>
-                    </tr>
-                </table>
-            </div>
-        </form>
-    </div>
     <div style=" width: 30%; position: absolute; top: 620px;left: 650px;" id="table10">
         <form method="post" action="" id="">
             <div class="panel admin-panel">
@@ -301,14 +275,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <tr>
                         <td >${MemcachedBaseResult.rps}</td>
                         <td >${MemcachedResult.rps}</td>
-                        <c:choose>
-                            <c:when test="${diffBean.rpsDiff>0}">
-                                <td ><img src="statics/images/up.png"/>${diffBean.rpsDiff}%</td>
-                            </c:when>
-                            <c:otherwise>
-                                <td ><img src="statics/images/down.png"/>${diffBean.rpsDiff}%</td>
-                            </c:otherwise>
-                        </c:choose>
+                     
                     </tr>
                 </table>
             </div>
@@ -328,14 +295,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <tr>
                         <td >${MemcachedBaseResult.getSetRate}</td>
                         <td >${MemcachedResult.getSetRate}</td>
-                        <c:choose>
-                            <c:when test="${diffBean.getSetRateDiff>0}">
-                                <td ><img src="statics/images/up.png"/>${diffBean.getSetRateDiff}%</td>
-                            </c:when>
-                            <c:otherwise>
-                                <td ><img src="statics/images/down.png"/>${diffBean.getSetRateDiff}%</td>
-                            </c:otherwise>
-                        </c:choose>
+                         
                     </tr>
                 </table>
             </div>

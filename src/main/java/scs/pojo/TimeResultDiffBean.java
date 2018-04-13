@@ -1,6 +1,5 @@
 package scs.pojo;
-
-import java.util.List;
+ 
 
 import scs.util.format.DataFormats; 
 /**
@@ -21,7 +20,7 @@ public class TimeResultDiffBean {
 	private float meanDiff;//响应时间平均值差异
 	private float minDiff; //响应时间最小值差异
 	private float maxDiff; //响应时间最大值差异
-	private float missRateDiff;//缺失率差异
+	private float missRateDiff;//缺失率差异 
 	
 	public TimeResultDiffBean(){}
  

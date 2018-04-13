@@ -6,7 +6,9 @@ import java.util.List;
  * @author yanan
  *
  */
-public class TimeResultBean {
+public class TimeResultBean { 
+	private int rps; //每秒钟请求数
+	private float getSetRate; //读写操作比 
 	private float nintyTh; //响应时间90分位数
 	private float nintyFiveTh; //响应时间95分位数
 	private float nintyNineTh; //响应时间99分位数
@@ -18,8 +20,11 @@ public class TimeResultBean {
 	private float missRate;//缺失率
 	
 	public TimeResultBean(){}
-	public TimeResultBean(float nintyTh, float nintyFiveTh, float nintyNineTh, List<TwoTuple<Float, Float>> cDF,
-			float var, float mean, float min, float max, float missRate) {
+	public TimeResultBean(int rps, float getSetRate, float nintyTh, float nintyFiveTh, float nintyNineTh,
+			List<TwoTuple<Float, Float>> cDF, float var, float mean, float min, float max, float missRate) {
+		super();
+		this.rps = rps;
+		this.getSetRate = getSetRate;
 		this.nintyTh = nintyTh;
 		this.nintyFiveTh = nintyFiveTh;
 		this.nintyNineTh = nintyNineTh;
@@ -30,10 +35,22 @@ public class TimeResultBean {
 		this.max = max;
 		this.missRate = missRate;
 	}
+	public int getRps() {
+		return rps;
+	}
+	public void setRps(int rps) {
+		this.rps = rps;
+	}
+	public float getGetSetRate() {
+		return getSetRate;
+	}
+	public void setGetSetRate(float getSetRate) {
+		this.getSetRate = getSetRate;
+	}
 	public float getNintyTh() {
 		return nintyTh;
 	}
-	public void setNintyth(float nintyTh) {
+	public void setNintyTh(float nintyTh) {
 		this.nintyTh = nintyTh;
 	}
 	public float getNintyFiveTh() {
@@ -86,8 +103,11 @@ public class TimeResultBean {
 	}
 	@Override
 	public String toString() {
-		return "TimeResultBean [nintyth=" + nintyTh + ", nintyFiveTh=" + nintyFiveTh + ", nintyNineTh=" + nintyNineTh
-				+ ", CDF=" + CDF + ", var=" + var + ", mean=" + mean + ", min=" + min + ", max=" + max + "]";
+		return "TimeResultBean [rps=" + rps + ", getSetRate=" + getSetRate + ", nintyTh=" + nintyTh + ", nintyFiveTh="
+				+ nintyFiveTh + ", nintyNineTh=" + nintyNineTh + ", CDF=" + CDF + ", var=" + var + ", mean=" + mean
+				+ ", min=" + min + ", max=" + max + ", missRate=" + missRate + "]";
 	}
-
+	
+	 
 }
+	 

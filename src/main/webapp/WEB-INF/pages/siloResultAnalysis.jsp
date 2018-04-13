@@ -58,8 +58,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </tr>
                     <tr>
 
-                        <td >${webSearchBaseResult.nintyTh}</td>
-                        <td >${webSearchResult.nintyTh}</td>
+                        <td >${siloBaseResult.nintyTh}</td>
+                        <td >${siloResult.nintyTh}</td>
                       <c:choose>
 							<c:when test="${diffBean.nintyThDiff>0}">
                                <td ><img src="statics/images/up.png"/>${diffBean.nintyThDiff}%</td>							
@@ -87,8 +87,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <th width="">变化率</th>
                     </tr>
                     <tr>
-                        <td >${webSearchBaseResult.nintyFiveTh}</td>
-                        <td >${webSearchResult.nintyFiveTh}</td>
+                        <td >${siloBaseResult.nintyFiveTh}</td>
+                        <td >${siloResult.nintyFiveTh}</td>
                         <c:choose>
 							<c:when test="${diffBean.nintyFiveThDiff>0}">
                                <td ><img src="statics/images/up.png"/>${diffBean.nintyFiveThDiff}%</td>							
@@ -117,8 +117,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <th width="">变化率</th>
                     </tr>
                     <tr>
-                        <td >${webSearchBaseResult.nintyNineTh}</td>
-                        <td >${webSearchResult.nintyNineTh}</td>
+                        <td >${siloBaseResult.nintyNineTh}</td>
+                        <td >${siloResult.nintyNineTh}</td>
                          <c:choose>
 							<c:when test="${diffBean.nintyNineThDiff>0}">
                                <td ><img src="statics/images/up.png"/>${diffBean.nintyNineThDiff}%</td>							
@@ -144,8 +144,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <th width="">变化率</th>
                     </tr>
                     <tr>
-                        <td >${webSearchBaseResult.var}</td>
-                        <td >${webSearchResult.var}</td>
+                        <td >${siloBaseResult.var}</td>
+                        <td >${siloResult.var}</td>
                          <c:choose>
 							<c:when test="${diffBean.varDiff>0}">
                                <td ><img src="statics/images/up.png"/>${diffBean.varDiff}%</td>							
@@ -171,8 +171,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <th width="">变化率</th>
                     </tr>
                     <tr>
-                        <td >${webSearchBaseResult.mean}</td>
-                        <td >${webSearchResult.mean}</td>
+                        <td >${siloBaseResult.mean}</td>
+                        <td >${siloResult.mean}</td>
                          <c:choose>
 							<c:when test="${diffBean.varDiff>0}">
                                <td ><img src="statics/images/up.png"/>${diffBean.meanDiff}%</td>							
@@ -198,8 +198,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <th width="">变化率</th>
                     </tr>
                     <tr>
-                        <td >${webSearchBaseResult.min}</td>
-                        <td >${webSearchResult.min}</td>
+                        <td >${siloBaseResult.min}</td>
+                        <td >${siloResult.min}</td>
                          <c:choose>
 							<c:when test="${diffBean.minDiff>0}">
                                <td ><img src="statics/images/up.png"/>${diffBean.minDiff}%</td>							
@@ -225,8 +225,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <th width="">变化率</th>
                     </tr>
                     <tr>
-                        <td >${webSearchBaseResult.max}</td>
-                        <td >${webSearchResult.max}</td>
+                        <td >${siloBaseResult.max}</td>
+                        <td >${siloResult.max}</td>
                          <c:choose>
 							<c:when test="${diffBean.maxDiff>0}">
                                <td ><img src="statics/images/up.png"/>${diffBean.maxDiff}%</td>							
@@ -252,8 +252,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <th width="">变化率</th>
                     </tr>
                     <tr>
-                        <td >${webSearchBaseResult.missRate}</td>
-                        <td >${webSearchResult.missRate}</td>
+                        <td >${siloBaseResult.missRate}</td>
+                        <td >${siloResult.missRate}</td>
                          <c:choose>
 							<c:when test="${diffBean.missRateDiff>0}">
                                <td ><img src="statics/images/up.png"/>${diffBean.missRateDiff}%</td>							

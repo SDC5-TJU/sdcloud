@@ -48,8 +48,6 @@ public class AppConfigController {
 			for(AppConfigBean bean:appConfiglist){ 
 				model.addAttribute(bean.getApplicationName(),bean); 
 			}
-			
-
 		}catch(Exception e){
 			logger.error("add Operator error"+e);
 			e.printStackTrace();
