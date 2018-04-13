@@ -44,7 +44,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div id="websearch2" style="width: 550px;height: 300px;position: absolute; left:600px;top: 50px;"></div>
     </div>
     <!--表-->
-    <div style=" width: 30%; position: absolute; top: 400px;left: 150px;" id="table">
+    <div>
+        <div style=" width: 30%; position: absolute; top: 400px;left: 150px;" id="table">
         <form method="post" action="" id="">
             <div class="panel admin-panel">
                 <!--<div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:web搜索</strong> <a href="" style="float:right; display:none;">添加字段</a></div>-->
@@ -56,15 +57,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <th width="">变化率</th>
                     </tr>
                     <tr>
-                        <td >${webServerBaseResult.nintyTh}</td>
-                        <td >${webServerResult.nintyTh}</td>
-                        <td >${diffBean.nintyThDiff}%</td>
+
+                        <td >${webServerBaseResult.nintyth}</td>
+                        <td >${webServerResult.nintyth}</td>
+                      <c:choose>
+							<c:when test="${diffBean.nintythDiff>0}">
+                               <td ><img src="statics/images/up.png"/>${diffBean.nintythDiff}%</td>							
+                            </c:when>
+							<c:otherwise>
+							   <td ><img src="statics/images/down.png"/>${diffBean.nintythDiff}%</td>							
+							
+							</c:otherwise>
+						</c:choose> 
+
                     </tr>
                 </table>
             </div>
         </form>
     </div>
-    <div style=" width: 30%; position: absolute; top: 400px;left: 600px;" id="table2">
+    <div style=" width: 30%; position: absolute; top: 400px;margin-left: 650px;" id="table2">
         <form method="post" action="" id="">
             <div class="panel admin-panel">
                 <!--<div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:web搜索</strong> <a href="" style="float:right; display:none;">添加字段</a></div>-->
@@ -78,12 +89,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <tr>
                         <td >${webServerBaseResult.nintyFiveTh}</td>
                         <td >${webServerResult.nintyFiveTh}</td>
-                        <td >${diffBean.nintyFiveThDiff}%</td>
+                        <c:choose>
+							<c:when test="${diffBean.nintyFiveThDiff>0}">
+                               <td ><img src="statics/images/up.png"/>${diffBean.nintyFiveThDiff}%</td>							
+                            </c:when>
+							<c:otherwise>
+							   <td ><img src="statics/images/down.png"/>${diffBean.nintyFiveThDiff}%</td>							
+							
+							</c:otherwise>
+						</c:choose> 
                     </tr>
                 </table>
             </div>
         </form>
     </div>
+    </div>
+
     <div style=" width: 30%; position: absolute; top: 530px;left: 150px;" id="table3">
         <form method="post" action="" id="">
             <div class="panel admin-panel">
@@ -98,13 +119,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <tr>
                         <td >${webServerBaseResult.nintyNineTh}</td>
                         <td >${webServerResult.nintyNineTh}</td>
-                        <td >${diffBean.nintyNineThDiff}%</td>
+                         <c:choose>
+							<c:when test="${diffBean.nintyNineThDiff>0}">
+                               <td ><img src="statics/images/up.png"/>${diffBean.nintyNineThDiff}%</td>							
+                            </c:when>
+							<c:otherwise>
+							   <td ><img src="statics/images/down.png"/>${diffBean.nintyFiveThDiff}%</td>							
+							</c:otherwise>
+						</c:choose>                        
                     </tr>
                 </table>
             </div>
         </form>
     </div>
-    <div style=" width: 30%; position: absolute; top: 530px;left: 600px;" id="table4">
+    <div style=" width: 30%; position: absolute; top: 530px;left: 650px;" id="table4">
         <form method="post" action="" id="">
             <div class="panel admin-panel">
                 <!--<div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:web搜索</strong> <a href="" style="float:right; display:none;">添加字段</a></div>-->
@@ -118,7 +146,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <tr>
                         <td >${webServerBaseResult.var}</td>
                         <td >${webServerResult.var}</td>
-                        <td >${diffBean.varDiff}%</td>
+                         <c:choose>
+							<c:when test="${diffBean.varDiff>0}">
+                               <td ><img src="statics/images/up.png"/>${diffBean.varDiff}%</td>							
+                            </c:when>
+							<c:otherwise>
+							   <td ><img src="statics/images/down.png"/>${diffBean.varDiff}%</td>							
+							</c:otherwise>
+						</c:choose>                           
                     </tr>
                 </table>
             </div>
@@ -138,13 +173,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <tr>
                         <td >${webServerBaseResult.mean}</td>
                         <td >${webServerResult.mean}</td>
-                        <td >${diffBean.meanDiff}%</td>
+                         <c:choose>
+							<c:when test="${diffBean.varDiff>0}">
+                               <td ><img src="statics/images/up.png"/>${diffBean.meanDiff}%</td>							
+                            </c:when>
+							<c:otherwise>
+							   <td ><img src="statics/images/down.png"/>${diffBean.meanDiff}%</td>							
+							</c:otherwise>
+						</c:choose>                         
                     </tr>
                 </table>
             </div>
         </form>
     </div>
-    <div style=" width: 30%; position: absolute; top: 660px;left: 600px;" id="table6">
+    <div style=" width: 30%; position: absolute; top: 660px;left: 650px;" id="table6">
         <form method="post" action="" id="">
             <div class="panel admin-panel">
                 <!--<div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:web搜索</strong> <a href="" style="float:right; display:none;">添加字段</a></div>-->
@@ -158,7 +200,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <tr>
                         <td >${webServerBaseResult.min}</td>
                         <td >${webServerResult.min}</td>
-                        <td >${diffBean.minDiff}%</td>
+                         <c:choose>
+							<c:when test="${diffBean.minDiff>0}">
+                               <td ><img src="statics/images/up.png"/>${diffBean.minDiff}%</td>							
+                            </c:when>
+							<c:otherwise>
+							   <td ><img src="statics/images/down.png"/>${diffBean.minDiff}%</td>							
+							</c:otherwise>
+						</c:choose>                           
                     </tr>
                 </table>
             </div>
@@ -178,13 +227,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <tr>
                         <td >${webServerBaseResult.max}</td>
                         <td >${webServerResult.max}</td>
-                        <td >${diffBean.maxDiff}%</td>
+                         <c:choose>
+							<c:when test="${diffBean.maxDiff>0}">
+                               <td ><img src="statics/images/up.png"/>${diffBean.maxDiff}%</td>							
+                            </c:when>
+							<c:otherwise>
+							   <td ><img src="statics/images/down.png"/>${diffBean.maxDiff}%</td>							
+							</c:otherwise>
+						</c:choose>                        
                     </tr>
                 </table>
             </div>
         </form>
     </div>
-        <div style=" width: 30%; position: absolute; top: 790px;left: 150px;" id="table7">
+        <div style=" width: 30%; position: absolute; top: 790px;left: 650px;" id="table8">
         <form method="post" action="" id="">
             <div class="panel admin-panel">
                 <!--<div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:web搜索</strong> <a href="" style="float:right; display:none;">添加字段</a></div>-->
@@ -198,7 +254,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <tr>
                         <td >${webServerBaseResult.missRate}</td>
                         <td >${webServerResult.missRate}</td>
-                        <td >${diffBean.missRateDiff}%</td>
+                         <c:choose>
+							<c:when test="${diffBean.missRateDiff>0}">
+                               <td ><img src="statics/images/up.png"/>${diffBean.missRateDiff}%</td>							
+                            </c:when>
+							<c:otherwise>
+							   <td ><img src="statics/images/down.png"/>${diffBean.missRateDiff}%</td>							
+							</c:otherwise>
+						</c:choose>                          
                     </tr>
                 </table>
             </div>
