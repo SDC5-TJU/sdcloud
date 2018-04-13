@@ -58,14 +58,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </tr>
                     <tr>
 
-                        <td >${webServerBaseResult.nintyth}</td>
-                        <td >${webServerResult.nintyth}</td>
+                        <td >${webServerBaseResult.nintyTh}</td>
+                        <td >${webServerResult.nintyTh}</td>
                       <c:choose>
-							<c:when test="${diffBean.nintythDiff>0}">
-                               <td ><img src="statics/images/up.png"/>${diffBean.nintythDiff}%</td>							
+							<c:when test="${diffBean.nintyThDiff>0}">
+                               <td ><img src="statics/images/up.png"/>${diffBean.nintyThDiff}%</td>							
                             </c:when>
 							<c:otherwise>
-							   <td ><img src="statics/images/down.png"/>${diffBean.nintythDiff}%</td>							
+							   <td ><img src="statics/images/down.png"/>${diffBean.nintyThDiff}%</td>							
 							
 							</c:otherwise>
 						</c:choose> 
