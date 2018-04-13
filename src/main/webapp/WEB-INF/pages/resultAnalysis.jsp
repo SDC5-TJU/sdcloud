@@ -57,6 +57,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <th width="">变化率</th>
                     </tr>
                     <tr>
+
                         <td >${webServerBaseResult.nintyth}</td>
                         <td >${webServerResult.nintyth}</td>
                       <c:choose>
@@ -68,6 +69,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							
 							</c:otherwise>
 						</c:choose> 
+
                     </tr>
                 </table>
             </div>
@@ -269,29 +271,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
 </div>
 
-<script type="text/javascript" src="../statics/js/jquery-1.9.1.js"></script>
-<script type="text/javascript" src="../statics/js/highcharts.js"></script>
-<script type="text/javascript" src="../statics/js/highcharts-more.js"></script>
+<script type="text/javascript" src="statics/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="statics/js/highcharts.js"></script>
+<script type="text/javascript" src="statics/js/highcharts-more.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        /*        $('#tableOn').click(function () {
-         $("#chart").hide();   //隐藏
-         $("#table").show();
-         })
-
-         $("#chartOn").click(function () {
-         $("#chart").show();   //隐藏
-         $("#table").hide();
-         })*/
+       
         Highcharts.chart('websearch2', {
-/*            chart: {
-                zoomType: 'x'
-            },*/
+ 
             boost: {
                 useGPUTranslations: true
             },
             title: {
-                text: 'Highcharts drawing ' + n + ' points'
+                text: 'Highcharts drawing points'
+            },
+            xAxis: {
+                type: 'datetime',
+                tickPixelInterval: 150
             },
             subtitle: {
                 text: 'Using the Boost module'
@@ -299,12 +295,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             tooltip: {
                 valueDecimals: 2
             },
-            series: [{
-                data:[12,12,32,34,2424,53,3223,23],
-            lineWidth: 0.5
-            }]
-        });
-        console.timeEnd('line');
+            series: [${diffBean.baseTimeStr}]
+        }); 
 
         Highcharts.chart('websearch1', {
             chart: {
@@ -315,63 +307,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             },
 
             xAxis: {
-                type: 'datetime',
-                // maxZoom:24 * 3600 * 1000, // x轴总共显示的时间
-                //min:<?=strtotime(date('Y-m-d'))?>,
-                dateTimeLabelFormats: {
-//                  minute: '%H:%M'
-                    day: '%H:%M'
-                }
+            	title: {
+                    text: 'used rate'
+                },
+                min:0
             },
             yAxis: {
                 title: {
                     text: 'used rate'
                 },
-                min:0
-
+                min:0,
+                max:1, 
             },
             legend: {
                 layout: 'vertical',
                 align: 'right',
                 verticalAlign: 'middle'
             },
-            plotOptions: {
-                area: {
-                    fillColor: {
-                        linearGradient: {
-                            x1: 0,
-                            y1: 0,
-                            x2: 0,
-                            y2: 1
-                        },
-                        stops: [
-                            [0, Highcharts.getOptions().colors[0]],
-                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                        ]
-                    },
-                    marker: {
-                        radius: 2
-                    },
-                    lineWidth: 1,
-                    states: {
-                        hover: {
-                            lineWidth: 1
-                        }
-                    },
-                    threshold: null
-                }
+            plotOptions: { 
+            	
             },
 
-            series: [{
-                type: 'area',
-                name:'测试一下',
-                data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,214,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,22,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,99,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-                ],
-                pointInterval: 306000,
-                pointStart: Date.UTC(2014, 6, 10,0,0,0),
-                pointEnd:Date.UTC(2014,6,10,23,59,59),
-                // pointEnd:Date.UTC(<?php date('Y , m, d',strtotime('-1 month'))?>, 0, 0, 0;?>)
-            }]
+            series: [${diffBean.baseCDFStr}]
         });
 
 

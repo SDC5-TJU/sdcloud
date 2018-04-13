@@ -1,29 +1,20 @@
 package scs.pojo;
 
-import java.util.List; 
+import java.util.List;
+
+import scs.util.format.DataFormats; 
 /**
  * 在线应用响应时间统计结果实体类
  * @author yanan
  *
  */
 public class TimeResultDiffBean {
-	/*private float nintyth; //响应时间90分位数
-	private float nintyFiveTh; //响应时间95分位数
-	private float nintyNineTh; //响应时间99分位数 
-	private float var; //响应时间方差
-	private float mean;//响应时间平均值
-	private float min; //响应时间最小值
-	private float max; //响应时间最大值
-	private float baseNintyth; //基准值响应时间90分位数
-	private float baseNintyFiveTh; //基准值响应时间95分位数
-	private float baseNintyNineTh; //基准值响应时间99分位数 
-	private float baseVar; //基准值响应时间方差
-	private float baseMean;//基准值响应时间平均值
-	private float baseM; //基准值响应时间最小值
-	private TimeResultBean.javafloat baseMax; //基准值响应时间最大值*/
-	private TimeResultBean baseResult;
-	private TimeResultBean result;
-	private float nintythDiff; //响应时间90分位数差异
+	private DataFormats format=DataFormats.getInstance();
+	private String baseTimeStr;
+	private String TimeStr;
+	private String baseCDFStr;
+	private String CDFStr;
+	private float nintyThDiff; //响应时间90分位数差异
 	private float nintyFiveThDiff; //响应时间95分位数差异
 	private float nintyNineThDiff; //响应时间99分位数 差异
 	private float varDiff; //响应时间方差差异
@@ -33,85 +24,95 @@ public class TimeResultDiffBean {
 	private float missRateDiff;//缺失率差异
 	
 	public TimeResultDiffBean(){}
-	public TimeResultDiffBean(TimeResultBean baseResult, TimeResultBean result, float nintythDiff,
-			float nintyFiveThDiff, float nintyNineThDiff, float varDiff, float meanDiff, float minDiff, float maxDiff, float missRateDiff) {
-		super();
-		this.baseResult = baseResult;
-		this.result = result;
-		this.nintythDiff = nintythDiff;
-		this.nintyFiveThDiff = nintyFiveThDiff;
-		this.nintyNineThDiff = nintyNineThDiff;
-		this.varDiff = varDiff;
-		this.meanDiff = meanDiff;
-		this.minDiff = minDiff;
-		this.maxDiff = maxDiff;
-		this.missRateDiff = missRateDiff;
+ 
+ 
+	public String getBaseTimeStr() {
+		return baseTimeStr;
 	}
-	public TimeResultBean getBaseResult() {
-		return baseResult;
+
+
+	public void setBaseTimeStr(String baseTimeStr) {
+		this.baseTimeStr = baseTimeStr;
 	}
-	public void setBaseResult(TimeResultBean baseResult) {
-		this.baseResult = baseResult;
+
+
+	public String getTimeStr() {
+		return TimeStr;
 	}
-	public TimeResultBean getResult() {
-		return result;
+
+
+	public void setTimeStr(String timeStr) {
+		TimeStr = timeStr;
 	}
-	public void setResult(TimeResultBean result) {
-		this.result = result;
+
+
+	public String getBaseCDFStr() {
+		return baseCDFStr;
 	}
-	public float getNintythDiff() {
-		return nintythDiff;
+
+
+	public void setBaseCDFStr(String baseCDFStr) {
+		this.baseCDFStr = baseCDFStr;
 	}
-	public void setNintythDiff(float nintythDiff) {
-		this.nintythDiff = nintythDiff;
+
+
+	public String getCDFStr() {
+		return CDFStr;
+	}
+
+
+	public void setCDFStr(String cDFStr) {
+		CDFStr = cDFStr;
+	}
+
+
+	public float getNintyThDiff() {
+		return nintyThDiff;
+	}
+	public void setNintyThDiff(float nintyThDiff) {
+		this.nintyThDiff = format.subFloat(nintyThDiff,1);
 	}
 	public float getNintyFiveThDiff() {
 		return nintyFiveThDiff;
 	}
 	public void setNintyFiveThDiff(float nintyFiveThDiff) {
-		this.nintyFiveThDiff = nintyFiveThDiff;
+		this.nintyFiveThDiff = format.subFloat(nintyFiveThDiff,1);
 	}
 	public float getNintyNineThDiff() {
 		return nintyNineThDiff;
 	}
 	public void setNintyNineThDiff(float nintyNineThDiff) {
-		this.nintyNineThDiff = nintyNineThDiff;
+		this.nintyNineThDiff = format.subFloat(nintyNineThDiff,1);
 	}
 	public float getVarDiff() {
 		return varDiff;
 	}
 	public void setVarDiff(float varDiff) {
-		this.varDiff = varDiff;
+		this.varDiff = format.subFloat(varDiff,1);
 	}
 	public float getMeanDiff() {
 		return meanDiff;
 	}
 	public void setMeanDiff(float meanDiff) {
-		this.meanDiff = meanDiff;
+		this.meanDiff = format.subFloat(meanDiff,1);
 	}
 	public float getMinDiff() {
 		return minDiff;
 	}
 	public void setMinDiff(float minDiff) {
-		this.minDiff = minDiff;
+		this.minDiff = format.subFloat(minDiff,1);
 	}
 	public float getMaxDiff() {
 		return maxDiff;
 	}
 	public void setMaxDiff(float maxDiff) {
-		this.maxDiff = maxDiff;
+		this.maxDiff = format.subFloat(maxDiff,1);
 	}
 	public float getMissRateDiff() {
 		return missRateDiff;
 	}
 	public void setMissRateDiff(float missRateDiff) {
-		this.missRateDiff = missRateDiff;
-	}
-	@Override
-	public String toString() {
-		return "TimeResultDiffBean [baseResult=" + baseResult + ", result=" + result + ", nintythDiff=" + nintythDiff
-				+ ", nintyFiveThDiff=" + nintyFiveThDiff + ", nintyNineThDiff=" + nintyNineThDiff + ", varDiff="
-				+ varDiff + ", meanDiff=" + meanDiff + ", minDiff=" + minDiff + ", maxDiff=" + maxDiff + "]";
+		this.missRateDiff = format.subFloat(missRateDiff,1);
 	}
 	 
 }

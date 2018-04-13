@@ -70,7 +70,7 @@
 	<bean id="CronTriggerBean"
 		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="SpringQtzJobMethod"></property>
-		<property name="cronExpression" value="0/10 * * * * ?"></property>
+		<property name="cronExpression" value="0/20 * * * * ?"></property>
 	</bean>
 	<!-- ======================== 调度工厂 ======================== -->
 	<bean id="SpringJobSchedulerFactoryBean"

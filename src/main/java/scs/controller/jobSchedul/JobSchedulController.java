@@ -24,6 +24,7 @@ import scs.pojo.TwoTuple;
 import scs.service.appConfig.AppConfigService;
 import scs.service.jobSchedul.JobSchedulService;
 import scs.service.recordManage.RecordManageService;
+import scs.util.repository.Repository;
 import scs.util.tools.ResultDiffAnalysis; 
 
 /**
@@ -218,7 +219,7 @@ public class JobSchedulController {
 		try{ 
 			TimeResultBean webServerBaseResult=new TimeResultBean();
 			List<TwoTuple<Float,Float>> cdfList=new ArrayList<TwoTuple<Float,Float>>();
-			for(int i=0;i<10;i++){
+			for(int i=0;i<=10;i++){
 				cdfList.add(new TwoTuple<Float,Float>((float)i,(float)(i*0.1)));
 			} 
 			webServerBaseResult.setCDF(cdfList);
@@ -233,7 +234,7 @@ public class JobSchedulController {
 			
 			TimeResultBean webServerResult=new TimeResultBean();
 			cdfList.clear();
-			for(int i=0;i<10;i++){
+			for(int i=0;i<=10;i++){
 				cdfList.add(new TwoTuple<Float,Float>((float)i,(float)(i*i*0.01)));
 			} 
 			webServerResult.setCDF(cdfList);
@@ -248,7 +249,16 @@ public class JobSchedulController {
 			
 			model.addAttribute("webServerResult",webServerResult);
 			model.addAttribute("webServerBaseResult",webServerBaseResult);
-			TimeResultDiffBean diffBean=ResultDiffAnalysis.getInstance().getResultDiff(webServerBaseResult,webServerResult);
+			for(int i=0;i<100;i++){
+				Repository.webServerBaseDataList.add(new TwoTuple<Long,Integer>(System.currentTimeMillis(),new Random().nextInt(200)));
+				Repository.webServerDataList.add(new TwoTuple<Long,Integer>(System.currentTimeMillis(),new Random().nextInt(800)));
+				Thread.sleep(10);
+			} 
+			Thread.sleep(10);
+			Repository.webServerBaseDataList.add(new TwoTuple<Long,Integer>(System.currentTimeMillis(),65535));
+			Repository.webServerDataList.add(new TwoTuple<Long,Integer>(System.currentTimeMillis(),65535));
+			 
+			TimeResultDiffBean diffBean=ResultDiffAnalysis.getInstance().getResultDiff(Repository.webServerBaseDataList,Repository.webServerDataList,webServerBaseResult,webServerResult);
 			model.addAttribute("diffBean",diffBean);
 		}catch(Exception e){
 			logger.error("add Operator error"+e);
@@ -338,7 +348,7 @@ public class JobSchedulController {
 			e.printStackTrace();
 		}
 	}
-	@RequestMapping("/getPhyResourceUse.do")
+	//@RequestMapping("/getPhyResourceUse.do")
 	public void getPhyResourceUse(HttpServletRequest request,HttpServletResponse response,Model model){
 		try{ 
 			SystemResourceUsageBean bean=new SystemResourceUsageBean();

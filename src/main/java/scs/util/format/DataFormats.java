@@ -1,6 +1,7 @@
 package scs.util.format;
 
  
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  */
 public class DataFormats {
 	private static DataFormats dataFormat=null;
-
+     
 	private DataFormats(){}
 
 	public synchronized static DataFormats getInstance() {
@@ -20,6 +21,11 @@ public class DataFormats {
 			dataFormat = new DataFormats();
 		}  
 		return dataFormat;
+	}
+	public float subFloat(float value,int length){
+		BigDecimal bd=new BigDecimal((double)value);    
+		bd=bd.setScale(length,4);    
+		return bd.floatValue();   
 	}
 	/**
 	 * 2位16进制数转8位2进制
