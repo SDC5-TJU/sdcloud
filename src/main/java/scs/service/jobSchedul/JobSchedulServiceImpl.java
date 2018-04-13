@@ -79,9 +79,9 @@ public class JobSchedulServiceImpl implements JobSchedulService {
 		if(driver.execute("cassandra",isBase)!=0){
 			int testRecordId=rDao.getLatestRecordId();
 			if(isBase==1){
-				//result=dao.addSiloData(Repository.siloBaseDataList,testRecordId,isBase);
+				result=dao.addCassandraData(Repository.cassandraBaseDataList,testRecordId,isBase);
 			}else{
-				//result=dao.addSiloData(Repository.siloDataList,testRecordId,isBase);
+				result=dao.addCassandraData(Repository.cassandraDataList,testRecordId,isBase);
 			}
 		}
 		return result;

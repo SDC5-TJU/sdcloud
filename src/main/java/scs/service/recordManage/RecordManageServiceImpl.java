@@ -37,7 +37,7 @@ public class RecordManageServiceImpl implements RecordManageService {
 			AppConfigBean bonnie=new AppConfigBean("bonnie","manuStop","","","循环","4096",latestRecordId,1);
 			AppConfigBean scimark=new AppConfigBean("scimark","autoStop","","","单次","4",latestRecordId,1);
 			AppConfigBean hadoop=new AppConfigBean("hadoop","autoStop","","","IO密集型","4",latestRecordId,1);
-			AppConfigBean cassandra=new AppConfigBean("cassandra","autoStop","","","","",latestRecordId,1);
+			AppConfigBean cassandra=new AppConfigBean("cassandra","autoStop","500","500","泊松","10",latestRecordId,1);
 			
 			map.put(webSearch.getApplicationName(),webSearch);
 			map.put(webServer.getApplicationName(),webServer);
