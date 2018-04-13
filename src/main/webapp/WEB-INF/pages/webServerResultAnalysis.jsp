@@ -147,6 +147,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <th width="">无干扰 响应时间最大值</th>
                         <th width="">干扰下 响应时间最大值</th>
                         <th width="">变化率</th>
+                        <th width="">无干扰 缺失率</th>
+                        <th width="">干扰下 缺失率</th>
+                        <th width="">变化率</th>
                     </tr>
                     <tr>
                         <td >${webServerBaseResult.max}</td>
@@ -159,6 +162,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 <td ><img src="statics/images/down.png"/>${diffBean.maxDiff}%</td>
                             </c:otherwise>
                         </c:choose>
+                        <td >${webServerBaseResult.missRate}</td>
+                        <td >${webServerResult.missRate}</td>
+                         <c:choose>
+							<c:when test="${diffBean.missRateDiff>0}">
+                               <td ><img src="statics/images/up.png"/>${diffBean.missRateDiff}%</td>							
+                            </c:when>
+							<c:otherwise>
+							   <td ><img src="statics/images/down.png"/>${diffBean.missRateDiff}%</td>							
+							</c:otherwise>
+						</c:choose>
                     </tr>
                 </table>
             </div>
@@ -207,14 +220,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             },
         colors: ['#058DC7', '#ff3300'],
             // series: [${diffBean.baseCDFStr}]
-            series:[{name:'无干扰下cdf分布1',
-                data:[[0.0,0.0],[1.0,0.01],[2.0,0.04],[3.0,0.09],[4.0,0.16],[5.0,0.25],[6.0,0.36],[7.0,0.49],[8.0,0.64],[9.0,0.81],[10.0,1.0]]}
-                ,
-                {name:'无干扰下cdf分布2',
-
-                 data:[[0.0,0.05],[1.0,0.05],[2.0,0.04],[3.0,0.09],[4.0,0.16],[5.0,0.25],[6.0,0.36],[7.0,0.09],[8.0,0.64],[9.0,0.81],[10.0,1.0]]}]
-
-
+            series:[${diffBean.baseCDFStr},${diffBean.CDFStr}]
 });
         Highcharts.chart('websearch2', {
 

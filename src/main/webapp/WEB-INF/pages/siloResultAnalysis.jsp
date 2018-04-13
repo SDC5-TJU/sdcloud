@@ -221,12 +221,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             },
         colors: ['#058DC7', '#ff3300'],
             // series: [${diffBean.baseCDFStr}]
-            series:[{name:'无干扰下cdf分布1',
-                data:[[0.0,0.0],[1.0,0.01],[2.0,0.04],[3.0,0.09],[4.0,0.16],[5.0,0.25],[6.0,0.36],[7.0,0.49],[8.0,0.64],[9.0,0.81],[10.0,1.0]]}
-                ,
-                {name:'无干扰下cdf分布2',
-
-                 data:[[0.0,0.05],[1.0,0.05],[2.0,0.04],[3.0,0.09],[4.0,0.16],[5.0,0.25],[6.0,0.36],[7.0,0.09],[8.0,0.64],[9.0,0.81],[10.0,1.0]]}]
+            series:[${diffBean.baseCDFStr},${diffBean.CDFStr}]
 
 
 });
@@ -260,10 +255,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             title: {
                 text: 'Highcharts drawing points'
             },
-            xAxis: {
-                type: 'datetime',
-                tickPixelInterval: 150
-            },
             subtitle: {
                 text: 'Using the Boost module'
             },
@@ -280,11 +271,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             },
             title: {
                 text: 'Highcharts drawing points'
-            },
-            xAxis: {
-                type: 'datetime',
-                tickPixelInterval: 150
-            },
+            }, 
             subtitle: {
                 text: 'Using the Boost module'
             },
