@@ -38,20 +38,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 </div>
 <div>
-    <!--表-->
-    <div>
-        <div style=" width: 30%; position: absolute; top: 100px;left: 150px;" id="table">
-            <form method="post" action="" id="">
-                <div class="panel admin-panel">
-                    <!--<div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:web搜索</strong> <a href="" style="float:right; display:none;">添加字段</a></div>-->
+    <!--图-->
+    <div style="width: 900px;" id="chart">
+        <div id="websearch1" style="width: 750px;height: 300px; position: absolute;top: 50px;left:50px;"></div>
 
-                    <table class="table table-hover text-center">
-                        <tr>
-                            <th width="">无干扰 响应时间90分位数</th>
-                            <th width="">干扰下 响应时间90分位数</th>
-                            <th width="">变化率</th>
-                        </tr>
-                        <tr>
+    </div>
+    <!--表-->
+        <div style=" width: 1100px; position: absolute; top: 400px;left: 100px;" id="table">
+        <form method="post" action="" id="">
+            <div class="panel admin-panel">
+                <div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:memcached</strong> <a href="" style="float:right; display:none;">添加字段</a></div>
+
+                <table class="table table-hover text-center">
+                    <tr>
+                        <th width="">无干扰 响应时间90th</th>
+                        <th width="">干扰下 响应时间90th</th>
+                        <th width="">变化率</th>
+                        <th width="">无干扰 响应时间95th</th>
+                        <th width="">干扰下 响应时间95th</th>
+                        <th width="">变化率</th>
+                    </tr>
+                    <tr>
                             <td >${MemcachedBaseResult.nintyTh}</td>
                             <td >${MemcachedResult.nintyTh}</td>
                             <c:choose>
@@ -60,26 +67,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 </c:when>
                                 <c:otherwise>
                                     <td ><img src="statics/images/down.png"/>${diffBean.nintyThDiff}%</td>
-
                                 </c:otherwise>
                             </c:choose>
-                        </tr>
-                    </table>
-                </div>
-            </form>
-        </div>
-        <div style=" width: 30%; position: absolute; top: 100px;margin-left: 650px;" id="table2">
-            <form method="post" action="" id="">
-                <div class="panel admin-panel">
-                    <!--<div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:web搜索</strong> <a href="" style="float:right; display:none;">添加字段</a></div>-->
-
-                    <table class="table table-hover text-center">
-                        <tr>
-                            <th width="">无干扰 响应时间95分位数</th>
-                            <th width="">干扰下 响应时间95分位数</th>
-                            <th width="">变化率</th>
-                        </tr>
-                        <tr>
                             <td >${MemcachedBaseResult.nintyFiveTh}</td>
                             <td >${MemcachedResult.nintyFiveTh}</td>
                             <c:choose>
@@ -88,25 +77,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 </c:when>
                                 <c:otherwise>
                                     <td ><img src="statics/images/down.png"/>${diffBean.nintyFiveThDiff}%</td>
-
                                 </c:otherwise>
                             </c:choose>
-                        </tr>
-                    </table>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div style=" width: 30%; position: absolute; top: 230px;left: 150px;" id="table3">
-        <form method="post" action="" id="">
-            <div class="panel admin-panel">
-                <!--<div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:电商服务</strong> <a href="" style="float:right; display:none;">添加字段</a></div>-->
-
-                <table class="table table-hover text-center">
+                    </tr>
                     <tr>
-                        <th width="">无干扰 响应时间99分位数</th>
-                        <th width="">干扰下 响应时间99分位数</th>
+                        <th width="">无干扰 响应时间99th</th>
+                        <th width="">干扰下 响应时间99th</th>
+                        <th width="">变化率</th>
+                        <th width="">无干扰 响应时间方差</th>
+                        <th width="">干扰下 响应时间方差</th>
                         <th width="">变化率</th>
                     </tr>
                     <tr>
@@ -119,24 +98,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <c:otherwise>
                                 <td ><img src="statics/images/down.png"/>${diffBean.nintyNineThDiff}%</td>
                             </c:otherwise>
-                        </c:choose>
-                    </tr>
-                </table>
-            </div>
-        </form>
-    </div>
-    <div style=" width: 30%; position: absolute; top: 230px;left: 650px;" id="table4">
-        <form method="post" action="" id="">
-            <div class="panel admin-panel">
-                <!--<div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:web搜索</strong> <a href="" style="float:right; display:none;">添加字段</a></div>-->
-
-                <table class="table table-hover text-center">
-                    <tr>
-                        <th width="">无干扰 响应时间方差</th>
-                        <th width="">干扰下 响应时间方差</th>
-                        <th width="">变化率</th>
-                    </tr>
-                    <tr>
+                        </c:choose> 
                         <td >${MemcachedBaseResult.var}</td>
                         <td >${MemcachedResult.var}</td>
                         <c:choose>
@@ -148,19 +110,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             </c:otherwise>
                         </c:choose>
                     </tr>
-                </table>
-            </div>
-        </form>
-    </div>
-    <div style=" width: 30%; position: absolute; top: 360px;left: 150px;" id="table5">
-        <form method="post" action="" id="">
-            <div class="panel admin-panel">
-                <!--<div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:web搜索</strong> <a href="" style="float:right; display:none;">添加字段</a></div>-->
-
-                <table class="table table-hover text-center">
                     <tr>
                         <th width="">无干扰 平均延迟</th>
                         <th width="">干扰下 平均延迟</th>
+                        <th width="">变化率</th>
+                        <th width="">无干扰 响应时间最小值</th>
+                        <th width="">干扰下 响应时间最小值</th>
                         <th width="">变化率</th>
                     </tr>
                     <tr>
@@ -173,24 +128,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <c:otherwise>
                                 <td ><img src="statics/images/down.png"/>${diffBean.meanDiff}%</td>
                             </c:otherwise>
-                        </c:choose>
-                    </tr>
-                </table>
-            </div>
-        </form>
-    </div>
-    <div style=" width: 30%; position: absolute; top: 360px;left: 650px;" id="table6">
-        <form method="post" action="" id="">
-            <div class="panel admin-panel">
-                <!--<div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:web搜索</strong> <a href="" style="float:right; display:none;">添加字段</a></div>-->
-
-                <table class="table table-hover text-center">
-                    <tr>
-                        <th width="">无干扰 响应时间最小值</th>
-                        <th width="">干扰下 响应时间最小值</th>
-                        <th width="">变化率</th>
-                    </tr>
-                    <tr>
+                        </c:choose>   
                         <td >${MemcachedBaseResult.min}</td>
                         <td >${MemcachedResult.min}</td>
                         <c:choose>
@@ -202,19 +140,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             </c:otherwise>
                         </c:choose>
                     </tr>
-                </table>
-            </div>
-        </form>
-    </div>
-    <div style=" width: 30%; position: absolute; top: 490px;left: 150px;" id="table7">
-        <form method="post" action="" id="">
-            <div class="panel admin-panel">
-                <!--<div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:web搜索</strong> <a href="" style="float:right; display:none;">添加字段</a></div>-->
-
-                <table class="table table-hover text-center">
                     <tr>
                         <th width="">无干扰 响应时间最大值</th>
                         <th width="">干扰下 响应时间最大值</th>
+                        <th width="">变化率</th>
+						<th width="">无干扰 缺失率</th>
+                        <th width="">干扰下 缺失率</th>
                         <th width="">变化率</th>
                     </tr>
                     <tr>
@@ -227,24 +158,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <c:otherwise>
                                 <td ><img src="statics/images/down.png"/>${diffBean.maxDiff}%</td>
                             </c:otherwise>
-                        </c:choose>
-                    </tr>
-                </table>
-            </div>
-        </form>
-    </div>
-    <div style=" width: 30%; position: absolute; top: 490px;left: 650px;" id="table8">
-        <form method="post" action="" id="">
-            <div class="panel admin-panel">
-                <!--<div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:web搜索</strong> <a href="" style="float:right; display:none;">添加字段</a></div>-->
-
-                <table class="table table-hover text-center">
-                    <tr>
-                        <th width="">无干扰 未命中次数</th>
-                        <th width="">干扰下 未命中次数</th>
-                        <th width="">变化率</th>
-                    </tr>
-                    <tr>
+                        </c:choose> 
                         <td >${MemcachedBaseResult.missRate}</td>
                         <td >${MemcachedResult.missRate}</td>
                         <c:choose>
@@ -254,54 +168,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <c:otherwise>
                                 <td ><img src="statics/images/down.png"/>${diffBean.missRateDiff}%</td>
                             </c:otherwise>
-                        </c:choose>
+                        </c:choose>  						
                     </tr>
-                </table>
-            </div>
-        </form>
-    </div>
-
-    <div style=" width: 30%; position: absolute; top: 620px;left: 650px;" id="table10">
-        <form method="post" action="" id="">
-            <div class="panel admin-panel">
-                <!--<div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:web搜索</strong> <a href="" style="float:right; display:none;">添加字段</a></div>-->
-
-                <table class="table table-hover text-center">
-                    <tr>
+					<tr>
                         <th width="">无干扰 每秒钟请求数</th>
                         <th width="">干扰下 每秒钟请求数</th>
+                        <th width="">变化率</th>
+						<th width="">无干扰 读写操作比</th>
+                        <th width="">干扰下 读写操作比</th>
                         <th width="">变化率</th>
                     </tr>
                     <tr>
                         <td >${MemcachedBaseResult.rps}</td>
                         <td >${MemcachedResult.rps}</td>
-                     
-                    </tr>
-                </table>
-            </div>
-        </form>
-    </div>
-    <div style=" width: 30%; position: absolute; top: 750px;left: 150px;" id="table11">
-        <form method="post" action="" id="">
-            <div class="panel admin-panel">
-                <!--<div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:web搜索</strong> <a href="" style="float:right; display:none;">添加字段</a></div>-->
-
-                <table class="table table-hover text-center">
-                    <tr>
-                        <th width="">无干扰 读写操作比</th>
-                        <th width="">干扰下 读写操作比</th>
-                        <th width="">变化率</th>
-                    </tr>
-                    <tr>
+						<td></td>
                         <td >${MemcachedBaseResult.getSetRate}</td>
                         <td >${MemcachedResult.getSetRate}</td>
-                         
+                        <td></td>						
                     </tr>
                 </table>
             </div>
         </form>
     </div>
-
 
 </div>
 </div>
@@ -311,18 +199,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="../statics/js/highcharts-more.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        /*        $('#tableOn').click(function () {
-         $("#chart").hide();   //隐藏
-         $("#table").show();
-         })
+        Highcharts.chart('websearch1', {
 
-         $("#chartOn").click(function () {
-         $("#chart").show();   //隐藏
-         $("#table").hide();
-         })*/
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: '包含负值的柱形图'
+            },
+            xAxis: {
+                categories: ['90th', '95th', '99th', '方差', '平均延迟','最小值','最大值','缺失率']
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                data: [${diffBean.nintyThDiff}, ${diffBean.nintyFiveThDiff}, ${diffBean.nintyNineThDiff},
+                       ${diffBean.varDiff}, ${diffBean.meanDiff},${diffBean.minDiff},${diffBean.maxDiff},${diffBean.missRateDiff}]
+            }]
 
 
-
+        });
     });
 </script>
 </body>

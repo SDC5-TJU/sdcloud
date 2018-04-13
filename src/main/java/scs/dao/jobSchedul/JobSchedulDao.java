@@ -9,5 +9,6 @@ public interface JobSchedulDao{
 	public int addMemcachedData(List<MemcachedDataBean> list,int testRecordId,int isBase);
 	public int addWebServerData(List<TwoTuple<Long,Integer>> list,int testRecordId,int isBase); 
 	public int addWebSearchData(List<TwoTuple<Long,Integer>> list,int testRecordId,int isBase); 
+	public int addCassandraData(List<TwoTuple<Long,Integer>> list,int testRecordId,int isBase); 
 	public int addSiloData(List<SiloDataBean> list,int testRecordId,int isBase);  
 }
