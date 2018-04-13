@@ -321,19 +321,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
                 <table class="table table-hover text-center">
                     <tr>
-                        <th width="">无干扰 请求总数</th>
-                        <th width="">干扰下 请求总数</th>
+                        <th width="">无干扰 读写操作比</th>
+                        <th width="">干扰下 读写操作比</th>
                         <th width="">变化率</th>
                     </tr>
                     <tr>
-                        <td >${MemcachedBaseResult.requests}</td>
-                        <td >${MemcachedResult.requests}</td>
+                        <td >${MemcachedBaseResult.getSetRate}</td>
+                        <td >${MemcachedResult.getSetRate}</td>
                         <c:choose>
-                            <c:when test="${diffBean.requestsDiff>0}">
-                                <td ><img src="statics/images/up.png"/>${diffBean.requestsDiff}%</td>
+                            <c:when test="${diffBean.getSetRateDiff>0}">
+                                <td ><img src="statics/images/up.png"/>${diffBean.getSetRateDiff}%</td>
                             </c:when>
                             <c:otherwise>
-                                <td ><img src="statics/images/down.png"/>${diffBean.requestsDiff}%</td>
+                                <td ><img src="statics/images/down.png"/>${diffBean.getSetRateDiff}%</td>
                             </c:otherwise>
                         </c:choose>
                     </tr>
@@ -341,60 +341,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div>
         </form>
     </div>
-    <div style=" width: 30%; position: absolute; top: 750px;left: 650px;" id="table12">
-        <form method="post" action="" id="">
-            <div class="panel admin-panel">
-                <!--<div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:web搜索</strong> <a href="" style="float:right; display:none;">添加字段</a></div>-->
 
-                <table class="table table-hover text-center">
-                    <tr>
-                        <th width="">无干扰 get数</th>
-                        <th width="">干扰下 get数</th>
-                        <th width="">变化率</th>
-                    </tr>
-                    <tr>
-                        <td >${MemcachedBaseResult.gets}</td>
-                        <td >${MemcachedResult.gets}</td>
-                        <c:choose>
-                            <c:when test="${diffBean.getsDiff>0}">
-                                <td ><img src="statics/images/up.png"/>${diffBean.getsDiff}%</td>
-                            </c:when>
-                            <c:otherwise>
-                                <td ><img src="statics/images/down.png"/>${diffBean.getsDiff}%</td>
-                            </c:otherwise>
-                        </c:choose>
-                    </tr>
-                </table>
-            </div>
-        </form>
-    </div>
-    <div style=" width: 30%; position: absolute; top: 880px;left: 150px;" id="table13">
-        <form method="post" action="" id="">
-            <div class="panel admin-panel">
-                <!--<div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:web搜索</strong> <a href="" style="float:right; display:none;">添加字段</a></div>-->
-
-                <table class="table table-hover text-center">
-                    <tr>
-                        <th width="">无干扰 set数</th>
-                        <th width="">干扰下 set数</th>
-                        <th width="">变化率</th>
-                    </tr>
-                    <tr>
-                        <td >${MemcachedBaseResult.sets}</td>
-                        <td >${MemcachedResult.sets}</td>
-                        <c:choose>
-                            <c:when test="${diffBean.setsDiff>0}">
-                                <td ><img src="statics/images/up.png"/>${diffBean.setsDiff}%</td>
-                            </c:when>
-                            <c:otherwise>
-                                <td ><img src="statics/images/down.png"/>${diffBean.setsDiff}%</td>
-                            </c:otherwise>
-                        </c:choose>
-                    </tr>
-                </table>
-            </div>
-        </form>
-    </div>
 
 </div>
 </div>
