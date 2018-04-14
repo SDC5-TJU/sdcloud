@@ -240,6 +240,10 @@ public class JobSchedulController {
 		 
 			TimeResultDiffBean diffBean=ResultDiffAnalysis.getInstance().getMemResultDiff(memBaseResult,memResult);
 			model.addAttribute("diffBean",diffBean);
+			List<AppConfigBean> appConfiglist=aService.getAppConfig(testRecordId);
+			for(AppConfigBean bean:appConfiglist){ 
+				model.addAttribute(bean.getApplicationName(),bean); 
+			}
 		}catch(Exception e){
 			logger.error("add Operator error"+e);
 			e.printStackTrace();
@@ -295,6 +299,10 @@ public class JobSchedulController {
 			 
 			TimeResultDiffBean diffBean=ResultDiffAnalysis.getInstance().getResultDiff(Repository.webServerBaseDataList,Repository.webServerDataList,webServerBaseResult,webServerResult);
 			model.addAttribute("diffBean",diffBean);
+			List<AppConfigBean> appConfiglist=aService.getAppConfig(testRecordId);
+			for(AppConfigBean bean:appConfiglist){ 
+				model.addAttribute(bean.getApplicationName(),bean); 
+			}
 		}catch(Exception e){
 			logger.error("add Operator error"+e);
 			e.printStackTrace();
@@ -350,6 +358,10 @@ public class JobSchedulController {
 			 
 			TimeResultDiffBean diffBean=ResultDiffAnalysis.getInstance().getResultDiff(Repository.webSearchBaseDataList,Repository.webSearchDataList,webSearchBaseResult,webSearchResult);
 			model.addAttribute("diffBean",diffBean);
+			List<AppConfigBean> appConfiglist=aService.getAppConfig(testRecordId);
+			for(AppConfigBean bean:appConfiglist){ 
+				model.addAttribute(bean.getApplicationName(),bean); 
+			}
 		}catch(Exception e){ 
 			e.printStackTrace();
 		}
@@ -404,6 +416,10 @@ public class JobSchedulController {
 			
 			TimeResultDiffBean diffBean=ResultDiffAnalysis.getInstance().getsiloResultDiff(Repository.siloBaseDataList,Repository.siloDataList,siloBaseResult,siloResult);
 			model.addAttribute("diffBean",diffBean);
+			List<AppConfigBean> appConfiglist=aService.getAppConfig(testRecordId);
+			for(AppConfigBean bean:appConfiglist){ 
+				model.addAttribute(bean.getApplicationName(),bean); 
+			}
 		}catch(Exception e){
 			logger.error("add Operator error"+e);
 			e.printStackTrace();

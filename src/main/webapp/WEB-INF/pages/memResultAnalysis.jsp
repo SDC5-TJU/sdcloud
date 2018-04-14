@@ -22,18 +22,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body style="height:950px;">
 <div >
     <ul class="nav nav-tabs" >
+       <c:if test="${webSearch.enable==1}">
         <li class="" style="float: left;">
-            <a  href="#" id="websearch">web搜索</a>
+            <a  href="getWebSearchResult.do?testRecordId=${testRecordId}" target="_blank" id="websearch">web搜索</a>
         </li>
+       </c:if>
+       <c:if test="${webServer.enable==1}">
         <li class="" style="float: left;">
-            <a  href="#" id="webserver">电商服务</a>
+            <a  href="getWebServerResult.do?testRecordId=${testRecordId}" target="_blank" id="webserver">电商服务</a>
         </li>
+       </c:if>
+       <c:if test="${silo.enable==1}">        
         <li class="" style="float: left;">
-            <a  href="#" id="silo">silo</a>
+            <a  href="getSiloResult.do?testRecordId=${testRecordId}" target="_blank" id="silo">silo</a>
         </li>
+       </c:if>
+       <c:if test="${memcached.enable==1}">  
         <li class="" style="float: left;">
-            <a  href="#" id="memcached">memcached</a>
+            <a  href="getMemcachedResult.do?testRecordId=${testRecordId}" target="_blank" id="memcached">memcached</a>
         </li>
+       </c:if> 
     </ul>
 
 </div>
@@ -51,16 +59,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
                 <table class="table table-hover text-center">
                     <tr>
-                        <th width="">无干扰 响应时间90th</th>
-                        <th width="">干扰下 响应时间90th</th>
+                        <th style="background:#f9f9f9" width="">无干扰 响应时间90th</th>
+                        <th style="background:#f1f5fa" width="">干扰下 响应时间90th</th>
                         <th width="">变化率</th>
-                        <th width="">无干扰 响应时间95th</th>
-                        <th width="">干扰下 响应时间95th</th>
+                        <th style="background:#f9f9f9" width="">无干扰 响应时间95th</th>
+                        <th style="background:#f1f5fa" width="">干扰下 响应时间95th</th>
                         <th width="">变化率</th>
                     </tr>
                     <tr>
-                            <td >${MemcachedBaseResult.nintyTh}</td>
-                            <td >${MemcachedResult.nintyTh}</td>
+                            <td style="background:#f9f9f9">${MemcachedBaseResult.nintyTh}</td>
+                            <td style="background:#f1f5fa" >${MemcachedResult.nintyTh}</td>
                             <c:choose>
                                 <c:when test="${diffBean.nintyThDiff>0}">
                                     <td ><img src="statics/images/up.png"/>${diffBean.nintyThDiff}%</td>
@@ -69,8 +77,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                     <td ><img src="statics/images/down.png"/>${diffBean.nintyThDiff}%</td>
                                 </c:otherwise>
                             </c:choose>
-                            <td >${MemcachedBaseResult.nintyFiveTh}</td>
-                            <td >${MemcachedResult.nintyFiveTh}</td>
+                            <td style="background:#f9f9f9">${MemcachedBaseResult.nintyFiveTh}</td>
+                            <td style="background:#f1f5fa" >${MemcachedResult.nintyFiveTh}</td>
                             <c:choose>
                                 <c:when test="${diffBean.nintyFiveThDiff>0}">
                                     <td ><img src="statics/images/up.png"/>${diffBean.nintyFiveThDiff}%</td>
@@ -81,16 +89,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             </c:choose>
                     </tr>
                     <tr>
-                        <th width="">无干扰 响应时间99th</th>
-                        <th width="">干扰下 响应时间99th</th>
+                        <th style="background:#f9f9f9" width="">无干扰 响应时间99th</th>
+                        <th style="background:#f1f5fa" width="">干扰下 响应时间99th</th>
                         <th width="">变化率</th>
-                        <th width="">无干扰 响应时间方差</th>
-                        <th width="">干扰下 响应时间方差</th>
+                        <th style="background:#f9f9f9" width="">无干扰 响应时间方差</th>
+                        <th style="background:#f1f5fa" width="">干扰下 响应时间方差</th>
                         <th width="">变化率</th>
                     </tr>
                     <tr>
-                        <td >${MemcachedBaseResult.nintyNineTh}</td>
-                        <td >${MemcachedResult.nintyNineTh}</td>
+                        <td style="background:#f9f9f9">${MemcachedBaseResult.nintyNineTh}</td>
+                        <td style="background:#f1f5fa">${MemcachedResult.nintyNineTh}</td>
                         <c:choose>
                             <c:when test="${diffBean.nintyNineThDiff>0}">
                                 <td ><img src="statics/images/up.png"/>${diffBean.nintyNineThDiff}%</td>
@@ -99,8 +107,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 <td ><img src="statics/images/down.png"/>${diffBean.nintyNineThDiff}%</td>
                             </c:otherwise>
                         </c:choose> 
-                        <td >${MemcachedBaseResult.var}</td>
-                        <td >${MemcachedResult.var}</td>
+                        <td style="background:#f9f9f9">${MemcachedBaseResult.var}</td>
+                        <td style="background:#f1f5fa" >${MemcachedResult.var}</td>
                         <c:choose>
                             <c:when test="${diffBean.varDiff>0}">
                                 <td ><img src="statics/images/up.png"/>${diffBean.varDiff}%</td>
@@ -111,16 +119,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         </c:choose>
                     </tr>
                     <tr>
-                        <th width="">无干扰 平均延迟</th>
-                        <th width="">干扰下 平均延迟</th>
+                        <th style="background:#f9f9f9" width="">无干扰 平均延迟</th>
+                        <th style="background:#f1f5fa" width="">干扰下 平均延迟</th>
                         <th width="">变化率</th>
-                        <th width="">无干扰 响应时间最小值</th>
-                        <th width="">干扰下 响应时间最小值</th>
+                        <th style="background:#f9f9f9"width="">无干扰 响应时间最小值</th>
+                        <th style="background:#f1f5fa" width="">干扰下 响应时间最小值</th>
                         <th width="">变化率</th>
                     </tr>
                     <tr>
-                        <td >${MemcachedBaseResult.mean}</td>
-                        <td >${MemcachedResult.mean}</td>
+                        <td style="background:#f9f9f9">${MemcachedBaseResult.mean}</td>
+                        <td style="background:#f1f5fa" >${MemcachedResult.mean}</td>
                         <c:choose>
                             <c:when test="${diffBean.meanDiff>0}">
                                 <td ><img src="statics/images/up.png"/>${diffBean.meanDiff}%</td>
@@ -129,8 +137,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 <td ><img src="statics/images/down.png"/>${diffBean.meanDiff}%</td>
                             </c:otherwise>
                         </c:choose>   
-                        <td >${MemcachedBaseResult.min}</td>
-                        <td >${MemcachedResult.min}</td>
+                        <td style="background:#f9f9f9">${MemcachedBaseResult.min}</td>
+                        <td style="background:#f1f5fa" >${MemcachedResult.min}</td>
                         <c:choose>
                             <c:when test="${diffBean.minDiff>0}">
                                 <td ><img src="statics/images/up.png"/>${diffBean.minDiff}%</td>
@@ -141,16 +149,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         </c:choose>
                     </tr>
                     <tr>
-                        <th width="">无干扰 响应时间最大值</th>
-                        <th width="">干扰下 响应时间最大值</th>
+                        <th style="background:#f9f9f9" width="">无干扰 响应时间最大值</th>
+                        <th style="background:#f1f5fa" width="">干扰下 响应时间最大值</th>
                         <th width="">变化率</th>
-						<th width="">无干扰 缺失率</th>
-                        <th width="">干扰下 缺失率</th>
+						<th style="background:#f9f9f9" width="">无干扰 缺失率</th>
+                        <th style="background:#f1f5fa" width="">干扰下 缺失率</th>
                         <th width="">变化率</th>
                     </tr>
                     <tr>
-                        <td >${MemcachedBaseResult.max}</td>
-                        <td >${MemcachedResult.max}</td>
+                        <td style="background:#f9f9f9">${MemcachedBaseResult.max}</td>
+                        <td style="background:#f1f5fa" >${MemcachedResult.max}</td>
                         <c:choose>
                             <c:when test="${diffBean.maxDiff>0}">
                                 <td ><img src="statics/images/up.png"/>${diffBean.maxDiff}%</td>
@@ -159,8 +167,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 <td ><img src="statics/images/down.png"/>${diffBean.maxDiff}%</td>
                             </c:otherwise>
                         </c:choose> 
-                        <td >${MemcachedBaseResult.missRate}</td>
-                        <td >${MemcachedResult.missRate}</td>
+                        <td style="background:#f9f9f9">${MemcachedBaseResult.missRate}</td>
+                        <td style="background:#f1f5fa" >${MemcachedResult.missRate}</td>
                         <c:choose>
                             <c:when test="${diffBean.missRateDiff>0}">
                                 <td ><img src="statics/images/up.png"/>${diffBean.missRateDiff}%</td>
@@ -171,19 +179,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         </c:choose>  						
                     </tr>
 					<tr>
-                        <th width="">无干扰 每秒钟请求数</th>
-                        <th width="">干扰下 每秒钟请求数</th>
+                        <th style="background:#f9f9f9" width="">无干扰 每秒钟请求数</th>
+                        <th style="background:#f1f5fa" width="">干扰下 每秒钟请求数</th>
                         <th width="">变化率</th>
-						<th width="">无干扰 读写操作比</th>
-                        <th width="">干扰下 读写操作比</th>
+						<th style="background:#f9f9f9" width="">无干扰 读写操作比</th>
+                        <th style="background:#f1f5fa" width="">干扰下 读写操作比</th>
                         <th width="">变化率</th>
                     </tr>
                     <tr>
-                        <td >${MemcachedBaseResult.rps}</td>
-                        <td >${MemcachedResult.rps}</td>
+                        <td style="background:#f9f9f9">${MemcachedBaseResult.rps}</td>
+                        <td style="background:#f1f5fa" >${MemcachedResult.rps}</td>
 						<td></td>
-                        <td >${MemcachedBaseResult.getSetRate}</td>
-                        <td >${MemcachedResult.getSetRate}</td>
+                        <td style="background:#f9f9f9">${MemcachedBaseResult.getSetRate}</td>
+                        <td style="background:#f1f5fa" >${MemcachedResult.getSetRate}</td>
                         <td></td>						
                     </tr>
                 </table>
