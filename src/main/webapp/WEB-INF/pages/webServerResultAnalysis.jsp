@@ -24,22 +24,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <ul class="nav nav-tabs" >
        <c:if test="${webSearch.enable==1}">
         <li class="" style="float: left;">
-            <a  href=" " target="_blank" id="websearch">web搜索</ a>
+            <a  href="getWebSearchResult.do?testRecordId=${testRecordId}" target="_blank" id="websearch">web搜索</a>
         </li>
        </c:if>
        <c:if test="${webServer.enable==1}">
         <li class="" style="float: left;">
-            <a  href="getWebServerResult.do?testRecordId=${testRecordId}" target="_blank" id="webserver">电商服务</ a>
+            <a  href="getWebServerResult.do?testRecordId=${testRecordId}" target="_blank" id="webserver">电商服务</a>
         </li>
        </c:if>
        <c:if test="${silo.enable==1}">        
         <li class="" style="float: left;">
-            <a  href="getSiloResult.do?testRecordId=${testRecordId}" target="_blank" id="silo">silo</ a>
+            <a  href="getSiloResult.do?testRecordId=${testRecordId}" target="_blank" id="silo">silo</a>
         </li>
        </c:if>
        <c:if test="${memcached.enable==1}">  
         <li class="" style="float: left;">
-            <a  href="getMemcachedResult.do?testRecordId=${testRecordId}" target="_blank" id="memcached">memcached</ a>
+            <a  href="getMemcachedResult.do?testRecordId=${testRecordId}" target="_blank" id="memcached">memcached</a>
         </li>
        </c:if> 
     </ul>

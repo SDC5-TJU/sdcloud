@@ -244,6 +244,7 @@ public class JobSchedulController {
 			for(AppConfigBean bean:appConfiglist){ 
 				model.addAttribute(bean.getApplicationName(),bean); 
 			}
+			model.addAttribute("testRecordId",testRecordId);
 		}catch(Exception e){
 			logger.error("add Operator error"+e);
 			e.printStackTrace();
@@ -303,6 +304,7 @@ public class JobSchedulController {
 			for(AppConfigBean bean:appConfiglist){ 
 				model.addAttribute(bean.getApplicationName(),bean); 
 			}
+			model.addAttribute("testRecordId",testRecordId);
 		}catch(Exception e){
 			logger.error("add Operator error"+e);
 			e.printStackTrace();
@@ -362,6 +364,7 @@ public class JobSchedulController {
 			for(AppConfigBean bean:appConfiglist){ 
 				model.addAttribute(bean.getApplicationName(),bean); 
 			}
+			model.addAttribute("testRecordId",testRecordId);
 		}catch(Exception e){ 
 			e.printStackTrace();
 		}
@@ -420,6 +423,7 @@ public class JobSchedulController {
 			for(AppConfigBean bean:appConfiglist){ 
 				model.addAttribute(bean.getApplicationName(),bean); 
 			}
+			model.addAttribute("testRecordId",testRecordId);
 		}catch(Exception e){
 			logger.error("add Operator error"+e);
 			e.printStackTrace();
