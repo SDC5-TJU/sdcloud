@@ -19,7 +19,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="statics/js/jquery.js"></script>
     <script src="statics/js/pintuer.js"></script>
 </head>
-<body>
+<body style="height:1200px;">
 <div >
     <ul class="nav nav-tabs" >
         <li class="" style="float: left;">
@@ -193,7 +193,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 zoomType: 'x'
             },
             title: {
-                text: ''
+                text: 'webSever尾延迟累积分布'
             },
 
             xAxis: {
@@ -204,11 +204,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             },
             yAxis: {
                 title: {
-                    text: '累计概率'
+                    text: '累积概率'
                 },
                 min:0,
                 max:1,
-                tickPositions: [0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0]
+                tickPositions: [0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0],
             },
             legend: {
                 layout: 'vertical',
@@ -225,18 +225,35 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         Highcharts.chart('websearch2', {
 
             chart: {
-                type: 'column'
+                type: 'column',
+                zoomType: 'x'
             },
             title: {
-                text: '包含负值的柱形图'
+                text: 'websever各项指标变化率'
             },
             xAxis: {
                 categories: ['90th', '95th', '99th', '方差', '平均值','最小值','最大值']
             },
+            yAxis: {
+                title: {
+                    text: '变化率/%'
+                },
+            },
+            legend: {                                                                    
+                enabled: false                                                           
+            } ,
+            tooltip: {
+                formatter: function () {
+                	return '<span style="color: '+ this.series.color + '">\u25CF</span> '+
+                    this.series.name+': <br/><b>'+ this.x+'变化'+this.y+'%' +'</b><br/>.'
+                  }
+                }, 
             credits: {
                 enabled: false
             },
+           
             series: [{
+            	name:'webSever',
                 data: [${diffBean.nintyThDiff}, ${diffBean.nintyFiveThDiff}, ${diffBean.nintyNineThDiff},
                        ${diffBean.varDiff}, ${diffBean.meanDiff},${diffBean.minDiff},${diffBean.maxDiff}]
             }]
@@ -245,43 +262,62 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         });
         
         Highcharts.chart('websearch3', {
-        	 
+            title: {
+                text: '无干扰下访问延迟分布'
+            },
+            chart: {
+                zoomType: 'x'
+            },
             boost: {
                 useGPUTranslations: true
             },
-            title: {
-                text: 'Highcharts drawing points'
-            },
+            legend: {                                                                    
+                enabled: false                                                           
+            } ,
             xAxis: {
                 type: 'datetime',
                 tickPixelInterval: 150
             },
-            subtitle: {
-                text: 'Using the Boost module'
+            yAxis: {
+                title: {
+                    text: '响应时间/ms'
+                },
             },
             tooltip: {
-                valueDecimals: 2
+                
+                xDateFormat: '%Y-%m-%d %H:%M:%S.%L',
+                valueSuffix: 'ms',
             },
             series: [${diffBean.baseTimeStr}]
         });
         
         Highcharts.chart('websearch4', {
-        	 
+            title: {
+                text: '干扰下访问延迟分布'
+            },
+            chart: {
+                zoomType: 'x'
+            },
             boost: {
                 useGPUTranslations: true
-            },
-            title: {
-                text: 'Highcharts drawing points'
             },
             xAxis: {
                 type: 'datetime',
                 tickPixelInterval: 150
             },
-            subtitle: {
-                text: 'Using the Boost module'
+            colors: ['#ff3300'],
+            yAxis: {
+                title: {
+                    text: '响应时间/ms'
+                },
             },
+            legend: {                                                                    
+                enabled: false                                                           
+            } ,
             tooltip: {
-                valueDecimals: 2
+                
+                xDateFormat: '%Y-%m-%d %H:%M:%S.%L',
+                valueSuffix: 'ms'
             },
             series: [${diffBean.baseTimeStr}]
         }); 
