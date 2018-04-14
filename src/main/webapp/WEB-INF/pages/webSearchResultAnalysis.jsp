@@ -21,19 +21,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <body style="height:1200px;">
 <div >
-    <ul class="nav nav-tabs" >
+<ul class="nav nav-tabs" >
+       <c:if test="${webSearch.enable==1}">
         <li class="" style="float: left;">
-            <a  href="#" id="websearch">web搜索</a>
+            <a  href=" " target="_blank" id="websearch">web搜索</ a>
         </li>
+       </c:if>
+       <c:if test="${webServer.enable==1}">
         <li class="" style="float: left;">
-            <a  href="#" id="webserver">电商服务</a>
+            <a  href="getWebServerResult.do?testRecordId=${testRecordId}" target="_blank" id="webserver">电商服务</ a>
         </li>
+       </c:if>
+       <c:if test="${silo.enable==1}">        
         <li class="" style="float: left;">
-            <a  href="#" id="silo">silo</a>
+            <a  href="getSiloResult.do?testRecordId=${testRecordId}" target="_blank" id="silo">silo</ a>
         </li>
+       </c:if>
+       <c:if test="${memcached.enable==1}">  
         <li class="" style="float: left;">
-            <a  href="#" id="memcached">memcached</a>
+            <a  href="getMemcachedResult.do?testRecordId=${testRecordId}" target="_blank" id="memcached">memcached</ a>
         </li>
+       </c:if> 
     </ul>
 
 </div>
@@ -53,16 +61,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
                 <table class="table table-hover text-center">
                     <tr>
-                        <th width="">无干扰 响应时间90th</th>
-                        <th width="">干扰下 响应时间90th</th>
+                        <th style="background:#f9f9f9" width="">无干扰 响应时间90th</th>
+                        <th style="background:#f1f5fa" width="">干扰下 响应时间90th</th>
                         <th width="">变化率</th>
-                        <th width="">无干扰 响应时间95th</th>
-                        <th width="">干扰下 响应时间95th</th>
+                        <th style="background:#f9f9f9" width="">无干扰 响应时间95th</th>
+                        <th style="background:#f1f5fa" width="">干扰下 响应时间95th</th>
                         <th width="">变化率</th>
                     </tr>
                     <tr>
-                        <td>${webSearchBaseResult.nintyTh}</td>
-                        <td>${webSearchResult.nintyTh}</td>
+                        <td style="background:#f9f9f9">${webSearchBaseResult.nintyTh}</td>
+                        <td style="background:#f1f5fa">${webSearchResult.nintyTh}</td>
                       <c:choose>
 							<c:when test="${diffBean.nintyThDiff>0}">
                                <td ><img src="statics/images/up.png"/>${diffBean.nintyThDiff}%</td>							
@@ -71,8 +79,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							   <td ><img src="statics/images/down.png"/>${diffBean.nintyThDiff}%</td>														
 							</c:otherwise>
 						</c:choose> 
-                        <td >${webSearchBaseResult.nintyFiveTh}</td>
-                        <td >${webSearchResult.nintyFiveTh}</td>
+                        <td style="background:#f9f9f9" >${webSearchBaseResult.nintyFiveTh}</td>
+                        <td style="background:#f1f5fa" >${webSearchResult.nintyFiveTh}</td>
                         <c:choose>
 							<c:when test="${diffBean.nintyFiveThDiff>0}">
                                <td ><img src="statics/images/up.png"/>${diffBean.nintyFiveThDiff}%</td>							
@@ -83,16 +91,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</c:choose>
                     </tr>
                     <tr>
-                        <th width="">无干扰 响应时间99th</th>
-                        <th width="">干扰下 响应时间99th</th>
+                        <th style="background:#f9f9f9" width="">无干扰 响应时间99th</th>
+                        <th style="background:#f1f5fa" width="">干扰下 响应时间99th</th>
                         <th width="">变化率</th>
-                        <th width="">无干扰 响应时间方差</th>
-                        <th width="">干扰下 响应时间方差</th>
+                        <th style="background:#f9f9f9" width="">无干扰 响应时间方差</th>
+                        <th style="background:#f1f5fa" width="">干扰下 响应时间方差</th>
                         <th width="">变化率</th>
                     </tr>
                     <tr>
-                        <td >${webSearchBaseResult.nintyNineTh}</td>
-                        <td >${webSearchResult.nintyNineTh}</td>
+                        <td style="background:#f9f9f9" >${webSearchBaseResult.nintyNineTh}</td>
+                        <td style="background:#f1f5fa" >${webSearchResult.nintyNineTh}</td>
                          <c:choose>
 							<c:when test="${diffBean.nintyNineThDiff>0}">
                                <td ><img src="statics/images/up.png"/>${diffBean.nintyNineThDiff}%</td>							
@@ -101,8 +109,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							   <td ><img src="statics/images/down.png"/>${diffBean.nintyFiveThDiff}%</td>							
 							</c:otherwise>
 						</c:choose>
-                        <td >${webSearchBaseResult.var}</td>
-                        <td >${webSearchResult.var}</td>
+                        <td style="background:#f9f9f9" >${webSearchBaseResult.var}</td>
+                        <td style="background:#f1f5fa" >${webSearchResult.var}</td>
                          <c:choose>
 							<c:when test="${diffBean.varDiff>0}">
                                <td ><img src="statics/images/up.png"/>${diffBean.varDiff}%</td>							
@@ -113,16 +121,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</c:choose> 
                     </tr>
                     <tr>
-                        <th width="">无干扰 响应时间平均值</th>
-                        <th width="">干扰下 响应时间平均值</th>
+                        <th style="background:#f9f9f9" width="">无干扰 响应时间平均值</th>
+                        <th style="background:#f1f5fa" width="">干扰下 响应时间平均值</th>
                         <th width="">变化率</th>
-                        <th width="">无干扰 响应时间最小值</th>
-                        <th width="">干扰下 响应时间最小值</th>
+                        <th style="background:#f9f9f9" width="">无干扰 响应时间最小值</th>
+                        <th style="background:#f1f5fa" width="">干扰下 响应时间最小值</th>
                         <th width="">变化率</th>
                     </tr>
                     <tr>
-                        <td >${webSearchBaseResult.mean}</td>
-                        <td >${webSearchResult.mean}</td>
+                        <td style="background:#f9f9f9" >${webSearchBaseResult.mean}</td>
+                        <td style="background:#f1f5fa" >${webSearchResult.mean}</td>
                          <c:choose>
 							<c:when test="${diffBean.varDiff>0}">
                                <td ><img src="statics/images/up.png"/>${diffBean.meanDiff}%</td>							
@@ -131,8 +139,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							   <td ><img src="statics/images/down.png"/>${diffBean.meanDiff}%</td>							
 							</c:otherwise>
 						</c:choose>  
-                        <td >${webSearchBaseResult.min}</td>
-                        <td >${webSearchResult.min}</td>
+                        <td style="background:#f9f9f9" >${webSearchBaseResult.min}</td>
+                        <td style="background:#f1f5fa" >${webSearchResult.min}</td>
                          <c:choose>
 							<c:when test="${diffBean.minDiff>0}">
                                <td ><img src="statics/images/up.png"/>${diffBean.minDiff}%</td>							
@@ -143,16 +151,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</c:choose> 
                     </tr>
                     <tr>
-                        <th width="">无干扰 响应时间最大值</th>
-                        <th width="">干扰下 响应时间最大值</th>
+                        <th style="background:#f9f9f9" width="">无干扰 响应时间最大值</th>
+                        <th style="background:#f1f5fa" width="">干扰下 响应时间最大值</th>
                         <th width="">变化率</th>
-						<th width="">无干扰 缺失率</th>
-                        <th width="">干扰下 缺失率</th>
+						<th style="background:#f9f9f9" width="">无干扰 缺失率</th>
+                        <th style="background:#f1f5fa" width="">干扰下 缺失率</th>
                         <th width="">变化率</th>
                     </tr>
                     <tr>
-                        <td >${webSearchBaseResult.max}</td>
-                        <td >${webSearchResult.max}</td>
+                        <td style="background:#f9f9f9" >${webSearchBaseResult.max}</td>
+                        <td style="background:#f1f5fa" >${webSearchResult.max}</td>
                          <c:choose>
 							<c:when test="${diffBean.maxDiff>0}">
                                <td ><img src="statics/images/up.png"/>${diffBean.maxDiff}%</td>							
@@ -161,8 +169,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							   <td ><img src="statics/images/down.png"/>${diffBean.maxDiff}%</td>							
 							</c:otherwise>
 						</c:choose>
-                        <td >${webSearchBaseResult.missRate}</td>
-                        <td >${webSearchResult.missRate}</td>
+                        <td style="background:#f9f9f9" >${webSearchBaseResult.missRate}</td>
+                        <td style="background:#f1f5fa" >${webSearchResult.missRate}</td>
                          <c:choose>
 							<c:when test="${diffBean.missRateDiff>0}">
                                <td ><img src="statics/images/up.png"/>${diffBean.missRateDiff}%</td>							
