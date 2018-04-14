@@ -194,9 +194,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
 </div>
 
-<script type="text/javascript" src="../statics/js/jquery-1.9.1.js"></script>
-<script type="text/javascript" src="../statics/js/highcharts.js"></script>
-<script type="text/javascript" src="../statics/js/highcharts-more.js"></script>
+<script type="text/javascript" src="statics/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="statics/js/highcharts.js"></script>
+<script type="text/javascript" src="statics/js/highcharts-more.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         Highcharts.chart('websearch1', {

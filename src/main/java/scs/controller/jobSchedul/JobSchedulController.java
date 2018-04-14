@@ -251,11 +251,11 @@ public class JobSchedulController {
 			@RequestParam(value="testRecordId",required=true) int testRecordId){
 		try{ 
 			TimeResultBean webServerBaseResult=new TimeResultBean();
-			List<TwoTuple<Float,Float>> cdfList=new ArrayList<TwoTuple<Float,Float>>();
+			List<TwoTuple<Float,Float>> baseCdfList=new ArrayList<TwoTuple<Float,Float>>();
 			for(int i=0;i<=10;i++){
-				cdfList.add(new TwoTuple<Float,Float>((float)i,(float)(i*0.1)));
+				baseCdfList.add(new TwoTuple<Float,Float>((float)i,(float)(i*0.1)));
 			} 
-			webServerBaseResult.setCDF(cdfList);
+			webServerBaseResult.setCDF(baseCdfList);
 			webServerBaseResult.setNintyTh(326);
 			webServerBaseResult.setNintyFiveTh(388);
 			webServerBaseResult.setNintyNineTh(466);
@@ -266,7 +266,7 @@ public class JobSchedulController {
 			webServerBaseResult.setMissRate((float)10.0);
 			
 			TimeResultBean webServerResult=new TimeResultBean();
-			cdfList.clear();
+			List<TwoTuple<Float,Float>> cdfList=new ArrayList<TwoTuple<Float,Float>>();
 			for(int i=0;i<=10;i++){
 				cdfList.add(new TwoTuple<Float,Float>((float)i,(float)(i*i*0.01)));
 			} 
@@ -306,11 +306,11 @@ public class JobSchedulController {
 			@RequestParam(value="testRecordId",required=true) int testRecordId){
 		try{ 
 			TimeResultBean webSearchBaseResult=new TimeResultBean();
-			List<TwoTuple<Float,Float>> cdfList=new ArrayList<TwoTuple<Float,Float>>();
+			List<TwoTuple<Float,Float>> baseCdfList=new ArrayList<TwoTuple<Float,Float>>();
 			for(int i=0;i<=10;i++){
-				cdfList.add(new TwoTuple<Float,Float>((float)i,(float)(i*0.1)));
+				baseCdfList.add(new TwoTuple<Float,Float>((float)i,(float)(i*0.1)));
 			} 
-			webSearchBaseResult.setCDF(cdfList);
+			webSearchBaseResult.setCDF(baseCdfList);
 			webSearchBaseResult.setNintyTh(326);
 			webSearchBaseResult.setNintyFiveTh(388);
 			webSearchBaseResult.setNintyNineTh(466);
@@ -321,7 +321,7 @@ public class JobSchedulController {
 			webSearchBaseResult.setMissRate((float)10.0);
 			
 			TimeResultBean webSearchResult=new TimeResultBean();
-			cdfList.clear();
+			List<TwoTuple<Float,Float>> cdfList=new ArrayList<TwoTuple<Float,Float>>();
 			for(int i=0;i<=10;i++){
 				cdfList.add(new TwoTuple<Float,Float>((float)i,(float)(i*i*0.01)));
 			} 
@@ -360,11 +360,11 @@ public class JobSchedulController {
 			@RequestParam(value="testRecordId",required=true) int testRecordId){
 		try{ 
 			TimeResultBean siloBaseResult=new TimeResultBean();
-			List<TwoTuple<Float,Float>> cdfList=new ArrayList<TwoTuple<Float,Float>>();
+			List<TwoTuple<Float,Float>> baseCdfList=new ArrayList<TwoTuple<Float,Float>>();
 			for(int i=0;i<=10;i++){
-				cdfList.add(new TwoTuple<Float,Float>((float)i,(float)(i*0.1)));
+				baseCdfList.add(new TwoTuple<Float,Float>((float)i,(float)(i*0.1)));
 			} 
-			siloBaseResult.setCDF(cdfList);
+			siloBaseResult.setCDF(baseCdfList);
 			siloBaseResult.setNintyTh(326);
 			siloBaseResult.setNintyFiveTh(388);
 			siloBaseResult.setNintyNineTh(466);
@@ -375,7 +375,7 @@ public class JobSchedulController {
 			siloBaseResult.setMissRate((float)10.0);
 			
 			TimeResultBean siloResult=new TimeResultBean();
-			cdfList.clear();
+			List<TwoTuple<Float,Float>> cdfList=new ArrayList<TwoTuple<Float,Float>>();
 			for(int i=0;i<=10;i++){
 				cdfList.add(new TwoTuple<Float,Float>((float)i,(float)(i*i*0.01)));
 			} 

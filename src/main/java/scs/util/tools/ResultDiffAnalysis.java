@@ -225,7 +225,7 @@ public class ResultDiffAnalysis {
 		StringBuffer strName=new StringBuffer();
 		StringBuffer strData=new StringBuffer();
 		StringBuffer HSeries=new StringBuffer();
-		strName.append("{name:'无干扰下访问延迟分布',lineWidth:0.5,"); 
+		strName.append("{name:'无干扰下访问延迟分布',lineWidth:0.5,");
 		strData.append("data:[");
 		int size=baseTimeList.size()-1;
 		for(int i=0;i<size;i++){

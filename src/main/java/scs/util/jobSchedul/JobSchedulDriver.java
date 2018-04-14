@@ -46,6 +46,7 @@ public class JobSchedulDriver {
 		}
 		System.out.println("执行 execute完毕 "+appName);
 		//resultSize=instance.processResult(isBase);//返回结果数量给调用者
+		System.out.println("result="+resultSize);
 		if(Repository.appConfigMap.get(appName).getApplicationType().equals("autoStop")){
 			Repository.appStatusMap.put(appName,false);//执行完毕,标记该作业执行状态为未执行
 		} 

@@ -1,9 +1,5 @@
 package scs.service.jobSchedul;
-
-import java.util.List;
-
-import scs.pojo.AppConfigBean;
-
+  
 /**
  * 登录service层接口
  * @author YangYanan
