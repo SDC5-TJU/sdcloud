@@ -28,13 +28,15 @@ public class SystemResourceController {
 	@Autowired
 	@Qualifier("systemMonitor")
 	public SystemMonitor systemMonitor;
+	
 
 	/**
 	 * @author jztong
-	 * @param number 根据主机名对应的标号查找静态数组最近一次的查询信息
+	 * @param number
+	 *            根据主机名对应的标号查找静态数组最近一次的查询信息
 	 * @return 由最近一次的资源使用信息封装起来的数据对象
 	 */
-	@RequestMapping(value="/getPhyResourceUse.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/getPhyResourceUse.do", method = RequestMethod.GET)
 	@ResponseBody
 	public String getSystemReal(@RequestParam("no") int number) {
 		TableSystemresourceusage realSystemData = systemMonitor.getRealSystemResourceFromStaticData(number);
@@ -51,18 +53,19 @@ public class SystemResourceController {
 	public String JsonChangeCronFlag(@RequestBody int flag) {
 		// 返回操作结果
 		if (flag == 1 && Repository.cronFlag == 0) {
-			//关闭采集
+			// 关闭采集
 			Repository.cronFlag = 1;
 			return "已开启";
-		}else if(flag == 0 && Repository.cronFlag == 1){
+		} else if (flag == 0 && Repository.cronFlag == 1) {
 			return "已关闭";
 		}
 		return null;
 	}
-	
+
 	/**
 	 * @author jztong
-	 * @param number 根据主机名对应的标号查找数据库最近60次的监控信息
+	 * @param number
+	 *            根据主机名对应的标号查找数据库最近60次的监控信息
 	 * @return 拼接字符串
 	 */
 	@RequestMapping(value = "/phyMoniter.do", method = RequestMethod.GET)
@@ -113,13 +116,13 @@ public class SystemResourceController {
 			HIoSeries.append(strIoName).append(strIoData).append(",marker: {enabled: false}}");
 			HNetSeries.append(strNetName).append(strNetData).append(",marker: {enabled: false}}");
 			model.addAttribute("cpu", HCpuSeries.toString());
-			model.addAttribute("mem", HMemSeries.toString());
+			model.addAttribute("memory", HMemSeries.toString());
 			model.addAttribute("io", HIoSeries.toString());
 			model.addAttribute("net", HNetSeries.toString());
 		} catch (Exception e) {
 			logger.error("login error" + e);
 			e.printStackTrace();
 		}
-		return "index";
+		return "physicalMoniter" + number;
 	}
 }

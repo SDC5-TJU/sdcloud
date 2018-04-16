@@ -32,10 +32,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </ul>
     <h2><span class="icon-user"></span>资源监控</h2>
     <ul style="display:block">
-        <li><a href="phyMoniter1.do" target="right"><span class="icon-caret-right"></span>物理机1实时监控</a></li>
-        <li><a href="phyMoniter2.do" target="right"><span class="icon-caret-right"></span>物理机2实时监控</a></li>
+        <li><a href="phyMoniter.do?no=1" target="right"><span class="icon-caret-right"></span>物理机1实时监控</a></li>
+        <li><a href="phyMoniter.do?no=2" target="right"><span class="icon-caret-right"></span>物理机2实时监控</a></li>
         <li><a href="phyMoniter.do" target="right"><span class="icon-caret-right"></span>总体实时监控</a></li>
-        <li><a href="containerMoniter.do" target="right"><span class="icon-caret-right"></span>容器资源监控</a></li>
+        <li><a href="containerMonitor.do" target="right"><span class="icon-caret-right"></span>容器资源监控</a></li>
         <li><a href="appMoniter.do" target="right"><span class="icon-caret-right"></span>应用资源监控</a></li>
     </ul>
     <h2><span class="icon-user"></span>历史数据</h2>
