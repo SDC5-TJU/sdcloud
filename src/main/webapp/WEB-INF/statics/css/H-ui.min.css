@@ -17,6 +17,7 @@
 .new-w50{  width: 23%;  float: left;  }
 .new-input{padding-right: 10px;line-height: 20px;font-size: 14px;border-radius: 3px;float: left;}
 .config {
+	color:#ffffff;
     font-size: 15px;
     padding-top: 5px;
     padding-bottom: 5px;
@@ -24,8 +25,8 @@
     padding-right: 8px;
     border-width: 0px;
     border-style: solid;
-    border-radius: 8px;
-    background-color: #21A1D3;}
+    border-radius: 3px;
+    background-color: #00b2dd;}
 .new-col-sm-2{width: 14.2857143%;}
 
 /* background-color: #9FFFAF ;*/
