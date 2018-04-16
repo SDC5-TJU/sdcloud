@@ -76,7 +76,7 @@
 	<bean id="SpringJobSchedulerFactoryBean"
 		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
-			<list>  
+			<list>   
 			 <ref bean="CronTriggerBean" /> 
 			</list>
 		</property>
