@@ -19,7 +19,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="statics/js/jquery.js"></script>
     <script src="statics/js/pintuer.js"></script>
 </head>
-<body style="height:1200px;">
+<body style="height:1400px;">
 <div >
 <ul class="nav nav-tabs" >
        <c:if test="${webSearch.enable==1}">
@@ -48,136 +48,126 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div>
     <!--图-->
     <div style="width: 900px;" id="chart">
-        <div id="websearch1" style="width: 550px;height: 300px; position: absolute;top: 50px;left:50px;"></div>
-        <div id="websearch2" style="width: 550px;height: 300px;position: absolute; left:650px;top: 50px;"></div>
-        <div id="websearch3" style="width: 550px;height: 300px;position: absolute; left:50px;top: 400px;"></div>
-        <div id="websearch4" style="width: 550px;height: 300px;position: absolute; left:650px;top: 400px;"></div>
+        <div id="websearch1" style="width: 550px;height: 300px; position: absolute;top: 150px;left:150px;"></div>
+        <div id="websearch2" style="width: 550px;height: 300px;position: absolute; left:750px;top: 150px;"></div>
+        <div id="websearch3" style="width: 550px;height: 300px;position: absolute; left:150px;top: 500px;"></div>
+        <div id="websearch4" style="width: 550px;height: 300px;position: absolute; left:750px;top: 500px;"></div>
     </div>
     <!--表-->
-        <div style=" width: 1100px; position: absolute; top: 750px;left: 100px;" id="table">
+        <div style=" width: 1100px; position: absolute; top: 850px;left: 200px;" id="table">
         <form method="post" action="" id="">
             <div class="panel admin-panel">
                 <div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:电商服务</strong> <a href="" style="float:right; display:none;">添加字段</a></div>
 
                 <table class="table table-hover text-center">
                     <tr>
-                        <th style="background:#f9f9f9" width="">无干扰 响应时间90th</th>
-                        <th style="background:#f1f5fa" width="">干扰下 响应时间90th</th>
-                        <th  width="">变化率</th>
-                        <th style="background:#f9f9f9" width="">无干扰 响应时间95th</th>
-                        <th style="background:#f1f5fa" width="">干扰下 响应时间95th</th>
-                        <th width="">变化率</th>
+                        <th style="background:#f1f5fa" width="25%"></th>
+                        <th style="background:#f9f9f9" width="25%">无干扰</th>
+                        <th style="background:#f1f5fa" width="25%">干扰下</th>
+                        <th style="background:#f9f9f9" width="25%">变化率</th>
                     </tr>
                     <tr>
+                        <td style="background:#f1f5fa">响应时间90th</td>
                         <td style="background:#f9f9f9" >${webServerBaseResult.nintyTh}</td>
                         <td style="background:#f1f5fa" >${webServerResult.nintyTh}</td>
                         <c:choose>
                             <c:when test="${diffBean.nintyThDiff>0}">
-                                <td ><img src="statics/images/up.png"/>${diffBean.nintyThDiff}%</td>
+                                <td style="background:#f9f9f9" ><img src="statics/images/up.png"/>${diffBean.nintyThDiff}%</td>
                             </c:when>
                             <c:otherwise>
-                                <td ><img src="statics/images/down.png"/>${diffBean.nintyThDiff}%</td>
+                                <td style="background:#f9f9f9" ><img src="statics/images/down.png"/>${diffBean.nintyThDiff}%</td>
                             </c:otherwise>
                         </c:choose>
+                    </tr>
+                    <tr>
+                    	<td style="background:#f1f5fa">响应时间95th</td>
                         <td style="background:#f9f9f9" >${webServerBaseResult.nintyFiveTh}</td>
                         <td style="background:#f1f5fa" >${webServerResult.nintyFiveTh}</td>
                         <c:choose>
                             <c:when test="${diffBean.nintyFiveThDiff>0}">
-                                <td ><img src="statics/images/up.png"/>${diffBean.nintyFiveThDiff}%</td>
+                                <td style="background:#f9f9f9" ><img src="statics/images/up.png"/>${diffBean.nintyFiveThDiff}%</td>
                             </c:when>
                             <c:otherwise>
-                                <td ><img src="statics/images/down.png"/>${diffBean.nintyFiveThDiff}%</td>
+                                <td style="background:#f9f9f9" ><img src="statics/images/down.png"/>${diffBean.nintyFiveThDiff}%</td>
 
                             </c:otherwise>
                         </c:choose>
                     </tr>
                     <tr>
-                        <th style="background:#f9f9f9" width="">无干扰 响应时间99th</th>
-                        <th style="background:#f1f5fa" width="">干扰下 响应时间99th</th>
-                        <th width="">变化率</th>
-                        <th style="background:#f9f9f9" width="">无干扰 响应时间方差</th>
-                        <th style="background:#f1f5fa" width="">干扰下 响应时间方差</th>
-                        <th width="">变化率</th>
-                    </tr>
-                    <tr>
+                   	 	<td style="background:#f1f5fa"> 响应时间99th</td>
                         <td style="background:#f9f9f9" >${webServerBaseResult.nintyNineTh}</td>
                         <td style="background:#f1f5fa" >${webServerResult.nintyNineTh}</td>
                         <c:choose>
                             <c:when test="${diffBean.nintyNineThDiff>0}">
-                                <td ><img src="statics/images/up.png"/>${diffBean.nintyNineThDiff}%</td>
+                                <td style="background:#f9f9f9" ><img src="statics/images/up.png"/>${diffBean.nintyNineThDiff}%</td>
                             </c:when>
                             <c:otherwise>
-                                <td ><img src="statics/images/down.png"/>${diffBean.nintyFiveThDiff}%</td>
+                                <td style="background:#f9f9f9" ><img src="statics/images/down.png"/>${diffBean.nintyFiveThDiff}%</td>
                             </c:otherwise>
                         </c:choose>
+                    </tr>
+                    <tr>
+                   	 	<td style="background:#f1f5fa"> 响应时间方差</td>                                            
                         <td style="background:#f9f9f9" >${webServerBaseResult.var}</td>
                         <td style="background:#f1f5fa" >${webServerResult.var}</td>
                         <c:choose>
                             <c:when test="${diffBean.varDiff>0}">
-                                <td ><img src="statics/images/up.png"/>${diffBean.varDiff}%</td>
+                                <td style="background:#f9f9f9" ><img src="statics/images/up.png"/>${diffBean.varDiff}%</td>
                             </c:when>
                             <c:otherwise>
-                                <td ><img src="statics/images/down.png"/>${diffBean.varDiff}%</td>
+                                <td style="background:#f9f9f9" ><img src="statics/images/down.png"/>${diffBean.varDiff}%</td>
                             </c:otherwise>
                         </c:choose>
                     </tr>
                     <tr>
-                        <th style="background:#f9f9f9" width="">无干扰 响应时间平均值</th>
-                        <th style="background:#f1f5fa" width="">干扰下 响应时间平均值</th>
-                        <th width="">变化率</th>
-                        <th style="background:#f9f9f9" width="">无干扰 响应时间最小值</th>
-                        <th style="background:#f1f5fa" width="">干扰下 响应时间最小值</th>
-                        <th width="">变化率</th>
-                    </tr>
-                    <tr>
+                   	 	<td style="background:#f1f5fa"> 响应时间平均值</td>                    
                         <td style="background:#f9f9f9" >${webServerBaseResult.mean}</td>
                         <td style="background:#f1f5fa" >${webServerResult.mean}</td>
                         <c:choose>
                             <c:when test="${diffBean.varDiff>0}">
-                                <td ><img src="statics/images/up.png"/>${diffBean.meanDiff}%</td>
+                                <td style="background:#f9f9f9" ><img src="statics/images/up.png"/>${diffBean.meanDiff}%</td>
                             </c:when>
                             <c:otherwise>
-                                <td ><img src="statics/images/down.png"/>${diffBean.meanDiff}%</td>
+                                <td style="background:#f9f9f9" ><img src="statics/images/down.png"/>${diffBean.meanDiff}%</td>
                             </c:otherwise>
                         </c:choose>
+                    </tr>
+                    <tr>
+                   	 	<td style="background:#f1f5fa"> 响应时间最小值</td>                                               
                         <td style="background:#f9f9f9" >${webServerBaseResult.min}</td>
                         <td style="background:#f1f5fa" >${webServerResult.min}</td>
                         <c:choose>
                             <c:when test="${diffBean.minDiff>0}">
-                                <td ><img src="statics/images/up.png"/>${diffBean.minDiff}%</td>
+                                <td style="background:#f9f9f9" ><img src="statics/images/up.png"/>${diffBean.minDiff}%</td>
                             </c:when>
                             <c:otherwise>
-                                <td ><img src="statics/images/down.png"/>${diffBean.minDiff}%</td>
+                                <td style="background:#f9f9f9" ><img src="statics/images/down.png"/>${diffBean.minDiff}%</td>
                             </c:otherwise>
                         </c:choose>
                     </tr>
                     <tr>
-                        <th style="background:#f9f9f9" width="">无干扰 响应时间最大值</th>
-                        <th style="background:#f1f5fa" width="">干扰下 响应时间最大值</th>
-                        <th width="">变化率</th>
-                        <th style="background:#f9f9f9" width="">无干扰 缺失率</th>
-                        <th style="background:#f1f5fa" width="">干扰下 缺失率</th>
-                        <th width="">变化率</th>
-                    </tr>
-                    <tr>
+                   	 	<td style="background:#f1f5fa"> 响应时间最大值</td>                    
                         <td style="background:#f9f9f9" >${webServerBaseResult.max}</td>
                         <td style="background:#f1f5fa" >${webServerResult.max}</td>
                         <c:choose>
                             <c:when test="${diffBean.maxDiff>0}">
-                                <td ><img src="statics/images/up.png"/>${diffBean.maxDiff}%</td>
+                                <td style="background:#f9f9f9" ><img src="statics/images/up.png"/>${diffBean.maxDiff}%</td>
                             </c:when>
                             <c:otherwise>
-                                <td ><img src="statics/images/down.png"/>${diffBean.maxDiff}%</td>
+                                <td style="background:#f9f9f9" ><img src="statics/images/down.png"/>${diffBean.maxDiff}%</td>
                             </c:otherwise>
                         </c:choose>
+                    </tr>
+                    <tr>
+                    	<td style="background:#f1f5fa"> 缺失率</td>                           
                         <td style="background:#f9f9f9" >${webServerBaseResult.missRate}</td>
                         <td style="background:#f1f5fa" >${webServerResult.missRate}</td>
                          <c:choose>
 							<c:when test="${diffBean.missRateDiff>0}">
-                               <td ><img src="statics/images/up.png"/>${diffBean.missRateDiff}%</td>							
+                               <td style="background:#f9f9f9" ><img src="statics/images/up.png"/>${diffBean.missRateDiff}%</td>							
                             </c:when>
 							<c:otherwise>
-							   <td ><img src="statics/images/down.png"/>${diffBean.missRateDiff}%</td>							
+							   <td style="background:#f9f9f9" ><img src="statics/images/down.png"/>${diffBean.missRateDiff}%</td>							
 							</c:otherwise>
 						</c:choose>
                     </tr>
