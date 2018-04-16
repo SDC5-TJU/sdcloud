@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import scs.pojo.TestRecordBean;
+import scs.pojo.TwoTuple;
 
 /**
  * 登录service层接口
@@ -17,6 +18,5 @@ public interface RecordManageService {
 	public String modifyEndTime(int testRecordId,String startTime);
 	public int getRecordCount();
 	public TestRecordBean getRecordById(int testRecordId);
-	public List<TestRecordBean> searchRecord(int start,int pageSize);
- 
+	public List<TestRecordBean> searchRecord(int start,int pageSize); 
 }

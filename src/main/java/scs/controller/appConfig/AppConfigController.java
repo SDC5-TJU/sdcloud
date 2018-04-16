@@ -48,8 +48,6 @@ public class AppConfigController {
 			for(AppConfigBean bean:appConfiglist){ 
 				model.addAttribute(bean.getApplicationName(),bean); 
 			}
-			
-
 		}catch(Exception e){
 			logger.error("add Operator error"+e);
 			e.printStackTrace();
@@ -72,6 +70,7 @@ public class AppConfigController {
 	@RequestMapping("/modifyAppConfig.do")
 	public void modifyAppConfig(HttpServletRequest request,HttpServletResponse response, 
 			@RequestParam(value="applicationName",required=true) String[] applicationName, 
+			@RequestParam(value="applicationType",required=true) String[] applicationType, 
 			@RequestParam(value="requestCount",required=false) String[] requestCount,
 			@RequestParam(value="warmUpCount",required=false) String[] warmUpCount,
 			@RequestParam(value="pattern",required=true) String[] pattern,
@@ -81,9 +80,8 @@ public class AppConfigController {
 		try{
 			Map<String,AppConfigBean> map=new HashMap<String,AppConfigBean>();
 			for(int i=0;i<applicationName.length;i++){
-				AppConfigBean bean=new AppConfigBean(applicationName[i],"",requestCount[i],warmUpCount[i],pattern[i],intensity[i],testRecordId[i],enable[i]);
-				map.put(applicationName[i],bean);
-				System.out.println(bean.toString());
+				AppConfigBean bean=new AppConfigBean(applicationName[i],applicationType[i],requestCount[i],warmUpCount[i],pattern[i],intensity[i],testRecordId[i],enable[i]);
+				map.put(applicationName[i],bean); 
 			}
 			int result=service.modifyAppConfig(map);
 			response.getWriter().print(result);

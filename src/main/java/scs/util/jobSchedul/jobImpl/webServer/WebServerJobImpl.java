@@ -39,8 +39,8 @@ public class WebServerJobImpl implements JobInterface{
 		} catch (IOException e) { 
 			e.printStackTrace();
 		}
-		this.rmiUrl[0]=prop.getProperty("rmi_worker01_url").trim();//读取worker rmi url的路径 
-		this.rmiUrl[1]=prop.getProperty("rmi_worker02_url").trim();//读取worker rmi url的路径 
+		this.rmiUrl[0]=prop.getProperty("rmi_webServer01_url").trim();//读取worker rmi url的路径 
+		this.rmiUrl[1]=prop.getProperty("rmi_webServer02_url").trim();//读取worker rmi url的路径 
 		this.config=Repository.appConfigMap.get("webServer");  
 		if(isBase==1){
 			Repository.webServerBaseDataList.clear();//基准测试 

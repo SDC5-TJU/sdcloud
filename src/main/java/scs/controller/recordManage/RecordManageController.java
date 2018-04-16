@@ -14,7 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import scs.pojo.AppConfigBean;
 import scs.pojo.TestRecordBean;
+import scs.service.appConfig.AppConfigService;
 import scs.service.recordManage.RecordManageService;
 import scs.util.format.DateFormats; 
 
@@ -29,6 +31,7 @@ public class RecordManageController {
 	private static Logger logger = Logger.getLogger(RecordManageController.class.getName());
 
 	@Resource RecordManageService service;
+	@Resource AppConfigService aService;
 	
 	@RequestMapping("/addRecordBefore.do")
 	public String addRecordBefore(HttpServletRequest request,HttpServletResponse response){
@@ -92,12 +95,16 @@ public class RecordManageController {
 			logger.error("search record error"+e);
 			e.printStackTrace();
 		}
-		return "RecordManage";
+		return "recordManage";
 	}
 	@RequestMapping("/resultAnalysis.do")
 	public String resultAnalysis(HttpServletRequest request,Model model,
 			@RequestParam(value="testRecordId",required=true) int testRecordId){
-		
+		List<AppConfigBean> appConfiglist=aService.getAppConfig(testRecordId);
+		for(AppConfigBean bean:appConfiglist){ 
+			model.addAttribute(bean.getApplicationName(),bean); 
+		}
+		model.addAttribute("testRecordId",testRecordId);
 		return "resultAnalysis";
 	}
 	

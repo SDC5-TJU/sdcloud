@@ -73,6 +73,21 @@ public class JobSchedulDaoImpl extends MySQLBaseDao implements JobSchedulDao{
 		}
 		return result;
 	}
+
+	@Override
+	public int addCassandraData(List<TwoTuple<Long, Integer>> list, int testRecordId, int isBase) {
+		String sql="";
+		if(isBase==1){
+			sql="insert into data_cassandra_base(generateTime,queryTime,testRecordId) values(?,?,?)";
+		}else{
+			sql="insert into data_cassandra(generateTime,queryTime,testRecordId) values(?,?,?)";
+		}
+		int result=0;
+		for(TwoTuple<Long, Integer> item:list){
+			result+=this.jt.update(sql,new Object[]{item.first,item.second,testRecordId});
+		}
+		return result;
+	}
  
 
 	 

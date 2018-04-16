@@ -47,6 +47,8 @@ public class Repository{
 	public static List<TwoTuple<Long, Integer>> webServerBaseDataList=new ArrayList<TwoTuple<Long, Integer>>();
 	public static List<TwoTuple<Long, Integer>> webSearchDataList=new ArrayList<TwoTuple<Long, Integer>>();
 	public static List<TwoTuple<Long, Integer>> webSearchBaseDataList=new ArrayList<TwoTuple<Long, Integer>>();
+	public static List<TwoTuple<Long, Integer>> cassandraDataList=new ArrayList<TwoTuple<Long, Integer>>();
+	public static List<TwoTuple<Long, Integer>> cassandraBaseDataList=new ArrayList<TwoTuple<Long, Integer>>();
 	
 	/*
 	 * 物理机/容器/服务 资源监控数组

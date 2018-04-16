@@ -46,8 +46,8 @@ public class WebSearchJobImpl implements JobInterface{
 		} catch (IOException e) { 
 			e.printStackTrace();
 		}
-		this.rmiUrl[0]=prop.getProperty("rmi_worker01_url").trim();//读取worker rmi url的路径 
-		this.rmiUrl[1]=prop.getProperty("rmi_worker02_url").trim();//读取worker rmi url的路径 
+		this.rmiUrl[0]=prop.getProperty("rmi_webSearch01_url").trim();//读取worker rmi url的路径 
+		this.rmiUrl[1]=prop.getProperty("rmi_webSearch02_url").trim();//读取worker rmi url的路径 
 		this.config=Repository.appConfigMap.get("webSearch");
 
 		if(isBase==1){

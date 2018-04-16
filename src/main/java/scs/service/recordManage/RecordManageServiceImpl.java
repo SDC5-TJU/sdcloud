@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import scs.pojo.AppConfigBean;
 import scs.pojo.TestRecordBean;
+import scs.pojo.TwoTuple;
 import scs.util.repository.Repository;
 import scs.dao.appConfig.AppConfigDao;
 import scs.dao.recordManage.RecordManageDao;
@@ -37,7 +38,7 @@ public class RecordManageServiceImpl implements RecordManageService {
 			AppConfigBean bonnie=new AppConfigBean("bonnie","manuStop","","","循环","4096",latestRecordId,1);
 			AppConfigBean scimark=new AppConfigBean("scimark","autoStop","","","单次","4",latestRecordId,1);
 			AppConfigBean hadoop=new AppConfigBean("hadoop","autoStop","","","IO密集型","4",latestRecordId,1);
-			AppConfigBean cassandra=new AppConfigBean("cassandra","autoStop","","","","",latestRecordId,1);
+			AppConfigBean cassandra=new AppConfigBean("cassandra","autoStop","500","500","泊松","10",latestRecordId,1);
 			
 			map.put(webSearch.getApplicationName(),webSearch);
 			map.put(webServer.getApplicationName(),webServer);
@@ -94,7 +95,5 @@ public class RecordManageServiceImpl implements RecordManageService {
 		return dao.getRecordById(testRecordId);
 	}
 
-
-
-
+ 
 }
