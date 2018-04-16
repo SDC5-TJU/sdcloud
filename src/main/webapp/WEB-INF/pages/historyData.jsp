@@ -95,24 +95,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                  }
              },
 
-             series: [{
-                 name:'物理机1',
-                 data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,214,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,22,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,99,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-                 ],
-                 pointInterval: 306000,
-                 pointStart: Date.UTC(2014, 6, 10,0,0,0),
-                 pointEnd:Date.UTC(2014,6,10,23,59,59),
-                 // pointEnd:Date.UTC(<?php date('Y , m, d',strtotime('-1 month'))?>, 0, 0, 0;?>)
-             },
-                 {
-                     name:'物理机2',
-                     data:[100,90,40,20,100,107,190,100,105,80,10,20,70,90,130,170,50,40,214,0,0,40,0,60,0,0,0,0,30,0,50,10,0,0,0,0,0,50,50,70,80,40,90,60,00,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,22,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,99,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-                     ],
-                     pointInterval: 306000,
-                     pointStart: Date.UTC(2014, 6, 10,0,0,0),
-                     pointEnd:Date.UTC(2014,6,10,23,59,59),
-                     // pointEnd:Date.UTC(<?php date('Y , m, d',strtotime('-1 month'))?>, 0, 0, 0;?>)
-                 }]
+             series: [${sysUsageStr0}]
          });
 
          Highcharts.chart('websearch2', {
@@ -172,103 +155,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                  }
              },
 
-             series: [{
-                 name:'物理机1',
-                 data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,214,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,22,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,99,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-                 ],
-                 pointInterval: 306000,
-                 pointStart: Date.UTC(2014, 6, 10,0,0,0),
-                 pointEnd:Date.UTC(2014,6,10,23,59,59),
-                 // pointEnd:Date.UTC(<?php date('Y , m, d',strtotime('-1 month'))?>, 0, 0, 0;?>)
-             },
-                 {
-                     name:'物理机2',
-                     data:[100,90,40,20,100,107,190,100,105,80,10,20,70,90,130,170,50,40,214,0,0,40,0,60,0,0,0,0,30,0,50,10,0,0,0,0,0,50,50,70,80,40,90,60,00,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,22,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,99,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-                     ],
-                     pointInterval: 306000,
-                     pointStart: Date.UTC(2014, 6, 10,0,0,0),
-                     pointEnd:Date.UTC(2014,6,10,23,59,59),
-                     // pointEnd:Date.UTC(<?php date('Y , m, d',strtotime('-1 month'))?>, 0, 0, 0;?>)
-                 }]
+             series: [${sysUsageStr1}]
          });
+
          Highcharts.chart('websearch3', {
-             chart: {
-                 zoomType: 'x'
-             },
-             title: {
-                 text: '物理机网络使用情况'
-             },
-
-             xAxis: {
-                 type: 'datetime',
-                 // maxZoom:24 * 3600 * 1000, // x轴总共显示的时间
-                 //min:<?=strtotime(date('Y-m-d'))?>,
-                 dateTimeLabelFormats: {
-//                   minute: '%H:%M'
-                     day: '%H:%M'
-                 }
-             },
-             yAxis: {
-                 title: {
-                     text: 'used rate'
-                 },
-                 min:0
-
-             },
-             legend: {
-                 layout: 'vertical',
-                 align: 'right',
-                 verticalAlign: 'middle'
-             },
-             colors: ['#058DC7', '#ff3300'],
-             plotOptions: {
-                 area: {
-                     fillColor: {
-                         linearGradient: {
-                             x1: 0,
-                             y1: 0,
-                             x2: 0,
-                             y2: 1
-                         },
-                         stops: [
-                             [0, Highcharts.getOptions().colors[0]],
-                             [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                         ]
-                     },
-                     marker: {
-                         radius: 2
-                     },
-                     lineWidth: 1,
-                     states: {
-                         hover: {
-                             lineWidth: 1
-                         }
-                     },
-                     threshold: null
-                 }
-             },
-
-             series: [{
-                 name:'物理机1',
-                 data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,214,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,22,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,99,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-                 ],
-                 pointInterval: 306000,
-                 pointStart: Date.UTC(2014, 6, 10,0,0,0),
-                 pointEnd:Date.UTC(2014,6,10,23,59,59),
-                 // pointEnd:Date.UTC(<?php date('Y , m, d',strtotime('-1 month'))?>, 0, 0, 0;?>)
-             },
-                 {
-                     name:'物理机2',
-                     data:[100,90,40,20,100,107,190,100,105,80,10,20,70,90,130,170,50,40,214,0,0,40,0,60,0,0,0,0,30,0,50,10,0,0,0,0,0,50,50,70,80,40,90,60,00,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,22,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,99,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-                     ],
-                     pointInterval: 306000,
-                     pointStart: Date.UTC(2014, 6, 10,0,0,0),
-                     pointEnd:Date.UTC(2014,6,10,23,59,59),
-                     // pointEnd:Date.UTC(<?php date('Y , m, d',strtotime('-1 month'))?>, 0, 0, 0;?>)
-                 }]
-         });
-
-         Highcharts.chart('websearch4', {
              chart: {
                  zoomType: 'x'
              },
@@ -325,85 +215,67 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                  }
              },
 
-             series: [{
-                 name:'物理机1',
-                 data:[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,214,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,22,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,99,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-                 ],
-                 pointInterval: 306000,
-                 pointStart: Date.UTC(2014, 6, 10,0,0,0),
-                 pointEnd:Date.UTC(2014,6,10,23,59,59),
-                 // pointEnd:Date.UTC(<?php date('Y , m, d',strtotime('-1 month'))?>, 0, 0, 0;?>)
-             },
-                 {
-                     name:'物理机2',
-                     data:[100,90,40,20,100,107,190,100,105,80,10,20,70,90,130,170,50,40,214,0,0,40,0,60,0,0,0,0,30,0,50,10,0,0,0,0,0,50,50,70,80,40,90,60,00,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,22,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,99,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-                     ],
-                     pointInterval: 306000,
-                     pointStart: Date.UTC(2014, 6, 10,0,0,0),
-                     pointEnd:Date.UTC(2014,6,10,23,59,59),
-                     // pointEnd:Date.UTC(<?php date('Y , m, d',strtotime('-1 month'))?>, 0, 0, 0;?>)
-                 }]
+             series: [${sysUsageStr2}]
          });
-
-         Highcharts.chart('websearch5', {
+         Highcharts.chart('websearch4', {
              chart: {
-                 type: 'area'
+                 zoomType: 'x'
              },
              title: {
-                 text: '各应用内存占用情况'
+                 text: '物理机网络使用情况'
              },
+
              xAxis: {
-                 categories: ['10:01', '10:02', '10:03', '10:04', '10:05', '10:06'],
-                 tickmarkPlacement: 'on',
-                 title: {
-                     enabled: false
+                 type: 'datetime',
+                 // maxZoom:24 * 3600 * 1000, // x轴总共显示的时间
+                 //min:<?=strtotime(date('Y-m-d'))?>,
+                 dateTimeLabelFormats: {
+//                   minute: '%H:%M'
+                     day: '%H:%M'
                  }
              },
              yAxis: {
                  title: {
-                     text: 'MB'
+                     text: 'used rate'
                  },
                  min:0
-
              },
              legend: {
                  layout: 'vertical',
                  align: 'right',
                  verticalAlign: 'middle'
              },
-             tooltip: {
-                 split: true,
-                 valueSuffix: ' MB'
-             },
+             colors: ['#058DC7', '#ff3300'],
              plotOptions: {
                  area: {
-                     stacking: 'normal',
-                     lineColor: '#666666',
-                     lineWidth: 1,
+                     fillColor: {
+                         linearGradient: {
+                             x1: 0,
+                             y1: 0,
+                             x2: 0,
+                             y2: 1
+                         },
+                         stops: [
+                             [0, Highcharts.getOptions().colors[0]],
+                             [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                         ]
+                     },
                      marker: {
-                         lineWidth: 1,
-                         lineColor: '#666666'
-                     }
+                         radius: 2
+                     },
+                     lineWidth: 1,
+                     states: {
+                         hover: {
+                             lineWidth: 1
+                         }
+                     },
+                     threshold: null
                  }
              },
 
-             series: [{
-                 type: 'area',
-                 name:'应用1',
-                 data:[30,40,50,70,100,400],
-             },
-                 {
-                     name:'应用2',
-                     data:[70,90,150,200,190,500],
-                 },
-                 {
-                     name:'应用3',
-                     data:[100,190,250,290,390,600],
-                 }]
-
+             series: [${sysUsageStr3}]
          });
-
-         Highcharts.chart('websearch6', {
+         Highcharts.chart('websearch5', {
              chart: {
                  type: 'area'
              },
@@ -411,7 +283,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                  text: '各应用CPU占用情况'
              },
              xAxis: {
-                 categories: ['10:01', '10:02', '10:03', '10:04', '10:05', '10:06'],
+                 categories: ${appUsageStr2},
                  tickmarkPlacement: 'on',
                  title: {
                      enabled: false
@@ -444,21 +316,50 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                      }
                  }
              },
-
-             series: [{
-                 type: 'area',
-                 name:'应用1',
-                 data:[30,40,50,70,100,400],
+             series: [${appUsageStr0}]
+         });
+         Highcharts.chart('websearch6', {
+             chart: {
+                 type: 'area'
              },
-                 {
-                     name:'应用2',
-                     data:[70,90,150,200,190,500],
+             title: {
+                 text: '各应用内存占用情况'
+             },
+             xAxis: {
+                 categories: ${appUsageStr2},
+                 tickmarkPlacement: 'on',
+                 title: {
+                     enabled: false
+                 }
+             },
+             yAxis: {
+                 title: {
+                     text: 'MB'
                  },
-                 {
-                     name:'应用3',
-                     data:[100,190,250,290,390,600],
-                 }]
+                 min:0
 
+             },
+             legend: {
+                 layout: 'vertical',
+                 align: 'right',
+                 verticalAlign: 'middle'
+             },
+             tooltip: {
+                 split: true,
+                 valueSuffix: ' MB'
+             },
+             plotOptions: {
+                 area: {
+                     stacking: 'normal',
+                     lineColor: '#666666',
+                     lineWidth: 1,
+                     marker: {
+                         lineWidth: 1,
+                         lineColor: '#666666'
+                     }
+                 }
+             },
+             series: [${appUsageStr1}]
          });
 
 
