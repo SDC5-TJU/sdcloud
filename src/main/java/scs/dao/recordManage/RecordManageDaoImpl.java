@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Repository;
 
 import scs.pojo.TestRecordBean;
+import scs.pojo.TwoTuple;
 import scs.dao.MySQLBaseDao;
 
 @Repository
@@ -105,10 +106,5 @@ public class RecordManageDaoImpl extends MySQLBaseDao implements RecordManageDao
 		});
 		return bean;
 	}
-
-
-
-
-
-
+  
 }

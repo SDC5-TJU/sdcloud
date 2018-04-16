@@ -64,6 +64,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                        <input  class="input new-w50" type="hidden"  value="${webSearch.testRecordId}" id="config1-5" name="testRecordId">
                        <input  class="input new-w50" type="hidden"  value="${webSearch.applicationName}" id="config1-6" name="applicationName">
                        <input  class="input new-w50" type="hidden"  value="${webSearch.enable}" id="config1-7" name="enable">
+                       <input  class="input new-w50" type="hidden"  value="${webSearch.applicationType}" id="config1-8" name="applicationType">
                           <c:choose>
 							<c:when test="${webSearch.enable==1}">
 								<input style="float: right;" type="button" class="config" value="禁用" id="config1">
@@ -84,6 +85,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                        <input  class="input new-w50" type="hidden"  value="${webServer.testRecordId}" id="config2-5" name="testRecordId">
                        <input  class="input new-w50" type="hidden"  value="${webServer.applicationName}" id="config2-6" name="applicationName">
                        <input  class="input new-w50" type="hidden"  value="${webServer.enable}" id="config2-7" name="enable">
+                       <input  class="input new-w50" type="hidden"  value="${webServer.applicationType}" id="config2-8" name="applicationType">
                           <c:choose>
 							<c:when test="${webServer.enable==1}">
 								<input style="float: right;" type="button" class="config" value="禁用" id="config2">
@@ -112,6 +114,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                        <input  class="input new-w50" type="hidden"  value="${memcached.testRecordId}" id="config3-5" name="testRecordId">
                        <input  class="input new-w50" type="hidden"  value="${memcached.applicationName}" id="config3-6" name="applicationName">
                        <input  class="input new-w50" type="hidden"  value="${memcached.enable}" id="config3-7" name="enable">
+                       <input  class="input new-w50" type="hidden"  value="${memcached.applicationType}" id="config3-8" name="applicationType">
                           <c:choose>
 							<c:when test="${memcached.enable==1}">
 								<input style="float: right;" type="button" class="config" value="禁用" id="config3">
@@ -132,6 +135,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                        <input  class="input new-w50" type="hidden"  value="${silo.testRecordId}" id="config4-5" name="testRecordId">
                        <input  class="input new-w50" type="hidden"  value="${silo.applicationName}" id="config4-6" name="applicationName">
                        <input  class="input new-w50" type="hidden"  value="${silo.enable}" id="config4-7" name="enable">
+                       <input  class="input new-w50" type="hidden"  value="${silo.applicationType}" id="config4-8" name="applicationType">
                           <c:choose>
 							<c:when test="${silo.enable==1}">
 								<input style="float: right;" type="button" class="config" value="禁用" id="config4">
@@ -164,6 +168,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                        <input  class="input new-w50" type="hidden"  value="${bonnie.testRecordId}" id="config5-5" name="testRecordId">
                        <input  class="input new-w50" type="hidden"  value="${bonnie.applicationName}" id="config5-6" name="applicationName">
                        <input  class="input new-w50" type="hidden"  value="${bonnie.enable}" id="config5-7" name="enable">
+                   	   <input  class="input new-w50" type="hidden"  value="${bonnie.applicationType}" id="config5-8" name="applicationType">
                    <c:choose>
 							<c:when test="${bonnie.enable==1}">
 								<input style="float: right;" type="button" class="config" value="禁用" id="config5">
@@ -192,6 +197,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                        <input  class="input new-w50" type="hidden"  value="${scimark.testRecordId}" id="config6-5" name="testRecordId">
                        <input  class="input new-w50" type="hidden"  value="${scimark.applicationName}" id="config6-6" name="applicationName">
                        <input  class="input new-w50" type="hidden"  value="${scimark.enable}" id="config6-7" name="enable">
+                       <input  class="input new-w50" type="hidden"  value="${scimark.applicationType}" id="config6-8" name="applicationType">
                           <c:choose>
 							<c:when test="${scimark.enable==1}">
 								<input style="float: right;" type="button" class="config" value="禁用" id="config6">
@@ -220,6 +226,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                        <input  class="input new-w50" type="hidden"  value="${hadoop.testRecordId}" id="config7-5" name="testRecordId">
                        <input  class="input new-w50" type="hidden"  value="${hadoop.applicationName}" id="config7-6" name="applicationName">
                        <input  class="input new-w50" type="hidden"  value="${hadoop.enable}" id="config7-7" name="enable">
+                       <input  class="input new-w50" type="hidden"  value="${hadoop.applicationType}" id="config7-8" name="applicationType">
                           <c:choose>
 							<c:when test="${hadoop.enable==1}">
 								<input style="float: right;" type="button" class="config" value="禁用" id="config7">
@@ -248,6 +255,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                        <input  class="input new-w50" type="hidden"  value="${cassandra.testRecordId}" id="config8-5" name="testRecordId">
                        <input  class="input new-w50" type="hidden"  value="${cassandra.applicationName}" id="config8-6" name="applicationName">
                        <input  class="input new-w50" type="hidden"  value="${cassandra.enable}" id="config8-7" name="enable">
+                       <input  class="input new-w50" type="hidden"  value="${cassandra.applicationType}" id="config8-8" name="applicationType">
                           <c:choose>
 							<c:when test="${cassandra.enable==1}">
 								<input style="float: right;" type="button" class="config" value="禁用" id="config8">

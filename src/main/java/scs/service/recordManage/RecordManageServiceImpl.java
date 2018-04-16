@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import scs.pojo.AppConfigBean;
 import scs.pojo.TestRecordBean;
+import scs.pojo.TwoTuple;
 import scs.util.repository.Repository;
 import scs.dao.appConfig.AppConfigDao;
 import scs.dao.recordManage.RecordManageDao;
@@ -94,7 +95,5 @@ public class RecordManageServiceImpl implements RecordManageService {
 		return dao.getRecordById(testRecordId);
 	}
 
-
-
-
+ 
 }

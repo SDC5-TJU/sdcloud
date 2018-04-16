@@ -1,9 +1,8 @@
 package scs.dao.recordManage;
- 
-import java.util.Date;
-import java.util.List;
-
+  
+import java.util.List; 
 import scs.pojo.TestRecordBean;
+import scs.pojo.TwoTuple;
 
 public interface RecordManageDao {
 	public int addRecord(int recordId,String recordDesc);
@@ -12,5 +11,5 @@ public interface RecordManageDao {
 	public List<TestRecordBean> searchRecord(int start,int pageSize);
 	public int getRecordCount();
 	public TestRecordBean getRecordById(int testRecordId);
-	public int getLatestRecordId();
+	public int getLatestRecordId(); 
 }

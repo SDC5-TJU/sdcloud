@@ -61,13 +61,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
                 <table class="table table-hover text-center">
                     <tr>
-                        <th style="background:#f1f5fa" width="25%"></th>
+                        <th style="background:#f1f5fa" width="25%">指标</th>
                         <th style="background:#f9f9f9" width="25%">无干扰</th>
                         <th style="background:#f1f5fa" width="25%">干扰下</th>
                         <th style="background:#f9f9f9" width="25%">变化率</th>
                     </tr>
                     <tr>
-                    	<td style="background:#f1f5fa">响应时间90th</td>
+                    	<td style="background:#f1f5fa">响应时间90th /ms</td>
                         <td style="background:#f9f9f9">${siloBaseResult.nintyTh}</td>
                         <td style="background:#f1f5fa">${siloResult.nintyTh}</td>
                       <c:choose>
@@ -80,7 +80,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</c:choose>
                     </tr>
                     <tr>
-                    	<td style="background:#f1f5fa">响应时间95th</td>							 
+                    	<td style="background:#f1f5fa">响应时间95th /ms</td>							 
                         <td style="background:#f9f9f9">${siloBaseResult.nintyFiveTh}</td>
                         <td style="background:#f1f5fa">${siloResult.nintyFiveTh}</td>
                         <c:choose>
@@ -93,7 +93,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</c:choose> 
                     </tr>
                     <tr>
-                    	<td style="background:#f1f5fa"> 响应时间99th</td>
+                    	<td style="background:#f1f5fa"> 响应时间99th /ms</td>
                         <td style="background:#f9f9f9">${siloBaseResult.nintyNineTh}</td>
                         <td style="background:#f1f5fa">${siloResult.nintyNineTh}</td>
                          <c:choose>
@@ -119,7 +119,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</c:choose> 
                     </tr>
                     <tr>
-                    	<td style="background:#f1f5fa"> 响应时间平均值</td> 
+                    	<td style="background:#f1f5fa"> 响应时间平均值 /ms</td> 
                         <td style="background:#f9f9f9">${siloBaseResult.mean}</td>
                         <td style="background:#f1f5fa">${siloResult.mean}</td>
                          <c:choose>
@@ -132,7 +132,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</c:choose>
                     </tr>
                     <tr>
-                   	 	<td style="background:#f1f5fa"> 响应时间最小值</td> 						   
+                   	 	<td style="background:#f1f5fa"> 响应时间最小值 /ms</td> 						   
                         <td style="background:#f9f9f9">${siloBaseResult.min}</td>
                         <td style="background:#f1f5fa">${siloResult.min}</td>
                          <c:choose>
@@ -145,7 +145,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</c:choose> 
                     </tr>
                     <tr>
-                    	<td style="background:#f1f5fa"> 响应时间最大值</td> 
+                    	<td style="background:#f1f5fa"> 响应时间最大值 /ms</td> 
                         <td style="background:#f9f9f9">${siloBaseResult.max}</td>
                         <td style="background:#f1f5fa">${siloResult.max}</td>
                          <c:choose>
