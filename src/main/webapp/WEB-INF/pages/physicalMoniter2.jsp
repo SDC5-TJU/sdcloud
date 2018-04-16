@@ -2,8 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
 
@@ -11,15 +10,16 @@
 <html>
 <head>
 <base href="<%=basePath%>">
- <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="renderer" content="webkit">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="renderer" content="webkit">
 <title>物理机监控</title>
-   <link rel="stylesheet" href="statics/css/pintuer.css">
-    <link rel="stylesheet" href="statics/css/admin.css">
-    <link rel="stylesheet" href="statics/css/physical.css">
-    
+<link rel="stylesheet" href="statics/css/pintuer.css">
+<link rel="stylesheet" href="statics/css/admin.css">
+<link rel="stylesheet" href="statics/css/physical.css">
+
 </head>
 
 <body>
@@ -27,18 +27,24 @@
 	<div id="mainDiv">
 		<div id="container1"></div>
 		<div id="container2"></div>
-		<div id="containerControl"> 
-			<span style="font-family: 微软雅黑;font-size: 14px;">线程控制:</span><input type="button" id="startButton" value="开始" onclick="start();" style="cursor:pointer">
+		<div id="containerControl">
+			<span style="font-family: 微软雅黑; font-size: 14px;">线程控制:</span><input
+				type="button" id="startButton" value="开始" onclick="start();"
+				style="cursor: pointer">
 		</div>
 		<div id="hadoopControl">
 			<div>
-			<span style="font-family: 微软雅黑;font-size: 14px;">启动hadoop任务</span>
+				<span style="font-family: 微软雅黑; font-size: 14px;">启动hadoop任务</span>
 			</div>
 			<div id="hadoopControl_title">
-				<input type="button" id="viewButton" value="运行" onclick="startHadoop();" style="cursor:pointer"><input type="text" id="maps" style="width:56px; height:20px;" placeholder="map数量"><input type="text" id="reduces" style="width:66px; height:20px;" placeholder="reduce数量">
+				<input type="button" id="viewButton" value="运行"
+					onclick="startHadoop();" style="cursor: pointer"><input
+					type="text" id="maps" style="width: 56px; height: 20px;"
+					placeholder="map数量"><input type="text" id="reduces"
+					style="width: 66px; height: 20px;" placeholder="reduce数量">
 			</div>
 			<div>
-			<span style="font-family: 微软雅黑;font-size: 14px;" id="res"></span>
+				<span style="font-family: 微软雅黑; font-size: 14px;" id="res"></span>
 			</div>
 		</div>
 		<div id="container3"></div>
@@ -49,7 +55,7 @@
 		<script type="text/javascript" src="statics/js/highcharts.js"></script>
 		<script type="text/javascript" src="statics/js/highcharts-more.js"></script>
 		<script> var returnedData = null;var lastcollecttime = null; </script>
-		
+
 		<script type="text/javascript">
 
 		 setInterval(function() {
@@ -62,11 +68,7 @@
 					success:function(returned) {
 						var lastcollecttime = null;
 						if(returned!=null&&returned!=""&&returned!="null"){
-							//lastcollecttime = returnedData[0].collecttime;
 							returnedData = returned;
-							//console.log(lastcollecttime);
-							console.log(returned);
-							//console.log(returnedData[0].collecttime);
 						}
 						if(lastcollecttime == returnedData[0].collecttime.time && returnedData.collecttime.time == null)
 							{
@@ -111,7 +113,6 @@
                     // set up the updating of the chart each second
                     var series = this.series[0];
                     var x,y,a;
-                   
                     setInterval(function (){
                     	if(flag==true){
                     	
