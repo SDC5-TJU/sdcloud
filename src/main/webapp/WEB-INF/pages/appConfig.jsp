@@ -57,10 +57,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                <div class="row cl">
                    <label class="form-label col-xs-4 col-sm-2">web搜索：</label> 
                     <div class="formControls col-xs-8 col-sm-9"> 
-                       <input  class="input new-w50 new-col-sm-2"  type="text"  value="${webSearch.requestCount}" placeholder="" id="config1-1" name="requestCount" >
-                       <input style="margin-left:20px; " class="input new-w50 new-col-sm-2"  type="text"  value="${webSearch.warmUpCount}" placeholder="" id="config1-2" name="warmUpCount">
+                       <input  class="input new-w50 new-col-sm-2"  type="text"  value="${webSearch.requestCount}" id="config1-1" name="requestCount" >
+                       <input style="margin-left:20px; " class="input new-w50 new-col-sm-2"  type="text"  value="${webSearch.warmUpCount}" id="config1-2" name="warmUpCount">
                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${webSearch.pattern}" placeholder="定值/均匀/指数/泊松" id="config1-3" name="pattern" >
-                       <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="${webSearch.intensity}" placeholder="" id="config1-4" name="intensity">
+                       <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="${webSearch.intensity}" id="config1-4" name="intensity">
                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${webSearch.testRecordId}" id="config1-5" name="testRecordId">
                        <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${webSearch.applicationName}" id="config1-6" name="applicationName">
                        <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${webSearch.enable}" id="config1-7" name="enable">
@@ -78,10 +78,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                <div class="row cl">
                    <label class="form-label col-xs-4 col-sm-2">电商服务：</label>
                    <div class="formControls col-xs-8 col-sm-9">
-                       <input class="input new-w50 new-col-sm-2" type="text"  value="${webServer.requestCount}" placeholder="" id="config2-1" name="requestCount" >
-                       <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${webServer.warmUpCount}" placeholder="" id="config2-2" name="warmUpCount">
+                       <input class="input new-w50 new-col-sm-2" type="text"  value="${webServer.requestCount}" id="config2-1" name="requestCount" >
+                       <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${webServer.warmUpCount}" id="config2-2" name="warmUpCount">
                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${webServer.pattern}" placeholder="定值/均匀/指数/泊松" id="config2-3" name="pattern" >
-                       <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="${webServer.intensity}" placeholder="" id="config2-4" name="intensity">
+                       <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="${webServer.intensity}" id="config2-4" name="intensity">
                        <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${webServer.testRecordId}" id="config2-5" name="testRecordId">
                        <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${webServer.applicationName}" id="config2-6" name="applicationName">
                        <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${webServer.enable}" id="config2-7" name="enable">
@@ -97,6 +97,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</div>
                </div>
                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">Cassandra：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <input class="input new-w50 new-col-sm-2" type="text"  value="${cassandra.requestCount}" id="config8-1" name="requestCount" >
+                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${cassandra.warmUpCount}" id="config8-2" name="warmUpCount">
+                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${cassandra.pattern}" placeholder="定值/均匀/指数/泊松" id="config8-3" name="pattern" >
+                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="${cassandra.intensity}" id="config8-4" name="intensity">
+                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${cassandra.testRecordId}" id="config8-5" name="testRecordId">
+                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${cassandra.applicationName}" id="config8-6" name="applicationName">
+                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${cassandra.enable}" id="config8-7" name="enable">
+                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${cassandra.applicationType}" id="config8-8" name="applicationType">
+                          <c:choose>
+							<c:when test="${cassandra.enable==1}">
+								<input style="margin-left:40px;" type="button" class="config" value="禁用" id="config8">
+							</c:when>
+							<c:otherwise>
+								<input style="margin-left:40px; background:#22cc77;" type="button" class="config" value="开启" id="config8">
+							</c:otherwise>
+						</c:choose>                    
+					</div>
+                </div> 
+               <div class="row cl">
                    <label class="col-xs-4 col-sm-2 new-center"></label>
                    <label class="col-xs-4 new-col-sm-2 new-center1" >请求总数</label>
                    <label class="col-xs-4 new-col-sm-2 new-center1">预热次数</label>
@@ -107,10 +128,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                <div class="row cl">
                    <label class="form-label col-xs-4 col-sm-2">memcached:</label>
                    <div class="formControls col-xs-8 col-sm-9">
-                      <input  class="input new-w50 new-col-sm-2" type="text"  value="${memcached.requestCount}" placeholder="" id="config3-1" name="requestCount" >
-                       <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="${memcached.warmUpCount}" placeholder="" id="config3-2" name="intensity">
+                      <input  class="input new-w50 new-col-sm-2" type="text"  value="${memcached.requestCount}" id="config3-1" name="requestCount" >
+                       <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="${memcached.warmUpCount}" id="config3-2" name="intensity">
                        <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${memcached.pattern}" readonly="true" id="config3-3" name="pattern" >
-                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${memcached.intensity}" placeholder="" id="config3-4" name="warmUpCount">
+                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${memcached.intensity}" id="config3-4" name="warmUpCount">
                        <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${memcached.testRecordId}" id="config3-5" name="testRecordId">
                        <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${memcached.applicationName}" id="config3-6" name="applicationName">
                        <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${memcached.enable}" id="config3-7" name="enable">
@@ -181,8 +202,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </div>
                 <div class="row cl">
                     <label class="col-xs-4 col-sm-2 new-center"></label>
-                    <label class="col-xs-4 new-col-sm-2 new-center1">请求总数</label>
-                    <label class="col-xs-4 new-col-sm-2 new-center1">预热次数</label>
+                    <label class="col-xs-4 new-col-sm-2 new-center1"></label>
+                    <label class="col-xs-4 new-col-sm-2 new-center1"></label>
                     <label class="col-xs-4 new-col-sm-2 new-center1">负载策略</label>
                     <label class="col-xs-4 new-col-sm-2 new-center1">线程数量</label>
                     <label class="col-xs-4 new-col-sm-2 new-center1">启用状态</label>
@@ -237,35 +258,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</c:choose>                         
 					</div>
                 </div>
-                  <div class="row cl">
-                    <label class="col-xs-4 col-sm-2 new-center"></label>
-                    <label class="col-xs-4 new-col-sm-2 new-center1">请求总数</label>
-                    <label class="col-xs-4 new-col-sm-2 new-center1">预热总数</label>
-                    <label class="col-xs-4 new-col-sm-2 new-center1">负载策略</label>
-                    <label class="col-xs-4 new-col-sm-2 new-center1">间隔单位/ms</label>
-                    <label class="col-xs-4 new-col-sm-2 new-center1">启用状态</label>
-                </div>
-                <div class="row cl">
-                    <label class="form-label col-xs-4 col-sm-2">Cassandra：</label>
-                    <div class="formControls col-xs-8 col-sm-9">
-                        <input class="input new-w50 new-col-sm-2" type="text"  value="${cassandra.requestCount}" readonly="true" placeholder="" id="config8-1" name="requestCount" >
-                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${cassandra.warmUpCount}" readonly="true" placeholder="" id="config8-2" name="warmUpCount">
-                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${cassandra.pattern}" readonly="true" id="config8-3" name="pattern" >
-                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="${cassandra.intensity}" placeholder="" id="config8-4" name="intensity">
-                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${cassandra.testRecordId}" id="config8-5" name="testRecordId">
-                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${cassandra.applicationName}" id="config8-6" name="applicationName">
-                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${cassandra.enable}" id="config8-7" name="enable">
-                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${cassandra.applicationType}" id="config8-8" name="applicationType">
-                          <c:choose>
-							<c:when test="${cassandra.enable==1}">
-								<input style="margin-left:40px;" type="button" class="config" value="禁用" id="config8">
-							</c:when>
-							<c:otherwise>
-								<input style="margin-left:40px; background:#22cc77;" type="button" class="config" value="开启" id="config8">
-							</c:otherwise>
-						</c:choose>                    
-					</div>
-                </div> 
+                
                 <div class="row cl">
                     <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
                         <button style="float: right;" onclick="save();" class="btn btn-primary radius" ><i class="Hui-iconfont">&#xe632;</i>保存</button>

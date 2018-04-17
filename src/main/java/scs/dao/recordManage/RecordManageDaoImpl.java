@@ -68,6 +68,10 @@ public class RecordManageDaoImpl extends MySQLBaseDao implements RecordManageDao
 			sql="update table_testrecord set startTime=? where autoId=?";
 			if(this.jt.update(sql,new Object[]{startTime,testRecordId})!=0){
 				result=startTime;
+				
+				//代码段开始
+				//读取容器资源使用信息的调用位置 to do
+				//代码段结束
 			}
 		}else{
 			result=curStartTime.substring(0,19);

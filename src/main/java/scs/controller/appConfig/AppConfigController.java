@@ -23,7 +23,7 @@ import scs.service.appConfig.AppConfigService;
  * 用于不同在线和离线应用配置
  * 在线应用:请求次数、负载策略、强度、预热次数等
  * 离线应用:负载策略、强度、执行方式等
- * @author 
+ * @author yanan
  *
  */
 @Controller
@@ -59,13 +59,13 @@ public class AppConfigController {
 	 * @param request
 	 * @param response
 	 * @param applicationName 所有应用的应用名称数组,依次填充
-	 * @param applicationType 所有应用的应用名称数组,依次填充
-	 * @param requestCount 所有应用的应用名称数组,依次填充
-	 * @param warmUpCount 所有应用的应用名称数组,依次填充
-	 * @param pattern 所有应用的应用名称数组,依次填充
-	 * @param intensity 所有应用的应用名称数组,依次填充
-	 * @param testRecordId 所有应用的应用名称数组,依次填充
-	 * @param enable 所有应用的应用名称数组,依次填充
+	 * @param applicationType 所有应用的应用类型数组,依次填充
+	 * @param requestCount 所有应用的请求总数数组,依次填充
+	 * @param warmUpCount 所有应用的预热总数数组,依次填充
+	 * @param pattern 所有应用的应用启动模式数组,依次填充
+	 * @param intensity 所有应用的强度数组,依次填充
+	 * @param testRecordId 该次测试记录的id数组,依次填充
+	 * @param enable 所有应用的是否启用标志数组,依次填充
 	 */
 	@RequestMapping("/modifyAppConfig.do")
 	public void modifyAppConfig(HttpServletRequest request,HttpServletResponse response, 
