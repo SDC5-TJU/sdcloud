@@ -51,7 +51,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                    <label class="col-xs-4 new-col-sm-2 new-center1">请求总数</label>
                    <label class="col-xs-4 new-col-sm-2 new-center1">预热次数</label>
                    <label class="col-xs-4 new-col-sm-2 new-center1">请求策略</label>
-                   <label class="col-xs-4 new-col-sm-2 new-center1">间隔单位/ms</label>
+                   <label class="col-xs-4 new-col-sm-2 new-center1" style="margin-left:-20px;">间隔单位/ms</label>
                    <label class="col-xs-4 new-col-sm-2 new-center1">启用状态</label>
                </div>
                <div class="row cl">
@@ -123,7 +123,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                    <label class="col-xs-4 new-col-sm-2 new-center1">预热次数</label>
                    <label class="col-xs-4 new-col-sm-2 new-center1">请求策略</label>
                    <label class="col-xs-4 new-col-sm-2 new-center1">QPS</label>
-                   <label class="col-xs-4 new-col-sm-2 new-center1">启用状态</label>
+                   <label class="col-xs-4 new-col-sm-2 new-center1" style="margin-left:-20px;">启用状态</label>
                </div>
                <div class="row cl">
                    <label class="form-label col-xs-4 col-sm-2">memcached:</label>
@@ -176,8 +176,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <label class="col-xs-4 new-col-sm-2 new-center1">读取操作</label>
                     <label class="col-xs-4 new-col-sm-2 new-center1">写入操作</label>
                     <label class="col-xs-4 new-col-sm-2 new-center1">负载策略</label>
-                    <label class="col-xs-4 new-col-sm-2 new-center1">读写块大小/MB</label>
-                    <label class="col-xs-4 new-col-sm-2 new-center1">启用状态</label>
+                    <label class="col-xs-4 new-col-sm-2 new-center1" style="margin-left:-20px;">读写块大小</label>
+                    <label class="col-xs-4 new-col-sm-2 new-center1" >启用状态</label>
                 </div>
                 <div class="row cl">
                     <label class="form-label col-xs-4 col-sm-2">Bonnie：</label>
@@ -185,7 +185,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                        <input  class="input new-w50 new-col-sm-2" type="text"  value="${bonnie.requestCount}" readonly="true" placeholder="按块读取" id="config5-1" name="requestCount" >
                        <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${bonnie.warmUpCount}" readonly="true" placeholder="按块写入" id="config5-2" name="warmUpCount">
                        <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${bonnie.pattern}" readonly="true" id="config5-3" name="pattern" >
-                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="${bonnie.intensity}" placeholder="单位:MB" id="config5-4" name="intensity">
+                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="${bonnie.intensity}MB" placeholder="单位:MB" id="config5-4" name="intensity">
                        <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${bonnie.testRecordId}" id="config5-5" name="testRecordId">
                        <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${bonnie.applicationName}" id="config5-6" name="applicationName">
                        <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${bonnie.enable}" id="config5-7" name="enable">
@@ -205,7 +205,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <label class="col-xs-4 new-col-sm-2 new-center1"></label>
                     <label class="col-xs-4 new-col-sm-2 new-center1"></label>
                     <label class="col-xs-4 new-col-sm-2 new-center1">负载策略</label>
-                    <label class="col-xs-4 new-col-sm-2 new-center1">线程数量</label>
+                    <label class="col-xs-4 new-col-sm-2 new-center1" style="margin-left:-20px;">线程数量</label>
                     <label class="col-xs-4 new-col-sm-2 new-center1">启用状态</label>
                 </div>
                 <div class="row cl">
@@ -234,7 +234,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <label class="col-xs-4 new-col-sm-2 new-center1"></label>
                     <label class="col-xs-4 new-col-sm-2 new-center1"></label>
                     <label class="col-xs-4 new-col-sm-2 new-center1">负载类型</label>
-                    <label class="col-xs-4 new-col-sm-2 new-center1">reduce数</label>
+                    <label class="col-xs-4 new-col-sm-2 new-center1" style="margin-left:-20px;">reduce数</label>
                     <label class="col-xs-4 new-col-sm-2 new-center1">启用状态</label>
                 </div>
                 <div class="row cl">

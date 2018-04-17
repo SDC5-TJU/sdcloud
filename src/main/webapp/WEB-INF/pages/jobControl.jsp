@@ -233,7 +233,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="statics/js/highcharts-more.js"></script>
 <script type="text/javascript">
 //开启chart按钮
-	var flag=false;
+	var flag1=false;
+	var flag2=false;
  
 	$("#startChartButton").click(function(){
 		if(flag==true){
@@ -287,8 +288,10 @@ $("#endButton").click(function(){
 					 if(returned.length==1){
 							$("#webSearchButton").attr("disabled", returned[0].webSearch);
 							$("#webSearchAverButton").attr("disabled", returned[0].webSearch);
+							flag1=returned[0].webSearch;
 							$("#webServerButton").attr("disabled", returned[0].webServer); 
 							$("#webServerAverButton").attr("disabled", returned[0].webServer); 
+							flag2=returned[0].webServer;
 							$("#memcachedButton").attr("disabled", returned[0].memcached);
 							$("#memcachedAverButton").attr("disabled", returned[0].memcached);
 							$("#siloButton").attr("disabled", returned[0].silo);
@@ -314,6 +317,7 @@ $("#endButton").click(function(){
 $("#webSearchButton").click(function(){
 	$("#webSearchButton").attr("disabled",true);
 	$("#webSearchAverButton").attr("disabled",true);
+	flag1=true;
 		    $.ajax({
 				async:true,
 				type:"post",
@@ -327,6 +331,7 @@ $("#webSearchButton").click(function(){
 $("#webSearchAverButton").click(function(){
 	$("#webSearchButton").attr("disabled",true);
 	$("#webSearchAverButton").attr("disabled",true);
+	flag1=true;
     $.ajax({
 		async:true,
 		type:"post",
@@ -341,6 +346,7 @@ $("#webSearchAverButton").click(function(){
 $("#webServerButton").click(function(){
 	$("#webServerButton").attr("disabled",true);
 	$("#webServerAverButton").attr("disabled",true);
+	flag2=true;
 		    $.ajax({
 				async:true,
 				type:"post",
@@ -354,6 +360,7 @@ $("#webServerButton").click(function(){
 $("#webServerAverButton").click(function(){
 	$("#webServerButton").attr("disabled",true);
 	$("#webServerAverButton").attr("disabled",true);
+	flag2=true;
     $.ajax({
 		async:true,
 		type:"post",
@@ -523,7 +530,7 @@ $(document).ready(function (){
                     var series = this.series[0];
                     var a=null;
                     setInterval(function (){
-                    	if(flag==true){  
+                    	if(flag1==true){  
 			                $.ajax({
 								async:true,
 								type:"post",
@@ -591,7 +598,7 @@ $(document).ready(function (){
                     var series = this.series[0];
                     var a=null;
                     setInterval(function (){
-                    	if(flag==true){  
+                    	if(flag2==true){  
 			                $.ajax({
 								async:true,
 								type:"post",

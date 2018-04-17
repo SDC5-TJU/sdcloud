@@ -21,7 +21,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <body style="height:1400px;">
 <div >
-<ul class="nav nav-tabs" >
+<ul class="nav nav-tabs" style="">
        <c:if test="${webSearch.enable==1}">
         <li class="" style="float: left;">
             <a  href="getWebSearchResult.do?testRecordId=${testRecordId}" target="_blank" id="websearch">web搜索</a>
@@ -46,12 +46,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
    <!--图-->
     <div id="chart">
-        <div id="websearch1" style="width: 1100px;height: 300px;position: absolute;top: 150px;left:150px;background-color:#000000；"></div>
-        <div id="websearch2" style="width: 1100px;height: 300px;position: absolute; left:150px;top: 500px;"></div>
-        <div id="websearch3" style="width: 1100px;height: 300px;position: absolute; left:150px;top: 850px;"></div>
-        <div id="websearch4" style="width: 1100px;height: 300px;position: absolute; left:150px;top: 1200px;"></div>
-        <div id="websearch5" style="width: 1100px;height: 300px;position: absolute; left:150px;top: 1550px;"></div>
-        <div id="websearch6" style="width: 1100px;height: 300px;position: absolute; left:150px;top: 1900px;"></div>
+        <div id="websearch1" style="width: 1200px;height: 300px;position: absolute;top: 100px;left:50px;background-color:#000000；"></div>
+        <div id="websearch2" style="width: 1200px;height: 300px;position: absolute; left:50px;top: 450px;"></div>
+        <div id="websearch3" style="width: 1200px;height: 300px;position: absolute; left:50px;top: 800px;"></div>
+        <div id="websearch4" style="width: 1200px;height: 300px;position: absolute; left:50px;top: 1150px;"></div>
+        <div id="websearch5" style="width: 1200px;height: 300px;position: absolute; left:50px;top: 1500px;"></div>
+        <div id="websearch6" style="width: 1200px;height: 300px;position: absolute; left:50px;top: 1850px;"></div>
     </div>
     
 
@@ -68,8 +68,14 @@ $(document).ready(function() {
          title: {
              text: '物理机CPU使用情况'
          },
-
+         tooltip: {
+             split: true,
+             valueSuffix: '%'
+         },
          xAxis: {
+             title: {
+                 text: '时间'
+             },
              type: 'datetime',
              // maxZoom:24 * 3600 * 1000, // x轴总共显示的时间
              //min:<?=strtotime(date('Y-m-d'))?>,
@@ -80,7 +86,7 @@ $(document).ready(function() {
          },
          yAxis: {
              title: {
-                 text: 'used rate'
+                 text: '使用率%'
              },
              min:0
 
@@ -88,7 +94,11 @@ $(document).ready(function() {
          legend: {
              layout: 'vertical',
              align: 'right',
-             verticalAlign: 'middle'
+             verticalAlign: 'middle',
+             align: 'center', //水平方向位置
+             verticalAlign: 'bottom', //垂直方向位置
+             x: 0, //距离x轴的距离
+             y: 0 //距离Y轴的距离
          },
          colors: ['#058DC7', '#ff3300'],
          plotOptions: {
@@ -128,8 +138,14 @@ $(document).ready(function() {
          title: {
              text: '物理机memory使用情况'
          },
-
+         tooltip: {
+             split: true,
+             valueSuffix: '%'
+         },
          xAxis: {
+             title: {
+                 text: '时间'
+             },
              type: 'datetime',
              // maxZoom:24 * 3600 * 1000, // x轴总共显示的时间
              //min:<?=strtotime(date('Y-m-d'))?>,
@@ -140,7 +156,7 @@ $(document).ready(function() {
          },
          yAxis: {
              title: {
-                 text: 'used rate'
+                 text: '使用率%'
              },
              min:0
 
@@ -148,7 +164,11 @@ $(document).ready(function() {
          legend: {
              layout: 'vertical',
              align: 'right',
-             verticalAlign: 'middle'
+             verticalAlign: 'middle',
+             align: 'center', //水平方向位置
+             verticalAlign: 'bottom', //垂直方向位置
+             x: 0, //距离x轴的距离
+             y: 0 //距离Y轴的距离
          },
          colors: ['#058DC7', '#ff3300'],
          plotOptions: {
@@ -188,8 +208,14 @@ $(document).ready(function() {
          title: {
              text: '物理机I/O使用情况'
          },
-
+         tooltip: {
+             split: true,
+             valueSuffix: '%'
+         },
          xAxis: {
+             title: {
+                 text: '时间'
+             },
              type: 'datetime',
              // maxZoom:24 * 3600 * 1000, // x轴总共显示的时间
              //min:<?=strtotime(date('Y-m-d'))?>,
@@ -200,7 +226,7 @@ $(document).ready(function() {
          },
          yAxis: {
              title: {
-                 text: 'used rate'
+                 text: '使用率%'
              },
              min:0
 
@@ -208,7 +234,11 @@ $(document).ready(function() {
          legend: {
              layout: 'vertical',
              align: 'right',
-             verticalAlign: 'middle'
+             verticalAlign: 'middle',
+             align: 'center', //水平方向位置
+             verticalAlign: 'bottom', //垂直方向位置
+             x: 0, //距离x轴的距离
+             y: 0 //距离Y轴的距离
          },
          colors: ['#058DC7', '#ff3300'],
          plotOptions: {
@@ -247,8 +277,14 @@ $(document).ready(function() {
          title: {
              text: '物理机网络使用情况'
          },
-
+         tooltip: {
+             split: true,
+             valueSuffix: '%'
+         },
          xAxis: {
+             title: {
+                 text: '时间'
+             },
              type: 'datetime',
              // maxZoom:24 * 3600 * 1000, // x轴总共显示的时间
              //min:<?=strtotime(date('Y-m-d'))?>,
@@ -259,14 +295,18 @@ $(document).ready(function() {
          },
          yAxis: {
              title: {
-                 text: 'used rate'
+                 text: '使用率%'
              },
              min:0
          },
          legend: {
              layout: 'vertical',
              align: 'right',
-             verticalAlign: 'middle'
+             verticalAlign: 'middle',
+             align: 'center', //水平方向位置
+             verticalAlign: 'bottom', //垂直方向位置
+             x: 0, //距离x轴的距离
+             y: 0 //距离Y轴的距离
          },
          colors: ['#058DC7', '#ff3300'],
          plotOptions: {
@@ -300,7 +340,8 @@ $(document).ready(function() {
      });
      Highcharts.chart('websearch5', {
          chart: {
-             type: 'area'
+             type: 'area',
+             zoomType: 'x'
          },
          title: {
              text: '各应用CPU占用情况'
@@ -314,7 +355,7 @@ $(document).ready(function() {
          },
          yAxis: {
              title: {
-                 text: 'MB'
+                 text: '使用率%'
              },
              min:0
 
@@ -326,7 +367,7 @@ $(document).ready(function() {
          },
          tooltip: {
              split: true,
-             valueSuffix: ' MB'
+             valueSuffix: '%'
          },
          plotOptions: {
              area: {
@@ -343,7 +384,8 @@ $(document).ready(function() {
      });
      Highcharts.chart('websearch6', {
          chart: {
-             type: 'area'
+             type: 'area',
+             zoomType: 'x'
          },
          title: {
              text: '各应用内存占用情况'
@@ -357,7 +399,7 @@ $(document).ready(function() {
          },
          yAxis: {
              title: {
-                 text: 'MB'
+                 text: '使用率%'
              },
              min:0
 
@@ -369,7 +411,7 @@ $(document).ready(function() {
          },
          tooltip: {
              split: true,
-             valueSuffix: ' MB'
+             valueSuffix: '%'
          },
          plotOptions: {
              area: {
