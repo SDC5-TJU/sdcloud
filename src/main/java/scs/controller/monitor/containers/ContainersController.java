@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.sf.json.JSONArray;
@@ -28,7 +29,7 @@ public class ContainersController {
 	@Qualifier("containerMonitor")
 	public ContainerMonitor containerMonitor;
 
-	@RequestMapping("/getContainerResourceUse.do")
+	@RequestMapping(value="/getContainerResourceUse.do")
 	@ResponseBody
 	public JSONArray getContainerReal() {
 		try {
@@ -49,5 +50,10 @@ public class ContainersController {
 
 		return null;
 	}
-
+	
+	@RequestMapping("/containerMonitor.do")
+	public String getContainerMonitor(){
+		return "containerMonitor";
+	}
+	
 }
