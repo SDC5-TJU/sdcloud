@@ -56,6 +56,8 @@ public class AppConfigController {
 	}
 	/**
 	 * 修改应用配置信息
+	 * 这里在线应用webserver websearh silo memcached cassandra具有查询总数，预热总数，请求模式，请求间隔单位
+	 * 离线应用 hadoop bonnie scimark没有查询和预热，为统一字段，便于存储保留这两项，两项赋空值
 	 * @param request
 	 * @param response
 	 * @param applicationName 所有应用的应用名称数组,依次填充

@@ -36,10 +36,14 @@ public class RecordManageController {
 	@Resource RecordManageService service;
 	@Resource AppConfigService aService;
 	@Resource HistoryDataService hService;
-	
+
+	@RequestMapping("/index.do")
+	public String index(HttpServletRequest request,Model model){	 
+		return "index";
+	}
 	@RequestMapping("/addRecordBefore.do")
 	public String addRecordBefore(HttpServletRequest request,HttpServletResponse response){
-		 return "deviceAdd";
+		return "deviceAdd";
 	}
 	@RequestMapping("/addRecord.do")
 	public void addRecord(HttpServletRequest request,HttpServletResponse response, 
@@ -117,16 +121,10 @@ public class RecordManageController {
 		for(String hostName:hostNameSet){
 			chartStrList.addAll(hService.searchSysResourceUsage(hostName,record.getStartTime(),record.getEndTime()));
 		}
-		if(chartStrList.size()==0){
-			for(int i=0;i<4;i++){ //cpu mem io net 
-				model.addAttribute("sysUsageStr"+i,"");
-			}
-		}else{
-			for(int i=0;i<4;i++){ //cpu mem io net 
-				model.addAttribute("sysUsageStr"+i,chartStrList.get(i)+","+chartStrList.get(i+4));
-			}
+		for(int i=0;i<4;i++){ //组合2个物理机的cpu mem io net曲线 
+			model.addAttribute("sysUsageStr"+i,chartStrList.get(i)+","+chartStrList.get(i+4));
 		}
-		
+
 		/*
 		 * 绘制8个应用的cpu 内存堆叠图
 		 */
@@ -139,23 +137,13 @@ public class RecordManageController {
 			needTime=count==appNameSet.size()?true:false;
 			chartStrList.addAll(hService.searchAppResourceUsage(appName,record.getStartTime(),record.getEndTime(),needTime));
 		}
-		if(chartStrList.size()==0){
-			for(int i=0;i<2;i++){ //cpu mem 
-				model.addAttribute("appUsageStr"+i,"");
-			} 
-			model.addAttribute("appUsageStr"+2,"");//绘制时间轴
-		}else{
-			for(int i=0;i<2;i++){ //cpu mem 
-				model.addAttribute("appUsageStr"+i,chartStrList.get(i)+","+chartStrList.get(i+2)+","+chartStrList.get(i+4)+","+chartStrList.get(i+6)+","+chartStrList.get(i+8)+","+chartStrList.get(i+10)+","+chartStrList.get(i+12)+","+chartStrList.get(i+14));
-			} 
-			model.addAttribute("appUsageStr"+2,chartStrList.get(16));//绘制时间轴
-		}
+
+		for(int i=0;i<6;i++){ //组合8个应用的cpu mem ioInput ioOutput netInput netOutput曲线
+			model.addAttribute("appUsageStr"+i,chartStrList.get(i)+","+chartStrList.get(i+6)+","+chartStrList.get(i+12)+","+chartStrList.get(i+18)+","+chartStrList.get(i+24)+","+chartStrList.get(i+30)+","+chartStrList.get(i+36)+","+chartStrList.get(i+42));
+		} 
+		model.addAttribute("appUsageStr"+2,chartStrList.get(48));//绘制时间轴
+
 		model.addAttribute("testRecordId",testRecordId);
 		return "resultAnalysis";
-	}
-	
-	@RequestMapping("/index.do")
-	public String index(HttpServletRequest request,Model model){	 
-		return "index";
 	}
 }

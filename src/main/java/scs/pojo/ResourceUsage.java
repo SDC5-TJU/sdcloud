@@ -13,7 +13,10 @@ public abstract class ResourceUsage {
 	protected Float memUsageAmount; //MB
 	protected Float netUsageRate;   //B
 	protected Float ioUsageRate;    //B
-	protected Float blockIo;        //MB
+	protected Float ioInput;   //磁盘写入数据量
+	protected Float ioOutput;  //磁盘写出数据量
+	protected Float netInput;  //网络写入数据量
+	protected Float netOutput; //网络写出数据量 
 	
 	public int getAutoId() {
 		return autoId;
@@ -57,10 +60,29 @@ public abstract class ResourceUsage {
 	public void setIoUsageRate(Float ioUsageRate) {
 		this.ioUsageRate = ioUsageRate;
 	}
-	public Float getBlockIo() {
-		return blockIo;
+	public Float getIoInput() {
+		return ioInput;
 	}
-	public void setBlockIo(Float blockIo) {
-		this.blockIo = blockIo;
+	public void setIoInput(Float ioInput) {
+		this.ioInput = ioInput;
 	}
+	public Float getIoOutput() {
+		return ioOutput;
+	}
+	public void setIoOutput(Float ioOutput) {
+		this.ioOutput = ioOutput;
+	}
+	public Float getNetInput() {
+		return netInput;
+	}
+	public void setNetInput(Float netInput) {
+		this.netInput = netInput;
+	}
+	public Float getNetOutput() {
+		return netOutput;
+	}
+	public void setNetOutput(Float netOutput) {
+		this.netOutput = netOutput;
+	}
+	 
 }
