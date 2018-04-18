@@ -105,7 +105,7 @@ class ResultParser {
 		// nintyNineTh = g * (float)(int)newlist.get(j) + (1-g)* (float)(int)newlist.get(j-1);
 		xj = (float)(int)newlist.get(j);
 		xj_1 = (float)(int)newlist.get(j-1);
-		nintyNineTh = (float) ((size * 0.95 - j)*( xj - xj_1) + xj_1);
+		nintyNineTh = (float) ((size * 0.99 - j)*( xj - xj_1) + xj_1);
 			
 		 bean.setNintyNineTh(nintyNineTh);
 		
@@ -260,17 +260,17 @@ class ResultParser {
 		
 		return cdf;
 	}
-	public float getMax(List newlist){
+	public float getMax(List<Float> newlist){
 		//Collections.sort(newlist);
 		float max = (float) newlist.get(newlist.size()-1);
 		return max;
 	}
-	public float getMin(List  newlist){
+	public float getMin(List<Float>  newlist){
 		//Collections.sort(newlist);
 		float min = (float) newlist.get(0);
 		return min;
 	}
-	public float getMean(List  newlist){
+	public float getMean(List<Float>  newlist){
 		float temp,mean, sum=0.0f;
 		for(int i = 0; i < newlist.size(); i++) {
 			temp = (float) newlist.get(i);
@@ -280,45 +280,45 @@ class ResultParser {
 		return mean;
 	}
 
-	public float getVar(List newlist){
+	public float getVar(List<Float> newlist){
 		float var =0.0f;
 		int size = newlist.size();
 		float mean = getMean(newlist);
 		for(int i = 0; i <size; i++ ) {
-			int temp1 = (int) newlist.get(i);
-			float temp2 = temp1;
+			 
+			float temp2 = newlist.get(i);
 			var = var + (temp2 - mean)*(temp2- mean);
 		}
 		var = var / size;
 		return var;
 	}
-	public float getNintyTh(List newlist){
+	public float getNintyTh(List<Float> newlist){
 		//Collections
 		int size = newlist.size();
 		float nintyth;
 		int j = (int)((size) * 0.9);
-		float xj = (float)(int)newlist.get(j);
-		float xj_1 = (float)(int)newlist.get(j-1);
+		float xj = newlist.get(j);
+		float xj_1 = newlist.get(j-1);
 		nintyth = (float) ((size * 0.9 - j)*( xj - xj_1) + xj_1);
 		return nintyth;
 	}
-	public float getNintyFiveTh(List  newlist){
+	public float getNintyFiveTh(List<Float>  newlist){
 		float nintyFiveTh = 0.0f;
 		int size = newlist.size();
 		int j = (int)((size) * 0.95);
 		//float g = (float) ((size + 1 )*0.95 - j);
-		float xj = (float)(int)newlist.get(j);
-		float xj_1 = (float)(int)newlist.get(j-1);
+		float xj = newlist.get(j);
+		float xj_1 = newlist.get(j-1);
 		nintyFiveTh = (float) ((size * 0.95 - j)*( xj - xj_1) + xj_1);
 		return nintyFiveTh;
 	}
-	public float getNintyNinth(List  newlist){
+	public float getNintyNinth(List<Float>  newlist){
 		float nintyNineTh = 0.0f;
 		int size = newlist.size();
 		int j = (int)((size) * 0.99);
 		//float g = (float) ((size + 1 )*0.95 - j);
-		float xj = (float)(int)newlist.get(j);
-		float xj_1 = (float)(int)newlist.get(j-1);
+		float xj =newlist.get(j);
+		float xj_1 = newlist.get(j-1);
 		nintyNineTh = (float) ((size * 0.99 - j)*( xj - xj_1) + xj_1);
 		return nintyNineTh;
 	}
