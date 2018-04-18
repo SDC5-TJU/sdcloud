@@ -34,7 +34,7 @@ class ResultParser {
 		
 		TimeResultBean bean = new TimeResultBean();
 		
-		
+		//w
 		//对list 排序 计算需要计算的各分位数
 		// 将需要进行分位数计算的数据单独取出来存储在 newlist 中
 		List<Integer> newlist = new ArrayList<Integer>();

@@ -4,7 +4,7 @@ import java.util.List;
 
 import scs.pojo.TimeResultBean;
 /**
- * 
+ * 结果处理适配类
  * @author Juane
  *
  */
