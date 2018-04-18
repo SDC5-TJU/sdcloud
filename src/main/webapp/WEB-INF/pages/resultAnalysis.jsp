@@ -19,7 +19,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="statics/js/jquery.js"></script>
     <script src="statics/js/pintuer.js"></script>
 </head>
-<body style="height:1400px;">
+<body style="height:3300px;">
 <div >
 <ul class="nav nav-tabs" style="">
        <c:if test="${webSearch.enable==1}">
@@ -46,12 +46,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
    <!--图-->
     <div id="chart">
-        <div id="websearch1" style="width: 1200px;height: 300px;position: absolute;top: 100px;left:50px;background-color:#000000；"></div>
+        <div id="websearch1" style="width: 1200px;height: 300px;position: absolute; left:50px;top: 100px;"></div>
         <div id="websearch2" style="width: 1200px;height: 300px;position: absolute; left:50px;top: 450px;"></div>
         <div id="websearch3" style="width: 1200px;height: 300px;position: absolute; left:50px;top: 800px;"></div>
         <div id="websearch4" style="width: 1200px;height: 300px;position: absolute; left:50px;top: 1150px;"></div>
         <div id="websearch5" style="width: 1200px;height: 300px;position: absolute; left:50px;top: 1500px;"></div>
         <div id="websearch6" style="width: 1200px;height: 300px;position: absolute; left:50px;top: 1850px;"></div>
+        <div id="websearch7" style="width: 1200px;height: 300px;position: absolute; left:50px;top: 2200px;"></div>
+        <div id="websearch8" style="width: 1200px;height: 300px;position: absolute; left:50px;top: 2550px;"></div>
+        <div id="websearch9" style="width: 1200px;height: 300px;position: absolute; left:50px;top: 2900px;"></div>
+        <div id="websearch10" style="width: 1200px;height: 300px;position: absolute; left:50px;top: 3250px;"></div>
+        
     </div>
     
 
@@ -412,6 +417,182 @@ $(document).ready(function() {
          tooltip: {
              split: true,
              valueSuffix: '%'
+         },
+         plotOptions: {
+             area: {
+                 stacking: 'normal',
+                 lineColor: '#666666',
+                 lineWidth: 1,
+                 marker: {
+                     lineWidth: 1,
+                     lineColor: '#666666'
+                 }
+             }
+         },
+         series: [${appUsageStr1}]
+     });
+     
+     Highcharts.chart('websearch7', {
+         chart: {
+             type: 'area'
+         },
+         title: {
+             text: 'I/O input'
+         },
+         xAxis: {
+             categories: ${appUsageStr2},
+             tickmarkPlacement: 'on',
+             title: {
+                 enabled: false
+             }
+         },
+         yAxis: {
+             title: {
+                 text: 'MB'
+             },
+             min:0
+
+         },
+         legend: {
+             layout: 'vertical',
+             align: 'right',
+             verticalAlign: 'middle'
+         },
+         tooltip: {
+             split: true,
+             valueSuffix: ' MB'
+         },
+         plotOptions: {
+             area: {
+                 stacking: 'normal',
+                 lineColor: '#666666',
+                 lineWidth: 1,
+                 marker: {
+                     lineWidth: 1,
+                     lineColor: '#666666'
+                 }
+             }
+         },
+         series: [${appUsageStr1}]
+     });
+     
+     Highcharts.chart('websearch8', {
+         chart: {
+             type: 'area'
+         },
+         title: {
+             text: 'I/O output'
+         },
+         xAxis: {
+             categories: ${appUsageStr2},
+             tickmarkPlacement: 'on',
+             title: {
+                 enabled: false
+             }
+         },
+         yAxis: {
+             title: {
+                 text: 'MB'
+             },
+             min:0
+
+         },
+         legend: {
+             layout: 'vertical',
+             align: 'right',
+             verticalAlign: 'middle'
+         },
+         tooltip: {
+             split: true,
+             valueSuffix: ' MB'
+         },
+         plotOptions: {
+             area: {
+                 stacking: 'normal',
+                 lineColor: '#666666',
+                 lineWidth: 1,
+                 marker: {
+                     lineWidth: 1,
+                     lineColor: '#666666'
+                 }
+             }
+         },
+         series: [${appUsageStr1}]
+     });
+
+     Highcharts.chart('websearch9', {
+         chart: {
+             type: 'area'
+         },
+         title: {
+             text: 'net input'
+         },
+         xAxis: {
+             categories: ${appUsageStr2},
+             tickmarkPlacement: 'on',
+             title: {
+                 enabled: false
+             }
+         },
+         yAxis: {
+             title: {
+                 text: 'MB'
+             },
+             min:0
+
+         },
+         legend: {
+             layout: 'vertical',
+             align: 'right',
+             verticalAlign: 'middle'
+         },
+         tooltip: {
+             split: true,
+             valueSuffix: ' MB'
+         },
+         plotOptions: {
+             area: {
+                 stacking: 'normal',
+                 lineColor: '#666666',
+                 lineWidth: 1,
+                 marker: {
+                     lineWidth: 1,
+                     lineColor: '#666666'
+                 }
+             }
+         },
+         series: [${appUsageStr1}]
+     });
+     
+     Highcharts.chart('websearch10', {
+         chart: {
+             type: 'area'
+         },
+         title: {
+             text: 'net output'
+         },
+         xAxis: {
+             categories: ${appUsageStr2},
+             tickmarkPlacement: 'on',
+             title: {
+                 enabled: false
+             }
+         },
+         yAxis: {
+             title: {
+                 text: 'MB'
+             },
+             min:0
+
+         },
+         legend: {
+             layout: 'vertical',
+             align: 'right',
+             verticalAlign: 'middle'
+         },
+         tooltip: {
+             split: true,
+             valueSuffix: ' MB'
          },
          plotOptions: {
              area: {

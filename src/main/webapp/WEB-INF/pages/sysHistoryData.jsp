@@ -29,7 +29,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <li> <a class="button border-main icon-plus-square-o" href=""> 结束时间</a> </li>
                 <li><input type="text" placeholder="" name="keywords" id="endTime" class="input" style="width:180px; line-height:17px;
                 display:inline-block" /></li>
-                <li><a href="javascript:void(0)" class="button border-main icon-search" onclick="changesearch()" > 搜索</a></li>
+                <li><a href="javascript:void(0)" class="button border-main icon-search" onclick="search();" > 搜索</a></li>
             </ul>
         </div>
     </div>
@@ -61,8 +61,26 @@ laydate.render({
 
 </script>
 <script type="text/javascript">
+ 	var strs= new Array();//定义数组存储绘图数据
+ 	
     $(document).ready(function() {
-       
+        function search(){
+        	$.ajax({
+    			async:true,
+    			type:"post",
+    			url:"searchSysHistoryData.do",
+				data:{startTime:startTime,endTime:endTime},
+    			dataType:"text",
+    			success:function(returned){
+    				console.log(returned);
+    				strs=returned.split("#");
+    			}	
+    		});
+           
+        }
+    	
+        
+
     	 Highcharts.chart('websearch1', {
              chart: {
                  zoomType: 'x'
