@@ -26,6 +26,7 @@ import scs.service.appConfig.AppConfigService;
 import scs.service.jobSchedul.JobSchedulService;
 import scs.service.recordManage.RecordManageService;
 import scs.util.repository.Repository;
+import scs.util.tools.AdapterForResult;
 import scs.util.tools.ResultDiffAnalysis; 
 
 /**
@@ -209,33 +210,35 @@ public class JobSchedulController {
 	public String getMemcachedResult(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="testRecordId",required=true) int testRecordId){
 		try{ 
-			TimeResultBean memBaseResult=new TimeResultBean();
-		
-			memBaseResult.setNintyTh(326);
-			memBaseResult.setNintyFiveTh(388);
-			memBaseResult.setNintyNineTh(466);
-			memBaseResult.setMin((float)26.0);
-			memBaseResult.setMax((float)688.0);
-			memBaseResult.setMean((float)134.0);
-			memBaseResult.setVar((float)1213.0);
-			memBaseResult.setMissRate((float)10.0);
-			memBaseResult.setGetSetRate(0.8f); 
-			memBaseResult.setRps(200000);
-			
-			TimeResultBean memResult=new TimeResultBean();
-			  
-			memResult.setNintyTh(526);
-			memResult.setNintyFiveTh(588);
-			memResult.setNintyNineTh(866);
-			memResult.setMin((float)23.0);
-			memResult.setMax((float)888.0);
-			memResult.setMean((float)234.0);
-			memResult.setVar((float)2484.0);
-			memResult.setMissRate((float)10.0);
-			memResult.setGetSetRate(0.8f); 
-			memResult.setRps(200000);
-			
-			model.addAttribute("MemcachedResult",memResult);
+			//jane
+			TimeResultBean memBaseResult=AdapterForResult.adapter("memcached", Repository.memcachedBaseDataList);
+//		
+//			memBaseResult.setNintyTh(326);
+//			memBaseResult.setNintyFiveTh(388);
+//			memBaseResult.setNintyNineTh(466);
+//			memBaseResult.setMin((float)26.0);
+//			memBaseResult.setMax((float)688.0);
+//			memBaseResult.setMean((float)134.0);
+//			memBaseResult.setVar((float)1213.0);
+//			memBaseResult.setMissRate((float)10.0);
+//			memBaseResult.setGetSetRate(0.8f); 
+//			memBaseResult.setRps(200000);
+//			
+			//jane
+			TimeResultBean memResult = AdapterForResult.adapter("memcached",Repository.memcachedDataList);//new TimeResultBean();
+//			  
+//			memResult.setNintyTh(526);
+//			memResult.setNintyFiveTh(588);
+//			memResult.setNintyNineTh(866);
+//			memResult.setMin((float)23.0);
+//			memResult.setMax((float)888.0);
+//			memResult.setMean((float)234.0);
+//			memResult.setVar((float)2484.0);
+//			memResult.setMissRate((float)10.0);
+//			memResult.setGetSetRate(0.8f); 
+//			memResult.setRps(200000);
+//			
+//			model.addAttribute("MemcachedResult",memResult);
 			model.addAttribute("MemcachedBaseResult",memBaseResult);
 		 
 			TimeResultDiffBean diffBean=ResultDiffAnalysis.getInstance().getMemResultDiff(memBaseResult,memResult);
@@ -255,36 +258,36 @@ public class JobSchedulController {
 	public String getWebServerResult(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="testRecordId",required=true) int testRecordId){
 		try{ 
-			TimeResultBean webServerBaseResult=new TimeResultBean();
+			TimeResultBean webServerBaseResult= AdapterForResult.adapter("webServer",Repository.webServerBaseDataList);//new TimeResultBean();
 			List<TwoTuple<Float,Float>> baseCdfList=new ArrayList<TwoTuple<Float,Float>>();
 			for(int i=0;i<=10;i++){
 				baseCdfList.add(new TwoTuple<Float,Float>((float)i,(float)(i*0.1)));
 			} 
-			webServerBaseResult.setCDF(baseCdfList);
-			webServerBaseResult.setNintyTh(326);
-			webServerBaseResult.setNintyFiveTh(388);
-			webServerBaseResult.setNintyNineTh(466);
-			webServerBaseResult.setMin((float)26.0);
-			webServerBaseResult.setMax((float)688.0);
-			webServerBaseResult.setMean((float)134.0);
-			webServerBaseResult.setVar((float)1213.0);
-			webServerBaseResult.setMissRate((float)10.0);
-			
-			TimeResultBean webServerResult=new TimeResultBean();
+//			webServerBaseResult.setCDF(baseCdfList);
+//			webServerBaseResult.setNintyTh(326);
+//			webServerBaseResult.setNintyFiveTh(388);
+//			webServerBaseResult.setNintyNineTh(466);
+//			webServerBaseResult.setMin((float)26.0);
+//			webServerBaseResult.setMax((float)688.0);
+//			webServerBaseResult.setMean((float)134.0);
+//			webServerBaseResult.setVar((float)1213.0);
+//			webServerBaseResult.setMissRate((float)10.0);
+//			
+			TimeResultBean webServerResult=AdapterForResult.adapter("webServer",Repository.webServerDataList);
 			List<TwoTuple<Float,Float>> cdfList=new ArrayList<TwoTuple<Float,Float>>();
 			for(int i=0;i<=10;i++){
 				cdfList.add(new TwoTuple<Float,Float>((float)i,(float)(i*i*0.01)));
 			} 
-			webServerResult.setCDF(cdfList);
-			webServerResult.setNintyTh(526);
-			webServerResult.setNintyFiveTh(588);
-			webServerResult.setNintyNineTh(866);
-			webServerResult.setMin((float)23.0);
-			webServerResult.setMax((float)888.0);
-			webServerResult.setMean((float)234.0);
-			webServerResult.setVar((float)2484.0);
-			webServerResult.setMissRate((float)10.0);
-			
+//			webServerResult.setCDF(cdfList);
+//			webServerResult.setNintyTh(526);
+//			webServerResult.setNintyFiveTh(588);
+//			webServerResult.setNintyNineTh(866);
+//			webServerResult.setMin((float)23.0);
+//			webServerResult.setMax((float)888.0);
+//			webServerResult.setMean((float)234.0);
+//			webServerResult.setVar((float)2484.0);
+//			webServerResult.setMissRate((float)10.0);
+//			
 			model.addAttribute("webServerResult",webServerResult);
 			model.addAttribute("webServerBaseResult",webServerBaseResult);
 			Repository.webServerBaseDataList.clear();
@@ -315,36 +318,36 @@ public class JobSchedulController {
 	public String getWebSearchResult(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="testRecordId",required=true) int testRecordId){
 		try{ 
-			TimeResultBean webSearchBaseResult=new TimeResultBean();
+			TimeResultBean webSearchBaseResult=AdapterForResult.adapter("webSearch",Repository.webSearchBaseDataList);//new TimeResultBean();
 			List<TwoTuple<Float,Float>> baseCdfList=new ArrayList<TwoTuple<Float,Float>>();
 			for(int i=0;i<=10;i++){
 				baseCdfList.add(new TwoTuple<Float,Float>((float)i,(float)(i*0.1)));
 			} 
-			webSearchBaseResult.setCDF(baseCdfList);
-			webSearchBaseResult.setNintyTh(326);
-			webSearchBaseResult.setNintyFiveTh(388);
-			webSearchBaseResult.setNintyNineTh(466);
-			webSearchBaseResult.setMin((float)26.0);
-			webSearchBaseResult.setMax((float)688.0);
-			webSearchBaseResult.setMean((float)134.0);
-			webSearchBaseResult.setVar((float)1213.0);
-			webSearchBaseResult.setMissRate((float)10.0);
-			
-			TimeResultBean webSearchResult=new TimeResultBean();
+//			webSearchBaseResult.setCDF(baseCdfList);
+//			webSearchBaseResult.setNintyTh(326);
+//			webSearchBaseResult.setNintyFiveTh(388);
+//			webSearchBaseResult.setNintyNineTh(466);
+//			webSearchBaseResult.setMin((float)26.0);
+//			webSearchBaseResult.setMax((float)688.0);
+//			webSearchBaseResult.setMean((float)134.0);
+//			webSearchBaseResult.setVar((float)1213.0);
+//			webSearchBaseResult.setMissRate((float)10.0);
+//			
+			TimeResultBean webSearchResult=AdapterForResult.adapter("webSearch",Repository.webSearchDataList);//new TimeResultBean();
 			List<TwoTuple<Float,Float>> cdfList=new ArrayList<TwoTuple<Float,Float>>();
 			for(int i=0;i<=10;i++){
 				cdfList.add(new TwoTuple<Float,Float>((float)i,(float)(i*i*0.01)));
 			} 
-			webSearchResult.setCDF(cdfList);
-			webSearchResult.setNintyTh(526);
-			webSearchResult.setNintyFiveTh(588);
-			webSearchResult.setNintyNineTh(866);
-			webSearchResult.setMin((float)23.0);
-			webSearchResult.setMax((float)888.0);
-			webSearchResult.setMean((float)234.0);
-			webSearchResult.setVar((float)2484.0);
-			webSearchResult.setMissRate((float)10.0);
-			
+//			webSearchResult.setCDF(cdfList);
+//			webSearchResult.setNintyTh(526);
+//			webSearchResult.setNintyFiveTh(588);
+//			webSearchResult.setNintyNineTh(866);
+//			webSearchResult.setMin((float)23.0);
+//			webSearchResult.setMax((float)888.0);
+//			webSearchResult.setMean((float)234.0);
+//			webSearchResult.setVar((float)2484.0);
+//			webSearchResult.setMissRate((float)10.0);
+//			
 			model.addAttribute("webSearchResult",webSearchResult);
 			model.addAttribute("webSearchBaseResult",webSearchBaseResult);
 			Repository.webSearchBaseDataList.clear();
@@ -374,36 +377,36 @@ public class JobSchedulController {
 	public String getSiloResult(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="testRecordId",required=true) int testRecordId){
 		try{ 
-			TimeResultBean siloBaseResult=new TimeResultBean();
+			TimeResultBean siloBaseResult= AdapterForResult.adapter("silo",Repository.siloBaseDataList);//new TimeResultBean();
 			List<TwoTuple<Float,Float>> baseCdfList=new ArrayList<TwoTuple<Float,Float>>();
 			for(int i=0;i<=10;i++){
 				baseCdfList.add(new TwoTuple<Float,Float>((float)i,(float)(i*0.1)));
 			} 
-			siloBaseResult.setCDF(baseCdfList);
-			siloBaseResult.setNintyTh(326);
-			siloBaseResult.setNintyFiveTh(388);
-			siloBaseResult.setNintyNineTh(466);
-			siloBaseResult.setMin((float)26.0);
-			siloBaseResult.setMax((float)688.0);
-			siloBaseResult.setMean((float)134.0);
-			siloBaseResult.setVar((float)1213.0);
-			siloBaseResult.setMissRate((float)10.0);
-			
-			TimeResultBean siloResult=new TimeResultBean();
+//			siloBaseResult.setCDF(baseCdfList);
+//			siloBaseResult.setNintyTh(326);
+//			siloBaseResult.setNintyFiveTh(388);
+//			siloBaseResult.setNintyNineTh(466);
+//			siloBaseResult.setMin((float)26.0);
+//			siloBaseResult.setMax((float)688.0);
+//			siloBaseResult.setMean((float)134.0);
+//			siloBaseResult.setVar((float)1213.0);
+//			siloBaseResult.setMissRate((float)10.0);
+//			
+			TimeResultBean siloResult= AdapterForResult.adapter("silo",Repository.siloDataList);//new TimeResultBean();
 			List<TwoTuple<Float,Float>> cdfList=new ArrayList<TwoTuple<Float,Float>>();
 			for(int i=0;i<=10;i++){
 				cdfList.add(new TwoTuple<Float,Float>((float)i,(float)(i*i*0.01)));
 			} 
-			siloResult.setCDF(cdfList);
-			siloResult.setNintyTh(526);
-			siloResult.setNintyFiveTh(588);
-			siloResult.setNintyNineTh(866);
-			siloResult.setMin((float)23.0);
-			siloResult.setMax((float)888.0);
-			siloResult.setMean((float)234.0);
-			siloResult.setVar((float)2484.0);
-			siloResult.setMissRate((float)10.0);
-			
+//			siloResult.setCDF(cdfList);
+//			siloResult.setNintyTh(526);
+//			siloResult.setNintyFiveTh(588);
+//			siloResult.setNintyNineTh(866);
+//			siloResult.setMin((float)23.0);
+//			siloResult.setMax((float)888.0);
+//			siloResult.setMean((float)234.0);
+//			siloResult.setVar((float)2484.0);
+//			siloResult.setMissRate((float)10.0);
+//			
 			model.addAttribute("siloResult",siloResult);
 			model.addAttribute("siloBaseResult",siloBaseResult);
 			Repository.siloBaseDataList.clear();
