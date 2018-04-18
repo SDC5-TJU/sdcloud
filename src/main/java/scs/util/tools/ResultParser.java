@@ -110,32 +110,32 @@ class ResultParser {
 		 bean.setNintyNineTh(nintyNineTh);
 		
 		//CDF
-		 bean.setCDF(getCDF(newlist));
-		/**
-		  * List<TwoTuple<Float,Float>> cdf = new ArrayList();
-		  * float percent;
-		  *	//Integer counts = 1;
-		  * int sumcount = 0;
-		  * for(int i=0; i < size-1; i++) {
-		  * sumcount++;
-		  *
-		  * if((int)newlist.get(i) ==(int)newlist.get(i+1)) {
-		  *	//System.out.println(i + " is =" + newlist.get(i) +" "+newlist.get(i+1));
-		  * }else {		
-		  * 	//System.out.println(i + " is " + newlist.get(i) +" "+newlist.get(i+1));
-		  *	
-		  *	//float percent = (float)counts/ (float)size;
-		  *	percent = (float)sumcount/ (float)size;
-		  *	cdf.add(new TwoTuple<Float,Float>((float)(int)newlist.get(i),percent));
-		  *	//counts = 1;
-		  *	
-		  * }
-		  * }
-		  *  percent = 1.0f;
-		  *  cdf.add(new TwoTuple<Float,Float>((float)(int)newlist.get(size-1),percent));
-		  *
-		  */
 		
+		
+		   List<TwoTuple<Float,Float>> cdf = new ArrayList();
+		  float percent;
+		 	//Integer counts = 1;
+		  int sumcount = 0;
+		  for(int i=0; i < size-1; i++) {
+		  sumcount++;
+		  
+		  if((int)newlist.get(i) ==(int)newlist.get(i+1)) {
+		  //System.out.println(i + " is =" + newlist.get(i) +" "+newlist.get(i+1));
+		   }else {		
+		   	//System.out.println(i + " is " + newlist.get(i) +" "+newlist.get(i+1));
+		  	
+		  	//float percent = (float)counts/ (float)size;
+		  	percent = (float)sumcount/ (float)size;
+		  cdf.add(new TwoTuple<Float,Float>((float)(int)newlist.get(i),percent));
+		  //counts = 1;
+		  	
+		   }
+		   }
+		    percent = 1.0f;
+		    cdf.add(new TwoTuple<Float,Float>((float)(int)newlist.get(size-1),percent));
+		  
+		  
+		    bean.setCDF(cdf);
 		
 		// miss
 		float miss = 0.0f;
@@ -234,29 +234,22 @@ class ResultParser {
 		return bean;
 	}
 	
-	public List<TwoTuple<Float,Float>>  getCDF(List newlist){
+	public List<TwoTuple<Float,Float>>  getCDF(List<Float> newlist){
 		List<TwoTuple<Float,Float>> cdf = new ArrayList();
 		float percent;
-		//Integer counts = 1;
 		int sumcount = 0;
 		int size = newlist.size();
 		for(int i=0; i < size-1; i++) {
 			sumcount++;
 			
-			if((int)newlist.get(i) ==(int)newlist.get(i+1)) {
-				//System.out.println(i + " is =" + newlist.get(i) +" "+newlist.get(i+1));
+			if(newlist.get(i) ==newlist.get(i+1)) {
 			}else {		
-				//System.out.println(i + " is " + newlist.get(i) +" "+newlist.get(i+1));
-				
-				//float percent = (float)counts/ (float)size;
 				percent = (float)sumcount/ (float)size;
-				cdf.add(new TwoTuple<Float,Float>((float)(int)newlist.get(i),percent));
-				//counts = 1;
-				
+				cdf.add(new TwoTuple<Float,Float>(newlist.get(i),percent));			
 			}
 		}
 		percent = 1.0f;
-		cdf.add(new TwoTuple<Float,Float>((float)(int)newlist.get(size-1),percent));
+		cdf.add(new TwoTuple<Float,Float>(newlist.get(size-1),percent));
 		
 		return cdf;
 	}
