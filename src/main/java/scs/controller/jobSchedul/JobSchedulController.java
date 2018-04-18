@@ -273,6 +273,7 @@ public class JobSchedulController {
 //			webServerBaseResult.setVar((float)1213.0);
 //			webServerBaseResult.setMissRate((float)10.0);
 //			
+			//jane
 			TimeResultBean webServerResult=AdapterForResult.adapter("webServer",Repository.webServerDataList);
 			List<TwoTuple<Float,Float>> cdfList=new ArrayList<TwoTuple<Float,Float>>();
 			for(int i=0;i<=10;i++){
