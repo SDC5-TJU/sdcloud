@@ -70,7 +70,7 @@ public class AppConfigController {
 	 * @param enable 所有应用的是否启用标志数组,依次填充
 	 */
 	@RequestMapping("/modifyAppConfig.do")
-	public void modifyAppConfig(HttpServletRequest request,HttpServletResponse response, 
+	public String modifyAppConfig(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="applicationName",required=true) String[] applicationName, 
 			@RequestParam(value="applicationType",required=true) String[] applicationType, 
 			@RequestParam(value="requestCount",required=false) String[] requestCount,
@@ -79,19 +79,19 @@ public class AppConfigController {
 			@RequestParam(value="intensity",required=true) String[] intensity,
 			@RequestParam(value="testRecordId",required=true) int[] testRecordId,
 			@RequestParam(value="enable",required=true) int[] enable){
-		try{
+		try{ 
 			Map<String,AppConfigBean> map=new HashMap<String,AppConfigBean>();
 			for(int i=0;i<applicationName.length;i++){
 				AppConfigBean bean=new AppConfigBean(applicationName[i],applicationType[i],requestCount[i],warmUpCount[i],pattern[i],intensity[i],testRecordId[i],enable[i]);
 				map.put(applicationName[i],bean); 
 			}
-			int result=service.modifyAppConfig(map);
-			response.getWriter().print(result);
-
+			int result=service.modifyAppConfig(map); 
+			model.addAttribute("result",result);
 		}catch(Exception e){
 			logger.error("add Operator error"+e);
 			e.printStackTrace();
-		}
+		} 
+		return "redirect:getAppConfig.do?testRecordId="+testRecordId[0]; 
 
 	}
 }
