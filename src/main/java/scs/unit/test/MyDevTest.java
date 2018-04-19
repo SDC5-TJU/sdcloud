@@ -86,40 +86,40 @@ public class MyDevTest {
 	
 	@Test
 	public void testCron(){
-//		if (Repository.cronFlag != 1) {
-//			System.out.println("停止");
-//			return;
-//		}
-//		Repository.cronFlag = 0;
-//		String[] hosts = { "192.168.1.128", "192.168.1.147" };
-//		String hostname = "192.168.1.128";
-//		String username = "tank";
-//		String password = "tanklab";
-//		int len = hosts.length;
-//		ArrayList<TableContainerresourceusage> combineList = new ArrayList<>();
-//		for (int i = 0; i < len; i++) {
-//			hostname = hosts[i];
-//			InputStream containerInfoStream = containerMonitor.getContainerInfoStream(hostname, username, password);
-//			ArrayList<TableContainerresourceusage> containersPOJO = containerMonitor
-//					.getContainersPOJO(containerInfoStream);
-//			combineList.addAll(containersPOJO);
-//			containerMonitor.testInsert(containersPOJO);
-//			Iterator<TableContainerresourceusage> iterator = containersPOJO.iterator();
-//			// 添加进全局 containerRealUsageMap 变量
-//			while (iterator.hasNext()) {
-//				TableContainerresourceusage tableContainerresourceusage = (TableContainerresourceusage) iterator.next();
-//				// containerName：Hadoop1 container类对象最新的资源使用情况
-//				Repository.containerRealUsageMap.put(tableContainerresourceusage.getContainername(),
-//						tableContainerresourceusage);
-//			}
-//		}
-//		// 统计
-//		Map<String, List<String>> appNames = appMonitor.getAPPName(Repository.appInfoMap);
-//		Map<String, TableAppresourceusage> aggregateAPPResourceUsage = appMonitor.aggregateAPP(combineList, appNames);
-//		appMonitor.testInsert(aggregateAPPResourceUsage);
-//		// 添加进全局 appRealUsageMap 变量
-//		Repository.appRealUsageMap = aggregateAPPResourceUsage;
-//		
+		if (Repository.cronFlag != 1) {
+			System.out.println("停止");
+			return;
+		}
+		Repository.cronFlag = 0;
+		String[] hosts = { "192.168.1.128", "192.168.1.147" };
+		String hostname = "192.168.1.128";
+		String username = "tank";
+		String password = "tanklab";
+		int len = hosts.length;
+		ArrayList<TableContainerresourceusage> combineList = new ArrayList<>();
+		for (int i = 0; i < len; i++) {
+			hostname = hosts[i];
+			InputStream containerInfoStream = containerMonitor.getContainerInfoStream(hostname, username, password);
+			ArrayList<TableContainerresourceusage> containersPOJO = containerMonitor
+					.getContainersPOJO(containerInfoStream);
+			combineList.addAll(containersPOJO);
+			containerMonitor.testInsert(containersPOJO);
+			Iterator<TableContainerresourceusage> iterator = containersPOJO.iterator();
+			// 添加进全局 containerRealUsageMap 变量
+			while (iterator.hasNext()) {
+				TableContainerresourceusage tableContainerresourceusage = (TableContainerresourceusage) iterator.next();
+				// containerName：Hadoop1 container类对象最新的资源使用情况
+				Repository.containerRealUsageMap.put(tableContainerresourceusage.getContainername(),
+						tableContainerresourceusage);
+			}
+		}
+		// 统计
+		Map<String, List<String>> appNames = appMonitor.getAPPName(Repository.appInfoMap);
+		Map<String, TableAppresourceusage> aggregateAPPResourceUsage = appMonitor.aggregateAPP(combineList, appNames);
+		appMonitor.testInsert(aggregateAPPResourceUsage);
+		// 添加进全局 appRealUsageMap 变量
+		Repository.appRealUsageMap = aggregateAPPResourceUsage;
+		
 		//调用systemresourceusage
 		ArrayList<TableSystemresourceusage> systemDataList = systemMonitor.getSystemDataList(Repository.systemInfoMap);
 		systemMonitor.testInsert(systemDataList);

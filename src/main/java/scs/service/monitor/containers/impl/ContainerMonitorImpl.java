@@ -21,7 +21,7 @@ import scs.service.monitor.containers.ContainerMonitor;
 
 @Service("containerMonitor")
 public class ContainerMonitorImpl implements ContainerMonitor {
-	
+
 	// public static String DOCKER_COMMAND = "sudo docker info";
 	@Autowired
 	public TableContainerresourceusageMapper containerresourceusageMapper;
@@ -115,12 +115,41 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 				Number parse3 = percentInstance.parse(split[3]);
 				record.setMemusagerate(parse3.floatValue());
 				/*
-				record.setBlockio(0f);
-				record.setIousagerate(0f);
-				record.setNetusagerate(0f);
-				*/
+				 * record.setBlockio(0f); record.setIousagerate(0f);
+				 * record.setNetusagerate(0f);
+				 */
+				String[] netArray = split[4].split("/");
+				if (netArray[0].trim().endsWith("MB") || netArray[0].trim().endsWith("KB")
+						|| netArray[0].trim().endsWith("GB")) {
+					record.setNetinput(
+							Float.parseFloat(netArray[0].trim().substring(0, netArray[0].trim().length() - 2)));
+				} else if (netArray[0].trim().endsWith("B")) {
+					record.setNetinput(
+							Float.parseFloat(netArray[0].trim().substring(0, netArray[0].trim().length() - 1)));
+				}
+				if (netArray[1].trim().endsWith("MB") || netArray[1].trim().endsWith("KB")
+						|| netArray[1].trim().endsWith("GB")) {
+					record.setNetoutput(
+							Float.parseFloat(netArray[1].trim().substring(0, netArray[1].trim().length() - 2)));
+				} else if (netArray[1].trim().endsWith("B")) {
+					record.setNetoutput(
+							Float.parseFloat(netArray[1].trim().substring(0, netArray[1].trim().length() - 1)));
+				}
+
+				String[] ioArray = split[5].split("/");
+				if (ioArray[0].trim().endsWith("MB") || ioArray[0].trim().endsWith("KB")
+						|| ioArray[0].trim().endsWith("GB")) {
+					record.setIoinput(Float.parseFloat(ioArray[0].trim().substring(0, ioArray[0].trim().length() - 2)));
+				} else if (ioArray[0].trim().endsWith("B")) {
+					record.setIoinput(Float.parseFloat(ioArray[0].trim().substring(0, ioArray[0].trim().length() - 1)));
+				}
+				if (ioArray[1].trim().endsWith("MB") || ioArray[1].trim().endsWith("KB")
+						|| ioArray[1].trim().endsWith("GB")) {
+					record.setIooutput(Float.parseFloat(ioArray[1].trim().substring(0, ioArray[1].trim().length() - 2)));
+				} else if (ioArray[1].trim().endsWith("B")) {
+					record.setIooutput(Float.parseFloat(ioArray[1].trim().substring(0, ioArray[1].trim().length() - 1)));
+				}
 				record.setCollecttime(date);
-				
 				arrayList.add(record);
 			}
 		} catch (Exception e) {

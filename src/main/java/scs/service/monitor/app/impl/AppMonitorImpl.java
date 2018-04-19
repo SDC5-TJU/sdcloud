@@ -20,7 +20,7 @@ import scs.service.monitor.app.AppMonitor;
 
 @Service("appMonitor")
 public class AppMonitorImpl implements AppMonitor {
-	
+
 	@Autowired
 	public TableAppresourceusageMapper appresourceusageMapper;
 
@@ -44,13 +44,13 @@ public class AppMonitorImpl implements AppMonitor {
 	}
 
 	@Override
-	public Map<String, TableAppresourceusage> aggregateAPP(ArrayList<TableContainerresourceusage> containerresourceusages,
+	public Map<String, TableAppresourceusage> aggregateAPP(
+			ArrayList<TableContainerresourceusage> containerresourceusages,
 			Map<String, List<String>> appContainerNames) {
 		// 8个服务的名称
 		Set<Entry<String, List<String>>> entries = appContainerNames.entrySet();
 		/*
-		 * String:服务名称，applicationName
-		 * TableAppresourceusage：服务资源统计
+		 * String:服务名称，applicationName TableAppresourceusage：服务资源统计
 		 */
 		Map<String, TableAppresourceusage> simpleAggregate = new HashMap<>();
 		Iterator<Entry<String, List<String>>> iteratorEntries = entries.iterator();
@@ -65,40 +65,54 @@ public class AppMonitorImpl implements AppMonitor {
 			float cpuusage = 0.0f;
 			float memusage = 0.0f;
 			float memAmount = 0.0f;
-			float iousage = 0.0f;
-			float blockiousage = 0.0f;
-			float netusage = 0.0f;
+			/*
+			 * float iousage = 0.0f; 
+			 * float blockiousage = 0.0f; 
+			 * float netusage = 0.0f;
+			 */
+			float ioInput = 0.0f;
+			float ioOutput = 0.0f;
+			float netInput = 0.0f;
+			float netOutput = 0.0f;
 			// containerresourceusages 为统一了两台物理服务器的列表
 			for (TableContainerresourceusage container : containerresourceusages) {
-				
+
 				if (containersList.contains(container.getContainername())) {
 					sum++;
 					cpuusage += container.getCpuusagerate();
 					memusage += container.getMemusagerate();
 					memAmount += container.getMemusageamount();
 					/*
-					iousage += container.getIousagerate();
-					blockiousage += container.getBlockio();
-					netusage += container.getNetusagerate();
-					*/
+					 * iousage += container.getIousagerate(); blockiousage +=
+					 * container.getBlockio(); netusage +=
+					 * container.getNetusagerate();
+					 */
+					netInput += container.getNetinput();
+					netOutput += container.getNetoutput();
+					ioInput += container.getIoinput();
+					ioOutput += container.getIooutput();
 					appresourceusage.setCollecttime(container.getCollecttime());
 				}
-				//求平均值
-				appresourceusage.setCpuusagerate(cpuusage	/sum);
-				appresourceusage.setMemusageamount(memAmount/sum);
-				appresourceusage.setMemusagerate(memusage 	/sum);
+				// 求平均值
+				appresourceusage.setCpuusagerate(cpuusage 		/ sum);
+				appresourceusage.setMemusageamount(memAmount 	/ sum);
+				appresourceusage.setMemusagerate(memusage 		/ sum);
+				appresourceusage.setNetinput(netInput			/sum);
+				appresourceusage.setNetoutput(netOutput 		/sum);
+				appresourceusage.setIoinput(ioInput				/sum);
+				appresourceusage.setIooutput(ioOutput			/sum);
 				/*
-				appresourceusage.setIousagerate(iousage 	/sum);
-				appresourceusage.setBlockio(blockiousage 	/sum);
-				appresourceusage.setNetusagerate(netusage 	/sum);
-				*/
+				 * appresourceusage.setIousagerate(iousage /sum);
+				 * appresourceusage.setBlockio(blockiousage /sum);
+				 * appresourceusage.setNetusagerate(netusage /sum);
+				 */
 			}
-			
+
 			simpleAggregate.put(appName, appresourceusage);
 		}
-		
+
 		return simpleAggregate;
-		
+
 	}
 
 	@Override
@@ -108,7 +122,7 @@ public class AppMonitorImpl implements AppMonitor {
 		}
 		Set<Entry<String, TableAppresourceusage>> entrySet = apps.entrySet();
 		Iterator<Entry<String, TableAppresourceusage>> iterator = entrySet.iterator();
-		
+
 		int sum = 0;
 		while (iterator.hasNext()) {
 			Entry<String, TableAppresourceusage> record = iterator.next();
