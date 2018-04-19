@@ -259,6 +259,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         });
         
         Highcharts.chart('websearch3', {
+            chart: {
+                type: 'scatter',
+                zoomType: 'x'
+            },
+            plotOptions: {
+                series: {
+                    marker: {
+                        radius: 1
+                    }
+                }
+            },
             boost: {
                 useGPUTranslations: true
             },
@@ -286,7 +297,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         });
         
         Highcharts.chart('websearch4', {
-        	 
+            chart: {
+                type: 'scatter',
+                zoomType: 'x'
+            },
+            plotOptions: {
+                series: {
+                    marker: {
+                        radius: 1
+                    }
+                }
+            },
             boost: {
                 useGPUTranslations: true
             },

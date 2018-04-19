@@ -91,6 +91,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${cassandra.pattern}" placeholder="定值/均匀/指数/泊松" id="" name="pattern">
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${cassandra.intensity}" placeholder="" id="" name="intensity" >
                         <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="cassandraButton">
+                    	<input style="margin-left:20px; " type="button"  class="config" onclick="" value="基准采集" id="cassandraAverButton">
+                    	
                     </div>
                 </div>
                 </c:if>
@@ -303,6 +305,7 @@ $("#endButton").click(function(){
 							$("#scimarkButton").attr("disabled", returned[0].scimark);
 							$("#hadoopButton").attr("disabled", returned[0].hadoop);
 							$("#cassandraButton").attr("disabled", returned[0].cassandra);
+							$("#cassandraAverButton").attr("disabled", returned[0].cassandra);
 					 } 
 					//to do
 					/*遍历json数组，获取并判断每个应有的状态，为true 则disable的按钮 为false 则相反*/ 
