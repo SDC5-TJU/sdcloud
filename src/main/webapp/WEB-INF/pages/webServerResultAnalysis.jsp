@@ -264,7 +264,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 text: '无干扰下访问延迟分布'
             },
             chart: {
+                type: 'scatter',
                 zoomType: 'x'
+            },
+            plotOptions: {
+                series: {
+                    marker: {
+                        radius: 2
+                    }
+                }
             },
             boost: {
                 useGPUTranslations: true
@@ -294,7 +302,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 text: '干扰下访问延迟分布'
             },
             chart: {
+                type: 'scatter',
                 zoomType: 'x'
+            },
+            plotOptions: {
+                series: {
+                    marker: {
+                        radius: 1
+                    }
+                }
             },
             boost: {
                 useGPUTranslations: true
@@ -312,8 +328,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             legend: {                                                                    
                 enabled: false                                                           
             } ,
-            tooltip: {
-                
+            tooltip: {                
                 xDateFormat: '%Y-%m-%d %H:%M:%S.%L',
                 valueSuffix: 'ms'
             },
