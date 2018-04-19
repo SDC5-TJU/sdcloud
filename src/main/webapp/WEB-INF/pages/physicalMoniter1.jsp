@@ -19,7 +19,6 @@
 <link rel="stylesheet" href="statics/css/pintuer.css">
 <link rel="stylesheet" href="statics/css/admin.css">
 <link rel="stylesheet" href="statics/css/physical.css">
-
 </head>
 
 <body>
