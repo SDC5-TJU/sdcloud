@@ -163,6 +163,7 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 					record.setIoinput(
 							Float.parseFloat(ioArray[0].trim().substring(0, ioArray[0].trim().length() - 2)) / 1024f);
 				}else if(ioArray[0].trim().endsWith("GB")){
+					System.out.println(Float.parseFloat(ioArray[0].trim().substring(0, ioArray[0].trim().length() - 2)) * 1024f);
 					record.setIoinput(
 							Float.parseFloat(ioArray[0].trim().substring(0, ioArray[0].trim().length() - 2)) * 1024f);
 				}else if (ioArray[0].trim().endsWith("B") && !(ioArray[0].trim().endsWith("GB") || ioArray[0].trim().endsWith("KB") || ioArray[0].trim().endsWith("MB"))) {

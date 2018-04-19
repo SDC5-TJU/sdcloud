@@ -120,13 +120,13 @@ public class MyDevTest {
 		// 添加进全局 appRealUsageMap 变量
 		Repository.appRealUsageMap = aggregateAPPResourceUsage;
 		
-		//调用systemresourceusage
-		ArrayList<TableSystemresourceusage> systemDataList = systemMonitor.getSystemDataList(Repository.systemInfoMap);
-		systemMonitor.testInsert(systemDataList);
-		
-		for (TableSystemresourceusage tableSystemresourceusage : systemDataList) {
-			Repository.systemRealUsageMap.put(tableSystemresourceusage.getHostname(), tableSystemresourceusage);
-		}
+//		//调用systemresourceusage
+//		ArrayList<TableSystemresourceusage> systemDataList = systemMonitor.getSystemDataList(Repository.systemInfoMap);
+//		systemMonitor.testInsert(systemDataList);
+//		
+//		for (TableSystemresourceusage tableSystemresourceusage : systemDataList) {
+//			Repository.systemRealUsageMap.put(tableSystemresourceusage.getHostname(), tableSystemresourceusage);
+//		}
 	}
 	
 	@Test
