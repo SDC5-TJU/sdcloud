@@ -76,18 +76,22 @@ public class AppMonitorImpl implements AppMonitor {
 					cpuusage += container.getCpuusagerate();
 					memusage += container.getMemusagerate();
 					memAmount += container.getMemusageamount();
+					/*
 					iousage += container.getIousagerate();
 					blockiousage += container.getBlockio();
 					netusage += container.getNetusagerate();
+					*/
 					appresourceusage.setCollecttime(container.getCollecttime());
 				}
 				//求平均值
 				appresourceusage.setCpuusagerate(cpuusage	/sum);
 				appresourceusage.setMemusageamount(memAmount/sum);
 				appresourceusage.setMemusagerate(memusage 	/sum);
+				/*
 				appresourceusage.setIousagerate(iousage 	/sum);
 				appresourceusage.setBlockio(blockiousage 	/sum);
 				appresourceusage.setNetusagerate(netusage 	/sum);
+				*/
 			}
 			
 			simpleAggregate.put(appName, appresourceusage);

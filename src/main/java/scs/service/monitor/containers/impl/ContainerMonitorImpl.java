@@ -114,11 +114,11 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 
 				Number parse3 = percentInstance.parse(split[3]);
 				record.setMemusagerate(parse3.floatValue());
-
+				/*
 				record.setBlockio(0f);
 				record.setIousagerate(0f);
 				record.setNetusagerate(0f);
-				
+				*/
 				record.setCollecttime(date);
 				
 				arrayList.add(record);
