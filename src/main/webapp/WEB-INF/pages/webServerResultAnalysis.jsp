@@ -317,7 +317,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 xDateFormat: '%Y-%m-%d %H:%M:%S.%L',
                 valueSuffix: 'ms'
             },
-            series: [${diffBean.baseTimeStr}]
+            series: [${diffBean.timeStr}]
         }); 
 
 

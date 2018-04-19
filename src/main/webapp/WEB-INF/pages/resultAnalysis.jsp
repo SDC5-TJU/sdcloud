@@ -42,6 +42,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <a  href="getMemcachedResult.do?testRecordId=${testRecordId}" target="_blank" id="memcached">memcached</a>
         </li>
        </c:if> 
+       <c:if test="${cassandra.enable==1}">  
+        <li class="" style="float: left;">
+            <a  href="getCassandraResult.do?testRecordId=${testRecordId}" target="_blank" id="memcached">cassandra</a>
+        </li>
+       </c:if>
     </ul>
     
    <!--图-->
@@ -352,7 +357,7 @@ $(document).ready(function() {
              text: '各应用CPU占用情况'
          },
          xAxis: {
-             categories: ${appUsageStr2},
+             categories: ${appUsageStr6},
              tickmarkPlacement: 'on',
              title: {
                  enabled: false
@@ -396,7 +401,7 @@ $(document).ready(function() {
              text: '各应用内存占用情况'
          },
          xAxis: {
-             categories: ${appUsageStr2},
+             categories: ${appUsageStr6},
              tickmarkPlacement: 'on',
              title: {
                  enabled: false
@@ -440,7 +445,7 @@ $(document).ready(function() {
              text: 'I/O input'
          },
          xAxis: {
-             categories: ${appUsageStr2},
+             categories: ${appUsageStr6},
              tickmarkPlacement: 'on',
              title: {
                  enabled: false
@@ -473,7 +478,7 @@ $(document).ready(function() {
                  }
              }
          },
-         series: [${appUsageStr1}]
+         series: [${appUsageStr2}]
      });
      
      Highcharts.chart('websearch8', {
@@ -484,7 +489,7 @@ $(document).ready(function() {
              text: 'I/O output'
          },
          xAxis: {
-             categories: ${appUsageStr2},
+             categories: ${appUsageStr6},
              tickmarkPlacement: 'on',
              title: {
                  enabled: false
@@ -517,7 +522,7 @@ $(document).ready(function() {
                  }
              }
          },
-         series: [${appUsageStr1}]
+         series: [${appUsageStr3}]
      });
 
      Highcharts.chart('websearch9', {
@@ -528,7 +533,7 @@ $(document).ready(function() {
              text: 'net input'
          },
          xAxis: {
-             categories: ${appUsageStr2},
+             categories: ${appUsageStr6},
              tickmarkPlacement: 'on',
              title: {
                  enabled: false
@@ -561,7 +566,7 @@ $(document).ready(function() {
                  }
              }
          },
-         series: [${appUsageStr1}]
+         series: [${appUsageStr4}]
      });
      
      Highcharts.chart('websearch10', {
@@ -572,7 +577,7 @@ $(document).ready(function() {
              text: 'net output'
          },
          xAxis: {
-             categories: ${appUsageStr2},
+             categories: ${appUsageStr6},
              tickmarkPlacement: 'on',
              title: {
                  enabled: false
@@ -605,7 +610,7 @@ $(document).ready(function() {
                  }
              }
          },
-         series: [${appUsageStr1}]
+         series: [${appUsageStr5}]
      });
 
 });

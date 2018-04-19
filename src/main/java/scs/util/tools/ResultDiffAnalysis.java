@@ -123,7 +123,6 @@ public class ResultDiffAnalysis {
 		}
 		HSeries.append(strName).append(strData).append("}");
 		diffBean.setTimeStr(HSeries.toString());
-
 		/*
 		 * 绘制无干扰下cdf曲线
 		 */
