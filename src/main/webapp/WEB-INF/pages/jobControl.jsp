@@ -56,8 +56,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <label class="col-xs-4 new-col-sm-2 new-center1"></label>
                 </div>
             </c:if>    
-                <c:if test="${webSearch.enable==1}">
-
+                <c:if test="${webSearch.enable==1}"> 
                 <div class="row cl">
                     <label class="form-label col-xs-4 col-sm-2">web搜索：</label>
                     <div class="formControls col-xs-8 col-sm-9">
@@ -68,7 +67,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="webSearchButton">
                         <input style="margin-left:20px; " type="button"  class="config" onclick="" value="基准采集" id="webSearchAverButton">
                     </div>
-                </div>
+                </div> 
                 </c:if>
                 <c:if test="${webServer.enable==1}">
                <div class="row cl">
@@ -80,6 +79,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${webServer.intensity}" placeholder="2000" id="config2-4" name="intensity">
                         <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="webServerButton">
                         <input style="margin-left:20px; " type="button"  class="config" onclick="" value="基准采集" id="webServerAverButton">
+                    </div>
+                </div>
+                </c:if>
+                <c:if test="${cassandra.enable==1}"> 
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">Cassandra：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="${cassandra.requestCount}" placeholder="" id="config8-1" name="requestCount" >
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="${cassandra.warmUpCount}" placeholder="" id="config8-2" name="warmUpCount" >
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${cassandra.pattern}" placeholder="定值/均匀/指数/泊松" id="" name="pattern">
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${cassandra.intensity}" placeholder="" id="" name="intensity" >
+                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="cassandraButton">
                     </div>
                 </div>
                 </c:if>
@@ -185,26 +196,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </div>
                 </div>
                 </c:if>
-                <c:if test="${hadoop.enable==1}">
-				<div class="row cl">
-                    <label class="col-xs-4 new-col-sm-2 new-center1"></label>
-                    <label class="col-xs-4 new-col-sm-2 new-center1">请求总数</label>
-                    <label class="col-xs-4 new-col-sm-2 new-center1">预热总数</label>
-                    <label class="col-xs-4 new-col-sm-2 new-center1">负载策略</label>
-                    <label class="col-xs-4 new-col-sm-2 new-center1">间隔单位/ms</label>
-                    <label class="col-xs-4 new-col-sm-2 new-center1"></label>
-                </div>
-                <div class="row cl">
-                    <label class="form-label col-xs-4 col-sm-2">Cassandra：</label>
-                    <div class="formControls col-xs-8 col-sm-9">
-                        <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="${cassandra.requestCount}" placeholder="" id="config8-1" name="requestCount" disabled="disabled">
-                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="" placeholder="" id="config8-2" name="" disabled="disabled">
-                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="" placeholder="" id="" name="" disabled="disabled">
-                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${cassandra.intensity}" placeholder="" id="" name="intensity" >
-                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="cassandraButton">
-                    </div>
-                </div>
-                </c:if>
+               
             </div>
 
         </form>
@@ -241,7 +233,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="statics/js/highcharts-more.js"></script>
 <script type="text/javascript">
 //开启chart按钮
-	var flag=false;
+	var flag1=false;
+	var flag2=false;
  
 	$("#startChartButton").click(function(){
 		if(flag==true){
@@ -295,8 +288,10 @@ $("#endButton").click(function(){
 					 if(returned.length==1){
 							$("#webSearchButton").attr("disabled", returned[0].webSearch);
 							$("#webSearchAverButton").attr("disabled", returned[0].webSearch);
+							flag1=returned[0].webSearch;
 							$("#webServerButton").attr("disabled", returned[0].webServer); 
 							$("#webServerAverButton").attr("disabled", returned[0].webServer); 
+							flag2=returned[0].webServer;
 							$("#memcachedButton").attr("disabled", returned[0].memcached);
 							$("#memcachedAverButton").attr("disabled", returned[0].memcached);
 							$("#siloButton").attr("disabled", returned[0].silo);
@@ -322,6 +317,7 @@ $("#endButton").click(function(){
 $("#webSearchButton").click(function(){
 	$("#webSearchButton").attr("disabled",true);
 	$("#webSearchAverButton").attr("disabled",true);
+	flag1=true;
 		    $.ajax({
 				async:true,
 				type:"post",
@@ -335,6 +331,7 @@ $("#webSearchButton").click(function(){
 $("#webSearchAverButton").click(function(){
 	$("#webSearchButton").attr("disabled",true);
 	$("#webSearchAverButton").attr("disabled",true);
+	flag1=true;
     $.ajax({
 		async:true,
 		type:"post",
@@ -349,6 +346,7 @@ $("#webSearchAverButton").click(function(){
 $("#webServerButton").click(function(){
 	$("#webServerButton").attr("disabled",true);
 	$("#webServerAverButton").attr("disabled",true);
+	flag2=true;
 		    $.ajax({
 				async:true,
 				type:"post",
@@ -362,6 +360,7 @@ $("#webServerButton").click(function(){
 $("#webServerAverButton").click(function(){
 	$("#webServerButton").attr("disabled",true);
 	$("#webServerAverButton").attr("disabled",true);
+	flag2=true;
     $.ajax({
 		async:true,
 		type:"post",
@@ -531,7 +530,7 @@ $(document).ready(function (){
                     var series = this.series[0];
                     var a=null;
                     setInterval(function (){
-                    	if(flag==true){  
+                    	if(flag1==true){  
 			                $.ajax({
 								async:true,
 								type:"post",
@@ -599,7 +598,7 @@ $(document).ready(function (){
                     var series = this.series[0];
                     var a=null;
                     setInterval(function (){
-                    	if(flag==true){  
+                    	if(flag2==true){  
 			                $.ajax({
 								async:true,
 								type:"post",

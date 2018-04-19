@@ -41,7 +41,7 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 
 	@Override
 	public List<ContainerResourceUsageBean> searchContainerResourceUsage(String hostName, String startTime,String endTime) {
-		String sql="select cpuUsageRate,memUsageRate,netUsageRate,ioUsageRate,collectTime from table_containerresourceusage where hostName=? and collectTime>=? and collectTime<=?";
+		String sql="select cpuUsageRate,memUsageRate,netInput,netOutput,ioInput,ioOutput,collectTime from table_containerresourceusage where hostName=? and collectTime>=? and collectTime<=?";
 		List<ContainerResourceUsageBean> list=jt.query(sql,new Object[]{hostName,startTime,endTime},new ResultSetExtractor<List<ContainerResourceUsageBean>>() {
 			public List<ContainerResourceUsageBean> extractData(ResultSet rs) throws SQLException, DataAccessException {
 				List<ContainerResourceUsageBean> list = new ArrayList<ContainerResourceUsageBean>();
@@ -49,9 +49,11 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 					ContainerResourceUsageBean bean=new ContainerResourceUsageBean();
 					bean.setCpuUsageRate(rs.getFloat(1));
 					bean.setMemUsageRate(rs.getFloat(2));
-					bean.setIoUsageRate(rs.getFloat(3));
-					bean.setNetUsageRate(rs.getFloat(4));
-					bean.setCollectTime(DateFormats.getInstance().dateStringToTime(rs.getString(5)));
+					bean.setNetInput(rs.getFloat(3));
+					bean.setNetOutput(rs.getFloat(4));
+					bean.setIoInput(rs.getFloat(5));
+					bean.setIoOutput(rs.getFloat(6));
+					bean.setCollectTime(DateFormats.getInstance().dateStringToTime(rs.getString(7)));
 					list.add(bean);
 				}
 				return list;
@@ -63,7 +65,7 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 	@Override
 	public List<AppResouceUsageBean> searchAppResourceUsage(String appName, String startTime,
 			String endTime) {
-		String sql="select cpuUsageRate,memUsageRate,netUsageRate,ioUsageRate,collectTime from table_appresourceusage where applicationName=? and collectTime>=? and collectTime<=?";
+		String sql="select cpuUsageRate,memUsageRate,netInput,netOutput,ioInput,ioOutput,collectTime from table_appresourceusage where applicationName=? and collectTime>=? and collectTime<=?";
 		List<AppResouceUsageBean> list=jt.query(sql,new Object[]{appName,startTime,endTime},new ResultSetExtractor<List<AppResouceUsageBean>>() {
 			public List<AppResouceUsageBean> extractData(ResultSet rs) throws SQLException, DataAccessException {
 				List<AppResouceUsageBean> list = new ArrayList<AppResouceUsageBean>();
@@ -71,9 +73,11 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 					AppResouceUsageBean bean=new AppResouceUsageBean();
 					bean.setCpuUsageRate(rs.getFloat(1));
 					bean.setMemUsageRate(rs.getFloat(2));
-					bean.setIoUsageRate(rs.getFloat(3));
-					bean.setNetUsageRate(rs.getFloat(4));
-					bean.setCollectTime(DateFormats.getInstance().dateStringToTime(rs.getString(5)));
+					bean.setNetInput(rs.getFloat(3));
+					bean.setNetOutput(rs.getFloat(4));
+					bean.setIoInput(rs.getFloat(5));
+					bean.setIoOutput(rs.getFloat(6));
+					bean.setCollectTime(DateFormats.getInstance().dateStringToTime(rs.getString(7)));
 					list.add(bean);
 				}
 				return list;

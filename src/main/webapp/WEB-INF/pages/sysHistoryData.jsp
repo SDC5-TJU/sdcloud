@@ -7,7 +7,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-<!--测评结果汇总-->
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,7 +18,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="statics/js/jquery.js"></script>
     <script src="statics/js/pintuer.js"></script>
 </head>
-<body style="height:2700px;">
+<body>
+<form method="post" action="" id="listform">
+    <div class="panel admin-panel">
+        <div class="panel-head"><strong class="icon-reorder"> 物理机测试记录查询</strong> <a href="" style="float:right; display:none;">添加字段</a></div>
+        <div class="padding border-bottom">
+            <ul class="search" style="padding-left:10px;">
+                <li> <a class="button border-main icon-plus-square-o" href=""> 开始时间</a> </li>
+                <li><input type="text" placeholder="" name="keywords" id="startTime" class="input" style="width:180px; line-height:17px;display:inline-block" /></li>
+                <li> <a class="button border-main icon-plus-square-o" href=""> 结束时间</a> </li>
+                <li><input type="text" placeholder="" name="keywords" id="endTime" class="input" style="width:180px; line-height:17px;
+                display:inline-block" /></li>
+                <li><a href="javascript:void(0)" class="button border-main icon-search" onclick="search();" > 搜索</a></li>
+            </ul>
+        </div>
+    </div>
+</form>
 <div>
     <!--图-->
     <div id="chart">
@@ -27,21 +41,46 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div id="websearch2" style="width: 1100px;height: 300px;position: absolute; left:150px;top: 500px;"></div>
         <div id="websearch3" style="width: 1100px;height: 300px;position: absolute; left:150px;top: 850px;"></div>
         <div id="websearch4" style="width: 1100px;height: 300px;position: absolute; left:150px;top: 1200px;"></div>
-        <div id="websearch5" style="width: 1100px;height: 300px;position: absolute; left:150px;top: 1550px;"></div>
-        <div id="websearch6" style="width: 1100px;height: 300px;position: absolute; left:150px;top: 1900px;"></div>
-        <div id="websearch7" style="width: 1100px;height: 300px;position: absolute; left:150px;top: 1250px;"></div>
-        <div id="websearch8" style="width: 1100px;height: 300px;position: absolute; left:150px;top: 1600px;"></div>
-        <div id="websearch9" style="width: 1100px;height: 300px;position: absolute; left:150px;top: 1990px;"></div>
-        <div id="websearch10" style="width: 1100px;height: 300px;position: absolute; left:150px;top: 2300px;"></div>
     </div>
 
 </div>
 <script type="text/javascript" src="statics/js/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="statics/js/highcharts.js"></script>
 <script type="text/javascript" src="statics/js/highcharts-more.js"></script>
+<script type="text/javascript" src="statics/js/laydate.js"></script>
 <script type="text/javascript">
+laydate.render({
+    elem: '#startTime'
+    ,type: 'datetime' //指定元素
+});
+
+laydate.render({
+    elem: '#endTime'
+    ,type: 'datetime' //指定元素
+});
+
+</script>
+<script type="text/javascript">
+ 	var strs= new Array();//定义数组存储绘图数据
+ 	
     $(document).ready(function() {
-       
+        function search(){
+        	$.ajax({
+    			async:true,
+    			type:"post",
+    			url:"searchSysHistoryData.do",
+				data:{startTime:startTime,endTime:endTime},
+    			dataType:"text",
+    			success:function(returned){
+    				console.log(returned);
+    				strs=returned.split("#");
+    			}	
+    		});
+           
+        }
+    	
+        
+
     	 Highcharts.chart('websearch1', {
              chart: {
                  zoomType: 'x'
@@ -279,271 +318,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
              series: [${sysUsageStr3}]
          });
-         Highcharts.chart('websearch5', {
-             chart: {
-                 type: 'area'
-             },
-             title: {
-                 text: '各应用CPU占用情况'
-             },
-             xAxis: {
-                 categories: ${appUsageStr2},
-                 tickmarkPlacement: 'on',
-                 title: {
-                     enabled: false
-                 }
-             },
-             yAxis: {
-                 title: {
-                     text: 'MB'
-                 },
-                 min:0
-
-             },
-             legend: {
-                 layout: 'vertical',
-                 align: 'right',
-                 verticalAlign: 'middle'
-             },
-             tooltip: {
-                 split: true,
-                 valueSuffix: ' MB'
-             },
-             plotOptions: {
-                 area: {
-                     stacking: 'normal',
-                     lineColor: '#666666',
-                     lineWidth: 1,
-                     marker: {
-                         lineWidth: 1,
-                         lineColor: '#666666'
-                     }
-                 }
-             },
-             series: [${appUsageStr0}]
-         });
-         Highcharts.chart('websearch6', {
-             chart: {
-                 type: 'area'
-             },
-             title: {
-                 text: '各应用内存占用情况'
-             },
-             xAxis: {
-                 categories: ${appUsageStr2},
-                 tickmarkPlacement: 'on',
-                 title: {
-                     enabled: false
-                 }
-             },
-             yAxis: {
-                 title: {
-                     text: 'MB'
-                 },
-                 min:0
-
-             },
-             legend: {
-                 layout: 'vertical',
-                 align: 'right',
-                 verticalAlign: 'middle'
-             },
-             tooltip: {
-                 split: true,
-                 valueSuffix: ' MB'
-             },
-             plotOptions: {
-                 area: {
-                     stacking: 'normal',
-                     lineColor: '#666666',
-                     lineWidth: 1,
-                     marker: {
-                         lineWidth: 1,
-                         lineColor: '#666666'
-                     }
-                 }
-             },
-             series: [${appUsageStr1}]
-         });
-
-         Highcharts.chart('websearch7', {
-             chart: {
-                 type: 'area'
-             },
-             title: {
-                 text: 'I/O input'
-             },
-             xAxis: {
-                 categories: ${appUsageStr2},
-                 tickmarkPlacement: 'on',
-                 title: {
-                     enabled: false
-                 }
-             },
-             yAxis: {
-                 title: {
-                     text: 'MB'
-                 },
-                 min:0
-
-             },
-             legend: {
-                 layout: 'vertical',
-                 align: 'right',
-                 verticalAlign: 'middle'
-             },
-             tooltip: {
-                 split: true,
-                 valueSuffix: ' MB'
-             },
-             plotOptions: {
-                 area: {
-                     stacking: 'normal',
-                     lineColor: '#666666',
-                     lineWidth: 1,
-                     marker: {
-                         lineWidth: 1,
-                         lineColor: '#666666'
-                     }
-                 }
-             },
-             series: [${appUsageStr1}]
-         });
-         
-         Highcharts.chart('websearch8', {
-             chart: {
-                 type: 'area'
-             },
-             title: {
-                 text: 'I/O output'
-             },
-             xAxis: {
-                 categories: ${appUsageStr2},
-                 tickmarkPlacement: 'on',
-                 title: {
-                     enabled: false
-                 }
-             },
-             yAxis: {
-                 title: {
-                     text: 'MB'
-                 },
-                 min:0
-
-             },
-             legend: {
-                 layout: 'vertical',
-                 align: 'right',
-                 verticalAlign: 'middle'
-             },
-             tooltip: {
-                 split: true,
-                 valueSuffix: ' MB'
-             },
-             plotOptions: {
-                 area: {
-                     stacking: 'normal',
-                     lineColor: '#666666',
-                     lineWidth: 1,
-                     marker: {
-                         lineWidth: 1,
-                         lineColor: '#666666'
-                     }
-                 }
-             },
-             series: [${appUsageStr1}]
-         });
-
-         Highcharts.chart('websearch9', {
-             chart: {
-                 type: 'area'
-             },
-             title: {
-                 text: 'net input'
-             },
-             xAxis: {
-                 categories: ${appUsageStr2},
-                 tickmarkPlacement: 'on',
-                 title: {
-                     enabled: false
-                 }
-             },
-             yAxis: {
-                 title: {
-                     text: 'MB'
-                 },
-                 min:0
-
-             },
-             legend: {
-                 layout: 'vertical',
-                 align: 'right',
-                 verticalAlign: 'middle'
-             },
-             tooltip: {
-                 split: true,
-                 valueSuffix: ' MB'
-             },
-             plotOptions: {
-                 area: {
-                     stacking: 'normal',
-                     lineColor: '#666666',
-                     lineWidth: 1,
-                     marker: {
-                         lineWidth: 1,
-                         lineColor: '#666666'
-                     }
-                 }
-             },
-             series: [${appUsageStr1}]
-         });
-         
-         Highcharts.chart('websearch10', {
-             chart: {
-                 type: 'area'
-             },
-             title: {
-                 text: 'net output'
-             },
-             xAxis: {
-                 categories: ${appUsageStr2},
-                 tickmarkPlacement: 'on',
-                 title: {
-                     enabled: false
-                 }
-             },
-             yAxis: {
-                 title: {
-                     text: 'MB'
-                 },
-                 min:0
-
-             },
-             legend: {
-                 layout: 'vertical',
-                 align: 'right',
-                 verticalAlign: 'middle'
-             },
-             tooltip: {
-                 split: true,
-                 valueSuffix: ' MB'
-             },
-             plotOptions: {
-                 area: {
-                     stacking: 'normal',
-                     lineColor: '#666666',
-                     lineWidth: 1,
-                     marker: {
-                         lineWidth: 1,
-                         lineColor: '#666666'
-                     }
-                 }
-             },
-             series: [${appUsageStr1}]
-         });
 
 
 });
 </script>
+
 </body>
 </html>

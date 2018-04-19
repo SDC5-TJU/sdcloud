@@ -271,7 +271,7 @@
                     var series = this.series[0];
                     var a=null;
                     setInterval(function (){
-                    	if(flag==true){  
+                    	if(false){  
 			                $.ajax({
 								async:true,
 								type:"post",
@@ -323,7 +323,7 @@
         exporting: {
             enabled: false
         },
-        series:[${solrCloud}]
+        series:[]
     });
     /**
      * webServer

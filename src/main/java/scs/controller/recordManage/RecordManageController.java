@@ -1,8 +1,10 @@
 package scs.controller.recordManage;
 
 import org.apache.log4j.Logger;
- 
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import scs.pojo.AppConfigBean;
 import scs.pojo.TestRecordBean;
 import scs.service.appConfig.AppConfigService;
+import scs.service.historyData.HistoryDataService;
 import scs.service.recordManage.RecordManageService;
-import scs.util.format.DateFormats; 
+import scs.util.format.DateFormats;
+import scs.util.repository.Repository; 
 
 /**
  * 评测记录管理控制类
@@ -31,10 +35,15 @@ public class RecordManageController {
 
 	@Resource RecordManageService service;
 	@Resource AppConfigService aService;
-	
+	@Resource HistoryDataService hService;
+
+	@RequestMapping("/index.do")
+	public String index(HttpServletRequest request,Model model){	 
+		return "index";
+	}
 	@RequestMapping("/addRecordBefore.do")
 	public String addRecordBefore(HttpServletRequest request,HttpServletResponse response){
-		 return "deviceAdd";
+		return "deviceAdd";
 	}
 	@RequestMapping("/addRecord.do")
 	public void addRecord(HttpServletRequest request,HttpServletResponse response, 
@@ -103,12 +112,38 @@ public class RecordManageController {
 		for(AppConfigBean bean:appConfiglist){ 
 			model.addAttribute(bean.getApplicationName(),bean); 
 		}
+		TestRecordBean record=service.getRecordById(testRecordId);
+		List<String> chartStrList=new ArrayList<String>();
+		/*
+		 * 绘制物理机的cpu 内存 io net使用率图
+		 */
+		Set<String> hostNameSet=Repository.systemInfoMap.keySet(); 
+		for(String hostName:hostNameSet){
+			chartStrList.addAll(hService.searchSysResourceUsage(hostName,record.getStartTime(),record.getEndTime()));
+		}
+		for(int i=0;i<4;i++){ //组合2个物理机的cpu mem io net曲线 
+			model.addAttribute("sysUsageStr"+i,chartStrList.get(i)+","+chartStrList.get(i+4));
+		}
+
+		/*
+		 * 绘制8个应用的cpu 内存堆叠图
+		 */
+		chartStrList.clear();
+		Set<String> appNameSet=Repository.appInfoMap.keySet(); 
+		int count=0;
+		boolean needTime=false;
+		for(String appName:appNameSet){
+			count++;
+			needTime=count==appNameSet.size()?true:false;
+			chartStrList.addAll(hService.searchAppResourceUsage(appName,record.getStartTime(),record.getEndTime(),needTime));
+		}
+
+		for(int i=0;i<6;i++){ //组合8个应用的cpu mem ioInput ioOutput netInput netOutput曲线
+			model.addAttribute("appUsageStr"+i,chartStrList.get(i)+","+chartStrList.get(i+6)+","+chartStrList.get(i+12)+","+chartStrList.get(i+18)+","+chartStrList.get(i+24)+","+chartStrList.get(i+30)+","+chartStrList.get(i+36)+","+chartStrList.get(i+42));
+		} 
+		model.addAttribute("appUsageStr"+2,chartStrList.get(48));//绘制时间轴
+
 		model.addAttribute("testRecordId",testRecordId);
 		return "resultAnalysis";
-	}
-	
-	@RequestMapping("/index.do")
-	public String index(HttpServletRequest request,Model model){	 
-		return "index";
 	}
 }
