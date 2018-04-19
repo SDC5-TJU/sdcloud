@@ -19,70 +19,7 @@
 <link rel="stylesheet" href="statics/css/pintuer.css">
 <link rel="stylesheet" href="statics/css/admin.css">
 <link rel="stylesheet" href="statics/css/physical.css">
-<style>
-.display {
-	width: 150px;
-	height: 50px;
-	background: #86D8E6;
-	border: 1px #86D8E6 solid;
-	z-index: 10;
-}
 
-.node {
-	width: 12px;
-	height: 12px;
-	z-index: 100;
-}
-
-.axis path, .axis line {
-	fill: none;
-	stroke: black;
-	shape-rendering: crispEdges;
-}
-
-.axis text {
-	font-family: sans-serif;
-	font-size: 11px;
-}
-
-.MyRect {
-	fill: steelblue;
-}
-
-.MyText {
-	fill: white;
-	text-anchor: middle;
-}
-
-.thead, tr {
-	border-top-width: 1px;
-	border-top-style: solid;
-	border-top-color: rgb(230, 189, 189);
-}
-
-#table-1 {
-	border-bottom-width: 1px;
-	border-bottom-style: solid;
-	border-bottom-color: rgb(230, 189, 189);
-}
-
-/* Padding and font style */
-.td, th {
-	padding: 5px 10px;
-	font-size: 12px;
-	font-family: Verdana;
-	color: rgb(177, 106, 104);
-}
-
-/* Alternating background colors */
-.tr:nth-child(even) {
-	background: rgb(238, 211, 210)
-}
-
-.tr:nth-child(odd) {
-	background: #FFF
-}
-</style>
 <script type="text/javascript" src="statics/js/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="statics/js/highcharts.js"></script>
 <script type="text/javascript" src="statics/js/highcharts-more.js"></script>
@@ -102,11 +39,9 @@
 								var lastcollectTime = null;
 								if (returned != null && returned != ""
 										&& returned != "null") {
-									//lastcollectTime = returnedData[0].collectTime;
+								
 									returnedData = returned;
-									//console.log(returnedData);
-
-									//console.log(returnedData[0].collectTime);
+								
 								}
 								/* if (returnedData.collecttime.time == null
 										&& lastcollectTime == returnedData[0].collecttime.time) {
@@ -128,53 +63,31 @@
 			page = 1;
 			return 0;
 		}
-		var tableTitle = "<table border='0' align='center' cellpadding='0' " +
-			                    "cellspacing='0' class='tableContent' >" +
-				"<tr><th>容器名称</th><th>CPU %</th><th>mem usage</th><th>mem %</th>" +
-				/* "<th>net I/O</th><th>disk I/O</th>" +  */
+		var tableTitle = "<table  class="table table-hover text-center" >" +
+				"<tr><th width= "200px">容器名称</th><th width = "340px">CPU %</th><th  width = "340px">mem usage</th><th  width = "340px">mem %</th>" +
+				"<th  width = "340px">net I/O</th><th  width = "340px">disk I/O</th>" +  
 				"</tr>";
 		var tableContent = "";
 		var tableClass = "";
-		var temColor = "green";
-		var humColor = "green";
 
 		document.getElementById('tableDiv').innerHTML = "";
 		if (returnedData != "") {
 			console.log(returnedData);
 			for (var i = 0; i < 38; i++) {
 				if (returnedData[i] != null && returnedData[i] != "") {
-					/* var nodeID = returnedData[i].nodeID&0xff;//注意&左右不能有空格
-					 var nodeName = nodeID + "号节点";
-					 var collectTime = returnedData[i].collectTime;
-					 var tem = returnedData[i].tem;
-					 var hum = returnedData[i].hum;
-					 var nodeStyle = "环境节点";
-					 if(nodeID > 50){
-					   nodeStyle = "展柜节点";
-					 }
-					 
-					 tableClass = (i % 2 == 0)?"":"tableBg";
-					 temColor = (tem >= TmaxValue)?"red":(tem <= TminValue)?"blue":"green";
-					 humColor = (hum >= HmaxValue)?"red":(hum <= HminValue)?"blue":"green";
-					 tableContent += "<tr align='center' class='"+tableClass+"' >" 
-					                 + "<td>"+nodeName+"</td>"
-					                 + "<td>"+nodeStyle+"</td>" 
-					                 + "<td>"+collectTime+"</td>"
-					                 + "<td><font style='color:"+temColor+"'>"+tem+"</font></td>" 
-					                 + "<td><font style='color:"+humColor+"'>"+hum+"</font></td></tr>";*/
+					
 					var nodeName = returnedData[i].containername;
 					var cpu = returnedData[i].cpuusagerate * 100;
 					var mem = returnedData[i].memusagerate * 100;
 					var memamount = returnedData[i].memusagerate;
-					/* var net = returnedData[i].netusagerate * 100;
-					var io = returnedData[i].iousagerate * 100; */
+					
 					tableContent += "<tr align='center'  >" + 
 							"<td>" + nodeName + "</td>" +
 							"<td>" + cpu + "</td>" +
 							"<td>" + memamount + "</td>" +
 							"<td>" + mem + "</td>" + 
-							/* "<td>" + net + "</td>" +
-							"<td>" + io + "</td>" + */
+							 "<td>" + net + "</td>" +
+							"<td>" + io + "</td>" + 
 							"</tr>"
 
 				}
@@ -182,15 +95,10 @@
 		}
 
 		var realTable = tableTitle + tableContent + "</table>";
-		var realPage = "";
+	
 
-		/* if(${totalpage} != 1){*/
-		/*var realPage ="<div id='tablePagePre' onclick='ajaxTable("+(page-1)+")' ><img src='images/btnPre2.gif' /></div> " 
-		            + "<div id='tablePageNum' style='cursor: pointer;margin-left: 245px;'>"+page+"/${totalpage}</div>"
-		            + "<div id='tablePageNext' onclick='ajaxTable("+(page+1)+")' ><img src='images/btnNext.gif'  /></div>";
-		}*/
 
-		document.getElementById("tableDiv").innerHTML = realTable + realPage;
+		document.getElementById("tableDiv").innerHTML = realTable ;
 	}
 
 	//定时刷新
@@ -201,27 +109,8 @@
 
 <body>
 
-
-
-
-	<div id="mainPart">
-		<div id="mainPartLeft" style="width: 438px;"></div>
-		<div id="mainPartRight" style="width: 763px;">
-			<h2>实时数据表格</h2>
-
-
-			<div id="tabTable">
-
-				<div id="tableDiv"
-					style="width: 595px; height: 510px; margin: 0 auto; background-color: #FFF;"></div>
-
-
-
-			</div>
-		</div>
-		<script>
-			
-		</script>
+	<div  id ="tableDiv"  class="panel admin-panel"  style="width: 1300px;height:1450px; margin: 0 auto; background-color: #FFF;"></div>
+	
+		
 </body>
-
 </html>
