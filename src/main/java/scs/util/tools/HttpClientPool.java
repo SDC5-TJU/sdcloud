@@ -113,8 +113,7 @@ public class HttpClientPool {
 			 url=serverBaseURL+RandomString.generateString(2);
 		}else{
 			url=searchBaseURL+rand.nextInt(9999);
-		}
-		 System.out.println(url);
+		} 
 		int costTime=65535;
 		long begin=0L,end=0L;
 		HttpGet httpget=new HttpGet(url);

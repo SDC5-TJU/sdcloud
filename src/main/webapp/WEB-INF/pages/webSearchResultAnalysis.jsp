@@ -295,7 +295,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 tickPixelInterval: 150
             },
             title: {
-                text: '无干扰下访问延迟分布'
+                text: '干扰下访问延迟分布'
             },
             legend: {                                                                    
                 enabled: false                                                           
@@ -311,7 +311,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 xDateFormat: '%Y-%m-%d %H:%M:%S.%L',
                 valueSuffix: 'ms',
             },
-            series: [${diffBean.baseTimeStr}]
+            series: [${diffBean.timeStr}]
         }); 
 
 

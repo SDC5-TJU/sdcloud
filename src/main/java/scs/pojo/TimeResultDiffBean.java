@@ -10,7 +10,7 @@ import scs.util.format.DataFormats;
 public class TimeResultDiffBean {
 	private DataFormats format=DataFormats.getInstance();
 	private String baseTimeStr;
-	private String TimeStr;
+	private String timeStr;
 	private String baseCDFStr;
 	private String CDFStr;
 	private float nintyThDiff; //响应时间90分位数差异
@@ -23,95 +23,110 @@ public class TimeResultDiffBean {
 	private float missRateDiff;//缺失率差异 
 	
 	public TimeResultDiffBean(){}
- 
- 
+
+	public DataFormats getFormat() {
+		return format;
+	}
+
+	public void setFormat(DataFormats format) {
+		this.format = format;
+	}
+
 	public String getBaseTimeStr() {
 		return baseTimeStr;
 	}
-
 
 	public void setBaseTimeStr(String baseTimeStr) {
 		this.baseTimeStr = baseTimeStr;
 	}
 
-
 	public String getTimeStr() {
-		return TimeStr;
+		return timeStr;
 	}
-
 
 	public void setTimeStr(String timeStr) {
-		TimeStr = timeStr;
+		this.timeStr = timeStr;
 	}
-
 
 	public String getBaseCDFStr() {
 		return baseCDFStr;
 	}
 
-
 	public void setBaseCDFStr(String baseCDFStr) {
 		this.baseCDFStr = baseCDFStr;
 	}
-
 
 	public String getCDFStr() {
 		return CDFStr;
 	}
 
-
 	public void setCDFStr(String cDFStr) {
 		CDFStr = cDFStr;
 	}
 
-
 	public float getNintyThDiff() {
 		return nintyThDiff;
 	}
+
 	public void setNintyThDiff(float nintyThDiff) {
-		this.nintyThDiff = format.subFloat(nintyThDiff,1);
+		this.nintyThDiff = nintyThDiff;
 	}
+
 	public float getNintyFiveThDiff() {
 		return nintyFiveThDiff;
 	}
+
 	public void setNintyFiveThDiff(float nintyFiveThDiff) {
-		this.nintyFiveThDiff = format.subFloat(nintyFiveThDiff,1);
+		this.nintyFiveThDiff = nintyFiveThDiff;
 	}
+
 	public float getNintyNineThDiff() {
 		return nintyNineThDiff;
 	}
+
 	public void setNintyNineThDiff(float nintyNineThDiff) {
-		this.nintyNineThDiff = format.subFloat(nintyNineThDiff,1);
+		this.nintyNineThDiff = nintyNineThDiff;
 	}
+
 	public float getVarDiff() {
 		return varDiff;
 	}
+
 	public void setVarDiff(float varDiff) {
-		this.varDiff = format.subFloat(varDiff,1);
+		this.varDiff = varDiff;
 	}
+
 	public float getMeanDiff() {
 		return meanDiff;
 	}
+
 	public void setMeanDiff(float meanDiff) {
-		this.meanDiff = format.subFloat(meanDiff,1);
+		this.meanDiff = meanDiff;
 	}
+
 	public float getMinDiff() {
 		return minDiff;
 	}
+
 	public void setMinDiff(float minDiff) {
-		this.minDiff = format.subFloat(minDiff,1);
+		this.minDiff = minDiff;
 	}
+
 	public float getMaxDiff() {
 		return maxDiff;
 	}
+
 	public void setMaxDiff(float maxDiff) {
-		this.maxDiff = format.subFloat(maxDiff,1);
+		this.maxDiff = maxDiff;
 	}
+
 	public float getMissRateDiff() {
 		return missRateDiff;
 	}
+
 	public void setMissRateDiff(float missRateDiff) {
-		this.missRateDiff = format.subFloat(missRateDiff,1);
+		this.missRateDiff = missRateDiff;
 	}
-	 
+ 
+ 
 }

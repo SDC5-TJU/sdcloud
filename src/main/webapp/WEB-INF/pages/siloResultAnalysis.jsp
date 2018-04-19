@@ -310,7 +310,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             tooltip: {
                 valueSuffix: 'ms',
             },
-            series: [${diffBean.baseTimeStr}]
+            series: [${diffBean.timeStr}]
         }); 
 
 

@@ -141,7 +141,7 @@ public class RecordManageController {
 		for(int i=0;i<6;i++){ //组合8个应用的cpu mem ioInput ioOutput netInput netOutput曲线
 			model.addAttribute("appUsageStr"+i,chartStrList.get(i)+","+chartStrList.get(i+6)+","+chartStrList.get(i+12)+","+chartStrList.get(i+18)+","+chartStrList.get(i+24)+","+chartStrList.get(i+30)+","+chartStrList.get(i+36)+","+chartStrList.get(i+42));
 		} 
-		model.addAttribute("appUsageStr"+2,chartStrList.get(48));//绘制时间轴
+		model.addAttribute("appUsageStr"+6,chartStrList.get(48));//绘制时间轴
 
 		model.addAttribute("testRecordId",testRecordId);
 		return "resultAnalysis";
