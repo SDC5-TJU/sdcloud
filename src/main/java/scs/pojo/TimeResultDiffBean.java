@@ -23,15 +23,7 @@ public class TimeResultDiffBean {
 	private float missRateDiff;//缺失率差异 
 	
 	public TimeResultDiffBean(){}
-
-	public DataFormats getFormat() {
-		return format;
-	}
-
-	public void setFormat(DataFormats format) {
-		this.format = format;
-	}
-
+ 
 	public String getBaseTimeStr() {
 		return baseTimeStr;
 	}
@@ -69,7 +61,7 @@ public class TimeResultDiffBean {
 	}
 
 	public void setNintyThDiff(float nintyThDiff) {
-		this.nintyThDiff = nintyThDiff;
+		this.nintyThDiff = format.subFloat(nintyThDiff,2);
 	}
 
 	public float getNintyFiveThDiff() {
@@ -77,7 +69,7 @@ public class TimeResultDiffBean {
 	}
 
 	public void setNintyFiveThDiff(float nintyFiveThDiff) {
-		this.nintyFiveThDiff = nintyFiveThDiff;
+		this.nintyFiveThDiff = format.subFloat(nintyFiveThDiff,2);
 	}
 
 	public float getNintyNineThDiff() {
@@ -85,7 +77,7 @@ public class TimeResultDiffBean {
 	}
 
 	public void setNintyNineThDiff(float nintyNineThDiff) {
-		this.nintyNineThDiff = nintyNineThDiff;
+		this.nintyNineThDiff = format.subFloat(nintyNineThDiff,2);
 	}
 
 	public float getVarDiff() {
@@ -93,7 +85,7 @@ public class TimeResultDiffBean {
 	}
 
 	public void setVarDiff(float varDiff) {
-		this.varDiff = varDiff;
+		this.varDiff = format.subFloat(varDiff,2);
 	}
 
 	public float getMeanDiff() {
@@ -101,7 +93,7 @@ public class TimeResultDiffBean {
 	}
 
 	public void setMeanDiff(float meanDiff) {
-		this.meanDiff = meanDiff;
+		this.meanDiff = format.subFloat(meanDiff,2);
 	}
 
 	public float getMinDiff() {
@@ -109,7 +101,7 @@ public class TimeResultDiffBean {
 	}
 
 	public void setMinDiff(float minDiff) {
-		this.minDiff = minDiff;
+		this.minDiff = format.subFloat(minDiff,2);
 	}
 
 	public float getMaxDiff() {
@@ -117,7 +109,7 @@ public class TimeResultDiffBean {
 	}
 
 	public void setMaxDiff(float maxDiff) {
-		this.maxDiff = maxDiff;
+		this.maxDiff = format.subFloat(maxDiff,2);
 	}
 
 	public float getMissRateDiff() {
@@ -125,7 +117,7 @@ public class TimeResultDiffBean {
 	}
 
 	public void setMissRateDiff(float missRateDiff) {
-		this.missRateDiff = missRateDiff;
+		this.missRateDiff = format.subFloat(missRateDiff,2);
 	}
  
  

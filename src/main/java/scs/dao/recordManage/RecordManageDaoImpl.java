@@ -1,23 +1,39 @@
 package scs.dao.recordManage;
 
 
+import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Repository;
 
+import scs.pojo.TableContainerresourceusage;
+import scs.pojo.TableContainerresourceusagestart;
 import scs.pojo.TestRecordBean;
 import scs.pojo.TwoTuple;
+import scs.service.monitor.containers.ContainerMonitor;
 import scs.dao.MySQLBaseDao;
+import scs.dao.monitor.DAOmapper.TableContainerresourceusagestartMapper;
 
 @Repository
 public class RecordManageDaoImpl extends MySQLBaseDao implements RecordManageDao {
+	
+	@Autowired
+	public TableContainerresourceusagestartMapper mapper;
+	
+	@Autowired
+	@Qualifier("containerMonitor")
+	public ContainerMonitor containerMonitor;
 
 	@Override
 	public int addRecord(int recordId,String recordDesc) {
@@ -68,9 +84,41 @@ public class RecordManageDaoImpl extends MySQLBaseDao implements RecordManageDao
 			sql="update table_testrecord set startTime=? where autoId=?";
 			if(this.jt.update(sql,new Object[]{startTime,testRecordId})!=0){
 				result=startTime;
-				
 				//代码段开始
 				//读取容器资源使用信息的调用位置 to do
+				String[] hosts = { "192.168.1.128", "192.168.1.147"};
+				String hostname = "192.168.1.128";
+				String username = "tank";
+				String password = "tanklab";
+				int len = hosts.length;
+				//combineList 是38个容器的数据
+				ArrayList<TableContainerresourceusage> combineList = new ArrayList<>();
+				for (int i = 0; i < len; i++) {
+					hostname = hosts[i];
+					InputStream containerInfoStream = containerMonitor.getContainerInfoStream(hostname, username, password);
+					combineList.addAll(containerMonitor
+							.getContainersPOJO(containerInfoStream));
+				}
+				//封装新表记录
+				TableContainerresourceusagestart tableContainerresourceusagestart = null;
+				for (int i = 0 ;i<combineList.size();i++){
+					tableContainerresourceusagestart = new TableContainerresourceusagestart();
+					try {
+						tableContainerresourceusagestart.setCollecttime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(startTime));
+					} catch (ParseException e) {
+						System.out.println("日期格式转换错误");
+					}
+					tableContainerresourceusagestart.setTestrecord((byte)testRecordId);
+					tableContainerresourceusagestart.setContainername(combineList.get(i).getContainername());
+					tableContainerresourceusagestart.setIoinput(combineList.get(i).getIoinput());;
+					tableContainerresourceusagestart.setIooutput(combineList.get(i).getIooutput());;
+					tableContainerresourceusagestart.setNetinput(combineList.get(i).getNetinput());;
+					tableContainerresourceusagestart.setNetoutput(combineList.get(i).getNetoutput());;
+					tableContainerresourceusagestart.setMemusageamount(combineList.get(i).getMemusageamount());
+					tableContainerresourceusagestart.setMemusagerate(combineList.get(i).getMemusagerate());
+					//插入表格
+					mapper.insert(tableContainerresourceusagestart);
+				}
 				//代码段结束
 			}
 		}else{

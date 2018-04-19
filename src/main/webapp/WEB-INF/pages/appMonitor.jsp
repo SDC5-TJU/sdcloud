@@ -31,7 +31,7 @@
 				$.ajax({
 							async : true,
 							type : "post",
-							url : "getContainerResourceUse.do",
+							url : "getAppResourceUse.do",
 							data : {},
 							dataType : "json",
 							success : function(returned) {
@@ -63,7 +63,7 @@
 			return 0;
 		}
 		var tableTitle = "<table  class="table table-hover text-center" >" +
-				"<tr><th width= "200px">容器名称</th><th width = "340px">CPU %</th><th  width = "340px">mem usage</th><th  width = "340px">mem %</th>" +
+				"<tr><th width= "200px">应用名称</th><th width = "340px">CPU %</th><th  width = "340px">mem usage</th><th  width = "340px">mem %</th>" +
 				"<th  width = "340px">net I/O</th><th  width = "340px">disk I/O</th>" +  
 				"</tr>";
 		var tableContent = "";
