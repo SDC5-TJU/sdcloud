@@ -415,183 +415,243 @@ public class TableAppresourceusageExample {
             return (Criteria) this;
         }
 
-        public Criteria andNetusagerateIsNull() {
-            addCriterion("netUsageRate is null");
+        public Criteria andNetinputIsNull() {
+            addCriterion("netInput is null");
             return (Criteria) this;
         }
 
-        public Criteria andNetusagerateIsNotNull() {
-            addCriterion("netUsageRate is not null");
+        public Criteria andNetinputIsNotNull() {
+            addCriterion("netInput is not null");
             return (Criteria) this;
         }
 
-        public Criteria andNetusagerateEqualTo(Float value) {
-            addCriterion("netUsageRate =", value, "netusagerate");
+        public Criteria andNetinputEqualTo(Float value) {
+            addCriterion("netInput =", value, "netinput");
             return (Criteria) this;
         }
 
-        public Criteria andNetusagerateNotEqualTo(Float value) {
-            addCriterion("netUsageRate <>", value, "netusagerate");
+        public Criteria andNetinputNotEqualTo(Float value) {
+            addCriterion("netInput <>", value, "netinput");
             return (Criteria) this;
         }
 
-        public Criteria andNetusagerateGreaterThan(Float value) {
-            addCriterion("netUsageRate >", value, "netusagerate");
+        public Criteria andNetinputGreaterThan(Float value) {
+            addCriterion("netInput >", value, "netinput");
             return (Criteria) this;
         }
 
-        public Criteria andNetusagerateGreaterThanOrEqualTo(Float value) {
-            addCriterion("netUsageRate >=", value, "netusagerate");
+        public Criteria andNetinputGreaterThanOrEqualTo(Float value) {
+            addCriterion("netInput >=", value, "netinput");
             return (Criteria) this;
         }
 
-        public Criteria andNetusagerateLessThan(Float value) {
-            addCriterion("netUsageRate <", value, "netusagerate");
+        public Criteria andNetinputLessThan(Float value) {
+            addCriterion("netInput <", value, "netinput");
             return (Criteria) this;
         }
 
-        public Criteria andNetusagerateLessThanOrEqualTo(Float value) {
-            addCriterion("netUsageRate <=", value, "netusagerate");
+        public Criteria andNetinputLessThanOrEqualTo(Float value) {
+            addCriterion("netInput <=", value, "netinput");
             return (Criteria) this;
         }
 
-        public Criteria andNetusagerateIn(List<Float> values) {
-            addCriterion("netUsageRate in", values, "netusagerate");
+        public Criteria andNetinputIn(List<Float> values) {
+            addCriterion("netInput in", values, "netinput");
             return (Criteria) this;
         }
 
-        public Criteria andNetusagerateNotIn(List<Float> values) {
-            addCriterion("netUsageRate not in", values, "netusagerate");
+        public Criteria andNetinputNotIn(List<Float> values) {
+            addCriterion("netInput not in", values, "netinput");
             return (Criteria) this;
         }
 
-        public Criteria andNetusagerateBetween(Float value1, Float value2) {
-            addCriterion("netUsageRate between", value1, value2, "netusagerate");
+        public Criteria andNetinputBetween(Float value1, Float value2) {
+            addCriterion("netInput between", value1, value2, "netinput");
             return (Criteria) this;
         }
 
-        public Criteria andNetusagerateNotBetween(Float value1, Float value2) {
-            addCriterion("netUsageRate not between", value1, value2, "netusagerate");
+        public Criteria andNetinputNotBetween(Float value1, Float value2) {
+            addCriterion("netInput not between", value1, value2, "netinput");
             return (Criteria) this;
         }
 
-        public Criteria andIousagerateIsNull() {
-            addCriterion("ioUsageRate is null");
+        public Criteria andNetoutputIsNull() {
+            addCriterion("netOutput is null");
             return (Criteria) this;
         }
 
-        public Criteria andIousagerateIsNotNull() {
-            addCriterion("ioUsageRate is not null");
+        public Criteria andNetoutputIsNotNull() {
+            addCriterion("netOutput is not null");
             return (Criteria) this;
         }
 
-        public Criteria andIousagerateEqualTo(Float value) {
-            addCriterion("ioUsageRate =", value, "iousagerate");
+        public Criteria andNetoutputEqualTo(Float value) {
+            addCriterion("netOutput =", value, "netoutput");
             return (Criteria) this;
         }
 
-        public Criteria andIousagerateNotEqualTo(Float value) {
-            addCriterion("ioUsageRate <>", value, "iousagerate");
+        public Criteria andNetoutputNotEqualTo(Float value) {
+            addCriterion("netOutput <>", value, "netoutput");
             return (Criteria) this;
         }
 
-        public Criteria andIousagerateGreaterThan(Float value) {
-            addCriterion("ioUsageRate >", value, "iousagerate");
+        public Criteria andNetoutputGreaterThan(Float value) {
+            addCriterion("netOutput >", value, "netoutput");
             return (Criteria) this;
         }
 
-        public Criteria andIousagerateGreaterThanOrEqualTo(Float value) {
-            addCriterion("ioUsageRate >=", value, "iousagerate");
+        public Criteria andNetoutputGreaterThanOrEqualTo(Float value) {
+            addCriterion("netOutput >=", value, "netoutput");
             return (Criteria) this;
         }
 
-        public Criteria andIousagerateLessThan(Float value) {
-            addCriterion("ioUsageRate <", value, "iousagerate");
+        public Criteria andNetoutputLessThan(Float value) {
+            addCriterion("netOutput <", value, "netoutput");
             return (Criteria) this;
         }
 
-        public Criteria andIousagerateLessThanOrEqualTo(Float value) {
-            addCriterion("ioUsageRate <=", value, "iousagerate");
+        public Criteria andNetoutputLessThanOrEqualTo(Float value) {
+            addCriterion("netOutput <=", value, "netoutput");
             return (Criteria) this;
         }
 
-        public Criteria andIousagerateIn(List<Float> values) {
-            addCriterion("ioUsageRate in", values, "iousagerate");
+        public Criteria andNetoutputIn(List<Float> values) {
+            addCriterion("netOutput in", values, "netoutput");
             return (Criteria) this;
         }
 
-        public Criteria andIousagerateNotIn(List<Float> values) {
-            addCriterion("ioUsageRate not in", values, "iousagerate");
+        public Criteria andNetoutputNotIn(List<Float> values) {
+            addCriterion("netOutput not in", values, "netoutput");
             return (Criteria) this;
         }
 
-        public Criteria andIousagerateBetween(Float value1, Float value2) {
-            addCriterion("ioUsageRate between", value1, value2, "iousagerate");
+        public Criteria andNetoutputBetween(Float value1, Float value2) {
+            addCriterion("netOutput between", value1, value2, "netoutput");
             return (Criteria) this;
         }
 
-        public Criteria andIousagerateNotBetween(Float value1, Float value2) {
-            addCriterion("ioUsageRate not between", value1, value2, "iousagerate");
+        public Criteria andNetoutputNotBetween(Float value1, Float value2) {
+            addCriterion("netOutput not between", value1, value2, "netoutput");
             return (Criteria) this;
         }
 
-        public Criteria andBlockioIsNull() {
-            addCriterion("blockIo is null");
+        public Criteria andIoinputIsNull() {
+            addCriterion("ioInput is null");
             return (Criteria) this;
         }
 
-        public Criteria andBlockioIsNotNull() {
-            addCriterion("blockIo is not null");
+        public Criteria andIoinputIsNotNull() {
+            addCriterion("ioInput is not null");
             return (Criteria) this;
         }
 
-        public Criteria andBlockioEqualTo(Float value) {
-            addCriterion("blockIo =", value, "blockio");
+        public Criteria andIoinputEqualTo(Float value) {
+            addCriterion("ioInput =", value, "ioinput");
             return (Criteria) this;
         }
 
-        public Criteria andBlockioNotEqualTo(Float value) {
-            addCriterion("blockIo <>", value, "blockio");
+        public Criteria andIoinputNotEqualTo(Float value) {
+            addCriterion("ioInput <>", value, "ioinput");
             return (Criteria) this;
         }
 
-        public Criteria andBlockioGreaterThan(Float value) {
-            addCriterion("blockIo >", value, "blockio");
+        public Criteria andIoinputGreaterThan(Float value) {
+            addCriterion("ioInput >", value, "ioinput");
             return (Criteria) this;
         }
 
-        public Criteria andBlockioGreaterThanOrEqualTo(Float value) {
-            addCriterion("blockIo >=", value, "blockio");
+        public Criteria andIoinputGreaterThanOrEqualTo(Float value) {
+            addCriterion("ioInput >=", value, "ioinput");
             return (Criteria) this;
         }
 
-        public Criteria andBlockioLessThan(Float value) {
-            addCriterion("blockIo <", value, "blockio");
+        public Criteria andIoinputLessThan(Float value) {
+            addCriterion("ioInput <", value, "ioinput");
             return (Criteria) this;
         }
 
-        public Criteria andBlockioLessThanOrEqualTo(Float value) {
-            addCriterion("blockIo <=", value, "blockio");
+        public Criteria andIoinputLessThanOrEqualTo(Float value) {
+            addCriterion("ioInput <=", value, "ioinput");
             return (Criteria) this;
         }
 
-        public Criteria andBlockioIn(List<Float> values) {
-            addCriterion("blockIo in", values, "blockio");
+        public Criteria andIoinputIn(List<Float> values) {
+            addCriterion("ioInput in", values, "ioinput");
             return (Criteria) this;
         }
 
-        public Criteria andBlockioNotIn(List<Float> values) {
-            addCriterion("blockIo not in", values, "blockio");
+        public Criteria andIoinputNotIn(List<Float> values) {
+            addCriterion("ioInput not in", values, "ioinput");
             return (Criteria) this;
         }
 
-        public Criteria andBlockioBetween(Float value1, Float value2) {
-            addCriterion("blockIo between", value1, value2, "blockio");
+        public Criteria andIoinputBetween(Float value1, Float value2) {
+            addCriterion("ioInput between", value1, value2, "ioinput");
             return (Criteria) this;
         }
 
-        public Criteria andBlockioNotBetween(Float value1, Float value2) {
-            addCriterion("blockIo not between", value1, value2, "blockio");
+        public Criteria andIoinputNotBetween(Float value1, Float value2) {
+            addCriterion("ioInput not between", value1, value2, "ioinput");
+            return (Criteria) this;
+        }
+
+        public Criteria andIooutputIsNull() {
+            addCriterion("ioOutput is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIooutputIsNotNull() {
+            addCriterion("ioOutput is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIooutputEqualTo(Float value) {
+            addCriterion("ioOutput =", value, "iooutput");
+            return (Criteria) this;
+        }
+
+        public Criteria andIooutputNotEqualTo(Float value) {
+            addCriterion("ioOutput <>", value, "iooutput");
+            return (Criteria) this;
+        }
+
+        public Criteria andIooutputGreaterThan(Float value) {
+            addCriterion("ioOutput >", value, "iooutput");
+            return (Criteria) this;
+        }
+
+        public Criteria andIooutputGreaterThanOrEqualTo(Float value) {
+            addCriterion("ioOutput >=", value, "iooutput");
+            return (Criteria) this;
+        }
+
+        public Criteria andIooutputLessThan(Float value) {
+            addCriterion("ioOutput <", value, "iooutput");
+            return (Criteria) this;
+        }
+
+        public Criteria andIooutputLessThanOrEqualTo(Float value) {
+            addCriterion("ioOutput <=", value, "iooutput");
+            return (Criteria) this;
+        }
+
+        public Criteria andIooutputIn(List<Float> values) {
+            addCriterion("ioOutput in", values, "iooutput");
+            return (Criteria) this;
+        }
+
+        public Criteria andIooutputNotIn(List<Float> values) {
+            addCriterion("ioOutput not in", values, "iooutput");
+            return (Criteria) this;
+        }
+
+        public Criteria andIooutputBetween(Float value1, Float value2) {
+            addCriterion("ioOutput between", value1, value2, "iooutput");
+            return (Criteria) this;
+        }
+
+        public Criteria andIooutputNotBetween(Float value1, Float value2) {
+            addCriterion("ioOutput not between", value1, value2, "iooutput");
             return (Criteria) this;
         }
 

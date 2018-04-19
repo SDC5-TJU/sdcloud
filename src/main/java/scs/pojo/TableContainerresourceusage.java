@@ -13,11 +13,13 @@ public class TableContainerresourceusage {
 
     private Float memusageamount;
 
-    private Float netusagerate;
+    private Float netinput;
 
-    private Float iousagerate;
+    private Float ioinput;
 
-    private Float blockio;
+    private Float iooutput;
+
+    private Float netoutput;
 
     private Date collecttime;
 
@@ -61,28 +63,36 @@ public class TableContainerresourceusage {
         this.memusageamount = memusageamount;
     }
 
-    public Float getNetusagerate() {
-        return netusagerate;
+    public Float getNetinput() {
+        return netinput;
     }
 
-    public void setNetusagerate(Float netusagerate) {
-        this.netusagerate = netusagerate;
+    public void setNetinput(Float netinput) {
+        this.netinput = netinput;
     }
 
-    public Float getIousagerate() {
-        return iousagerate;
+    public Float getIoinput() {
+        return ioinput;
     }
 
-    public void setIousagerate(Float iousagerate) {
-        this.iousagerate = iousagerate;
+    public void setIoinput(Float ioinput) {
+        this.ioinput = ioinput;
     }
 
-    public Float getBlockio() {
-        return blockio;
+    public Float getIooutput() {
+        return iooutput;
     }
 
-    public void setBlockio(Float blockio) {
-        this.blockio = blockio;
+    public void setIooutput(Float iooutput) {
+        this.iooutput = iooutput;
+    }
+
+    public Float getNetoutput() {
+        return netoutput;
+    }
+
+    public void setNetoutput(Float netoutput) {
+        this.netoutput = netoutput;
     }
 
     public Date getCollecttime() {

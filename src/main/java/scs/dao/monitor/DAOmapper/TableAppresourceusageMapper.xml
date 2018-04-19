@@ -7,9 +7,10 @@
     <result column="cpuUsageRate" property="cpuusagerate" jdbcType="REAL" />
     <result column="memUsageRate" property="memusagerate" jdbcType="REAL" />
     <result column="memUsageAmount" property="memusageamount" jdbcType="REAL" />
-    <result column="netUsageRate" property="netusagerate" jdbcType="REAL" />
-    <result column="ioUsageRate" property="iousagerate" jdbcType="REAL" />
-    <result column="blockIo" property="blockio" jdbcType="REAL" />
+    <result column="netInput" property="netinput" jdbcType="REAL" />
+    <result column="netOutput" property="netoutput" jdbcType="REAL" />
+    <result column="ioInput" property="ioinput" jdbcType="REAL" />
+    <result column="ioOutput" property="iooutput" jdbcType="REAL" />
     <result column="collectTime" property="collecttime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -71,8 +72,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    autoId, applicationName, cpuUsageRate, memUsageRate, memUsageAmount, netUsageRate, 
-    ioUsageRate, blockIo, collectTime
+    autoId, applicationName, cpuUsageRate, memUsageRate, memUsageAmount, netInput, netOutput, 
+    ioInput, ioOutput, collectTime
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="scs.pojo.TableAppresourceusageExample" >
     select
@@ -106,13 +107,13 @@
   </delete>
   <insert id="insert" parameterType="scs.pojo.TableAppresourceusage" >
     insert into table_appresourceusage (autoId, applicationName, cpuUsageRate, 
-      memUsageRate, memUsageAmount, netUsageRate, 
-      ioUsageRate, blockIo, collectTime
-      )
+      memUsageRate, memUsageAmount, netInput, 
+      netOutput, ioInput, ioOutput, 
+      collectTime)
     values (#{autoid,jdbcType=INTEGER}, #{applicationname,jdbcType=VARCHAR}, #{cpuusagerate,jdbcType=REAL}, 
-      #{memusagerate,jdbcType=REAL}, #{memusageamount,jdbcType=REAL}, #{netusagerate,jdbcType=REAL}, 
-      #{iousagerate,jdbcType=REAL}, #{blockio,jdbcType=REAL}, #{collecttime,jdbcType=TIMESTAMP}
-      )
+      #{memusagerate,jdbcType=REAL}, #{memusageamount,jdbcType=REAL}, #{netinput,jdbcType=REAL}, 
+      #{netoutput,jdbcType=REAL}, #{ioinput,jdbcType=REAL}, #{iooutput,jdbcType=REAL}, 
+      #{collecttime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="scs.pojo.TableAppresourceusage" >
     insert into table_appresourceusage
@@ -132,14 +133,17 @@
       <if test="memusageamount != null" >
         memUsageAmount,
       </if>
-      <if test="netusagerate != null" >
-        netUsageRate,
+      <if test="netinput != null" >
+        netInput,
       </if>
-      <if test="iousagerate != null" >
-        ioUsageRate,
+      <if test="netoutput != null" >
+        netOutput,
       </if>
-      <if test="blockio != null" >
-        blockIo,
+      <if test="ioinput != null" >
+        ioInput,
+      </if>
+      <if test="iooutput != null" >
+        ioOutput,
       </if>
       <if test="collecttime != null" >
         collectTime,
@@ -161,14 +165,17 @@
       <if test="memusageamount != null" >
         #{memusageamount,jdbcType=REAL},
       </if>
-      <if test="netusagerate != null" >
-        #{netusagerate,jdbcType=REAL},
+      <if test="netinput != null" >
+        #{netinput,jdbcType=REAL},
       </if>
-      <if test="iousagerate != null" >
-        #{iousagerate,jdbcType=REAL},
+      <if test="netoutput != null" >
+        #{netoutput,jdbcType=REAL},
       </if>
-      <if test="blockio != null" >
-        #{blockio,jdbcType=REAL},
+      <if test="ioinput != null" >
+        #{ioinput,jdbcType=REAL},
+      </if>
+      <if test="iooutput != null" >
+        #{iooutput,jdbcType=REAL},
       </if>
       <if test="collecttime != null" >
         #{collecttime,jdbcType=TIMESTAMP},
@@ -199,14 +206,17 @@
       <if test="record.memusageamount != null" >
         memUsageAmount = #{record.memusageamount,jdbcType=REAL},
       </if>
-      <if test="record.netusagerate != null" >
-        netUsageRate = #{record.netusagerate,jdbcType=REAL},
+      <if test="record.netinput != null" >
+        netInput = #{record.netinput,jdbcType=REAL},
       </if>
-      <if test="record.iousagerate != null" >
-        ioUsageRate = #{record.iousagerate,jdbcType=REAL},
+      <if test="record.netoutput != null" >
+        netOutput = #{record.netoutput,jdbcType=REAL},
       </if>
-      <if test="record.blockio != null" >
-        blockIo = #{record.blockio,jdbcType=REAL},
+      <if test="record.ioinput != null" >
+        ioInput = #{record.ioinput,jdbcType=REAL},
+      </if>
+      <if test="record.iooutput != null" >
+        ioOutput = #{record.iooutput,jdbcType=REAL},
       </if>
       <if test="record.collecttime != null" >
         collectTime = #{record.collecttime,jdbcType=TIMESTAMP},
@@ -223,9 +233,10 @@
       cpuUsageRate = #{record.cpuusagerate,jdbcType=REAL},
       memUsageRate = #{record.memusagerate,jdbcType=REAL},
       memUsageAmount = #{record.memusageamount,jdbcType=REAL},
-      netUsageRate = #{record.netusagerate,jdbcType=REAL},
-      ioUsageRate = #{record.iousagerate,jdbcType=REAL},
-      blockIo = #{record.blockio,jdbcType=REAL},
+      netInput = #{record.netinput,jdbcType=REAL},
+      netOutput = #{record.netoutput,jdbcType=REAL},
+      ioInput = #{record.ioinput,jdbcType=REAL},
+      ioOutput = #{record.iooutput,jdbcType=REAL},
       collectTime = #{record.collecttime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -246,14 +257,17 @@
       <if test="memusageamount != null" >
         memUsageAmount = #{memusageamount,jdbcType=REAL},
       </if>
-      <if test="netusagerate != null" >
-        netUsageRate = #{netusagerate,jdbcType=REAL},
+      <if test="netinput != null" >
+        netInput = #{netinput,jdbcType=REAL},
       </if>
-      <if test="iousagerate != null" >
-        ioUsageRate = #{iousagerate,jdbcType=REAL},
+      <if test="netoutput != null" >
+        netOutput = #{netoutput,jdbcType=REAL},
       </if>
-      <if test="blockio != null" >
-        blockIo = #{blockio,jdbcType=REAL},
+      <if test="ioinput != null" >
+        ioInput = #{ioinput,jdbcType=REAL},
+      </if>
+      <if test="iooutput != null" >
+        ioOutput = #{iooutput,jdbcType=REAL},
       </if>
       <if test="collecttime != null" >
         collectTime = #{collecttime,jdbcType=TIMESTAMP},
@@ -267,9 +281,10 @@
       cpuUsageRate = #{cpuusagerate,jdbcType=REAL},
       memUsageRate = #{memusagerate,jdbcType=REAL},
       memUsageAmount = #{memusageamount,jdbcType=REAL},
-      netUsageRate = #{netusagerate,jdbcType=REAL},
-      ioUsageRate = #{iousagerate,jdbcType=REAL},
-      blockIo = #{blockio,jdbcType=REAL},
+      netInput = #{netinput,jdbcType=REAL},
+      netOutput = #{netoutput,jdbcType=REAL},
+      ioInput = #{ioinput,jdbcType=REAL},
+      ioOutput = #{iooutput,jdbcType=REAL},
       collectTime = #{collecttime,jdbcType=TIMESTAMP}
     where autoId = #{autoid,jdbcType=INTEGER}
   </update>
