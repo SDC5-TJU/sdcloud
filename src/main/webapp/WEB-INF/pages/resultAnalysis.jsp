@@ -69,283 +69,37 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="statics/js/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="statics/js/highcharts.js"></script>
 <script type="text/javascript" src="statics/js/highcharts-more.js"></script>
+
+<script type="text/javascript" src="statics/js/highstock.js"></script>
+<script type="text/javascript" src="statics/js/exporting.js"></script>
 <script type="text/javascript">
+Highcharts.setOptions({ global: { useUTC: false } });
+Highstock.setOptions({ global: { useUTC: false } });
 $(document).ready(function() {
-	 Highcharts.chart('websearch1', {
-         chart: {
-             zoomType: 'x'
-         },
-         title: {
-             text: '物理机CPU使用情况'
-         },
-         tooltip: {
-             split: true,
-             valueSuffix: '%'
-         },
-         xAxis: {
-             title: {
-                 text: '时间'
-             },
-             type: 'datetime',
-             // maxZoom:24 * 3600 * 1000, // x轴总共显示的时间
-             //min:<?=strtotime(date('Y-m-d'))?>,
-             dateTimeLabelFormats: {
-//               minute: '%H:%M'
-                 day: '%H:%M'
-             }
-         },
-         yAxis: {
-             title: {
-                 text: '使用率%'
-             },
-             min:0
-
-         },
-         legend: {
-             layout: 'vertical',
-             align: 'right',
-             verticalAlign: 'middle',
-             align: 'center', //水平方向位置
-             verticalAlign: 'bottom', //垂直方向位置
-             x: 0, //距离x轴的距离
-             y: 0 //距离Y轴的距离
-         },
-         colors: ['#058DC7', '#ff3300'],
-         plotOptions: {
-             area: {
-                 fillColor: {
-                     linearGradient: {
-                         x1: 0,
-                         y1: 0,
-                         x2: 0,
-                         y2: 1
-                     },
-                     stops: [
-                         [0, Highcharts.getOptions().colors[0]],
-                         [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                     ]
-                 },
-                 marker: {
-                     radius: 2
-                 },
-                 lineWidth: 1,
-                 states: {
-                     hover: {
-                         lineWidth: 1
-                     }
-                 },
-                 threshold: null
-             }
-         },
-
+    Highstock.stockChart('websearch1', {
+        title: {
+            text: '物理机CPU使用情况'
+        },
          series: [${sysUsageStr0}]
      });
 
-     Highcharts.chart('websearch2', {
-         chart: {
-             zoomType: 'x'
-         },
+    Highstock.stockChart('websearch2', {
          title: {
              text: '物理机memory使用情况'
          },
-         tooltip: {
-             split: true,
-             valueSuffix: '%'
-         },
-         xAxis: {
-             title: {
-                 text: '时间'
-             },
-             type: 'datetime',
-             // maxZoom:24 * 3600 * 1000, // x轴总共显示的时间
-             //min:<?=strtotime(date('Y-m-d'))?>,
-             dateTimeLabelFormats: {
-//               minute: '%H:%M'
-                 day: '%H:%M'
-             }
-         },
-         yAxis: {
-             title: {
-                 text: '使用率%'
-             },
-             min:0
-
-         },
-         legend: {
-             layout: 'vertical',
-             align: 'right',
-             verticalAlign: 'middle',
-             align: 'center', //水平方向位置
-             verticalAlign: 'bottom', //垂直方向位置
-             x: 0, //距离x轴的距离
-             y: 0 //距离Y轴的距离
-         },
-         colors: ['#058DC7', '#ff3300'],
-         plotOptions: {
-             area: {
-                 fillColor: {
-                     linearGradient: {
-                         x1: 0,
-                         y1: 0,
-                         x2: 0,
-                         y2: 1
-                     },
-                     stops: [
-                         [0, Highcharts.getOptions().colors[0]],
-                         [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                     ]
-                 },
-                 marker: {
-                     radius: 2
-                 },
-                 lineWidth: 1,
-                 states: {
-                     hover: {
-                         lineWidth: 1
-                     }
-                 },
-                 threshold: null
-             }
-         },
-
          series: [${sysUsageStr1}]
      });
 
-     Highcharts.chart('websearch3', {
-         chart: {
-             zoomType: 'x'
-         },
+    Highstock.stockChart('websearch3', {
          title: {
              text: '物理机I/O使用情况'
          },
-         tooltip: {
-             split: true,
-             valueSuffix: '%'
-         },
-         xAxis: {
-             title: {
-                 text: '时间'
-             },
-             type: 'datetime',
-             // maxZoom:24 * 3600 * 1000, // x轴总共显示的时间
-             //min:<?=strtotime(date('Y-m-d'))?>,
-             dateTimeLabelFormats: {
-//               minute: '%H:%M'
-                 day: '%H:%M'
-             }
-         },
-         yAxis: {
-             title: {
-                 text: '使用率%'
-             },
-             min:0
-
-         },
-         legend: {
-             layout: 'vertical',
-             align: 'right',
-             verticalAlign: 'middle',
-             align: 'center', //水平方向位置
-             verticalAlign: 'bottom', //垂直方向位置
-             x: 0, //距离x轴的距离
-             y: 0 //距离Y轴的距离
-         },
-         colors: ['#058DC7', '#ff3300'],
-         plotOptions: {
-             area: {
-                 fillColor: {
-                     linearGradient: {
-                         x1: 0,
-                         y1: 0,
-                         x2: 0,
-                         y2: 1
-                     },
-                     stops: [
-                         [0, Highcharts.getOptions().colors[0]],
-                         [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                     ]
-                 },
-                 marker: {
-                     radius: 2
-                 },
-                 lineWidth: 1,
-                 states: {
-                     hover: {
-                         lineWidth: 1
-                     }
-                 },
-                 threshold: null
-             }
-         },
-
          series: [${sysUsageStr2}]
      });
-     Highcharts.chart('websearch4', {
-         chart: {
-             zoomType: 'x'
-         },
+    Highstock.stockChart('websearch4', {
          title: {
              text: '物理机网络使用情况'
          },
-         tooltip: {
-             split: true,
-             valueSuffix: '%'
-         },
-         xAxis: {
-             title: {
-                 text: '时间'
-             },
-             type: 'datetime',
-             // maxZoom:24 * 3600 * 1000, // x轴总共显示的时间
-             //min:<?=strtotime(date('Y-m-d'))?>,
-             dateTimeLabelFormats: {
-//               minute: '%H:%M'
-                 day: '%H:%M'
-             }
-         },
-         yAxis: {
-             title: {
-                 text: '使用率%'
-             },
-             min:0
-         },
-         legend: {
-             layout: 'vertical',
-             align: 'right',
-             verticalAlign: 'middle',
-             align: 'center', //水平方向位置
-             verticalAlign: 'bottom', //垂直方向位置
-             x: 0, //距离x轴的距离
-             y: 0 //距离Y轴的距离
-         },
-         colors: ['#058DC7', '#ff3300'],
-         plotOptions: {
-             area: {
-                 fillColor: {
-                     linearGradient: {
-                         x1: 0,
-                         y1: 0,
-                         x2: 0,
-                         y2: 1
-                     },
-                     stops: [
-                         [0, Highcharts.getOptions().colors[0]],
-                         [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                     ]
-                 },
-                 marker: {
-                     radius: 2
-                 },
-                 lineWidth: 1,
-                 states: {
-                     hover: {
-                         lineWidth: 1
-                     }
-                 },
-                 threshold: null
-             }
-         },
-
          series: [${sysUsageStr3}]
      });
      Highcharts.chart('websearch5', {

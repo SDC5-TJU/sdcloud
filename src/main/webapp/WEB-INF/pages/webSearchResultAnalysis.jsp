@@ -289,9 +289,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 },
             },
             tooltip: {
-                
-                xDateFormat: '%Y-%m-%d %H:%M:%S.%L',
-                valueSuffix: 'ms',
+                formatter:function(){
+                    return'<strong>'+this.series.name+'</strong><br/>'+
+                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S.%L',this.x)+'<br/>'+'响应时间：'+this.y+' ms';
+                },
             },
             series: [${diffBean.baseTimeStr}]
         });
@@ -328,9 +329,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 },
             },
             tooltip: {
-                
-                xDateFormat: '%Y-%m-%d %H:%M:%S.%L',
-                valueSuffix: 'ms',
+                formatter:function(){
+                    return'<strong>'+this.series.name+'</strong><br/>'+
+                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S.%L',this.x)+'<br/>'+'响应时间：'+this.y+' ms';
+                },
             },
             series: [${diffBean.timeStr}]
         }); 
