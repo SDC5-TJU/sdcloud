@@ -205,6 +205,13 @@ public class JobSchedulController {
 	public String getMemcachedResult(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="testRecordId",required=true) int testRecordId){
 		try{ 
+			if(Repository.memcachedBaseDataList.size()==0){
+				model.addAttribute("message","尚未进行memcached基准测试");
+				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
+			}else if(Repository.memcachedDataList.size()==0){
+				model.addAttribute("message","尚未进行memcached正式测试");
+				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
+			}
 			TimeResultBean memBaseResult=AdapterForResult.adapter("memcached", Repository.memcachedBaseDataList);
 			TimeResultBean memResult = AdapterForResult.adapter("memcached",Repository.memcachedDataList);//new TimeResultBean();
  		
@@ -228,22 +235,19 @@ public class JobSchedulController {
 	public String getWebServerResult(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="testRecordId",required=true) int testRecordId){
 		try{ 
+			if(Repository.webServerBaseDataList.size()==0){
+				model.addAttribute("message","尚未进行webServer基准测试");
+				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
+			}else if(Repository.webServerDataList.size()==0){
+				model.addAttribute("message","尚未进行webServer正式测试");
+				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
+			}
 			TimeResultBean webServerBaseResult= AdapterForResult.adapter("webServer",Repository.webServerBaseDataList);//new TimeResultBean();
 			TimeResultBean webServerResult=AdapterForResult.adapter("webServer",Repository.webServerDataList);
 			 
 			model.addAttribute("webServerResult",webServerResult);
 			model.addAttribute("webServerBaseResult",webServerBaseResult);
-//			Repository.webServerBaseDataList.clear();
-//			Repository.webServerDataList.clear();
-//			for(int i=0;i<100;i++){
-//				Repository.webServerBaseDataList.add(new TwoTuple<Long,Integer>(System.currentTimeMillis(),new Random().nextInt(200)));
-//				Repository.webServerDataList.add(new TwoTuple<Long,Integer>(System.currentTimeMillis(),new Random().nextInt(800)));
-//				Thread.sleep(10);
-//			} 
-//			Thread.sleep(10);
-//			Repository.webServerBaseDataList.add(new TwoTuple<Long,Integer>(System.currentTimeMillis(),65535));
-//			Repository.webServerDataList.add(new TwoTuple<Long,Integer>(System.currentTimeMillis(),65535));
-//			 
+ 	 
 			TimeResultDiffBean diffBean=ResultDiffAnalysis.getInstance().getResultDiff(Repository.webServerBaseDataList,Repository.webServerDataList,webServerBaseResult,webServerResult);
 			model.addAttribute("diffBean",diffBean);
 			List<AppConfigBean> appConfiglist=aService.getAppConfig(testRecordId);
@@ -261,6 +265,13 @@ public class JobSchedulController {
 	public String getWebSearchResult(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="testRecordId",required=true) int testRecordId){
 		try{ 
+			if(Repository.webSearchBaseDataList.size()==0){
+				model.addAttribute("message","尚未进行webSearch基准测试");
+				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
+			}else if(Repository.webSearchDataList.size()==0){
+				model.addAttribute("message","尚未进行webSearch正式测试");
+				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
+			}
 			TimeResultBean webSearchBaseResult=AdapterForResult.adapter("webSearch",Repository.webSearchBaseDataList);//new TimeResultBean();
 			TimeResultBean webSearchResult=AdapterForResult.adapter("webSearch",Repository.webSearchDataList);//new TimeResultBean();
 			
@@ -283,6 +294,13 @@ public class JobSchedulController {
 	public String getCassandraResult(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="testRecordId",required=true) int testRecordId){
 		try{ 
+			if(Repository.cassandraBaseDataList.size()==0){
+				model.addAttribute("message","尚未进行cassandra基准测试");
+				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
+			}else if(Repository.cassandraDataList.size()==0){
+				model.addAttribute("message","尚未进行cassandra正式测试");
+				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
+			}
 			TimeResultBean cassandraBaseResult=AdapterForResult.adapter("cassandra",Repository.cassandraBaseDataList);//new TimeResultBean();
 			TimeResultBean cassandraResult=AdapterForResult.adapter("cassandra",Repository.cassandraDataList);//new TimeResultBean();
 			
@@ -305,22 +323,19 @@ public class JobSchedulController {
 	public String getSiloResult(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="testRecordId",required=true) int testRecordId){
 		try{ 
+			if(Repository.siloBaseDataList.size()==0){
+				model.addAttribute("message","尚未进行silo基准测试");
+				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
+			}else if(Repository.siloDataList.size()==0){
+				model.addAttribute("message","尚未进行silo正式测试");
+				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
+			}
 			TimeResultBean siloBaseResult= AdapterForResult.adapter("silo",Repository.siloBaseDataList);//new TimeResultBean();
 	    	TimeResultBean siloResult= AdapterForResult.adapter("silo",Repository.siloDataList);//new TimeResultBean();
  	
 			model.addAttribute("siloResult",siloResult);
 			model.addAttribute("siloBaseResult",siloBaseResult);
-//			Repository.siloBaseDataList.clear();
-//			Repository.siloDataList.clear();
-//			for(int i=0;i<100;i++){
-//				Repository.siloBaseDataList.add(new SiloDataBean(233f,new Random().nextInt(500),255f));
-//				Repository.siloDataList.add(new SiloDataBean(233f,new Random().nextInt(1000),255f));
-//				Thread.sleep(10);
-//			} 
-//			Thread.sleep(10);
-//			Repository.siloBaseDataList.add(new SiloDataBean(233f,new Random().nextInt(500),255f));
-//			Repository.siloDataList.add(new SiloDataBean(233f,new Random().nextInt(1000),255f));
-//			
+ 	
 			TimeResultDiffBean diffBean=ResultDiffAnalysis.getInstance().getsiloResultDiff(Repository.siloBaseDataList,Repository.siloDataList,siloBaseResult,siloResult);
 			model.addAttribute("diffBean",diffBean);
 			List<AppConfigBean> appConfiglist=aService.getAppConfig(testRecordId);

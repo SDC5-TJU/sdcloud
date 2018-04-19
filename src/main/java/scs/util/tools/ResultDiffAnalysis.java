@@ -83,7 +83,7 @@ public class ResultDiffAnalysis {
 		StringBuffer strName=new StringBuffer();
 		StringBuffer strData=new StringBuffer();
 		StringBuffer HSeries=new StringBuffer();
-		strName.append("{name:'无干扰下访问延迟分布',lineWidth:0.5,"); 
+		strName.append("{name:'无干扰下访问延迟分布',"); 
 		strData.append("data:[");
 		int size=baseTimeList.size()-1;
 		for(int i=0;i<size;i++){
@@ -106,7 +106,7 @@ public class ResultDiffAnalysis {
 		strName.setLength(0);
 		strData.setLength(0);
 		HSeries.setLength(0);
-		strName.append("{name:'干扰下访问延迟分布',lineWidth:0.5,"); 
+		strName.append("{name:'干扰下访问延迟分布',"); 
 		strData.append("data:[");   
 		size=timeList.size()-1;
 		for(int i=0;i<size;i++){
@@ -224,7 +224,7 @@ public class ResultDiffAnalysis {
 		StringBuffer strName=new StringBuffer();
 		StringBuffer strData=new StringBuffer();
 		StringBuffer HSeries=new StringBuffer();
-		strName.append("{name:'无干扰下访问延迟分布',lineWidth:0.5,");
+		strName.append("{name:'无干扰下访问延迟分布',");
 		strData.append("data:[");
 		int size=baseTimeList.size()-1;
 		for(int i=0;i<size;i++){
@@ -239,7 +239,7 @@ public class ResultDiffAnalysis {
 		strName.setLength(0);
 		strData.setLength(0);
 		HSeries.setLength(0);
-		strName.append("{name:'干扰下访问延迟分布',lineWidth:0.5,"); 
+		strName.append("{name:'干扰下访问延迟分布',"); 
 		strData.append("data:[");
 		size=timeList.size()-1;
 		for(int i=0;i<size;i++){
