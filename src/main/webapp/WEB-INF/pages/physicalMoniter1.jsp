@@ -30,57 +30,30 @@
 			<span style="font-family: 微软雅黑; font-size: 14px;">线程控制:</span><input
 				type="button" id="startButton" value="开始" onclick="start();"
 				style="cursor: pointer">
-		</div>
-		<div id="hadoopControl">
-			<div>
-				<span style="font-family: 微软雅黑; font-size: 14px;">启动hadoop任务</span>
-			</div>
-			<div id="hadoopControl_title">
-				<input type="button" id="viewButton" value="运行"
-					onclick="startHadoop();" style="cursor: pointer"><input
-					type="text" id="maps" style="width: 56px; height: 20px;"
-					placeholder="map数量"><input type="text" id="reduces"
-					style="width: 66px; height: 20px;" placeholder="reduce数量">
-			</div>
-			<div>
-				<span style="font-family: 微软雅黑; font-size: 14px;" id="res"></span>
-			</div>
-		</div>
+		</div> 
 		<div id="container3"></div>
-		<div id="container4"></div>
-		<div id="container5"></div>
+		<div id="container4"></div> 
 
 		<script type="text/javascript" src="statics/js/jquery-1.9.1.js"></script>
 		<script type="text/javascript" src="statics/js/highcharts.js"></script>
 		<script type="text/javascript" src="statics/js/highcharts-more.js"></script>
-		<script> var returnedData = null;var lastcollecttime = null; </script>
-
 		<script type="text/javascript">
-
-		 setInterval(function() {
+		var returnedData = null; 
+		var flag=true;
+		 setInterval(function() { 
 				$.ajax({
 					async:true,
 					type:"get",
 					url:"getPhyResourceUse.do?no=1",
 					data:{},
 					dataType:"json",
-					success:function(returned) {
-						var lastcollecttime = null;
+					success:function(returned) { 
 						if(returned!=null&&returned!=""&&returned!="null"){
-							returnedData = returned;
-							console.log(returned);
+							returnedData = returned; 
 						}
-						if(lastcollecttime == returnedData[0].collecttime.time && returnedData.collecttime.time == null)
-							{
-								//因为数据问题出现异常,时间为空或者时间与前一刻相同
-								alert("异常");
-							}
 					}	
 				});
-			},10000);
-
-	var flag=true;
- 
+			},3000);
 	function start(){
 		if(flag==true){
 			flag=false;
@@ -101,8 +74,6 @@
     /**
     * solrCloud
     */
-    
-   
      Highcharts.chart('container1', {
         chart: {
             type: 'line',
@@ -112,19 +83,26 @@
                 load: function () {
                     // set up the updating of the chart each second
                     var series = this.series[0];
-                    var x,y,a;
-                   
+                    var lastcollecttime=null;
+                    var x,y;
                     setInterval(function (){
                     	if(flag==true){
 			              if(returnedData!=null){
 			            	    x = returnedData[0].collecttime.time;
-			            	    lastcollecttime = returnedData[0].collecttime.time;
-								y = returnedData[0].cpuusagerate;
-								y = parseFloat(y);
-				                series.addPoint([x,y], true, true); 
+			            	    y = returnedData[0].cpuusagerate;
+			            	    if(lastcollecttime==null){//如果第一次判断 直接添加点进去
+			            	    	 series.addPoint([x,y], true, true); 
+			            	    	 lastcollecttime = x;
+			            	    }else{ 
+			            	    	if(lastcollecttime<x){//如果不是第一次判断，则只有上次时间小于当前时间时才添加点
+			            	    		series.addPoint([x,y], true, true); 
+				            	    	lastcollecttime = x; 
+			            	    	}
+			            	    }
+				               
 			               }    
                     	}
-                    }, 10000);
+                    }, 200);
                 }
             }
         },
@@ -201,20 +179,26 @@
             	  load: function () {
                       // set up the updating of the chart each second
                       var series = this.series[0];
-                      var a=null;
-                      
+                      var lastcollecttime=null;
+                      var x,y;
                       setInterval(function (){
-                      	if(flag==true){  
-  			              if(returnedData!=null){
-  			            		x = returnedData[0].collecttime.time;
-		            	    	lastcollecttime = returnedData[0].collecttime.time;
-								y = returnedData[0].memusagerate;  
-								console.log(x);
-								console.log(y);
-				                series.addPoint([x,y], true, true); 
-			               } 
-                      	}
-                      },10000);
+                    	  if(flag==true){
+    			              if(returnedData!=null){
+    			            	    x = returnedData[0].collecttime.time;
+    			            	    y = returnedData[0].memusagerate;
+    			            	    if(lastcollecttime==null){
+    			            	    	 series.addPoint([x,y], true, true); 
+    			            	    	 lastcollecttime = x;
+    			            	    }else{
+    			            	    	if(lastcollecttime<x){
+    			            	    		series.addPoint([x,y], true, true); 
+    				            	    	lastcollecttime = x;
+    			            	    	} 
+    			            	    }
+    				               
+    			               }    
+                        	}
+                      },200);
                    }
              }
          },
@@ -290,33 +274,31 @@
                   load: function () {
                       // set up the updating of the chart each second
                       var series = this.series[0];
-                      var x,y,a;
-                     
+                      var lastcollecttime=null;
+                      var x,y;
                       setInterval(function (){
-                      	if(flag==true){
-                      	  $.ajax({
-  								async:true,
-  								//type:"post",
-  								//url:"getIoUseRate.do",
-  								data:{},
-  								dataType:"text",
-  								/*success:function(returned){
-  									a=returned;
-  								}	*/
-  							});
-  			              if(returnedData!=null){
-  			            	    x = returnedData[0].collecttime.time;
-		            	    	lastcollecttime = returnedData[0].collecttime.time;
-								y = returnedData[0].iousagerate;                
-  				                series.addPoint([x,y], true, true); 
-  			               }     
-                      	}
-                      }, 10000);
+                    	  if(flag==true){
+    			              if(returnedData!=null){
+    			            	    x = returnedData[0].collecttime.time;
+    			            	    y = returnedData[0].iousagerate;
+    			            	    if(lastcollecttime==null){
+    			            	    	 series.addPoint([x,y], true, true); 
+    			            	    	 lastcollecttime = x;
+    			            	    }else{
+    			            	    	if(lastcollecttime<x){
+    			            	    		series.addPoint([x,y], true, true); 
+    				            	    	lastcollecttime = x;
+    			            	    	} 
+    			            	    }
+    				               
+    			               }    
+                        	}
+                      }, 200);
                   }
               }
           },
           title: {
-              text: 'IO used(%)'
+              text: 'IO used(kb/s)'
           },
           xAxis: {
           	type: 'datetime',
@@ -325,21 +307,20 @@
           },
           yAxis: {
               title: {
-                  text: 'used rate'
+                  text: 'usage kb/s'
               },
               plotLines: [{
                   value: 0,
                   width: 1,
                   color: '#808080'
-              }],
-              max:100,
+              }], 
   			min:0,
           },
           tooltip: {
               formatter: function () {
                   return '<b>' + this.series.name + '</b><br/>' +
                       Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
-                      Highcharts.numberFormat(this.y, 2)+'%';
+                      Highcharts.numberFormat(this.y, 0)+'kb/s';
               }
           },
           legend: {
@@ -388,33 +369,31 @@
                    load: function () {
                        // set up the updating of the chart each second
                        var series = this.series[0];
-                       var x,y,a;
-                      
+                       var lastcollecttime=null;
+                       var x,y;
                        setInterval(function (){
-                       	if(flag==true){
-                       	  $.ajax({
-   								async:true,
-   								//type:"post",
-   								//url:"getNetUseRate.do",
-   								data:{},
-   								dataType:"text",
-   								/*success:function(returned){
-   									a=returned;
-   								}	*/
-   							});
-   			              if(returnedData!=null){
-   			            		x = returnedData[0].collecttime.time;
-		            	    	lastcollecttime = returnedData[0].collecttime.time;
-								y = returnedData[0].netusagerate;                   
-   				                series.addPoint([x,y], true, true); 
-   			               }     
-                       	}
-                       }, 10000);
+                    	   if(flag==true){
+     			              if(returnedData!=null){
+     			            	    x = returnedData[0].collecttime.time;
+     			            	    y = returnedData[0].netusagerate;
+     			            	    if(lastcollecttime==null){
+     			            	    	 series.addPoint([x,y], true, true); 
+     			            	    	 lastcollecttime = x;
+     			            	    }else{
+     			            	    	if(lastcollecttime<x){
+     			            	    		series.addPoint([x,y], true, true); 
+     				            	    	lastcollecttime = x;
+     			            	    	}
+     			            	    }
+     				               
+     			               }    
+                         	}
+                       }, 200);
                    }
                }
            },
            title: {
-               text: 'net used(%)'
+               text: 'net used(kb/s)'
            },
            xAxis: {
            	type: 'datetime',
@@ -423,21 +402,20 @@
            },
            yAxis: {
                title: {
-                   text: 'used rate'
+                   text: 'usage kb/s'
                },
                plotLines: [{
                    value: 0,
                    width: 1,
                    color: '#808080'
-               }],
-               max:100,
-   			min:0,
+               }], 
+   				min:0,
            },
            tooltip: {
                formatter: function () {
                    return '<b>' + this.series.name + '</b><br/>' +
                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
-                       Highcharts.numberFormat(this.y, 2)+'%';
+                       Highcharts.numberFormat(this.y, 2)+'kb/s';
                }
            },
            legend: {
@@ -474,65 +452,7 @@
            },
            series:[${net}]
        });
-     /**
-     * cpu柱状图
-     */
-      Highcharts.chart('container5', {
-          chart: {
-              type: 'column',
-              events: {
-                  load: function () {
-                      // set up the updating of the chart each second
-                      var series0 = this.series[0];
-                      var series1 = this.series[1];
-                      var series2 = this.series[2];
-                      setInterval(function () {
-                    	  if(false){
-	                    	  $.ajax({
-	  							async:true,
-	  							type:"post",
-	  							url:"cpuBaseInfoMethod.do",
-	  							data:{},
-	  							dataType:"json",
-	  							success:function(returned){
-	  								a=returned;
-	  							}	
-	  						});
-	                    	  if(a!=null){
-	                    		  series0.setData(a[0].idle);//未使用
-	                              series1.setData(a[0].user);
-	                              series2.setData(a[0].sys);
-	                    	  }
-                    	  }
-                      }, 10000);
-                  }
-              }
-          },
-          title: {
-              text: 'cpus'
-          },
-          xAxis: {
-              categories:[${cpuAxis}]
-          },
-          yAxis: {
-              min: 0,
-              title: {
-                  text: 'CPU useInfo(%)'
-              }
-          },
-          tooltip: {
-              pointFormat: '<span style="color:{series.color}">{series.name}</span>:({point.percentage:.0f}%)<br/>',
-              shared: true
-          },
-          plotOptions: {
-              column: {
-                  stacking: 'percent'
-              }
-          },
-          series: [${cpuColumn}]
-      });
-});
-
+ });
 </script>
 	</div>
 </body>
