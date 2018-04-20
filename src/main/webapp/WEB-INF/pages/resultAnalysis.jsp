@@ -53,26 +53,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<!--图-->
 		<div id="chart">
 			<div id="websearch1"
-				style="width: 1200px; height: 300px; position: absolute; left: 50px; top: 100px;"></div>
+				style="width: 1200px; height: 400px; position: absolute; left: 50px; top: 100px;"></div>
 			<div id="websearch2"
-				style="width: 1200px; height: 300px; position: absolute; left: 50px; top: 450px;"></div>
+				style="width: 1200px; height: 400px; position: absolute; left: 50px; top: 550px;"></div>
 			<div id="websearch3"
-				style="width: 1200px; height: 300px; position: absolute; left: 50px; top: 800px;"></div>
+				style="width: 1200px; height: 400px; position: absolute; left: 50px; top: 1000px;"></div>
 			<div id="websearch4"
-				style="width: 1200px; height: 300px; position: absolute; left: 50px; top: 1150px;"></div>
+				style="width: 1200px; height: 400px; position: absolute; left: 50px; top: 1450px;"></div>
 			<div id="websearch5"
-				style="width: 1200px; height: 300px; position: absolute; left: 50px; top: 1500px;"></div>
+				style="width: 1200px; height: 400px; position: absolute; left: 50px; top: 1900px;"></div>
 			<div id="websearch6"
-				style="width: 1200px; height: 300px; position: absolute; left: 50px; top: 1850px;"></div>
+				style="width: 1200px; height: 400px; position: absolute; left: 50px; top: 2350px;"></div>
 			<div id="websearch7"
-				style="width: 1200px; height: 300px; position: absolute; left: 50px; top: 2200px;"></div>
+				style="width: 1200px; height: 400px; position: absolute; left: 50px; top: 2800px;"></div>
 			<div id="websearch8"
-				style="width: 1200px; height: 300px; position: absolute; left: 50px; top: 2550px;"></div>
+				style="width: 1200px; height: 400px; position: absolute; left: 50px; top: 3250px;"></div>
 			<div id="websearch9"
-				style="width: 1200px; height: 300px; position: absolute; left: 50px; top: 2900px;"></div>
+				style="width: 1200px; height: 400px; position: absolute; left: 50px; top: 3700px;"></div>
 			<div id="websearch10"
-				style="width: 1200px; height: 300px; position: absolute; left: 50px; top: 3250px;"></div>
-
+				style="width: 1200px; height: 400px; position: absolute; left: 50px; top: 4150px;"></div>
 		</div>
 
 
@@ -130,7 +129,24 @@ $(document).ready(function() {
        	    min:0,
        	    max:100
         },
-        series: [${sysUsageStr0}]
+        series: [${sysUsageStr0},
+              {
+            type: 'flags',
+            data: [{
+                x: 1524140667000,
+                title: 'B',
+                text: 'Shape: "circlepin"'
+            }, {
+                x: 1524141500000,
+                title: 'B',
+                text: 'Shape: "circlepin"'
+            }],
+            onSeries: 'dataseries',
+            shape: 'circlepin',
+            width: 16 ,
+            color: Highcharts.getOptions().colors[0],
+            fillColor: Highcharts.getOptions().colors[0]
+        }]
      });
 
     Highstock.stockChart('websearch2', {
