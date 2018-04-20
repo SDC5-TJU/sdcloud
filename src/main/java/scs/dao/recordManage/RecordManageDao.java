@@ -2,7 +2,6 @@ package scs.dao.recordManage;
   
 import java.util.List; 
 import scs.pojo.TestRecordBean;
-import scs.pojo.TwoTuple;
 
 public interface RecordManageDao {
 	public int addRecord(int recordId,String recordDesc);

@@ -1,6 +1,5 @@
 package scs.service.recordManage;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import scs.pojo.AppConfigBean;
 import scs.pojo.TestRecordBean;
-import scs.pojo.TwoTuple;
 import scs.util.repository.Repository;
 import scs.dao.appConfig.AppConfigDao;
 import scs.dao.recordManage.RecordManageDao;
@@ -50,8 +48,9 @@ public class RecordManageServiceImpl implements RecordManageService {
 			map.put(scimark.getApplicationName(),scimark); 
 			result=aDao.addAppConfig(map)==0?0:result;
 			if(result!=0){ 
-				Repository.appConfigMap=map;
-				System.out.println("添加测试记录 appConfig size="+Repository.appConfigMap.size());
+				Repository.appConfigMap=map;//更新app配置数组
+				Repository.curTestRecordId=latestRecordId;//更新当前测试记录
+				System.out.println("添加测试记录 appConfig size="+Repository.appConfigMap.size()+"当前测试记录："+Repository.curTestRecordId);
 			}
 		}
 		return result;

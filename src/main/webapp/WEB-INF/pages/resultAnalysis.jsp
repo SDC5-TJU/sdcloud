@@ -9,81 +9,155 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
 <!--测评结果汇总-->
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="renderer" content="webkit">
-    <title></title>
-    <link rel="stylesheet" href="statics/css/pintuer.css">
-    <link rel="stylesheet" href="statics/css/admin.css">
-    <script src="statics/js/jquery.js"></script>
-    <script src="statics/js/pintuer.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="renderer" content="webkit">
+<title></title>
+<link rel="stylesheet" href="statics/css/pintuer.css">
+<link rel="stylesheet" href="statics/css/admin.css">
+<script src="statics/js/jquery.js"></script>
+<script src="statics/js/pintuer.js"></script>
 </head>
-<body style="height:3300px;">
-<div >
-<ul class="nav nav-tabs" style="">
-       <c:if test="${webSearch.enable==1}">
-        <li class="" style="float: left;">
-            <a  href="getWebSearchResult.do?testRecordId=${testRecordId}" target="_blank" id="websearch">web搜索</a>
-        </li>
-       </c:if>
-       <c:if test="${webServer.enable==1}">
-        <li class="" style="float: left;">
-            <a  href="getWebServerResult.do?testRecordId=${testRecordId}" target="_blank" id="webserver">电商服务</a>
-        </li>
-       </c:if>
-       <c:if test="${silo.enable==1}">        
-        <li class="" style="float: left;">
-            <a  href="getSiloResult.do?testRecordId=${testRecordId}" target="_blank" id="silo">silo</a>
-        </li>
-       </c:if>
-       <c:if test="${memcached.enable==1}">  
-        <li class="" style="float: left;">
-            <a  href="getMemcachedResult.do?testRecordId=${testRecordId}" target="_blank" id="memcached">memcached</a>
-        </li>
-       </c:if> 
-       <c:if test="${cassandra.enable==1}">  
-        <li class="" style="float: left;">
-            <a  href="getCassandraResult.do?testRecordId=${testRecordId}" target="_blank" id="memcached">cassandra</a>
-        </li>
-       </c:if>
-    </ul>
-    
-   <!--图-->
-    <div id="chart">
-        <div id="websearch1" style="width: 1200px;height: 300px;position: absolute; left:50px;top: 100px;"></div>
-        <div id="websearch2" style="width: 1200px;height: 300px;position: absolute; left:50px;top: 450px;"></div>
-        <div id="websearch3" style="width: 1200px;height: 300px;position: absolute; left:50px;top: 800px;"></div>
-        <div id="websearch4" style="width: 1200px;height: 300px;position: absolute; left:50px;top: 1150px;"></div>
-        <div id="websearch5" style="width: 1200px;height: 300px;position: absolute; left:50px;top: 1500px;"></div>
-        <div id="websearch6" style="width: 1200px;height: 300px;position: absolute; left:50px;top: 1850px;"></div>
-        <div id="websearch7" style="width: 1200px;height: 300px;position: absolute; left:50px;top: 2200px;"></div>
-        <div id="websearch8" style="width: 1200px;height: 300px;position: absolute; left:50px;top: 2550px;"></div>
-        <div id="websearch9" style="width: 1200px;height: 300px;position: absolute; left:50px;top: 2900px;"></div>
-        <div id="websearch10" style="width: 1200px;height: 300px;position: absolute; left:50px;top: 3250px;"></div>
-        
-    </div>
-    
+<body style="height: 3300px;">
+	<div>
+		<ul class="nav nav-tabs" style="">
+			<c:if test="${webSearch.enable==1}">
+				<li class="" style="float: left;"><a
+					href="getWebSearchResult.do?testRecordId=${testRecordId}"
+					target="_blank" id="websearch">web搜索</a></li>
+			</c:if>
+			<c:if test="${webServer.enable==1}">
+				<li class="" style="float: left;"><a
+					href="getWebServerResult.do?testRecordId=${testRecordId}"
+					target="_blank" id="webserver">电商服务</a></li>
+			</c:if>
+			<c:if test="${silo.enable==1}">
+				<li class="" style="float: left;"><a
+					href="getSiloResult.do?testRecordId=${testRecordId}"
+					target="_blank" id="silo">silo</a></li>
+			</c:if>
+			<c:if test="${memcached.enable==1}">
+				<li class="" style="float: left;"><a
+					href="getMemcachedResult.do?testRecordId=${testRecordId}"
+					target="_blank" id="memcached">memcached</a></li>
+			</c:if>
+			<c:if test="${cassandra.enable==1}">
+				<li class="" style="float: left;"><a
+					href="getCassandraResult.do?testRecordId=${testRecordId}"
+					target="_blank" id="memcached">cassandra</a></li>
+			</c:if>
+		</ul>
 
-</div>
-<script type="text/javascript" src="statics/js/jquery-1.9.1.js"></script>
-<script type="text/javascript" src="statics/js/highcharts.js"></script>
-<script type="text/javascript" src="statics/js/highcharts-more.js"></script>
+		<!--图-->
+		<div id="chart">
+			<div id="websearch1"
+				style="width: 1200px; height: 300px; position: absolute; left: 50px; top: 100px;"></div>
+			<div id="websearch2"
+				style="width: 1200px; height: 300px; position: absolute; left: 50px; top: 450px;"></div>
+			<div id="websearch3"
+				style="width: 1200px; height: 300px; position: absolute; left: 50px; top: 800px;"></div>
+			<div id="websearch4"
+				style="width: 1200px; height: 300px; position: absolute; left: 50px; top: 1150px;"></div>
+			<div id="websearch5"
+				style="width: 1200px; height: 300px; position: absolute; left: 50px; top: 1500px;"></div>
+			<div id="websearch6"
+				style="width: 1200px; height: 300px; position: absolute; left: 50px; top: 1850px;"></div>
+			<div id="websearch7"
+				style="width: 1200px; height: 300px; position: absolute; left: 50px; top: 2200px;"></div>
+			<div id="websearch8"
+				style="width: 1200px; height: 300px; position: absolute; left: 50px; top: 2550px;"></div>
+			<div id="websearch9"
+				style="width: 1200px; height: 300px; position: absolute; left: 50px; top: 2900px;"></div>
+			<div id="websearch10"
+				style="width: 1200px; height: 300px; position: absolute; left: 50px; top: 3250px;"></div>
 
-<script type="text/javascript" src="statics/js/highstock.js"></script>
-<script type="text/javascript" src="statics/js/exporting.js"></script>
-<script type="text/javascript">
-Highcharts.setOptions({ global: { useUTC: false } });
-Highstock.setOptions({ global: { useUTC: false } });
+		</div>
+
+
+	</div>
+	<script type="text/javascript" src="statics/js/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="statics/js/highcharts.js"></script>
+	<script type="text/javascript" src="statics/js/highcharts-more.js"></script>
+	<script type="text/javascript" src="statics/js/highstock.js"></script>
+	<script type="text/javascript" src="statics/js/exporting.js"></script>
+	<script type="text/javascript" src="statics/js/highcharts-zh_CN.js"></script>
+	<script type="text/javascript">
+Highcharts.setOptions({ 
+	global: { 
+		useUTC: false 
+		} 
+	});
+Highstock.setOptions({ 
+	global: { 
+		useUTC: false 
+		} 
+    });
 $(document).ready(function() {
     Highstock.stockChart('websearch1', {
-        title: {
-            text: '物理机CPU使用情况'
+    	credits:{ 
+    	      enabled:false 
+    	},
+    	scrollbar : {
+            enabled : false
         },
-         series: [${sysUsageStr0}]
+    	rangeSelector: {
+    	    buttons: [{
+    	        type: 'minute',
+    	        count: 1,
+    	        text: '1min'
+    	    }, {
+    	        type: 'minute',
+    	        count: 5,
+    	        text: '5min'
+    	    }, {
+    	        type: 'minute',
+    	        count: 30,
+    	        text: '0.5h'
+    	    }, {
+    	        type: 'all',
+    	        text: '所有'
+    	    }]
+    	},
+        title: {
+            text: '物理机CPU使用率'
+        },
+        yAxis: {
+            title: {
+                text: 'Exchange rate'
+            },
+       	    min:0,
+       	    max:100
+        },
+        series: [${sysUsageStr0}]
      });
 
     Highstock.stockChart('websearch2', {
+    	credits:{ 
+  	      enabled:false 
+  	    },
+	  	scrollbar : {
+	          enabled : false
+	      },
+	  	rangeSelector: {
+	  	    buttons: [{
+	  	        type: 'minute',
+	  	        count: 1,
+	  	        text: '1min'
+	  	    }, {
+	  	        type: 'minute',
+	  	        count: 5,
+	  	        text: '5min'
+	  	    }, {
+	  	        type: 'minute',
+	  	        count: 30,
+	  	        text: '0.5h'
+	  	    }, {
+	  	        type: 'all',
+	  	        text: '所有'
+	  	    }]
+	  	},
          title: {
              text: '物理机memory使用情况'
          },
@@ -91,12 +165,60 @@ $(document).ready(function() {
      });
 
     Highstock.stockChart('websearch3', {
+    	credits:{ 
+    	      enabled:false 
+    	    },
+  	  	scrollbar : {
+  	          enabled : false
+  	      },
+  	  	rangeSelector: {
+  	  	    buttons: [{
+  	  	        type: 'minute',
+  	  	        count: 1,
+  	  	        text: '1min'
+  	  	    }, {
+  	  	        type: 'minute',
+  	  	        count: 5,
+  	  	        text: '5min'
+  	  	    }, {
+  	  	        type: 'minute',
+  	  	        count: 30,
+  	  	        text: '0.5h'
+  	  	    }, {
+  	  	        type: 'all',
+  	  	        text: '所有'
+  	  	    }]
+  	  	},
          title: {
              text: '物理机I/O使用情况'
          },
          series: [${sysUsageStr2}]
      });
     Highstock.stockChart('websearch4', {
+    	credits:{ 
+    	      enabled:false 
+    	    },
+  	  	scrollbar : {
+  	          enabled : false
+  	      },
+  	  	rangeSelector: {
+  	  	    buttons: [{
+  	  	        type: 'minute',
+  	  	        count: 1,
+  	  	        text: '1min'
+  	  	    }, {
+  	  	        type: 'minute',
+  	  	        count: 5,
+  	  	        text: '5min'
+  	  	    }, {
+  	  	        type: 'minute',
+  	  	        count: 30,
+  	  	        text: '0.5h'
+  	  	    }, {
+  	  	        type: 'all',
+  	  	        text: '所有'
+  	  	    }]
+  	  	},
          title: {
              text: '物理机网络使用情况'
          },

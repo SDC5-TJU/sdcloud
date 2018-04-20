@@ -122,5 +122,24 @@ public class RepositoryDao {
 		}
 		return map;
 	}
-
+	public static int updateExecuteRecord(String appName,String eventTime,String action,int isBase) {
+		System.out.println(appName+" "+action+" isbase="+isBase);
+		int result=0;
+		try {
+			conn = DatabaseDriver.getInstance().getConn();
+			String sql = "insert into table_executeRecord(applicationName,eventTime,action,isBase) values(?,?,?,?)";
+			pst = conn.prepareStatement(sql);
+			pst.setString(1,appName);
+			pst.setString(2,eventTime);
+			pst.setString(3,action);
+			pst.setInt(4,isBase);
+			result= pst.executeUpdate(); 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally { 
+			DatabaseDriver.getInstance().closePreparedStatement(pst);
+			DatabaseDriver.getInstance().closeConnection(conn);
+		}
+		return result;
+	}
 }

@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 import scs.dao.historyData.HistoryDataDao;
 import scs.pojo.AppResouceUsageBean;
 import scs.pojo.ContainerResourceUsageBean;
-import scs.pojo.SystemResourceUsageBean; 
+import scs.pojo.MemcachedDataBean;
+import scs.pojo.SiloDataBean;
+import scs.pojo.SystemResourceUsageBean;
+import scs.pojo.TwoTuple;
 import scs.util.format.DateFormats;
 
 @Service
@@ -337,6 +340,36 @@ public class HistoryDataImpl implements HistoryDataService {
 		strData.setLength(0);
 		HSeries.setLength(0);
 		return chartStrList;
+	}
+
+	@Override
+	public List<MemcachedDataBean> searchMemcachedData(int testRecordId, int isBase) {
+		// TODO Auto-generated method stub
+		return dao.searchMemcachedData(testRecordId, isBase);
+	}
+
+	@Override
+	public List<SiloDataBean> searchSiloData(int testRecordId, int isBase) {
+		// TODO Auto-generated method stub
+		return dao.searchSiloData(testRecordId, isBase);
+	}
+
+	@Override
+	public List<TwoTuple<Long, Integer>> searchWebServerData(int testRecordId, int isBase) {
+		// TODO Auto-generated method stub
+		return dao.searchWebServerData(testRecordId, isBase);
+	}
+
+	@Override
+	public List<TwoTuple<Long, Integer>> searchWebSearchData(int testRecordId, int isBase) {
+		// TODO Auto-generated method stub
+		return dao.searchWebSearchData(testRecordId, isBase);
+	}
+
+	@Override
+	public List<TwoTuple<Long, Integer>> searchCassandraData(int testRecordId, int isBase) {
+		// TODO Auto-generated method stub
+		return dao.searchCassandraData(testRecordId, isBase);
 	}
 
 

@@ -1,5 +1,6 @@
 package scs.util.jobSchedul;
  
+import scs.util.format.DateFormats;
 import scs.util.jobSchedul.jobImpl.bonnie.BonnieJobImpl;
 import scs.util.jobSchedul.jobImpl.cassandra.CassandraJobImpl;
 import scs.util.jobSchedul.jobImpl.hadoop.HadoopJobImpl;
@@ -9,6 +10,7 @@ import scs.util.jobSchedul.jobImpl.silo.SiloJobImpl;
 import scs.util.jobSchedul.jobImpl.webSearch.WebSearchJobImpl;
 import scs.util.jobSchedul.jobImpl.webServer.WebServerJobImpl;
 import scs.util.repository.Repository;
+import scs.util.repository.RepositoryDao;
 /**
  * 应用调度配置驱动类
  * @author yanan
@@ -33,23 +35,22 @@ public class JobSchedulDriver {
 		int resultSize=0;  
 		if(Repository.appStatusMap.get(appName)==true) return 0;//如果应用正在运行,说明系统异常,返回0  
 	
-		Repository.appStatusMap.put(appName,true);//标记该作业执行状态为正在执行 
-		System.out.println("执行 execute "+appName);
+		Repository.appStatusMap.put(appName,true);//标记该作业执行状态为正在执行  
+		RepositoryDao.updateExecuteRecord(appName,DateFormats.getInstance().getNowDate(),"开始",isBase);
 		JobInterface instance=this.getJobExecuteInstance(appName);
 		instance.init(isBase);//初始化各种参数,读取配置文件等
 		instance.start(isBase);
+		resultSize=instance.processResult(isBase);//返回结果数量给调用者 
 		/*try {
 			Thread.sleep(20000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}*/
-		System.out.println("执行 execute完毕 "+appName);
-		resultSize=instance.processResult(isBase);//返回结果数量给调用者
-		System.out.println("result="+resultSize);
+		
 		if(Repository.appConfigMap.get(appName).getApplicationType().equals("autoStop")){
 			Repository.appStatusMap.put(appName,false);//执行完毕,标记该作业执行状态为未执行
-			System.out.println("置"+appName+" status--> "+Repository.appStatusMap.get(appName));
+			RepositoryDao.updateExecuteRecord(appName,DateFormats.getInstance().getNowDate(),"结束",isBase);
 		} 
 		return resultSize;
 
@@ -60,9 +61,9 @@ public class JobSchedulDriver {
 	 * @param isBase 是否为基准测试 0|1
 	 * @return 结果集数量
 	 */
-	public int shutdown(String appName){  
+	public int shutdown(String appName){
 		if(Repository.appStatusMap.get(appName)==false) return 1;//如果应用正在运行,说明没有运行,返回1 
-		System.out.println("执行shutdown "+appName);
+	 
 		JobInterface instance=this.getJobExecuteInstance(appName);
 		instance.shutdown(); 
 		/*try {
@@ -71,9 +72,9 @@ public class JobSchedulDriver {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}*/
-		System.out.println("执行shutdown完毕 "+appName);
 		Repository.appStatusMap.put(appName,false);//执行完毕,标记该作业执行状态为未执行
-	
+		RepositoryDao.updateExecuteRecord(appName,DateFormats.getInstance().getNowDate(),"结束",-1);
+		
 		return 1;
 
 	}

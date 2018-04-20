@@ -107,13 +107,7 @@ public class JobSchedulServiceImpl implements JobSchedulService {
 		// TODO Auto-generated method stub
 		return driver.execute("hadoop",-1);
 	}
-
-	@Override
-	public int executeCassandraApp() {
-		// TODO Auto-generated method stub
-		return driver.execute("cassandra",-1);
-	}
-
+ 
 	@Override
 	public String getAppStatus() {
 		// TODO Auto-generated method stub

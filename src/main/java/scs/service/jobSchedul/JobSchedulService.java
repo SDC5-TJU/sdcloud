@@ -19,7 +19,7 @@ public interface JobSchedulService {
 	public int executeScimarkApp(); 
 	
 	public int executeHadoopApp();
-	public int executeCassandraApp();
+	
 	
 	public int getWebSearchQueryTime();
 	public int getWebServerQueryTime();

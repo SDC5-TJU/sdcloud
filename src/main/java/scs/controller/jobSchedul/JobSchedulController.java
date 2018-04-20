@@ -13,11 +13,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
   
-import scs.pojo.AppConfigBean; 
+import scs.pojo.AppConfigBean;
+import scs.pojo.MemcachedDataBean;
+import scs.pojo.SiloDataBean;
 import scs.pojo.TestRecordBean;
 import scs.pojo.TimeResultBean;
-import scs.pojo.TimeResultDiffBean; 
+import scs.pojo.TimeResultDiffBean;
+import scs.pojo.TwoTuple;
 import scs.service.appConfig.AppConfigService;
+import scs.service.historyData.HistoryDataService;
 import scs.service.jobSchedul.JobSchedulService;
 import scs.service.recordManage.RecordManageService;
 import scs.util.repository.Repository;
@@ -33,11 +37,13 @@ import scs.util.tools.ResultDiffAnalysis;
 @Controller
 public class JobSchedulController {
 	private static Logger logger = Logger.getLogger(JobSchedulController.class.getName());
-
+	private Random rand=new Random();
+	
 	@Resource JobSchedulService service; 
 	@Resource AppConfigService aService;
 	@Resource RecordManageService rService;
-	Random rand=new Random();
+	@Resource HistoryDataService hService;
+	
 	
 	@RequestMapping("/jobSchedulBefore.do")
 	public String jobSchedulBefore(HttpServletRequest request,HttpServletResponse response,Model model,
@@ -110,7 +116,7 @@ public class JobSchedulController {
 			int result=service.executeWebServerApp(isBase);
 			response.getWriter().print(result); 
 		}catch(Exception e){
-			logger.error("add Operator error"+e);
+			
 			e.printStackTrace();
 		}
 
@@ -123,7 +129,7 @@ public class JobSchedulController {
 			response.getWriter().print(result);
 
 		}catch(Exception e){
-			logger.error("add Operator error"+e);
+			
 			e.printStackTrace();
 		}
 
@@ -136,7 +142,7 @@ public class JobSchedulController {
 			response.getWriter().print(result);
 
 		}catch(Exception e){
-			logger.error("add Operator error"+e);
+			
 			e.printStackTrace();
 		}
 
@@ -148,7 +154,7 @@ public class JobSchedulController {
 			response.getWriter().print(result);
 
 		}catch(Exception e){
-			logger.error("add Operator error"+e);
+			
 			e.printStackTrace();
 		}
 
@@ -160,7 +166,7 @@ public class JobSchedulController {
 			response.getWriter().print(result);
 
 		}catch(Exception e){
-			logger.error("add Operator error"+e);
+			
 			e.printStackTrace();
 		}
 
@@ -172,7 +178,7 @@ public class JobSchedulController {
 			response.getWriter().print(result);
 
 		}catch(Exception e){
-			logger.error("add Operator error"+e);
+			
 			e.printStackTrace();
 		}
 
@@ -184,7 +190,7 @@ public class JobSchedulController {
 			int result=service.executeHadoopApp();
 			response.getWriter().print(result);
 		}catch(Exception e){
-			logger.error("add Operator error"+e);
+			
 			e.printStackTrace();
 		}
 
@@ -196,7 +202,7 @@ public class JobSchedulController {
 			response.getWriter().print(resultStr);
 			//[{"memcached":false,"scimark":false,"bonnie":false,"webSearch":false,"cassandra":false,"webServer":false,"hadoop":false,"silo":false}]
 		}catch(Exception e){
-			logger.error("add Operator error"+e);
+			
 			e.printStackTrace();
 		}
 	}
@@ -204,29 +210,44 @@ public class JobSchedulController {
 	@RequestMapping("/getMemcachedResult.do")
 	public String getMemcachedResult(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="testRecordId",required=true) int testRecordId){
-		try{ 
-			if(Repository.memcachedBaseDataList.size()==0){
+		try{  
+			List<MemcachedDataBean> resultBaseList=null;
+			List<MemcachedDataBean> resultList=null;
+			if(testRecordId==Repository.curTestRecordId){
+				//如果要查看结果的测试记录id等于当前的测试记录,直接把静态仓库里的数据提出 
+				resultBaseList=Repository.memcachedBaseDataList;
+				resultList=Repository.memcachedDataList;
+			}else{
+				//否则,从数据库中读取历史记录 
+				resultBaseList=hService.searchMemcachedData(testRecordId,1);//读取基准数据
+				resultList=hService.searchMemcachedData(testRecordId,0);//读取测试数据
+			}
+			/*
+			 * 判断是否缺少数据 (基准和正式都要有才可以进行差异值计算)
+			 */
+			if(resultBaseList.size()==0){
 				model.addAttribute("message","尚未进行memcached基准测试");
 				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
-			}else if(Repository.memcachedDataList.size()==0){
+			}else if(resultList.size()==0){
 				model.addAttribute("message","尚未进行memcached正式测试");
 				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
 			}
-			TimeResultBean memBaseResult=AdapterForResult.adapter("memcached", Repository.memcachedBaseDataList);
-			TimeResultBean memResult = AdapterForResult.adapter("memcached",Repository.memcachedDataList);//new TimeResultBean();
- 		
-			model.addAttribute("MemcachedResult",memResult);
-			model.addAttribute("MemcachedBaseResult",memBaseResult);
-		 
-			TimeResultDiffBean diffBean=ResultDiffAnalysis.getInstance().getMemResultDiff(memBaseResult,memResult);
+			//计算基准数据和正式数据的各项指标
+			TimeResultBean resultBaseIndex=AdapterForResult.adapter("memcached",resultBaseList);
+			TimeResultBean resultIndex = AdapterForResult.adapter("memcached",resultList);//new TimeResultBean();
+			model.addAttribute("MemcachedBaseResult",resultBaseIndex);
+			model.addAttribute("MemcachedResult",resultIndex);
+			//计算各项指标差异值
+			TimeResultDiffBean diffBean=ResultDiffAnalysis.getInstance().getMemResultDiff(resultBaseIndex,resultIndex);
 			model.addAttribute("diffBean",diffBean);
+			//封装appconfig配置信息
 			List<AppConfigBean> appConfiglist=aService.getAppConfig(testRecordId);
 			for(AppConfigBean bean:appConfiglist){ 
 				model.addAttribute(bean.getApplicationName(),bean); 
 			}
 			model.addAttribute("testRecordId",testRecordId);
 		}catch(Exception e){
-			logger.error("add Operator error"+e);
+			
 			e.printStackTrace();
 		}
 		return "memResultAnalysis";
@@ -235,28 +256,40 @@ public class JobSchedulController {
 	public String getWebServerResult(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="testRecordId",required=true) int testRecordId){
 		try{ 
-			if(Repository.webServerBaseDataList.size()==0){
-				model.addAttribute("message","尚未进行webServer基准测试");
-				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
-			}else if(Repository.webServerDataList.size()==0){
-				model.addAttribute("message","尚未进行webServer正式测试");
-				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
+			List<TwoTuple<Long, Integer>> resultBaseList=null;
+			List<TwoTuple<Long, Integer>> resultList=null;
+			if(testRecordId==Repository.curTestRecordId){
+				//如果要查看结果的测试记录id等于当前的测试记录,直接把静态仓库里的数据提出 
+				resultBaseList=Repository.webServerBaseDataList;
+				resultList=Repository.webServerDataList;
+			}else{
+				//否则,从数据库中读取历史记录 
+				resultBaseList=hService.searchWebServerData(testRecordId, 1);//读取基准数据
+				resultList=hService.searchWebServerData(testRecordId,0);//读取测试数据
 			}
-			TimeResultBean webServerBaseResult= AdapterForResult.adapter("webServer",Repository.webServerBaseDataList);//new TimeResultBean();
-			TimeResultBean webServerResult=AdapterForResult.adapter("webServer",Repository.webServerDataList);
-			 
-			model.addAttribute("webServerResult",webServerResult);
-			model.addAttribute("webServerBaseResult",webServerBaseResult);
- 	 
-			TimeResultDiffBean diffBean=ResultDiffAnalysis.getInstance().getResultDiff(Repository.webServerBaseDataList,Repository.webServerDataList,webServerBaseResult,webServerResult);
+			String appName="webServer";
+			if(resultBaseList.size()==0){
+				model.addAttribute("message","尚未进行"+appName+"基准测试");
+				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
+			}else if(resultList.size()==0){
+				model.addAttribute("message","尚未进行"+appName+"正式测试");
+				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
+			} 
+			//计算基准数据和正式数据的各项指标
+			TimeResultBean resultBaseIndex= AdapterForResult.adapter(appName,resultBaseList); 
+			TimeResultBean resultIndex=AdapterForResult.adapter(appName,resultList);
+			model.addAttribute(appName+"BaseResult",resultBaseIndex);
+			model.addAttribute(appName+"Result",resultIndex);
+			//计算各项指标差异值
+			TimeResultDiffBean diffBean=ResultDiffAnalysis.getInstance().getResultDiff(resultBaseList,resultList,resultBaseIndex,resultIndex);
 			model.addAttribute("diffBean",diffBean);
+			//封装appconfig配置信息
 			List<AppConfigBean> appConfiglist=aService.getAppConfig(testRecordId);
 			for(AppConfigBean bean:appConfiglist){ 
 				model.addAttribute(bean.getApplicationName(),bean); 
 			}
 			model.addAttribute("testRecordId",testRecordId);
-		}catch(Exception e){
-			logger.error("add Operator error"+e);
+		}catch(Exception e){ 
 			e.printStackTrace();
 		}
 		return "webServerResultAnalysis";
@@ -265,21 +298,37 @@ public class JobSchedulController {
 	public String getWebSearchResult(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="testRecordId",required=true) int testRecordId){
 		try{ 
-			if(Repository.webSearchBaseDataList.size()==0){
-				model.addAttribute("message","尚未进行webSearch基准测试");
-				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
-			}else if(Repository.webSearchDataList.size()==0){
-				model.addAttribute("message","尚未进行webSearch正式测试");
-				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
+			List<TwoTuple<Long, Integer>> resultBaseList=null;
+			List<TwoTuple<Long, Integer>> resultList=null;
+			if(testRecordId==Repository.curTestRecordId){
+				//如果要查看结果的测试记录id等于当前的测试记录,直接把静态仓库里的数据提出 
+				resultBaseList=Repository.webSearchBaseDataList;
+				resultList=Repository.webSearchDataList;
+			}else{
+				//否则,从数据库中读取历史记录 
+				resultBaseList=hService.searchWebSearchData(testRecordId,1);//读取基准数据
+				resultList=hService.searchWebSearchData(testRecordId,0);//读取测试数据
 			}
-			TimeResultBean webSearchBaseResult=AdapterForResult.adapter("webSearch",Repository.webSearchBaseDataList);//new TimeResultBean();
-			TimeResultBean webSearchResult=AdapterForResult.adapter("webSearch",Repository.webSearchDataList);//new TimeResultBean();
-			
-			model.addAttribute("webSearchResult",webSearchResult);
-			model.addAttribute("webSearchBaseResult",webSearchBaseResult);
-		
-			TimeResultDiffBean diffBean=ResultDiffAnalysis.getInstance().getResultDiff(Repository.webSearchBaseDataList,Repository.webSearchDataList,webSearchBaseResult,webSearchResult);
+			/*
+			 * 判断是否缺少数据 (基准和正式都要有才可以进行差异值计算)
+			 */
+			String appName="webSearch";
+			if(resultBaseList.size()==0){
+				model.addAttribute("message","尚未进行"+appName+"基准测试");
+				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
+			}else if(resultList.size()==0){
+				model.addAttribute("message","尚未进行"+appName+"正式测试");
+				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
+			} 
+			//计算基准数据和正式数据的各项指标
+			TimeResultBean resultBaseIndex= AdapterForResult.adapter(appName,resultBaseList); 
+			TimeResultBean resultIndex=AdapterForResult.adapter(appName,resultList);
+			model.addAttribute(appName+"BaseResult",resultBaseIndex);
+			model.addAttribute(appName+"Result",resultIndex);
+			//计算各项指标差异值
+			TimeResultDiffBean diffBean=ResultDiffAnalysis.getInstance().getResultDiff(resultBaseList,resultList,resultBaseIndex,resultIndex);
 			model.addAttribute("diffBean",diffBean);
+			//封装appconfig配置信息
 			List<AppConfigBean> appConfiglist=aService.getAppConfig(testRecordId);
 			for(AppConfigBean bean:appConfiglist){ 
 				model.addAttribute(bean.getApplicationName(),bean); 
@@ -294,21 +343,37 @@ public class JobSchedulController {
 	public String getCassandraResult(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="testRecordId",required=true) int testRecordId){
 		try{ 
-			if(Repository.cassandraBaseDataList.size()==0){
-				model.addAttribute("message","尚未进行cassandra基准测试");
-				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
-			}else if(Repository.cassandraDataList.size()==0){
-				model.addAttribute("message","尚未进行cassandra正式测试");
-				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
+			List<TwoTuple<Long, Integer>> resultBaseList=null;
+			List<TwoTuple<Long, Integer>> resultList=null;
+			if(testRecordId==Repository.curTestRecordId){
+				//如果要查看结果的测试记录id等于当前的测试记录,直接把静态仓库里的数据提出 
+				resultBaseList=Repository.cassandraBaseDataList;
+				resultList=Repository.cassandraDataList;
+			}else{
+				//否则,从数据库中读取历史记录 
+				resultBaseList=hService.searchCassandraData(testRecordId,1);//读取基准数据
+				resultList=hService.searchCassandraData(testRecordId,0);//读取测试数据
 			}
-			TimeResultBean cassandraBaseResult=AdapterForResult.adapter("cassandra",Repository.cassandraBaseDataList);//new TimeResultBean();
-			TimeResultBean cassandraResult=AdapterForResult.adapter("cassandra",Repository.cassandraDataList);//new TimeResultBean();
-			
-			model.addAttribute("cassandraResult",cassandraResult);
-			model.addAttribute("cassandraBaseResult",cassandraBaseResult);
-		
-			TimeResultDiffBean diffBean=ResultDiffAnalysis.getInstance().getResultDiff(Repository.cassandraBaseDataList,Repository.cassandraDataList,cassandraBaseResult,cassandraResult);
+			/*
+			 * 判断是否缺少数据 (基准和正式都要有才可以进行差异值计算)
+			 */
+			String appName="cassandra";
+			if(resultBaseList.size()==0){
+				model.addAttribute("message","尚未进行"+appName+"基准测试");
+				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
+			}else if(resultList.size()==0){
+				model.addAttribute("message","尚未进行"+appName+"正式测试");
+				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
+			} 
+			//计算基准数据和正式数据的各项指标
+			TimeResultBean resultBaseIndex= AdapterForResult.adapter(appName,resultBaseList); 
+			TimeResultBean resultIndex=AdapterForResult.adapter(appName,resultList);
+			model.addAttribute(appName+"BaseResult",resultBaseIndex);
+			model.addAttribute(appName+"Result",resultIndex);
+			//计算各项指标差异值
+			TimeResultDiffBean diffBean=ResultDiffAnalysis.getInstance().getResultDiff(resultBaseList,resultList,resultBaseIndex,resultIndex);
 			model.addAttribute("diffBean",diffBean);
+			//封装appconfig配置信息
 			List<AppConfigBean> appConfiglist=aService.getAppConfig(testRecordId);
 			for(AppConfigBean bean:appConfiglist){ 
 				model.addAttribute(bean.getApplicationName(),bean); 
@@ -323,28 +388,43 @@ public class JobSchedulController {
 	public String getSiloResult(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="testRecordId",required=true) int testRecordId){
 		try{ 
-			if(Repository.siloBaseDataList.size()==0){
-				model.addAttribute("message","尚未进行silo基准测试");
-				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
-			}else if(Repository.siloDataList.size()==0){
-				model.addAttribute("message","尚未进行silo正式测试");
-				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
+			List<SiloDataBean> resultBaseList=null;
+			List<SiloDataBean> resultList=null;
+			if(testRecordId==Repository.curTestRecordId){
+				//如果要查看结果的测试记录id等于当前的测试记录,直接把静态仓库里的数据提出 
+				resultBaseList=Repository.siloBaseDataList;
+				resultList=Repository.siloDataList;
+			}else{
+				//否则,从数据库中读取历史记录 
+				resultBaseList=hService.searchSiloData(testRecordId,1);//读取基准数据
+				resultList=hService.searchSiloData(testRecordId,0);//读取测试数据
 			}
-			TimeResultBean siloBaseResult= AdapterForResult.adapter("silo",Repository.siloBaseDataList);//new TimeResultBean();
-	    	TimeResultBean siloResult= AdapterForResult.adapter("silo",Repository.siloDataList);//new TimeResultBean();
- 	
-			model.addAttribute("siloResult",siloResult);
-			model.addAttribute("siloBaseResult",siloBaseResult);
- 	
-			TimeResultDiffBean diffBean=ResultDiffAnalysis.getInstance().getsiloResultDiff(Repository.siloBaseDataList,Repository.siloDataList,siloBaseResult,siloResult);
+			/*
+			 * 判断是否缺少数据 (基准和正式都要有才可以进行差异值计算)
+			 */
+			String appName="silo";
+			if(resultBaseList.size()==0){
+				model.addAttribute("message","尚未进行"+appName+"基准测试");
+				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
+			}else if(resultList.size()==0){
+				model.addAttribute("message","尚未进行"+appName+"正式测试");
+				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
+			} 
+			//计算基准数据和正式数据的各项指标
+			TimeResultBean resultBaseIndex= AdapterForResult.adapter(appName,resultBaseList); 
+			TimeResultBean resultIndex=AdapterForResult.adapter(appName,resultList);
+			model.addAttribute(appName+"BaseResult",resultBaseIndex);
+			model.addAttribute(appName+"Result",resultIndex);
+			//计算各项指标差异值
+			TimeResultDiffBean diffBean=ResultDiffAnalysis.getInstance().getsiloResultDiff(resultBaseList,resultList,resultBaseIndex,resultIndex);
 			model.addAttribute("diffBean",diffBean);
+			//封装appconfig配置信息
 			List<AppConfigBean> appConfiglist=aService.getAppConfig(testRecordId);
 			for(AppConfigBean bean:appConfiglist){ 
 				model.addAttribute(bean.getApplicationName(),bean); 
 			}
 			model.addAttribute("testRecordId",testRecordId);
-		}catch(Exception e){
-			logger.error("add Operator error"+e);
+		}catch(Exception e){ 
 			e.printStackTrace();
 		}
 		return "siloResultAnalysis";
@@ -356,7 +436,7 @@ public class JobSchedulController {
 			int time=service.getWebSearchQueryTime();
 			response.getWriter().print(time);   
 		}catch(Exception e){
-			logger.error("add Operator error"+e);
+			
 			e.printStackTrace();
 		}
 	}
@@ -366,7 +446,7 @@ public class JobSchedulController {
 			int time=service.getWebServerQueryTime();
 			response.getWriter().print(time);   
 		}catch(Exception e){
-			logger.error("add Operator error"+e);
+			
 			e.printStackTrace();
 		}
 	}

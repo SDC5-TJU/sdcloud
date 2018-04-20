@@ -1,5 +1,5 @@
 package scs.dao.historyData;
-  
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -12,7 +12,10 @@ import scs.dao.MySQLBaseDao;
 import scs.pojo.AppConfigBean;
 import scs.pojo.AppResouceUsageBean;
 import scs.pojo.ContainerResourceUsageBean;
+import scs.pojo.MemcachedDataBean;
+import scs.pojo.SiloDataBean;
 import scs.pojo.SystemResourceUsageBean;
+import scs.pojo.TwoTuple;
 import scs.util.format.DateFormats;
 
 @Repository
@@ -86,7 +89,116 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 		return list;
 	}
 
-	 
+	@Override
+	public List<MemcachedDataBean> searchMemcachedData(int testRecordId, int isBase) {
+		String sql="select rps,requests,gets,sets,hits,misses,avg_lat,nintyTh,nintyFiveTh,nintyNineTh,min,max,std from data_memcached_base where testRecordId=?";
+		if(isBase==0){
+			sql="select rps,requests,gets,sets,hits,misses,avg_lat,nintyTh,nintyFiveTh,nintyNineTh,min,max,std from data_memcached where testRecordId=?";
+		}
+		List<MemcachedDataBean> list=jt.query(sql,new Object[]{testRecordId},new ResultSetExtractor<List<MemcachedDataBean>>() {
+			public List<MemcachedDataBean> extractData(ResultSet rs) throws SQLException, DataAccessException {
+				List<MemcachedDataBean> list = new ArrayList<MemcachedDataBean>();
+				while (rs.next()) {
+					MemcachedDataBean bean=new MemcachedDataBean();
+					bean.setRps(rs.getInt(1));
+					bean.setRequests(rs.getInt(2));
+					bean.setGets(rs.getInt(3));
+					bean.setSets(rs.getInt(4));
+					bean.setHits(rs.getInt(5));
+					bean.setMisses(rs.getInt(6));
+					bean.setAvg_lat(rs.getFloat(7));
+					bean.setNintyTh(rs.getFloat(8));
+					bean.setNintyFiveTh(rs.getFloat(9));
+					bean.setNintyNineTh(rs.getFloat(10));
+					bean.setMin(rs.getFloat(11));
+					bean.setMax(rs.getFloat(12));
+					bean.setStd(rs.getFloat(13));
+					list.add(bean);
+				}
+				return list;
+			}
+		});
+		return list;
+	}
+
+	@Override
+	public List<SiloDataBean> searchSiloData(int testRecordId, int isBase) {
+		String sql="select queryTime from data_silo_base where testRecordId=?";
+		if(isBase==0){
+			sql="select queryTime from data_silo where testRecordId=?";
+		}
+		List<SiloDataBean> list=jt.query(sql,new Object[]{testRecordId},new ResultSetExtractor<List<SiloDataBean>>() {
+			public List<SiloDataBean> extractData(ResultSet rs) throws SQLException, DataAccessException {
+				List<SiloDataBean> list = new ArrayList<SiloDataBean>();
+				while (rs.next()) {
+					SiloDataBean bean=new SiloDataBean();
+					bean.setQueryTime(rs.getFloat(1));
+					list.add(bean);
+				}
+				return list;
+			}
+		});
+		return list;
+	}
+
+	@Override
+	public List<TwoTuple<Long, Integer>> searchWebServerData(int testRecordId, int isBase) {
+		String sql="select generateTime,queryTime from data_webserver_base where testRecordId=?";
+		if(isBase==0){
+			sql="select generateTime,queryTime from data_webserver where testRecordId=?";
+		}
+		List<TwoTuple<Long,Integer>> list=jt.query(sql,new Object[]{testRecordId},new ResultSetExtractor<List<TwoTuple<Long,Integer>>>() {
+			public List<TwoTuple<Long,Integer>> extractData(ResultSet rs) throws SQLException, DataAccessException {
+				List<TwoTuple<Long,Integer>> list = new ArrayList<TwoTuple<Long,Integer>>();
+				while (rs.next()) {
+					TwoTuple<Long,Integer> bean=new TwoTuple<Long,Integer>(rs.getLong(1),rs.getInt(2));
+					list.add(bean);
+				}
+				return list;
+			}
+		});
+		return list;
+	}
+
+	@Override
+	public List<TwoTuple<Long, Integer>> searchWebSearchData(int testRecordId, int isBase) {
+		String sql="select generateTime,queryTime from data_websearch_base where testRecordId=?";
+		if(isBase==0){
+			sql="select generateTime,queryTime from data_websearch where testRecordId=?";
+		}
+		List<TwoTuple<Long,Integer>> list=jt.query(sql,new Object[]{testRecordId},new ResultSetExtractor<List<TwoTuple<Long,Integer>>>() {
+			public List<TwoTuple<Long,Integer>> extractData(ResultSet rs) throws SQLException, DataAccessException {
+				List<TwoTuple<Long,Integer>> list = new ArrayList<TwoTuple<Long,Integer>>();
+				while (rs.next()) {
+					TwoTuple<Long,Integer> bean=new TwoTuple<Long,Integer>(rs.getLong(1),rs.getInt(2));
+					list.add(bean);
+				}
+				return list;
+			}
+		});
+		return list;
+	}
+
+	@Override
+	public List<TwoTuple<Long,Integer>> searchCassandraData(int testRecordId, int isBase) {
+		String sql="select generateTime,queryTime from data_cassandra_base where testRecordId=?";
+		if(isBase==0){
+			sql="select generateTime,queryTime from data_cassandra where testRecordId=?";
+		}
+		List<TwoTuple<Long,Integer>> list=jt.query(sql,new Object[]{testRecordId},new ResultSetExtractor<List<TwoTuple<Long,Integer>>>() {
+			public List<TwoTuple<Long,Integer>> extractData(ResultSet rs) throws SQLException, DataAccessException {
+				List<TwoTuple<Long,Integer>> list = new ArrayList<TwoTuple<Long,Integer>>();
+				while (rs.next()) {
+					TwoTuple<Long,Integer> bean=new TwoTuple<Long,Integer>(rs.getLong(1),rs.getInt(2));
+					list.add(bean);
+				}
+				return list;
+			}
+		});
+		return list;
+	}
+
+
 
 
 
