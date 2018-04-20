@@ -38,9 +38,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <li><a href="containerMonitor.do" target="right"><span class="icon-caret-right"></span>容器资源监控</a></li>
         <li><a href="appMoniter.do" target="right"><span class="icon-caret-right"></span>应用资源监控</a></li>
     </ul>
-    <h2><span class="icon-user"></span>历史数据</h2>
+    <h2><span class="icon-user"></span>历史查询</h2>
     <ul style="display:block">
-        <li><a href="resultAnalysis.do" target="right"><span class="icon-caret-right"></span>测评结果汇总</a></li>
+        <li><a href="searchSysHistoryDataBefore.do" target="right"><span class="icon-caret-right"></span>物理机测试记录查询</a></li>
+        <li><a href="searchAppHistoryDataBefore.do" target="right"><span class="icon-caret-right"></span>应用测试记录查询</a></li>
+<!--         <li><a href="searchContainerHistoryDataBefore.do" target="right"><span class="icon-caret-right"></span>容器测试记录查询</a></li>
+ -->        
 	</ul>
   
 </div>

@@ -19,17 +19,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="statics/js/pintuer.js"></script>
 </head>
 <body>
-<form method="post" action="" id="listform">
+<form method="post" action="searchSysHistoryData.do" id="listform">
     <div class="panel admin-panel">
         <div class="panel-head"><strong class="icon-reorder"> 物理机测试记录查询</strong> <a href="" style="float:right; display:none;">添加字段</a></div>
         <div class="padding border-bottom">
             <ul class="search" style="padding-left:10px;">
                 <li> <a class="button border-main icon-plus-square-o" href=""> 开始时间</a> </li>
-                <li><input type="text" placeholder="" name="keywords" id="startTime" class="input" style="width:180px; line-height:17px;display:inline-block" /></li>
+                <li><input type="text" placeholder="" name="startTime" id="startTime" class="input" style="width:180px; line-height:17px;
+                display:inline-block" value="${startTime}" /></li>
                 <li> <a class="button border-main icon-plus-square-o" href=""> 结束时间</a> </li>
-                <li><input type="text" placeholder="" name="keywords" id="endTime" class="input" style="width:180px; line-height:17px;
-                display:inline-block" /></li>
-                <li><a href="javascript:void(0)" class="button border-main icon-search" onclick="search();" > 搜索</a></li>
+                <li><input type="text" placeholder="" name="endTime" id="endTime" class="input" style="width:180px; line-height:17px;
+                display:inline-block" value="${endTime}"/></li>
+                <li><input type="submit" class="button border-main icon-search" onclick="search();" ></li>
             </ul>
         </div>
     </div>
@@ -61,26 +62,14 @@ laydate.render({
 
 </script>
 <script type="text/javascript">
+function search(){
+	$("#listform").submit;
+}
+Highcharts.setOptions({ global: { useUTC: false } });
  	var strs= new Array();//定义数组存储绘图数据
  	
     $(document).ready(function() {
-        function search(){
-        	$.ajax({
-    			async:true,
-    			type:"post",
-    			url:"searchSysHistoryData.do",
-				data:{startTime:startTime,endTime:endTime},
-    			dataType:"text",
-    			success:function(returned){
-    				console.log(returned);
-    				strs=returned.split("#");
-    			}	
-    		});
-           
-        }
-    	
         
-
     	 Highcharts.chart('websearch1', {
              chart: {
                  zoomType: 'x'
