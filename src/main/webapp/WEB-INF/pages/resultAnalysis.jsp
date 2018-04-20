@@ -122,6 +122,9 @@ $(document).ready(function() {
         title: {
             text: '物理机CPU使用率'
         },
+        xAxis:{
+        	 plotLines:[${appRecordLineStr}]
+        },
         yAxis: {
             title: {
                 text: 'Exchange rate'
@@ -129,24 +132,7 @@ $(document).ready(function() {
        	    min:0,
        	    max:100
         },
-        series: [${sysUsageStr0},
-              {
-            type: 'flags',
-            data: [{
-                x: 1524140667000,
-                title: 'B',
-                text: 'Shape: "circlepin"'
-            }, {
-                x: 1524141500000,
-                title: 'B',
-                text: 'Shape: "circlepin"'
-            }],
-            onSeries: 'dataseries',
-            shape: 'circlepin',
-            width: 16 ,
-            color: Highcharts.getOptions().colors[0],
-            fillColor: Highcharts.getOptions().colors[0]
-        }]
+        series: [${sysUsageStr0},${appRecordStr}]
      });
 
     Highstock.stockChart('websearch2', {
