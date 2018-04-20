@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import scs.dao.historyData.HistoryDataDao;
 import scs.pojo.AppResouceUsageBean;
 import scs.pojo.ContainerResourceUsageBean;
+import scs.pojo.ExecuteRecordBean;
 import scs.pojo.MemcachedDataBean;
 import scs.pojo.SiloDataBean;
 import scs.pojo.SystemResourceUsageBean;
@@ -42,7 +43,7 @@ public class HistoryDataImpl implements HistoryDataService {
 		StringBuffer strName=new StringBuffer();
 		StringBuffer strData=new StringBuffer();
 		StringBuffer HSeries=new StringBuffer();
-		strName.append("{name:'").append(hostName).append("',");
+		strName.append("{name:'").append(hostName).append("',lineWidth:1,");
 		strData.append("data:["); 
 
 		int size=list.size()-1;
@@ -58,7 +59,7 @@ public class HistoryDataImpl implements HistoryDataService {
 		strName.setLength(0);
 		strData.setLength(0);
 		HSeries.setLength(0);
-		strName.append("{name:'").append(hostName).append("',");
+		strName.append("{name:'").append(hostName).append("',lineWidth:1,");
 		strData.append("data:["); 
 		for(int i=0;i<size;i++){
 			strData.append("[").append(list.get(i).getCollectTime()).append(",").append(list.get(i).getMemUsageRate()).append("],");
@@ -72,7 +73,7 @@ public class HistoryDataImpl implements HistoryDataService {
 		strName.setLength(0);
 		strData.setLength(0);
 		HSeries.setLength(0);
-		strName.append("{name:'").append(hostName).append("',");
+		strName.append("{name:'").append(hostName).append("',lineWidth:1,");
 		strData.append("data:["); 
 		for(int i=0;i<size;i++){
 			strData.append("[").append(list.get(i).getCollectTime()).append(",").append(list.get(i).getIoUsageRate()).append("],");
@@ -86,7 +87,7 @@ public class HistoryDataImpl implements HistoryDataService {
 		strName.setLength(0);
 		strData.setLength(0);
 		HSeries.setLength(0);
-		strName.append("{name:'").append(hostName).append("',");
+		strName.append("{name:'").append(hostName).append("',lineWidth:1,");
 		strData.append("data:["); 
 		for(int i=0;i<size;i++){
 			strData.append("[").append(list.get(i).getCollectTime()).append(",").append(list.get(i).getNetUsageRate()).append("],");
@@ -205,7 +206,7 @@ public class HistoryDataImpl implements HistoryDataService {
 		strData.append("[").append(list.get(size).getCollectTime()).append(",").append(list.get(size).getNetOutput()).append("]]");
 		HSeries.append(strName).append(strData).append(",marker:{enabled:false}}");
 		chartStrList.add(HSeries.toString());
-		
+
 		strName.setLength(0);
 		strData.setLength(0);
 		HSeries.setLength(0);
@@ -370,6 +371,64 @@ public class HistoryDataImpl implements HistoryDataService {
 	public List<TwoTuple<Long, Integer>> searchCassandraData(int testRecordId, int isBase) {
 		// TODO Auto-generated method stub
 		return dao.searchCassandraData(testRecordId, isBase);
+	}
+
+	@Override
+	public List<List<ExecuteRecordBean>> searchExecuteRecord(String startTime, String endTime) {
+		if(startTime==null||startTime.equals("")){
+			startTime="1970-01-01 00:00:00";
+		}
+		if(endTime==null||endTime.equals("")){
+			endTime=DateFormats.getInstance().getNowDate();
+		} 
+		// TODO Auto-generated method stub
+		List<List<ExecuteRecordBean>> pairList=new ArrayList<List<ExecuteRecordBean>>();
+		List<ExecuteRecordBean> list=dao.searchExecuteRecord(startTime, endTime);
+		for(int i=0;i<list.size();i++){
+			boolean findPair=false;
+			if(list.size()==1||list.get(i).getAction().equals("结束")){
+				//如果不巧是一个结束节点，或者队列长度为1，则直接添加
+				List<ExecuteRecordBean> itemList=new ArrayList<ExecuteRecordBean>();
+				itemList.add(list.get(i)); 
+				pairList.add(itemList);
+				list.remove(i);
+				i--;
+				continue;
+			}
+			for(int j=i+1;j<list.size();j++){
+				//pand
+				if(checkIsPair(list.get(i),list.get(j))==true){
+					List<ExecuteRecordBean> itemList=new ArrayList<ExecuteRecordBean>();
+					itemList.add(list.get(i));itemList.add(list.get(j)); 
+					pairList.add(itemList);
+					list.remove(j);
+					list.remove(i);
+					i--;
+					findPair=true;
+					break;
+				}
+			}
+			if(findPair==false){
+				//如果没有找到pair，直接把自己单独添加进去
+				List<ExecuteRecordBean> itemList=new ArrayList<ExecuteRecordBean>();
+				itemList.add(list.get(i)); 
+				pairList.add(itemList);
+				list.remove(i);
+				i--;
+			}
+		} 
+		return pairList;
+	}
+	private boolean checkIsPair(ExecuteRecordBean a,ExecuteRecordBean b){
+		if(a.getApplicationName().equals(b.getApplicationName())){//应用名字相同
+			if(a.getIsBase()==b.getIsBase()){//同种类型
+				if(b.getAction().equals("结束")){//而且还是结束
+					//那么就是一对
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 

@@ -2,6 +2,7 @@ package scs.service.historyData;
 
 import java.util.List;
 
+import scs.pojo.ExecuteRecordBean;
 import scs.pojo.MemcachedDataBean;
 import scs.pojo.SiloDataBean;
 import scs.pojo.TwoTuple;
@@ -21,4 +22,5 @@ public interface HistoryDataService {
 	public List<TwoTuple<Long, Integer>> searchWebServerData(int testRecordId,int isBase);
 	public List<TwoTuple<Long, Integer>> searchWebSearchData(int testRecordId,int isBase);
 	public List<TwoTuple<Long, Integer>> searchCassandraData(int testRecordId,int isBase);
+	public List<List<ExecuteRecordBean>> searchExecuteRecord(String startTime,String endTime);
 }

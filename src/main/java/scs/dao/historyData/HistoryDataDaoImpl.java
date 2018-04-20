@@ -12,6 +12,7 @@ import scs.dao.MySQLBaseDao;
 import scs.pojo.AppConfigBean;
 import scs.pojo.AppResouceUsageBean;
 import scs.pojo.ContainerResourceUsageBean;
+import scs.pojo.ExecuteRecordBean;
 import scs.pojo.MemcachedDataBean;
 import scs.pojo.SiloDataBean;
 import scs.pojo.SystemResourceUsageBean;
@@ -190,6 +191,26 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 				List<TwoTuple<Long,Integer>> list = new ArrayList<TwoTuple<Long,Integer>>();
 				while (rs.next()) {
 					TwoTuple<Long,Integer> bean=new TwoTuple<Long,Integer>(rs.getLong(1),rs.getInt(2));
+					list.add(bean);
+				}
+				return list;
+			}
+		});
+		return list;
+	}
+
+	@Override
+	public List<ExecuteRecordBean> searchExecuteRecord(String startTime, String endTime) {
+		String sql="select applicationName,eventTime,action,isBase from table_executeRecord where eventTime>? and eventTime<?";
+		List<ExecuteRecordBean> list=jt.query(sql,new Object[]{startTime,endTime},new ResultSetExtractor<List<ExecuteRecordBean>>() {
+			public List<ExecuteRecordBean> extractData(ResultSet rs) throws SQLException, DataAccessException {
+				List<ExecuteRecordBean> list = new ArrayList<ExecuteRecordBean>();
+				while (rs.next()) {
+					ExecuteRecordBean bean=new ExecuteRecordBean();
+					bean.setApplicationName(rs.getString(1));
+					bean.setEventTime(rs.getString(2));
+					bean.setAction(rs.getString(3));
+					bean.setIsBase(rs.getInt(4)); 
 					list.add(bean);
 				}
 				return list;

@@ -15,12 +15,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta name="renderer" content="webkit">
     <title></title>
     <link rel="stylesheet" href="statics/css/pintuer.css">
-    <link rel="stylesheet" href="statics/css/admin.css">
+    <link rel="stylesheet" href="statics/css/admin.css"> 
+    <link rel="stylesheet" href="statics/css/showBo.css"/>
     <script src="statics/js/jquery.js"></script>
     <script src="statics/js/pintuer.js"></script>
 </head>
 <body style="height:1400px;">
+
 <div >
+
 <ul class="nav nav-tabs" >
        <c:if test="${webSearch.enable==1}">
         <li class="" style="float: left;">
@@ -46,6 +49,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 </div>
 <div>
+
     <!--图-->
     <div style="width: 900px;" id="chart">
         <div id="websearch1" style="width: 550px;height: 300px; position: absolute;top: 150px;left:150px;"></div>
@@ -176,14 +180,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
 
 </div>
-</div>
-
+ 
 <script type="text/javascript" src="statics/js/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="statics/js/highcharts.js"></script>
-<script type="text/javascript" src="statics/js/highcharts-more.js"></script>
+<script type="text/javascript" src="statics/js/highcharts-more.js"></script> 
+<script type="text/javascript" src="statics/js/showBo.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-       
+       var message="${message}";
+       if(message!=null&&message!=""){
+    	   Showbo.Msg.alert(message)
+       }
 
         Highcharts.chart('websearch1', {
             chart: {

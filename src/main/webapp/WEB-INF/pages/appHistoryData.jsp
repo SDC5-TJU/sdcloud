@@ -65,8 +65,7 @@ laydate.render({
 </script>
 <script type="text/javascript">
 function search(){
-	$("#listform1").submit;
-	alert("已查询");
+	$("#listform1").submit; 
 }
 Highcharts.setOptions({ global: { useUTC: false } });
  	var strs= new Array();//定义数组存储绘图数据

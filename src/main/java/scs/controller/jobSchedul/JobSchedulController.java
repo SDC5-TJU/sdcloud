@@ -227,10 +227,10 @@ public class JobSchedulController {
 			 */
 			if(resultBaseList.size()==0){
 				model.addAttribute("message","尚未进行memcached基准测试");
-				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
+				return "memResultAnalysis";
 			}else if(resultList.size()==0){
 				model.addAttribute("message","尚未进行memcached正式测试");
-				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
+				return "memResultAnalysis";
 			}
 			//计算基准数据和正式数据的各项指标
 			TimeResultBean resultBaseIndex=AdapterForResult.adapter("memcached",resultBaseList);
@@ -270,10 +270,10 @@ public class JobSchedulController {
 			String appName="webServer";
 			if(resultBaseList.size()==0){
 				model.addAttribute("message","尚未进行"+appName+"基准测试");
-				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
+				return "webServerResultAnalysis";
 			}else if(resultList.size()==0){
 				model.addAttribute("message","尚未进行"+appName+"正式测试");
-				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
+				return "webServerResultAnalysis";
 			} 
 			//计算基准数据和正式数据的各项指标
 			TimeResultBean resultBaseIndex= AdapterForResult.adapter(appName,resultBaseList); 
@@ -315,10 +315,10 @@ public class JobSchedulController {
 			String appName="webSearch";
 			if(resultBaseList.size()==0){
 				model.addAttribute("message","尚未进行"+appName+"基准测试");
-				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
+				return "webSearchResultAnalysis"; 
 			}else if(resultList.size()==0){
 				model.addAttribute("message","尚未进行"+appName+"正式测试");
-				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
+				return "webSearchResultAnalysis"; 
 			} 
 			//计算基准数据和正式数据的各项指标
 			TimeResultBean resultBaseIndex= AdapterForResult.adapter(appName,resultBaseList); 
@@ -360,10 +360,10 @@ public class JobSchedulController {
 			String appName="cassandra";
 			if(resultBaseList.size()==0){
 				model.addAttribute("message","尚未进行"+appName+"基准测试");
-				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
+				return "cassandraResultAnalysis";
 			}else if(resultList.size()==0){
 				model.addAttribute("message","尚未进行"+appName+"正式测试");
-				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
+				return "cassandraResultAnalysis";
 			} 
 			//计算基准数据和正式数据的各项指标
 			TimeResultBean resultBaseIndex= AdapterForResult.adapter(appName,resultBaseList); 
@@ -405,10 +405,10 @@ public class JobSchedulController {
 			String appName="silo";
 			if(resultBaseList.size()==0){
 				model.addAttribute("message","尚未进行"+appName+"基准测试");
-				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
+				return "siloResultAnalysis";
 			}else if(resultList.size()==0){
 				model.addAttribute("message","尚未进行"+appName+"正式测试");
-				return "redirect:resultAnalysis.do?testRecordId="+testRecordId;
+				return "siloResultAnalysis";
 			} 
 			//计算基准数据和正式数据的各项指标
 			TimeResultBean resultBaseIndex= AdapterForResult.adapter(appName,resultBaseList); 

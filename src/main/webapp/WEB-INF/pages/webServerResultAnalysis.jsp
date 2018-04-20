@@ -16,6 +16,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <title></title>
     <link rel="stylesheet" href="statics/css/pintuer.css">
     <link rel="stylesheet" href="statics/css/admin.css">
+    <link rel="stylesheet" href="statics/css/showBo.css"/>
     <script src="statics/js/jquery.js"></script>
     <script src="statics/js/pintuer.js"></script>
 </head>
@@ -176,15 +177,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </form>
     </div>
 
-</div>
-</div>
+</div> 
 
 <script type="text/javascript" src="statics/js/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="statics/js/highcharts.js"></script>
 <script type="text/javascript" src="statics/js/highcharts-more.js"></script>
+<script type="text/javascript" src="statics/js/showBo.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-       
+    	  var message="${message}";
+          if(message!=null&&message!=""){
+       	   Showbo.Msg.alert(message)
+          }
 
         Highcharts.chart('websearch1', {
             chart: {

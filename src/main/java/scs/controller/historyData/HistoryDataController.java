@@ -27,11 +27,7 @@ public class HistoryDataController {
 	@Resource HistoryDataService service;
 	@Resource RecordManageService rService;
 
-	@RequestMapping("/test.do")
-	public String test(HttpServletRequest request){
-
-		return "test";
-	}
+ 
 	@RequestMapping("/searchSysHistoryDataBefore.do")
 	public String searchSysHistoryData(HttpServletRequest request){
 

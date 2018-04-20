@@ -19,4 +19,5 @@ public interface RecordManageService {
 	public int getRecordCount();
 	public TestRecordBean getRecordById(int testRecordId);
 	public List<TestRecordBean> searchRecord(int start,int pageSize); 
+	
 }
