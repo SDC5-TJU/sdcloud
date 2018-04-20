@@ -95,6 +95,7 @@ Highstock.setOptions({
     });
 $(document).ready(function() {
     Highstock.stockChart('websearch1', {
+    	
     	credits:{ 
     	      enabled:false 
     	},
@@ -132,6 +133,7 @@ $(document).ready(function() {
        	    min:0,
        	    max:100
         },
+        colors: ['#058DC7', '#ff3300'],
         series: [${sysUsageStr0},${appRecordStr}]
      });
 
@@ -163,6 +165,7 @@ $(document).ready(function() {
          title: {
              text: '物理机memory使用情况'
          },
+         colors: ['#058DC7', '#ff3300'],
          series: [${sysUsageStr1}]
      });
 
@@ -194,6 +197,7 @@ $(document).ready(function() {
          title: {
              text: '物理机I/O使用情况'
          },
+         colors: ['#058DC7', '#ff3300'],
          series: [${sysUsageStr2}]
      });
     Highstock.stockChart('websearch4', {
@@ -224,6 +228,7 @@ $(document).ready(function() {
          title: {
              text: '物理机网络使用情况'
          },
+         colors: ['#058DC7', '#ff3300'],
          series: [${sysUsageStr3}]
      });
      Highcharts.chart('websearch5', {
