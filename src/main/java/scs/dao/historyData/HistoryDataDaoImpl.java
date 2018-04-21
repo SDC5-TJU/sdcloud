@@ -45,13 +45,13 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 
 	@Override
 	public List<ContainerResourceUsageBean> searchContainerResourceUsage(String hostName, String startTime,String endTime) {
-		String sql="select cpuUsageRate,memUsageRate,netInput,netOutput,ioInput,ioOutput,collectTime from table_containerresourceusage where hostName=? and collectTime>=? and collectTime<=?";
+		String sql="select cpuUsageRate,memUsageRate,netInput,netOutput,ioInput,ioOutput,collectTime from table_containerresourceusage where containerName=? and collectTime>=? and collectTime<=?";
 		List<ContainerResourceUsageBean> list=jt.query(sql,new Object[]{hostName,startTime,endTime},new ResultSetExtractor<List<ContainerResourceUsageBean>>() {
 			public List<ContainerResourceUsageBean> extractData(ResultSet rs) throws SQLException, DataAccessException {
 				List<ContainerResourceUsageBean> list = new ArrayList<ContainerResourceUsageBean>();
 				while (rs.next()) {
 					ContainerResourceUsageBean bean=new ContainerResourceUsageBean();
-					bean.setCpuUsageRate(rs.getFloat(1)*1.25f);
+					bean.setCpuUsageRate(rs.getFloat(1));
 					bean.setMemUsageRate(rs.getFloat(2)*100);
 					bean.setNetInput(rs.getFloat(3));
 					bean.setNetOutput(rs.getFloat(4));

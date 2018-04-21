@@ -38,7 +38,7 @@ public class CronTasks {
 			System.out.println("停止");
 			return;
 		}
-//		Repository.cronFlag = 0;
+		// Repository.cronFlag = 0;
 		String[] hosts = { "192.168.1.128", "192.168.1.147" };
 		String hostname = "192.168.1.128";
 		String username = "tank";
@@ -48,8 +48,8 @@ public class CronTasks {
 		for (int i = 0; i < len; i++) {
 			hostname = hosts[i];
 			InputStream containerInfoStream = containerMonitor.getContainerInfoStream(hostname, username, password);
-			ArrayList<TableContainerresourceusage> containersPOJO = containerMonitor
-					.getContainersPOJO(containerInfoStream);
+			ArrayList<TableContainerresourceusage> containersPOJO = containerMonitor.getContainersPOJO(hostname,
+					username, password, containerInfoStream);
 			combineList.addAll(containersPOJO);
 			containerMonitor.testInsert(containersPOJO);
 			Iterator<TableContainerresourceusage> iterator = containersPOJO.iterator();
