@@ -49,9 +49,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<option value="${list}">${list}</option>
 							</c:forEach>
 					</select></li>
-					<input type="hidden" name="applicationName" value="webServer" id="appName" />
-					<li><input type="submit"
-						class="button border-main icon-search" onclick="search();"></li>
+					<input type="hidden" name="applicationName" value="hadoop" id="appName" />
+					<li><input type="button" class="button border-main icon-search"></li>
 				</ul>
 			</div>
 		</div>
@@ -93,11 +92,12 @@ laydate.render({
 </script>
 	<script type="text/javascript">
 function search(){
-	alert($("#appName").val())
+	
 	if($("#appName").val()==""){
 		Showbo.Msg.alert("请选择容器");
 	}else{
-		$("#listform1").submit; 
+		//$("#listform1").submit; 
+		alert($("#appName").val)
 	}
 }
 

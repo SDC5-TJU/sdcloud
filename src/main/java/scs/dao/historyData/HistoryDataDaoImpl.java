@@ -51,7 +51,7 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 				List<ContainerResourceUsageBean> list = new ArrayList<ContainerResourceUsageBean>();
 				while (rs.next()) {
 					ContainerResourceUsageBean bean=new ContainerResourceUsageBean();
-					bean.setCpuUsageRate(rs.getFloat(1)*1.25f);
+					bean.setCpuUsageRate(rs.getFloat(1));
 					bean.setMemUsageRate(rs.getFloat(2)*100);
 					bean.setNetInput(rs.getFloat(3));
 					bean.setNetOutput(rs.getFloat(4));
