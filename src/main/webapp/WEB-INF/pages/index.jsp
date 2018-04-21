@@ -42,8 +42,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <ul style="display:block">
         <li><a href="searchSysHistoryDataBefore.do" target="right"><span class="icon-caret-right"></span>物理机测试记录查询</a></li>
         <li><a href="searchAppHistoryDataBefore.do" target="right"><span class="icon-caret-right"></span>应用测试记录查询</a></li>
-<!--         <li><a href="searchContainerHistoryDataBefore.do" target="right"><span class="icon-caret-right"></span>容器测试记录查询</a></li>
- -->        
+        <li><a href="searchContainerHistoryDataBefore.do" target="right"><span class="icon-caret-right"></span>容器测试记录查询</a></li>
+        
 	</ul>
   
 </div>

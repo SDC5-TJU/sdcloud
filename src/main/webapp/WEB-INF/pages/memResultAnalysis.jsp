@@ -39,10 +39,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </li>
        </c:if>
        <c:if test="${memcached.enable==1}">  
-        <li class="" style="float: left;">
+        <li class="active1" style="float: left;">
             <a  href="getMemcachedResult.do?testRecordId=${testRecordId}" target="_blank" id="memcached">memcached</a>
         </li>
-       </c:if> 
+       </c:if>
+       <c:if test="${cassandra.enable==1}">
+		<li class="" style="float: left;">
+		    <a href="getCassandraResult.do?testRecordId=${testRecordId}"target="_blank" id="memcached">cassandra</a></li>
+	   </c:if> 
     </ul>
 
 </div>
@@ -73,8 +77,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 <c:when test="${diffBean.nintyThDiff>0}">
                                     <td style="background:#f9f9f9"><img src="statics/images/up.png"/>${diffBean.nintyThDiff}%</td>
                                 </c:when>
-                                <c:otherwise>
+                                <c:when test="${diffBean.nintyThDiff<0}">
                                     <td style="background:#f9f9f9"><img src="statics/images/down.png"/>${diffBean.nintyThDiff}%</td>
+                                </c:when>
+                                <c:otherwise>
+                                    <td style="background:#f9f9f9">${diffBean.nintyThDiff}%</td>
                                 </c:otherwise>
                             </c:choose>
                     </tr>
@@ -86,8 +93,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 <c:when test="${diffBean.nintyFiveThDiff>0}">
                                     <td style="background:#f9f9f9"><img src="statics/images/up.png"/>${diffBean.nintyFiveThDiff}%</td>
                                 </c:when>
-                                <c:otherwise>
+                                <c:when test="${diffBean.nintyFiveThDiff<0}">
                                     <td style="background:#f9f9f9"><img src="statics/images/down.png"/>${diffBean.nintyFiveThDiff}%</td>
+                                </c:when>
+                                <c:otherwise>
+                                    <td style="background:#f9f9f9">${diffBean.nintyFiveThDiff}%</td>
                                 </c:otherwise>
                             </c:choose>
                     </tr>
@@ -99,8 +109,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <c:when test="${diffBean.nintyNineThDiff>0}">
                                 <td style="background:#f9f9f9"><img src="statics/images/up.png"/>${diffBean.nintyNineThDiff}%</td>
                             </c:when>
-                            <c:otherwise>
+                            <c:when test="${diffBean.nintyNineThDiff<0}">
                                 <td style="background:#f9f9f9"><img src="statics/images/down.png"/>${diffBean.nintyNineThDiff}%</td>
+                            </c:when>
+                            <c:otherwise>
+                                <td style="background:#f9f9f9">${diffBean.nintyNineThDiff}%</td>
                             </c:otherwise>
                         </c:choose>
                     </tr>
@@ -112,8 +125,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <c:when test="${diffBean.varDiff>0}">
                                 <td style="background:#f9f9f9"><img src="statics/images/up.png"/>${diffBean.varDiff}%</td>
                             </c:when>
-                            <c:otherwise>
+                            <c:when test="${diffBean.varDiff<0}">
                                 <td style="background:#f9f9f9"><img src="statics/images/down.png"/>${diffBean.varDiff}%</td>
+                            </c:when>
+                            <c:otherwise>
+                                <td style="background:#f9f9f9">${diffBean.varDiff}%</td>
                             </c:otherwise>
                         </c:choose>
                     </tr>
@@ -125,8 +141,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <c:when test="${diffBean.meanDiff>0}">
                                 <td style="background:#f9f9f9"><img src="statics/images/up.png"/>${diffBean.meanDiff}%</td>
                             </c:when>
-                            <c:otherwise>
+                            <c:when test="${diffBean.meanDiff<0}">
                                 <td style="background:#f9f9f9"><img src="statics/images/down.png"/>${diffBean.meanDiff}%</td>
+                            </c:when>
+                            <c:otherwise>
+                                <td style="background:#f9f9f9">${diffBean.meanDiff}%</td>
                             </c:otherwise>
                         </c:choose>
                     </tr>
@@ -138,8 +157,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <c:when test="${diffBean.minDiff>0}">
                                 <td style="background:#f9f9f9"><img src="statics/images/up.png"/>${diffBean.minDiff}%</td>
                             </c:when>
-                            <c:otherwise>
+                            <c:when test="${diffBean.minDiff<0}">
                                 <td style="background:#f9f9f9"><img src="statics/images/down.png"/>${diffBean.minDiff}%</td>
+                            </c:when>
+                            <c:otherwise>
+                                <td style="background:#f9f9f9">${diffBean.minDiff}%</td>
                             </c:otherwise>
                         </c:choose>
                     </tr>
@@ -151,8 +173,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <c:when test="${diffBean.maxDiff>0}">
                                 <td style="background:#f9f9f9"><img src="statics/images/up.png"/>${diffBean.maxDiff}%</td>
                             </c:when>
-                            <c:otherwise>
+                            <c:when test="${diffBean.maxDiff<0}">
                                 <td style="background:#f9f9f9"><img src="statics/images/down.png"/>${diffBean.maxDiff}%</td>
+                            </c:when>
+                            <c:otherwise>
+                                <td style="background:#f9f9f9">${diffBean.maxDiff}%</td>
                             </c:otherwise>
                         </c:choose>
                     </tr>
@@ -164,8 +189,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <c:when test="${diffBean.missRateDiff>0}">
                                 <td style="background:#f9f9f9"><img src="statics/images/up.png"/>${diffBean.missRateDiff}%</td>
                             </c:when>
-                            <c:otherwise>
+                            <c:when test="${diffBean.missRateDiff<0}">
                                 <td style="background:#f9f9f9"><img src="statics/images/down.png"/>${diffBean.missRateDiff}%</td>
+                            </c:when>
+                            <c:otherwise>
+                                <td style="background:#f9f9f9">${diffBean.missRateDiff}%</td>
                             </c:otherwise>
                         </c:choose>  						
                     </tr>

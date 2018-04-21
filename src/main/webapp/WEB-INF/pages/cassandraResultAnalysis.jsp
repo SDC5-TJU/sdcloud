@@ -15,21 +15,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta name="renderer" content="webkit">
     <title></title>
     <link rel="stylesheet" href="statics/css/pintuer.css">
-    <link rel="stylesheet" href="statics/css/admin.css">
+    <link rel="stylesheet" href="statics/css/admin.css"> 
     <link rel="stylesheet" href="statics/css/showBo.css"/>
     <script src="statics/js/jquery.js"></script>
     <script src="statics/js/pintuer.js"></script>
 </head>
 <body style="height:1400px;">
+
 <div >
+
 <ul class="nav nav-tabs" >
        <c:if test="${webSearch.enable==1}">
         <li class="" style="float: left;">
-            <a  href="getWebSearchResult.do?testRecordId=${testRecordId}" target="_blank" id="websearch">web搜索</a>
+            <a  href="getWebSearchResult.do?testRecordId=${testRecordId}" target="_blank" id="webSearch">web搜索</a>
         </li>
        </c:if>
        <c:if test="${webServer.enable==1}">
-        <li class="active1" style="float: left;">
+        <li class="" style="float: left;">
             <a  href="getWebServerResult.do?testRecordId=${testRecordId}" target="_blank" id="webserver">电商服务</a>
         </li>
        </c:if>
@@ -44,13 +46,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </li>
        </c:if>
        <c:if test="${cassandra.enable==1}">
-		<li class="" style="float: left;">
+		<li class="active1" style="float: left;">
 		    <a href="getCassandraResult.do?testRecordId=${testRecordId}"target="_blank" id="memcached">cassandra</a></li>
 	   </c:if> 
     </ul>
 
 </div>
 <div>
+
     <!--图-->
     <div style="width: 900px;" id="chart">
         <div id="websearch1" style="width: 550px;height: 300px; position: absolute;top: 150px;left:150px;"></div>
@@ -62,7 +65,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div style=" width: 1100px; position: absolute; top: 850px;left: 200px;" id="table">
         <form method="post" action="" id="">
             <div class="panel admin-panel">
-                <div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:电商服务</strong> <a href="" style="float:right; display:none;">添加字段</a></div>
+                <div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:cassandra</strong> <a href="" style="float:right; display:none;">添加字段</a></div>
 
                 <table class="table table-hover text-center">
                     <tr>
@@ -72,157 +75,157 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <th style="background:#f9f9f9" width="25%">变化率</th>
                     </tr>
                     <tr>
-                        <td style="background:#f1f5fa">响应时间90th /ms</td>
-                        <td style="background:#f9f9f9" >${webServerBaseResult.nintyTh}</td>
-                        <td style="background:#f1f5fa" >${webServerResult.nintyTh}</td>
-                        <c:choose>
-                            <c:when test="${diffBean.nintyThDiff>0}">
-                                <td style="background:#f9f9f9" ><img src="statics/images/up.png"/>${diffBean.nintyThDiff}%</td>
+                    	<td style="background:#f1f5fa">响应时间90th /ms</td>
+                        <td style="background:#f9f9f9">${cassandraBaseResult.nintyTh}</td>
+                        <td style="background:#f1f5fa">${cassandraResult.nintyTh}</td>
+                      <c:choose>
+							<c:when test="${diffBean.nintyThDiff>0}">
+                               <td style="background:#f9f9f9"><img src="statics/images/up.png"/>${diffBean.nintyThDiff}%</td>							
                             </c:when>
                             <c:when test="${diffBean.nintyThDiff<0}">
-                                <td style="background:#f9f9f9" ><img src="statics/images/down.png"/>${diffBean.nintyThDiff}%</td>
+                               <td style="background:#f9f9f9"><img src="statics/images/down.png"/>${diffBean.nintyThDiff}%</td>							
                             </c:when>
-                            <c:otherwise>
-                                <td style="background:#f9f9f9" >${diffBean.nintyThDiff}%</td>
-                            </c:otherwise>
-                        </c:choose>
+							<c:otherwise>
+							   <td style="background:#f9f9f9">${diffBean.nintyThDiff}%</td>														
+							</c:otherwise>
+						</c:choose>
                     </tr>
                     <tr>
-                    	<td style="background:#f1f5fa">响应时间95th /ms</td>
-                        <td style="background:#f9f9f9" >${webServerBaseResult.nintyFiveTh}</td>
-                        <td style="background:#f1f5fa" >${webServerResult.nintyFiveTh}</td>
+                    	<td style="background:#f1f5fa">响应时间95th /ms</td>						 
+                        <td style="background:#f9f9f9" >${cassandraBaseResult.nintyFiveTh}</td>
+                        <td style="background:#f1f5fa" >${cassandraResult.nintyFiveTh}</td>
                         <c:choose>
-                            <c:when test="${diffBean.nintyFiveThDiff>0}">
-                                <td style="background:#f9f9f9" ><img src="statics/images/up.png"/>${diffBean.nintyFiveThDiff}%</td>
+							<c:when test="${diffBean.nintyFiveThDiff>0}">
+                               <td style="background:#f9f9f9"><img src="statics/images/up.png"/>${diffBean.nintyFiveThDiff}%</td>							
                             </c:when>
                             <c:when test="${diffBean.nintyFiveThDiff<0}">
-                                <td style="background:#f9f9f9" ><img src="statics/images/down.png"/>${diffBean.nintyFiveThDiff}%</td>
+                               <td style="background:#f9f9f9"><img src="statics/images/down.png"/>${diffBean.nintyFiveThDiff}%</td>							
                             </c:when>
-                            <c:otherwise>
-                                <td style="background:#f9f9f9" >${diffBean.nintyFiveThDiff}%</td>
-                            </c:otherwise>
-                        </c:choose>
+							<c:otherwise>
+							   <td style="background:#f9f9f9">${diffBean.nintyFiveThDiff}%</td>														
+							</c:otherwise>
+						</c:choose>
                     </tr>
                     <tr>
-                   	 	<td style="background:#f1f5fa"> 响应时间99th /ms</td>
-                        <td style="background:#f9f9f9" >${webServerBaseResult.nintyNineTh}</td>
-                        <td style="background:#f1f5fa" >${webServerResult.nintyNineTh}</td>
-                        <c:choose>
-                            <c:when test="${diffBean.nintyNineThDiff>0}">
-                                <td style="background:#f9f9f9" ><img src="statics/images/up.png"/>${diffBean.nintyNineThDiff}%</td>
+                    	<td style="background:#f1f5fa"> 响应时间99th /ms</td>
+                        <td style="background:#f9f9f9" >${cassandraBaseResult.nintyNineTh}</td>
+                        <td style="background:#f1f5fa" >${cassandraResult.nintyNineTh}</td>
+                         <c:choose>
+							<c:when test="${diffBean.nintyNineThDiff>0}">
+                               <td style="background:#f9f9f9"><img src="statics/images/up.png"/>${diffBean.nintyNineThDiff}%</td>							
                             </c:when>
                             <c:when test="${diffBean.nintyNineThDiff<0}">
-                                <td style="background:#f9f9f9" ><img src="statics/images/down.png"/>${diffBean.nintyNineThDiff}%</td>
+                               <td style="background:#f9f9f9"><img src="statics/images/down.png"/>${diffBean.nintyNineThDiff}%</td>							
                             </c:when>
-                            <c:otherwise>
-                                <td style="background:#f9f9f9" >${diffBean.nintyFiveThDiff}%</td>
-                            </c:otherwise>
-                        </c:choose>
+							<c:otherwise>
+							   <td style="background:#f9f9f9">${diffBean.nintyFiveThDiff}%</td>							
+							</c:otherwise>
+						</c:choose>
                     </tr>
                     <tr>
-                   	 	<td style="background:#f1f5fa"> 响应时间方差</td>                                            
-                        <td style="background:#f9f9f9" >${webServerBaseResult.var}</td>
-                        <td style="background:#f1f5fa" >${webServerResult.var}</td>
-                        <c:choose>
-                            <c:when test="${diffBean.varDiff>0}">
-                                <td style="background:#f9f9f9" ><img src="statics/images/up.png"/>${diffBean.varDiff}%</td>
+                   	 	<td style="background:#f1f5fa"> 响应时间方差</td>    						
+                        <td style="background:#f9f9f9" >${cassandraBaseResult.var}</td>
+                        <td style="background:#f1f5fa" >${cassandraResult.var}</td>
+                         <c:choose>
+							<c:when test="${diffBean.varDiff>0}">
+                               <td style="background:#f9f9f9"><img src="statics/images/up.png"/>${diffBean.varDiff}%</td>							
                             </c:when>
                             <c:when test="${diffBean.varDiff<0}">
-                                <td style="background:#f9f9f9" ><img src="statics/images/down.png"/>${diffBean.varDiff}%</td>
+                               <td style="background:#f9f9f9"><img src="statics/images/down.png"/>${diffBean.varDiff}%</td>							
                             </c:when>
-                            <c:otherwise>
-                                <td style="background:#f9f9f9" >${diffBean.varDiff}%</td>
-                            </c:otherwise>
-                        </c:choose>
+							<c:otherwise>
+							   <td style="background:#f9f9f9">${diffBean.varDiff}%</td>							
+							</c:otherwise>
+						</c:choose> 
                     </tr>
                     <tr>
-                   	 	<td style="background:#f1f5fa"> 响应时间平均值 /ms</td>                    
-                        <td style="background:#f9f9f9" >${webServerBaseResult.mean}</td>
-                        <td style="background:#f1f5fa" >${webServerResult.mean}</td>
-                        <c:choose>
-                            <c:when test="${diffBean.varDiff>0}">
-                                <td style="background:#f9f9f9" ><img src="statics/images/up.png"/>${diffBean.meanDiff}%</td>
+                   	 	<td style="background:#f1f5fa"> 响应时间平均值 /ms</td>                                        
+                        <td style="background:#f9f9f9" >${cassandraBaseResult.mean}</td>
+                        <td style="background:#f1f5fa" >${cassandraResult.mean}</td>
+                         <c:choose>
+							<c:when test="${diffBean.varDiff>0}">
+                               <td style="background:#f9f9f9"><img src="statics/images/up.png"/>${diffBean.meanDiff}%</td>							
                             </c:when>
                             <c:when test="${diffBean.varDiff<0}">
-                                <td style="background:#f9f9f9" ><img src="statics/images/down.png"/>${diffBean.meanDiff}%</td>
+                               <td style="background:#f9f9f9"><img src="statics/images/down.png"/>${diffBean.meanDiff}%</td>							
                             </c:when>
-                            <c:otherwise>
-                                <td style="background:#f9f9f9" >${diffBean.meanDiff}%</td>
-                            </c:otherwise>
-                        </c:choose>
+							<c:otherwise>
+							   <td style="background:#f9f9f9">${diffBean.meanDiff}%</td>							
+							</c:otherwise>
+						</c:choose>
                     </tr>
                     <tr>
-                   	 	<td style="background:#f1f5fa"> 响应时间最小值 /ms</td>                                               
-                        <td style="background:#f9f9f9" >${webServerBaseResult.min}</td>
-                        <td style="background:#f1f5fa" >${webServerResult.min}</td>
-                        <c:choose>
-                            <c:when test="${diffBean.minDiff>0}">
-                                <td style="background:#f9f9f9" ><img src="statics/images/up.png"/>${diffBean.minDiff}%</td>
+                   	 	<td style="background:#f1f5fa"> 响应时间最小值 /ms</td>  						  
+                        <td style="background:#f9f9f9" >${cassandraBaseResult.min}</td>
+                        <td style="background:#f1f5fa" >${cassandraResult.min}</td>
+                         <c:choose>
+							<c:when test="${diffBean.minDiff>0}">
+                               <td style="background:#f9f9f9"><img src="statics/images/up.png"/>${diffBean.minDiff}%</td>							
                             </c:when>
-                            <c:when test="${diffBean.minDiff<0}">
-                                <td style="background:#f9f9f9" ><img src="statics/images/down.png"/>${diffBean.minDiff}%</td>
+                      		<c:when test="${diffBean.minDiff<0}">
+                               <td style="background:#f9f9f9"><img src="statics/images/down.png"/>${diffBean.minDiff}%</td>							
                             </c:when>
-                            <c:otherwise>
-                                <td style="background:#f9f9f9" >${diffBean.minDiff}%</td>
-                            </c:otherwise>
-                        </c:choose>
+							<c:otherwise>
+							   <td style="background:#f9f9f9">${diffBean.minDiff}%</td>							
+							</c:otherwise>
+						</c:choose> 
                     </tr>
                     <tr>
-                   	 	<td style="background:#f1f5fa"> 响应时间最大值 /ms</td>                    
-                        <td style="background:#f9f9f9" >${webServerBaseResult.max}</td>
-                        <td style="background:#f1f5fa" >${webServerResult.max}</td>
-                        <c:choose>
-                            <c:when test="${diffBean.maxDiff>0}">
-                                <td style="background:#f9f9f9" ><img src="statics/images/up.png"/>${diffBean.maxDiff}%</td>
+                    	<td style="background:#f1f5fa"> 响应时间最大值 /ms</td>  
+                        <td style="background:#f9f9f9" >${cassandraBaseResult.max}</td>
+                        <td style="background:#f1f5fa" >${cassandraResult.max}</td>
+                         <c:choose>
+							<c:when test="${diffBean.maxDiff>0}">
+                               <td style="background:#f9f9f9"><img src="statics/images/up.png"/>${diffBean.maxDiff}%</td>							
                             </c:when>
                             <c:when test="${diffBean.maxDiff<0}">
-                                <td style="background:#f9f9f9" ><img src="statics/images/down.png"/>${diffBean.maxDiff}%</td>
+                               <td style="background:#f9f9f9"><img src="statics/images/down.png"/>${diffBean.maxDiff}%</td>							
                             </c:when>
-                            <c:otherwise>
-                                <td style="background:#f9f9f9" >${diffBean.maxDiff}%</td>
-                            </c:otherwise>
-                        </c:choose>
+							<c:otherwise>
+							   <td style="background:#f9f9f9">${diffBean.maxDiff}%</td>							
+							</c:otherwise>
+						</c:choose>
                     </tr>
                     <tr>
-                    	<td style="background:#f1f5fa"> 缺失率</td>                           
-                        <td style="background:#f9f9f9" >${webServerBaseResult.missRate}%</td>
-                        <td style="background:#f1f5fa" >${webServerResult.missRate}%</td>
+                    	<td style="background:#f1f5fa"> 缺失率</td> 						
+                        <td style="background:#f9f9f9" >${cassandraBaseResult.missRate}</td>
+                        <td style="background:#f1f5fa" >${cassandraResult.missRate}</td>
                          <c:choose>
 							<c:when test="${diffBean.missRateDiff>0}">
                                <td style="background:#f9f9f9" ><img src="statics/images/up.png"/>${diffBean.missRateDiff}%</td>							
                             </c:when>
-                            <c:when test="${diffBean.missRateDiff<0}">
-                               <td style="background:#f9f9f9" ><img src="statics/images/down.png"/>${diffBean.missRateDiff}%</td>							
-                            </c:when>
+							<c:when test="${diffBean.missRateDiff>0}">
+							   <td style="background:#f9f9f9" ><img src="statics/images/down.png"/>${diffBean.missRateDiff}%</td>							
+							</c:when>
 							<c:otherwise>
 							   <td style="background:#f9f9f9" >${diffBean.missRateDiff}%</td>							
 							</c:otherwise>
-						</c:choose>
+						</c:choose>   						
                     </tr>
                 </table>
             </div>
         </form>
     </div>
 
-</div> 
-
+</div>
+ 
 <script type="text/javascript" src="statics/js/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="statics/js/highcharts.js"></script>
-<script type="text/javascript" src="statics/js/highcharts-more.js"></script>
+<script type="text/javascript" src="statics/js/highcharts-more.js"></script> 
 <script type="text/javascript" src="statics/js/showBo.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-    	  var message="${message}";
-          if(message!=null&&message!=""){
-       	   Showbo.Msg.alert(message)
-          }
+       var message="${message}";
+       if(message!=null&&message!=""){
+    	   Showbo.Msg.alert(message)
+       }
 
         Highcharts.chart('websearch1', {
             chart: {
                 zoomType: 'x'
             },
             title: {
-                text: 'webSever尾延迟累积分布'
+                text: 'Casssndra尾延迟累积分布'
             },
 
             xAxis: {
@@ -237,7 +240,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 },
                 min:0,
                 max:1,
-                tickPositions: [0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0],
+                tickPositions: [0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0]
             },
             legend: {
                 layout: 'vertical',
@@ -248,8 +251,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
             },
         colors: ['#058DC7', '#ff3300'],
-            // series: [${diffBean.baseCDFStr}]
             series:[${diffBean.baseCDFStr},${diffBean.CDFStr}]
+
+
 });
         Highcharts.chart('websearch2', {
 
@@ -258,10 +262,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 zoomType: 'x'
             },
             title: {
-                text: 'websever各项指标变化率'
+                text: 'Casssndra各项指标变化率'
             },
             xAxis: {
-                categories: ['90th', '95th', '99th', '方差', '平均值','最小值','最大值']
+                categories: ['90th', '95th', '99th', '方差', '平均值','最小值','最大值','缺失率']
             },
             yAxis: {
                 title: {
@@ -280,20 +284,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             credits: {
                 enabled: false
             },
-           
             series: [{
-            	name:'webSever',
+            	name:'cassandra',
                 data: [${diffBean.nintyThDiff}, ${diffBean.nintyFiveThDiff}, ${diffBean.nintyNineThDiff},
-                       ${diffBean.varDiff}, ${diffBean.meanDiff},${diffBean.minDiff},${diffBean.maxDiff}]
+                       ${diffBean.varDiff}, ${diffBean.meanDiff},${diffBean.minDiff},${diffBean.maxDiff},${diffBean.missRateDiff}]
             }]
 
 
         });
         
         Highcharts.chart('websearch3', {
-            title: {
-                text: '无干扰下访问延迟分布'
-            },
             chart: {
                 type: 'scatter',
                 zoomType: 'x'
@@ -308,13 +308,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             boost: {
                 useGPUTranslations: true
             },
-            legend: {                                                                    
-                enabled: false                                                           
-            } ,
             xAxis: {
                 type: 'datetime',
                 tickPixelInterval: 150
             },
+            title: {
+                text: '无干扰下访问延迟分布'
+            },
+            legend: {                                                                    
+                enabled: false                                                           
+            } ,
             yAxis: {
                 title: {
                     text: '响应时间/ms'
@@ -330,9 +333,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         });
         
         Highcharts.chart('websearch4', {
-            title: {
-                text: '干扰下访问延迟分布'
-            },
             chart: {
                 type: 'scatter',
                 zoomType: 'x'
@@ -351,16 +351,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 type: 'datetime',
                 tickPixelInterval: 150
             },
+            title: {
+                text: '干扰下访问延迟分布'
+            },
+            legend: {                                                                    
+                enabled: false                                                           
+            } ,
             colors: ['#ff3300'],
             yAxis: {
                 title: {
                     text: '响应时间/ms'
                 },
             },
-            legend: {                                                                    
-                enabled: false                                                           
-            } ,
-            tooltip: {                
+            tooltip: {
                 formatter:function(){
                     return'<strong>'+this.series.name+'</strong><br/>'+
                         Highcharts.dateFormat('%Y-%m-%d %H:%M:%S.%L',this.x)+'<br/>'+'响应时间：'+this.y+' ms';

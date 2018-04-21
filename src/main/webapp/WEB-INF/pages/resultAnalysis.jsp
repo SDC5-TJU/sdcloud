@@ -123,9 +123,6 @@ $(document).ready(function() {
         title: {
             text: '物理机CPU使用率'
         },
-        xAxis:{
-        	 plotLines:[${appRecordLineStr}]
-        },
         yAxis: {
             title: {
                 text: 'Exchange rate'
@@ -134,6 +131,9 @@ $(document).ready(function() {
        	    max:100
         },
         colors: ['#058DC7', '#ff3300'],
+        xAxis:{
+       	 plotLines:[${appRecordLineStr}]
+       },
         series: [${sysUsageStr0},${appRecordStr}]
      });
 
@@ -166,7 +166,12 @@ $(document).ready(function() {
              text: '物理机memory使用情况'
          },
          colors: ['#058DC7', '#ff3300'],
-         series: [${sysUsageStr1}]
+         xAxis:{
+           	 plotLines:[${appRecordLineStr}]
+           },
+            series: [${sysUsageStr1},${appRecordStr}]
+         });
+
      });
 
     Highstock.stockChart('websearch3', {
@@ -198,7 +203,12 @@ $(document).ready(function() {
              text: '物理机I/O使用情况'
          },
          colors: ['#058DC7', '#ff3300'],
-         series: [${sysUsageStr2}]
+         xAxis:{
+           	 plotLines:[${appRecordLineStr}]
+           },
+            series: [${sysUsageStr2},${appRecordStr}]
+         });
+
      });
     Highstock.stockChart('websearch4', {
     	credits:{ 
@@ -229,7 +239,12 @@ $(document).ready(function() {
              text: '物理机网络使用情况'
          },
          colors: ['#058DC7', '#ff3300'],
-         series: [${sysUsageStr3}]
+         xAxis:{
+           	 plotLines:[${appRecordLineStr}]
+           },
+            series: [${sysUsageStr3},${appRecordStr}]
+         });
+
      });
      Highcharts.chart('websearch5', {
          chart: {
