@@ -32,65 +32,34 @@ public class MyDevTest {
 	@Autowired
 	@Qualifier("containerMonitor")
 	private ContainerMonitorImpl containerMonitor;
-	
+
 	@Autowired
 	@Qualifier("appMonitor")
 	public AppMonitor appMonitor;
-	
+
 	@Autowired
 	@Qualifier("systemMonitor")
 	public SystemMonitor systemMonitor;
 
-//	 @Test
-//	 public void testBase(){
-//	 Map<String, Float> memStat = baseInfoService.getMemStat();
-//	 System.out.println(memStat.get("RAM"));
-//	 System.out.println(memStat.get("memUsed"));
-//	 }
+	// @Test
+	// public void testBase(){
+	// Map<String, Float> memStat = baseInfoService.getMemStat();
+	// System.out.println(memStat.get("RAM"));
+	// System.out.println(memStat.get("memUsed"));
+	// }
 
 	@Test
 	public void testDb() {
-//		String hostname = "192.168.1.128";
-//		String username = "tank";
-//		String password = "tanklab";
-//		InputStream containerInfoStream = containerMonitor.getContainerInfoStream(hostname, username, password);
-//		ArrayList<TableContainerresourceusage> containersPOJO = containerMonitor.getContainersPOJO(containerInfoStream);
-//		System.out.println(containerMonitor.testInsert(containersPOJO));
-		
-		String[] hosts = {"192.168.1.128","192.168.1.147"};
-		String hostname = "192.168.1.128";
-		String username = "tank";
-		String password = "tanklab";
-		int len = hosts.length;
-		ArrayList<TableContainerresourceusage> combineList = new ArrayList<>();
-		for (int i = 0; i < len; i++) {
-			hostname = hosts[i];
-			InputStream containerInfoStream = containerMonitor.getContainerInfoStream(hostname, username, password);
-			ArrayList<TableContainerresourceusage> containersPOJO = containerMonitor.getContainersPOJO(containerInfoStream);
-			combineList.addAll(containersPOJO);
-			containerMonitor.testInsert(containersPOJO);
-			Iterator<TableContainerresourceusage> iterator = containersPOJO.iterator();
-			// 添加进全局 containerRealUsageMap 变量
-			while (iterator.hasNext()) {
-				TableContainerresourceusage tableContainerresourceusage = (TableContainerresourceusage) iterator.next();
-				Repository.containerRealUsageMap.put(tableContainerresourceusage.getContainername(), tableContainerresourceusage);
-			}
-		}
-		System.out.println(new Date());
-		//统计
-		Map<String, List<String>> appNames = appMonitor.getAPPName(Repository.appInfoMap);
-		Map<String, TableAppresourceusage> aggregateAPPResourceUsage = appMonitor.aggregateAPP(combineList, appNames);
-		appMonitor.testInsert(aggregateAPPResourceUsage);
-		System.out.println(new Date());
-	}
-	
-	@Test
-	public void testCron(){
-		if (Repository.cronFlag != 1) {
-			System.out.println("停止");
-			return;
-		}
-		Repository.cronFlag = 0;
+		// String hostname = "192.168.1.128";
+		// String username = "tank";
+		// String password = "tanklab";
+		// InputStream containerInfoStream =
+		// containerMonitor.getContainerInfoStream(hostname, username,
+		// password);
+		// ArrayList<TableContainerresourceusage> containersPOJO =
+		// containerMonitor.getContainersPOJO(containerInfoStream);
+		// System.out.println(containerMonitor.testInsert(containersPOJO));
+
 		String[] hosts = { "192.168.1.128", "192.168.1.147" };
 		String hostname = "192.168.1.128";
 		String username = "tank";
@@ -100,8 +69,39 @@ public class MyDevTest {
 		for (int i = 0; i < len; i++) {
 			hostname = hosts[i];
 			InputStream containerInfoStream = containerMonitor.getContainerInfoStream(hostname, username, password);
-			ArrayList<TableContainerresourceusage> containersPOJO = containerMonitor
-					.getContainersPOJO(containerInfoStream);
+			ArrayList<TableContainerresourceusage> containersPOJO = containerMonitor.getContainersPOJO(hostname,
+					username, password, containerInfoStream);
+			combineList.addAll(containersPOJO);
+			containerMonitor.testInsert(containersPOJO);
+			Iterator<TableContainerresourceusage> iterator = containersPOJO.iterator();
+			// 添加进全局 containerRealUsageMap 变量
+			while (iterator.hasNext()) {
+				TableContainerresourceusage tableContainerresourceusage = (TableContainerresourceusage) iterator.next();
+				Repository.containerRealUsageMap.put(tableContainerresourceusage.getContainername(),
+						tableContainerresourceusage);
+			}
+		}
+		System.out.println(new Date());
+		// 统计
+		Map<String, List<String>> appNames = appMonitor.getAPPName(Repository.appInfoMap);
+		Map<String, TableAppresourceusage> aggregateAPPResourceUsage = appMonitor.aggregateAPP(combineList, appNames);
+		appMonitor.testInsert(aggregateAPPResourceUsage);
+		System.out.println(new Date());
+	}
+
+	@Test
+	public void testCron() {
+		String[] hosts = { "192.168.1.128", "192.168.1.147" };
+		String hostname = "192.168.1.128";
+		String username = "tank";
+		String password = "tanklab";
+		int len = hosts.length;
+		ArrayList<TableContainerresourceusage> combineList = new ArrayList<>();
+		for (int i = 0; i < len; i++) {
+			hostname = hosts[i];
+			InputStream containerInfoStream = containerMonitor.getContainerInfoStream(hostname, username, password);
+			ArrayList<TableContainerresourceusage> containersPOJO = containerMonitor.getContainersPOJO(hostname,
+					username, password, containerInfoStream);
 			combineList.addAll(containersPOJO);
 			containerMonitor.testInsert(containersPOJO);
 			Iterator<TableContainerresourceusage> iterator = containersPOJO.iterator();
@@ -119,21 +119,24 @@ public class MyDevTest {
 		appMonitor.testInsert(aggregateAPPResourceUsage);
 		// 添加进全局 appRealUsageMap 变量
 		Repository.appRealUsageMap = aggregateAPPResourceUsage;
-		
-//		//调用systemresourceusage
-//		ArrayList<TableSystemresourceusage> systemDataList = systemMonitor.getSystemDataList(Repository.systemInfoMap);
-//		systemMonitor.testInsert(systemDataList);
-//		
-//		for (TableSystemresourceusage tableSystemresourceusage : systemDataList) {
-//			Repository.systemRealUsageMap.put(tableSystemresourceusage.getHostname(), tableSystemresourceusage);
-//		}
+
+		// //调用systemresourceusage
+		// ArrayList<TableSystemresourceusage> systemDataList =
+		// systemMonitor.getSystemDataList(Repository.systemInfoMap);
+		// systemMonitor.testInsert(systemDataList);
+		//
+		// for (TableSystemresourceusage tableSystemresourceusage :
+		// systemDataList) {
+		// Repository.systemRealUsageMap.put(tableSystemresourceusage.getHostname(),
+		// tableSystemresourceusage);
+		// }
 	}
-	
+
 	@Test
-	public void testSelect60(){
-//		int testSelect = systemMonitor.testSelect2(1);
-//		System.out.println(testSelect);
-		
+	public void testSelect60() {
+		// int testSelect = systemMonitor.testSelect2(1);
+		// System.out.println(testSelect);
+
 	}
-	
+
 }

@@ -9,5 +9,5 @@ public interface ContainerMonitor {
 	
 	public int testInsert(ArrayList<TableContainerresourceusage> containersList);
 	public InputStream getContainerInfoStream(String hostname, String username, String password);
-	public ArrayList<TableContainerresourceusage> getContainersPOJO(InputStream in);
+	public ArrayList<TableContainerresourceusage> getContainersPOJO(String hostname,String username,String password, InputStream in);
 }
