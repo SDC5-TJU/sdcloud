@@ -244,14 +244,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 align: 'right',
                 verticalAlign: 'middle'
             },
-            plotOptions: {
-
-            },
-        colors: ['#058DC7', '#ff3300'],
+            credits: {
+                enabled: false
+            }, 
+        	colors: ['#058DC7', '#ff3300'],
             // series: [${diffBean.baseCDFStr}]
-            series:[${diffBean.baseCDFStr},${diffBean.CDFStr}]
-
-
+            series:[${diffBean.baseCDFStr},${diffBean.CDFStr}] 
 });
         Highcharts.chart('websearch2', {
 
@@ -286,8 +284,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 data: [${diffBean.nintyThDiff}, ${diffBean.nintyFiveThDiff}, ${diffBean.nintyNineThDiff},
                        ${diffBean.varDiff}, ${diffBean.meanDiff},${diffBean.minDiff},${diffBean.maxDiff},${diffBean.missRateDiff}]
             }]
-
-
         });
         
         Highcharts.chart('websearch3', {

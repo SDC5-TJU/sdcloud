@@ -2,6 +2,7 @@ package scs.controller.recordManage;
 
 import org.apache.log4j.Logger;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -39,13 +40,20 @@ public class RecordManageController {
 	@Resource HistoryDataService hService;
 
 	@RequestMapping("/index.do")
-	public String index(HttpServletRequest request,Model model){	 
-		hService.searchExecuteRecord("1970-01-01 00:00:00","3019-01-01 00:00:00");
+	public String index(HttpServletRequest request,Model model){	  
 		return "index";
+	}
+	@RequestMapping("/getCurRecordId.do")
+	public void getCurRecordId(HttpServletRequest request,HttpServletResponse response){	 
+		try {
+			response.getWriter().write(Repository.curTestRecordId);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	@RequestMapping("/addRecordBefore.do")
 	public String addRecordBefore(HttpServletRequest request,HttpServletResponse response){
-		return "deviceAdd";
+		return "addRecord";
 	}
 	@RequestMapping("/addRecord.do")
 	public void addRecord(HttpServletRequest request,HttpServletResponse response, 
