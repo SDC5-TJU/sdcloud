@@ -29,15 +29,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <li><input type="text" placeholder="" name="startTime" id="startTime" class="input" style="width:180px; line-height:17px;
                 display:inline-block" value="${startTime}" /></li>
                 <li> <a class="button border-main icon-plus-square-o" href=""> 结束时间</a> </li>
-                <li><select name="selectOperator" class="input w50" id="selectApp" >
+				<input type="hidden" name="applicationName" value="" id="appName"/>
+                <li><input type="text" placeholder="" name="endTime" id="endTime" class="input" style="width:180px; line-height:17px;
+                display:inline-block" value="${endTime}"/></li>
+                <li><select name="selectOperator" class="input w50" id="selectApp" onchange="selectOnchang(this)" style="width:180px; line-height:17px;
+                display:inline-block">
 					<option value="">请选择容器</option>
 					<c:forEach var="list" items="${appNameList}" varStatus="status">
 					<option value="${list}">${list}</option>
 					</c:forEach>
-				</select></li>
-				<input type="hidden" name="applicationName" value="" id="appName"/>
-                <li><input type="text" placeholder="" name="endTime" id="endTime" class="input" style="width:180px; line-height:17px;
-                display:inline-block" value="${endTime}"/></li>
+					</select>
+				</li>
                 <li><input type="submit" class="button border-main icon-search" onclick="search();" ></li>
             </ul>
         </div>
@@ -73,25 +75,18 @@ laydate.render({
 
 </script>
 <script type="text/javascript">
-function search(){
+/* function search(){
 	if($("#appName").val()==""){
 		Showbo.Msg.alert("请选择容器");
 	}
 	else{
-		$("#listform1").submit; 
+		alert()
+		//$("#listform1").submit; 
 	}
-}
+} */
+
 Highcharts.setOptions({ global: { useUTC: false } });
 
-$("#selectApp").click(function(){
-	var appNames=document.getElementById("selectApp");
-	for ( var i=0;i<appNames.length;i++){
-		if (appNames[i].selected == true){
-			document.getElementById("appName").value = appNames[i].value;
-			break;
-		}
-	}
-})
  	
     $(document).ready(function() {
 
