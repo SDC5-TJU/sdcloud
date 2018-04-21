@@ -34,7 +34,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <ul style="display:block">
         <li><a href="phyMoniter.do?no=1" target="right"><span class="icon-caret-right"></span>物理机1实时监控</a></li>
         <li><a href="phyMoniter.do?no=2" target="right"><span class="icon-caret-right"></span>物理机2实时监控</a></li>
-        <li><a href="phyMoniter.do" target="right"><span class="icon-caret-right"></span>总体实时监控</a></li>
         <li><a href="containerMonitor.do" target="right"><span class="icon-caret-right"></span>容器资源监控</a></li>
         <li><a href="appMoniter.do" target="right"><span class="icon-caret-right"></span>应用资源监控</a></li>
     </ul>

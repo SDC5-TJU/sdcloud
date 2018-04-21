@@ -172,7 +172,7 @@ $(document).ready(function() {
             series: [${sysUsageStr1},${appRecordStr}]
          });
 
-     });
+
 
     Highstock.stockChart('websearch3', {
     	credits:{ 
@@ -209,7 +209,6 @@ $(document).ready(function() {
             series: [${sysUsageStr2},${appRecordStr}]
          });
 
-     });
     Highstock.stockChart('websearch4', {
     	credits:{ 
     	      enabled:false 
@@ -245,7 +244,6 @@ $(document).ready(function() {
             series: [${sysUsageStr3},${appRecordStr}]
          });
 
-     });
      Highcharts.chart('websearch5', {
          chart: {
              type: 'area',
