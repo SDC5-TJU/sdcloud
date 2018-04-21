@@ -8,59 +8,78 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="renderer" content="webkit">
-    <title></title>
-    <link rel="stylesheet" href="statics/css/pintuer.css">
-    <link rel="stylesheet" href="statics/css/admin.css">
-    <link rel="stylesheet" href="statics/css/showBo.css"/>
-    <script src="statics/js/jquery.js"></script>
-    <script src="statics/js/pintuer.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="renderer" content="webkit">
+<title></title>
+<link rel="stylesheet" href="statics/css/pintuer.css">
+<link rel="stylesheet" href="statics/css/admin.css">
+<link rel="stylesheet" href="statics/css/showBo.css" />
+<script src="statics/js/jquery.js"></script>
+<script src="statics/js/pintuer.js"></script>
 </head>
 <body>
-<form method="post" action="searchAppHistoryData.do" id="listform1">
-    <div class="panel admin-panel">
-        <div class="panel-head"><strong class="icon-reorder"> 容器测试记录查询</strong> <a href="" style="float:right; display:none;">添加字段</a></div>
-        <div class="padding border-bottom">
-            <ul class="search" style="padding-left:10px;">
-                <li> <a class="button border-main icon-plus-square-o" href=""> 开始时间</a> </li>
-                <li><input type="text" placeholder="" name="startTime" id="startTime" class="input" style="width:180px; line-height:17px;
-                display:inline-block" value="${startTime}" /></li>
-                <li> <a class="button border-main icon-plus-square-o" href=""> 结束时间</a> </li>
-                <li><select name="selectOperator" class="input w50" id="selectApp" >
-					<option value="">请选择容器</option>
-					<c:forEach var="list" items="${appNameList}" varStatus="status">
-					<option value="${list}">${list}</option>
-					</c:forEach>
-				</select></li>
-				<input type="hidden" name="applicationName" value="" id="appName"/>
-                <li><input type="text" placeholder="" name="endTime" id="endTime" class="input" style="width:180px; line-height:17px;
-                display:inline-block" value="${endTime}"/></li>
-                <li><input type="submit" class="button border-main icon-search" onclick="search();" ></li>
-            </ul>
-        </div>
-    </div>
-</form>
-<div>
-    <!--图-->
-    <div id="chart">
-        <div id="websearch1" style="width: 1100px;height: 300px;position: absolute; left:150px;top: 150px;"></div>
-        <div id="websearch2" style="width: 1100px;height: 300px;position: absolute; left:150px;top: 500px;"></div>
-        <div id="websearch3" style="width: 1100px;height: 300px;position: absolute; left:150px;top: 850px;"></div>
-        <div id="websearch4" style="width: 1100px;height: 300px;position: absolute; left:150px;top: 1200px;"></div>
-        <div id="websearch5" style="width: 1100px;height: 300px;position: absolute; left:150px;top: 1550px;"></div>
-        <div id="websearch6" style="width: 1100px;height: 300px;position: absolute; left:150px;top: 1900px;"></div>
-    </div>
+	<form method="post" action="searchContainerHistoryData.do"
+		id="listform1">
+		<div class="panel admin-panel">
+			<div class="panel-head">
+				<strong class="icon-reorder"> 容器测试记录查询</strong> <a href=""
+					style="float: right; display: none;">添加字段</a>
+			</div>
+			<div class="padding border-bottom">
+				<ul class="search" style="padding-left: 10px;">
+					<li><a class="button border-main icon-plus-square-o" href="">
+							开始时间</a></li>
+					<li><input type="text" placeholder="" name="startTime"
+						id="startTime" class="input"
+						style="width: 180px; line-height: 17px; display: inline-block"
+						value="${startTime}" /></li>
+					<li><a class="button border-main icon-plus-square-o" href="">
+							结束时间</a></li>
+					<li><input type="text" placeholder="" name="endTime"
+						id="endTime" class="input"
+						style="width: 180px; line-height: 17px; display: inline-block"
+						value="${endTime}" /></li>
+					<li><select name="selectOperator" class="input w50"
+						id="selectApp">
+							<option value="">请选择容器</option>
+							<c:forEach var="list" items="${appNameList}" varStatus="status">
+								<option value="${list}">${list}</option>
+							</c:forEach>
+					</select></li>
+					<input type="hidden" name="applicationName" value="webServer" id="appName" />
+					<li><input type="submit"
+						class="button border-main icon-search" onclick="search();"></li>
+				</ul>
+			</div>
+		</div>
+	</form>
+	<div>
+		<!--图-->
+		<div id="chart">
+			<div id="websearch1"
+				style="width: 1100px; height: 300px; position: absolute; left: 150px; top: 150px;"></div>
+			<div id="websearch2"
+				style="width: 1100px; height: 300px; position: absolute; left: 150px; top: 500px;"></div>
+			<div id="websearch3"
+				style="width: 1100px; height: 300px; position: absolute; left: 150px; top: 850px;"></div>
+			<div id="websearch4"
+				style="width: 1100px; height: 300px; position: absolute; left: 150px; top: 1200px;"></div>
+			<div id="websearch5"
+				style="width: 1100px; height: 300px; position: absolute; left: 150px; top: 1550px;"></div>
+			<div id="websearch6"
+				style="width: 1100px; height: 300px; position: absolute; left: 150px; top: 1900px;"></div>
+		</div>
 
-</div>
-<script type="text/javascript" src="statics/js/jquery-1.9.1.js"></script>
-<script type="text/javascript" src="statics/js/highcharts.js"></script>
-<script type="text/javascript" src="statics/js/highcharts-more.js"></script>
-<script type="text/javascript" src="statics/js/laydate.js"></script>
-<script type="text/javascript" src="statics/js/showBo.js"></script>
-<script type="text/javascript">
+	</div>
+	<script type="text/javascript" src="statics/js/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="statics/js/highcharts.js"></script>
+	<script type="text/javascript" src="statics/js/highcharts-more.js"></script>
+	<script type="text/javascript" src="statics/js/laydate.js"></script>
+	<script type="text/javascript" src="statics/js/showBo.js"></script>
+	<script type="text/javascript">
 laydate.render({
     elem: '#startTime'
     ,type: 'datetime' //指定元素
@@ -72,18 +91,18 @@ laydate.render({
 });
 
 </script>
-<script type="text/javascript">
+	<script type="text/javascript">
 function search(){
+	alert($("#appName").val())
 	if($("#appName").val()==""){
 		Showbo.Msg.alert("请选择容器");
-	}
-	else{
+	}else{
 		$("#listform1").submit; 
 	}
 }
-Highcharts.setOptions({ global: { useUTC: false } });
 
-$("#selectApp").click(function(){
+
+$("#selectApp").change(function(){
 	var appNames=document.getElementById("selectApp");
 	for ( var i=0;i<appNames.length;i++){
 		if (appNames[i].selected == true){
@@ -91,8 +110,9 @@ $("#selectApp").click(function(){
 			break;
 		}
 	}
+	alert($("#appName").val())
 })
- 	
+ 	Highcharts.setOptions({ global: { useUTC: false } });
     $(document).ready(function() {
 
     	Highcharts.chart('websearch1', {

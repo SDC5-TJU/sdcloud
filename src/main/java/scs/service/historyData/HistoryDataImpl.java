@@ -103,7 +103,7 @@ public class HistoryDataImpl implements HistoryDataService {
 	}
 
 	@Override
-	public List<String> searchContainerResourceUsage(String containerName, String startTime, String endTime) {
+	public List<String> searchContainerResourceUsage(String containerName,String startTime,String endTime,boolean needTime){
 		if(startTime==null||startTime.equals("")){
 			startTime="1970-01-01 00:00:00";
 		}
@@ -119,6 +119,9 @@ public class HistoryDataImpl implements HistoryDataService {
 			chartStrList.add("{name:'"+containerName+"',data:[],marker:{enabled:false}}");//添加io output使用空值曲线 
 			chartStrList.add("{name:'"+containerName+"',data:[],marker:{enabled:false}}");//添加net input使用空值曲线
 			chartStrList.add("{name:'"+containerName+"',data:[],marker:{enabled:false}}");//添加net output使用空值曲线
+			if(needTime==true){
+				chartStrList.add("[]");//拼接一个空的时间轴
+			}
 			return chartStrList;
 		}
 		/*
@@ -206,7 +209,22 @@ public class HistoryDataImpl implements HistoryDataService {
 		strData.append("[").append(list.get(size).getCollectTime()).append(",").append(list.get(size).getNetOutput()).append("]]");
 		HSeries.append(strName).append(strData).append(",marker:{enabled:false}}");
 		chartStrList.add(HSeries.toString());
-
+		/*
+		 * 拼接时间轴
+		 */
+		if(needTime==true){
+			strName.setLength(0);
+			strData.setLength(0);
+			HSeries.setLength(0);
+			strData.append("["); 
+			DateFormats format=DateFormats.getInstance();
+			for(int i=0;i<size;i++){
+				strData.append("'").append(format.LongToDate(list.get(i).getCollectTime())).append("',");
+			}
+			strData.append("'").append(format.LongToDate(list.get(size).getCollectTime())).append("']");
+			chartStrList.add(strData.toString()); 
+		} 
+		
 		strName.setLength(0);
 		strData.setLength(0);
 		HSeries.setLength(0);

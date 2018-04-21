@@ -50,8 +50,7 @@ class ResultParser {
 		Collections.sort(newlist);
 		//System.out.println(newlist);
 		//size
-		int size = newlist.size();
-		System.out.println("SIZE IS "+ size);
+		int size = newlist.size(); 
 		//max
 		int max =  (int) newlist.get(size-1);
 		float max1 = max;
