@@ -20,9 +20,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body style="background-color:#f2f9fd;">
 <div class="header bg-main">
   <div class="logo margin-big-left fadein-top">
-    <h1><img src="statics/images/y.jpg" class="radius-circle rotate-hover" height="50" alt="" />SDC云计算评测系统</h1>
+    <h1>SDC云计算评测系统</h1>
   </div>
-  <div class="head-l"><a class="button button-little bg-green" href="" target="_blank"><span class="icon-home"></span> 前台首页</a> &nbsp;&nbsp; &nbsp;&nbsp;<a class="button button-little bg-red" href="login.html"><span class="icon-power-off"></span> 退出登录</a> </div>
+  <div class="head-l" style="color:#fff;font-size:17px;position: absolute; right:150px;top:20px">当前测试记录:<span id="recordValue"></span></div>
 </div>
 <div class="leftnav">
   <div class="leftnav-title"><strong><span class="icon-list"></span>菜单列表</strong></div>
@@ -39,14 +39,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </ul>
     <h2><span class="icon-user"></span>历史查询</h2>
     <ul style="display:block">
-        <li><a href="searchSysHistoryDataBefore.do" target="right"><span class="icon-caret-right"></span>物理机测试记录查询</a></li>
-        <li><a href="searchAppHistoryDataBefore.do" target="right"><span class="icon-caret-right"></span>应用测试记录查询</a></li>
-        <li><a href="searchContainerHistoryDataBefore.do" target="right"><span class="icon-caret-right"></span>容器测试记录查询</a></li>
+        <li><a href="searchSysHistoryDataBefore.do" target="right"><span class="icon-caret-right"></span>物理机资源使用</a></li>
+        <li><a href="searchAppHistoryDataBefore.do" target="right"><span class="icon-caret-right"></span>应用资源使用</a></li>
+        <li><a href="searchContainerHistoryDataBefore.do" target="right"><span class="icon-caret-right"></span>容器资源使用</a></li>
         
 	</ul>
   
 </div>
 <script type="text/javascript">
+$(document).ready(function() {
+	setInterval(function() {
+		$.ajax({
+			async:true,
+			type:"get",
+			url:"getCurRecordId.do",
+			data:{},
+			dataType:"text",
+			success:function(returned){  
+					 if(returned!="-1"){
+							document.getElementById("recordValue").innnerHTML=returned; 
+					 } 
+					 
+			}	
+		});
+},1000);
+})
 $(function(){
   $(".leftnav h2").click(function(){
 	  $(this).next().slideToggle(200);	
