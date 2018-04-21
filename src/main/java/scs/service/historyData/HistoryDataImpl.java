@@ -125,7 +125,7 @@ public class HistoryDataImpl implements HistoryDataService {
 			return chartStrList;
 		}
 		/*
-		 * 绘制容器CPU使用率曲线
+		 * 绘制应用CPU使用率曲线
 		 */
 		StringBuffer strName=new StringBuffer();
 		StringBuffer strData=new StringBuffer();
@@ -133,14 +133,15 @@ public class HistoryDataImpl implements HistoryDataService {
 		strName.append("{name:'").append(containerName).append("',");
 		strData.append("data:[");
 		int size=list.size()-1;
+
 		for(int i=0;i<size;i++){
-			strData.append("[").append(list.get(i).getCollectTime()).append(",").append(list.get(i).getCpuUsageRate()).append("],");
+			strData.append(list.get(i).getCpuUsageRate()).append(",");
 		}
-		strData.append("[").append(list.get(size).getCollectTime()).append(",").append(list.get(size).getCpuUsageRate()).append("]]");
+		strData.append(list.get(size).getCpuUsageRate()).append("]");
 		HSeries.append(strName).append(strData).append(",marker:{enabled:false}}");
 		chartStrList.add(HSeries.toString());
 		/*
-		 * 绘制容器内存使用率曲线
+		 * 绘制应用内存使用率曲线
 		 */
 		strName.setLength(0);
 		strData.setLength(0);
@@ -148,13 +149,13 @@ public class HistoryDataImpl implements HistoryDataService {
 		strName.append("{name:'").append(containerName).append("',");
 		strData.append("data:["); 
 		for(int i=0;i<size;i++){
-			strData.append("[").append(list.get(i).getCollectTime()).append(",").append(list.get(i).getMemUsageRate()).append("],");
+			strData.append(list.get(i).getMemUsageRate()).append(",");
 		}
-		strData.append("[").append(list.get(size).getCollectTime()).append(",").append(list.get(size).getMemUsageRate()).append("]]");
+		strData.append(list.get(size).getMemUsageRate()).append("]");
 		HSeries.append(strName).append(strData).append(",marker:{enabled:false}}");
 		chartStrList.add(HSeries.toString());
 		/*
-		 * 绘制容器io input使用量曲线
+		 * 绘制应用IO input使用量曲线
 		 */
 		strName.setLength(0);
 		strData.setLength(0);
@@ -162,13 +163,27 @@ public class HistoryDataImpl implements HistoryDataService {
 		strName.append("{name:'").append(containerName).append("',");
 		strData.append("data:["); 
 		for(int i=0;i<size;i++){
-			strData.append("[").append(list.get(i).getCollectTime()).append(",").append(list.get(i).getIoInput()).append("],");
+			strData.append(list.get(i).getIoInput()).append(",");
 		}
-		strData.append("[").append(list.get(size).getCollectTime()).append(",").append(list.get(size).getIoInput()).append("]]");
+		strData.append(list.get(size).getIoInput()).append("]");
 		HSeries.append(strName).append(strData).append(",marker:{enabled:false}}");
 		chartStrList.add(HSeries.toString());
 		/*
-		 * 绘制容器io output使用量曲线
+		 * 绘制应用IO output使用量曲线
+		 */
+		strName.setLength(0);
+		strData.setLength(0);
+		HSeries.setLength(0);
+		strName.append("{name:'").append(containerName).append("',");
+		strData.append("data:[");
+		for(int i=0;i<size;i++){
+			strData.append(list.get(i).getIoOutput()).append(",");
+		}
+		strData.append(list.get(size).getIoOutput()).append("]");
+		HSeries.append(strName).append(strData).append(",marker:{enabled:false}}");
+		chartStrList.add(HSeries.toString());
+		/*
+		 * 绘制应用Net input使用量曲线
 		 */
 		strName.setLength(0);
 		strData.setLength(0);
@@ -176,13 +191,13 @@ public class HistoryDataImpl implements HistoryDataService {
 		strName.append("{name:'").append(containerName).append("',");
 		strData.append("data:["); 
 		for(int i=0;i<size;i++){
-			strData.append("[").append(list.get(i).getCollectTime()).append(",").append(list.get(i).getIoOutput()).append("],");
+			strData.append(list.get(i).getNetInput()).append(",");
 		}
-		strData.append("[").append(list.get(size).getCollectTime()).append(",").append(list.get(size).getIoOutput()).append("]]");
+		strData.append(list.get(size).getNetInput()).append("]");
 		HSeries.append(strName).append(strData).append(",marker:{enabled:false}}");
 		chartStrList.add(HSeries.toString());
 		/*
-		 * 绘制容器net input使用量曲线
+		 * 绘制应用Net output使用量曲线
 		 */
 		strName.setLength(0);
 		strData.setLength(0);
@@ -190,23 +205,9 @@ public class HistoryDataImpl implements HistoryDataService {
 		strName.append("{name:'").append(containerName).append("',");
 		strData.append("data:["); 
 		for(int i=0;i<size;i++){
-			strData.append("[").append(list.get(i).getCollectTime()).append(",").append(list.get(i).getNetInput()).append("],");
+			strData.append(list.get(i).getNetOutput()).append(",");
 		}
-		strData.append("[").append(list.get(size).getCollectTime()).append(",").append(list.get(size).getNetInput()).append("]]");
-		HSeries.append(strName).append(strData).append(",marker:{enabled:false}}");
-		chartStrList.add(HSeries.toString());
-		/*
-		 * 绘制容器net output使用量曲线
-		 */
-		strName.setLength(0);
-		strData.setLength(0);
-		HSeries.setLength(0);
-		strName.append("{name:'").append(containerName).append("',");
-		strData.append("data:["); 
-		for(int i=0;i<size;i++){
-			strData.append("[").append(list.get(i).getCollectTime()).append(",").append(list.get(i).getNetOutput()).append("],");
-		}
-		strData.append("[").append(list.get(size).getCollectTime()).append(",").append(list.get(size).getNetOutput()).append("]]");
+		strData.append(list.get(size).getNetOutput()).append("]");
 		HSeries.append(strName).append(strData).append(",marker:{enabled:false}}");
 		chartStrList.add(HSeries.toString());
 		/*
@@ -242,12 +243,12 @@ public class HistoryDataImpl implements HistoryDataService {
 		List<String> chartStrList=new ArrayList<String>();
 		List<AppResouceUsageBean> list=dao.searchAppResourceUsage(applicationName, startTime, endTime);
 		if(list==null||list.size()==0){
-			chartStrList.add("{name:'"+applicationName+"',data:[]}");//添加cpu使用率空值曲线
-			chartStrList.add("{name:'"+applicationName+"',data:[]}");//添加mem使用率空值曲线
-			chartStrList.add("{name:'"+applicationName+"',data:[]}");//添加io input使用空值曲线
-			chartStrList.add("{name:'"+applicationName+"',data:[]}");//添加io output使用空值曲线
-			chartStrList.add("{name:'"+applicationName+"',data:[]}");//添加net input使用空值曲线
-			chartStrList.add("{name:'"+applicationName+"',data:[]}");//添加net output使用空值曲线
+			chartStrList.add("{name:'"+applicationName+"',data:[],marker:{enabled:false}}");//添加cpu使用率空值曲线
+			chartStrList.add("{name:'"+applicationName+"',data:[],marker:{enabled:false}}");//添加mem使用率空值曲线
+			chartStrList.add("{name:'"+applicationName+"',data:[],marker:{enabled:false}}");//添加io input使用空值曲线
+			chartStrList.add("{name:'"+applicationName+"',data:[],marker:{enabled:false}}");//添加io output使用空值曲线
+			chartStrList.add("{name:'"+applicationName+"',data:[],marker:{enabled:false}}");//添加net input使用空值曲线
+			chartStrList.add("{name:'"+applicationName+"',data:[],marker:{enabled:false}}");//添加net output使用空值曲线
 			if(needTime==true){
 				chartStrList.add("[]");//拼接一个空的时间轴
 			}
@@ -267,7 +268,7 @@ public class HistoryDataImpl implements HistoryDataService {
 			strData.append(list.get(i).getCpuUsageRate()).append(",");
 		}
 		strData.append(list.get(size).getCpuUsageRate()).append("]");
-		HSeries.append(strName).append(strData).append("}");
+		HSeries.append(strName).append(strData).append(",marker:{enabled:false}}");
 		chartStrList.add(HSeries.toString());
 		/*
 		 * 绘制应用内存使用率曲线
@@ -281,7 +282,7 @@ public class HistoryDataImpl implements HistoryDataService {
 			strData.append(list.get(i).getMemUsageRate()).append(",");
 		}
 		strData.append(list.get(size).getMemUsageRate()).append("]");
-		HSeries.append(strName).append(strData).append("}");
+		HSeries.append(strName).append(strData).append(",marker:{enabled:false}}");
 		chartStrList.add(HSeries.toString());
 		/*
 		 * 绘制应用IO input使用量曲线
@@ -295,7 +296,7 @@ public class HistoryDataImpl implements HistoryDataService {
 			strData.append(list.get(i).getIoInput()).append(",");
 		}
 		strData.append(list.get(size).getIoInput()).append("]");
-		HSeries.append(strName).append(strData).append("}");
+		HSeries.append(strName).append(strData).append(",marker:{enabled:false}}");
 		chartStrList.add(HSeries.toString());
 		/*
 		 * 绘制应用IO output使用量曲线
@@ -309,7 +310,7 @@ public class HistoryDataImpl implements HistoryDataService {
 			strData.append(list.get(i).getIoOutput()).append(",");
 		}
 		strData.append(list.get(size).getIoOutput()).append("]");
-		HSeries.append(strName).append(strData).append("}");
+		HSeries.append(strName).append(strData).append(",marker:{enabled:false}}");
 		chartStrList.add(HSeries.toString());
 		/*
 		 * 绘制应用Net input使用量曲线
@@ -323,7 +324,7 @@ public class HistoryDataImpl implements HistoryDataService {
 			strData.append(list.get(i).getNetInput()).append(",");
 		}
 		strData.append(list.get(size).getNetInput()).append("]");
-		HSeries.append(strName).append(strData).append("}");
+		HSeries.append(strName).append(strData).append(",marker:{enabled:false}}");
 		chartStrList.add(HSeries.toString());
 		/*
 		 * 绘制应用Net output使用量曲线
@@ -337,7 +338,7 @@ public class HistoryDataImpl implements HistoryDataService {
 			strData.append(list.get(i).getNetOutput()).append(",");
 		}
 		strData.append(list.get(size).getNetOutput()).append("]");
-		HSeries.append(strName).append(strData).append("}");
+		HSeries.append(strName).append(strData).append(",marker:{enabled:false}}");
 		chartStrList.add(HSeries.toString());
 		/*
 		 * 拼接时间轴
