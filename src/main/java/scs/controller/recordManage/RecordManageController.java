@@ -46,7 +46,8 @@ public class RecordManageController {
 	@RequestMapping("/getCurRecordId.do")
 	public void getCurRecordId(HttpServletRequest request,HttpServletResponse response){	 
 		try {
-			response.getWriter().write(Repository.curTestRecordId);
+			String curRecordId=Integer.toString(Repository.curTestRecordId);
+			response.getWriter().write(curRecordId);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

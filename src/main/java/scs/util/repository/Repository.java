@@ -27,7 +27,7 @@ public class Repository{
 		}  
 		return repository;
 	}  
-	public static int curTestRecordId=-1; //当前测试记录
+	public static int curTestRecordId=0; //当前测试记录
 	/**
 	 * 作业调度模块配置信息变量
 	 */

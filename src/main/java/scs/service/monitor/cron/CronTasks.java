@@ -1,6 +1,7 @@
 package scs.service.monitor.cron;
 
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -34,6 +35,8 @@ public class CronTasks {
 	public SystemMonitor systemMonitor;
 
 	public void testCron() {
+		System.out.println(
+				new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date(System.currentTimeMillis())));
 		if (Repository.cronFlag != 1) {
 			System.out.println("停止");
 			return;
@@ -68,6 +71,11 @@ public class CronTasks {
 		// 添加进全局 appRealUsageMap 变量
 		Repository.appRealUsageMap = aggregateAPPResourceUsage;
 
+		System.out.println(
+				new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date(System.currentTimeMillis())));
+	}
+
+	public void testCronSystem() {
 		// 调用systemresourceusage
 		ArrayList<TableSystemresourceusage> systemDataList = systemMonitor.getSystemDataList(Repository.systemInfoMap);
 		systemMonitor.testInsert(systemDataList);
@@ -76,5 +84,4 @@ public class CronTasks {
 			Repository.systemRealUsageMap.put(tableSystemresourceusage.getHostname(), tableSystemresourceusage);
 		}
 	}
-
 }

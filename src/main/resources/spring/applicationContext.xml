@@ -57,7 +57,8 @@
 	<!-- 定时器 -->
 	<bean id="SpringQtzJob"
 		class="scs.service.monitor.cron.CronTasks" />
-	<bean id="SpringQtzJobMethod"
+		
+	<bean id="SpringQtzJobMethod1"
 		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject">
 			<ref bean="SpringQtzJob" />
@@ -66,18 +67,33 @@
 			<value>testCron</value>
 		</property>
 	</bean>
+	<bean id="SpringQtzJobMethod2"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="SpringQtzJob" />
+		</property>
+		<property name="targetMethod">
+			<value>testCronSystem</value>
+		</property>
+	</bean>
 	<!-- ======================== 调度触发器 ======================== -->
-	<bean id="CronTriggerBean"
+	<bean id="CronTriggerBean1"
 		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-		<property name="jobDetail" ref="SpringQtzJobMethod"></property>
+		<property name="jobDetail" ref="SpringQtzJobMethod1"></property>
 		<property name="cronExpression" value="0/20 * * * * ?"></property>
+	</bean>
+	<bean id="CronTriggerBean2"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="SpringQtzJobMethod2"></property>
+		<property name="cronExpression" value="0/10 * * * * ?"></property>
 	</bean>
 	<!-- ======================== 调度工厂 ======================== -->
 	<bean id="SpringJobSchedulerFactoryBean"
 		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
-			<list>   
-			 <!-- <ref bean="CronTriggerBean" /> --> 
+			<list>    
+			 <ref bean="CronTriggerBean1" />
+			 <ref bean="CronTriggerBean2" /> 
 			</list>
 		</property>
 	</bean>

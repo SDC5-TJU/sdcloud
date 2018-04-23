@@ -50,16 +50,17 @@ public class SystemResourceController {
 	 */
 	@RequestMapping("/monitor/cronFlag.do")
 	@ResponseBody
-	public String JsonChangeCronFlag(@RequestBody int flag) {
+	public int JsonChangeCronFlag(@RequestBody int flag) {
 		// 返回操作结果
 		if (flag == 1 && Repository.cronFlag == 0) {
 			// 关闭采集
 			Repository.cronFlag = 1;
-			return "已开启";
+			return Repository.cronFlag;
 		} else if (flag == 0 && Repository.cronFlag == 1) {
-			return "已关闭";
+			Repository.cronFlag = 0;
+			return Repository.cronFlag;
 		}
-		return null;
+		return -1;
 	}
 
 	/**

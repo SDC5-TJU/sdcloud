@@ -15,14 +15,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <title>SDC云计算评测系统</title>  
     <link rel="stylesheet" href="statics/css/pintuer.css">
     <link rel="stylesheet" href="statics/css/admin.css">
-    <script src="statics/js/jquery.js"></script>
 </head>
 <body style="background-color:#f2f9fd;">
 <div class="header bg-main">
   <div class="logo margin-big-left fadein-top">
     <h1>SDC云计算评测系统</h1>
   </div>
-  <div class="head-l" style="color:#fff;font-size:17px;position: absolute; right:150px;top:20px">当前测试记录:<span id="recordValue"></span></div>
+  <div class="head-l" style="color:#fff;font-size:17px;position: absolute; right:150px;top:20px">当前测试记录: <span id="recordValue"></span></div>
 </div>
 <div class="leftnav">
   <div class="leftnav-title"><strong><span class="icon-list"></span>菜单列表</strong></div>
@@ -47,24 +46,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</ul>
   
 </div>
+<script src="statics/js/jquery.js"></script>
 <script type="text/javascript">
-$(document).ready(function() {
 	setInterval(function() {
 		$.ajax({
 			async:true,
-			type:"get",
+			type:"post",
 			url:"getCurRecordId.do",
 			data:{},
 			dataType:"text",
 			success:function(returned){  
-					 if(returned!="-1"){
-							document.getElementById("recordValue").innnerHTML=returned; 
+					 if(returned!="0"){
+							document.getElementById("recordValue").innerHTML=returned; 
 					 } 
 					 
 			}	
 		});
-},1000);
-})
+},3000);
 $(function(){
   $(".leftnav h2").click(function(){
 	  $(this).next().slideToggle(200);	
