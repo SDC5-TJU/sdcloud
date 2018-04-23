@@ -93,11 +93,6 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 		return getCommandInfoStream(hostname, username, password, command);
 	}
 
-	@Test
-	public void tes1t() {
-		getContainerNetInfoStream("192.168.1.128", "tank", "tanklab", "Hadoop6");
-	}
-
 	public float[] getContainerNetInfoStream(String hostname, String username, String password, String containerName) {
 		String command = "cat /proc/`docker inspect --format='{{ .State.Pid }}' \"" + containerName + "\"`/net/dev";
 		InputStream commandInfoStream = getCommandInfoStream(hostname, username, password, command);
@@ -157,7 +152,7 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 					record.setMemusageamount(Float.parseFloat(mem) * 1024f);
 				}else if ("M".equalsIgnoreCase(mem.substring(mem.length() - 3,mem.length() - 2))) {
 					mem = mem.substring(0, mem.length() - 3);
-					record.setMemusageamount(Float.parseFloat(mem) * 1024f);
+					record.setMemusageamount(Float.parseFloat(mem));
 				}else {
 					mem = mem.substring(0, mem.length() - 3);
 					record.setMemusageamount(Float.parseFloat(mem));
