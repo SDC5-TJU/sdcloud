@@ -17,77 +17,61 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" href="statics/css/pintuer.css">
 <link rel="stylesheet" href="statics/css/admin.css">
 <link rel="stylesheet" href="statics/css/showBo.css" />
-<script src="statics/js/jquery.js"></script>
+
 <script src="statics/js/pintuer.js"></script>
+<script type="text/javascript">
+function search(){
+	var appName=document.getElementById("appName").value;
+	if(appName==""){
+		Showbo.Msg.alert("请选择容器");
+	}else{
+		document.getElementById("listform1").submit();   
+	}
+} 
+function setAppName(){
+	var appNames=document.getElementById("selectApp");
+	for ( var i=0;i<appNames.length;i++){
+		if (appNames[i].selected == true){
+			document.getElementById("appName").value = appNames[i].value;
+			break;
+		}
+	}
+	 
+ }
+ 
+</script>
 </head>
 <body>
-<<<<<<< HEAD
-<form method="post" action="searchAppHistoryData.do" id="listform1">
-    <div class="panel admin-panel">
-        <div class="panel-head"><strong class="icon-reorder"> 容器测试记录查询</strong> <a href="" style="float:right; display:none;">添加字段</a></div>
-        <div class="padding border-bottom">
-            <ul class="search" style="padding-left:10px;">
-                <li> <a class="button border-main icon-plus-square-o" href=""> 开始时间</a> </li>
-                <li><input type="text" placeholder="" name="startTime" id="startTime" class="input" style="width:180px; line-height:17px;
-                display:inline-block" value="${startTime}" /></li>
-                <li> <a class="button border-main icon-plus-square-o" href=""> 结束时间</a> </li>
-				<input type="hidden" name="applicationName" value="" id="appName"/>
-                <li><input type="text" placeholder="" name="endTime" id="endTime" class="input" style="width:180px; line-height:17px;
-                display:inline-block" value="${endTime}"/></li>
-                <li><select name="selectOperator" class="input w50" id="selectApp" onchange="selectOnchang(this)" style="width:180px; line-height:17px;
-                display:inline-block">
-					<option value="">请选择容器</option>
-					<c:forEach var="list" items="${appNameList}" varStatus="status">
-					<option value="${list}">${list}</option>
-					</c:forEach>
-					</select>
-				</li>
-                <li><input type="submit" class="button border-main icon-search" onclick="search();" ></li>
-            </ul>
-        </div>
-    </div>
-</form>
-<div>
-    <!--图-->
-    <div id="chart">
-        <div id="websearch1" style="width: 1100px;height: 300px;position: absolute; left:150px;top: 150px;"></div>
-        <div id="websearch2" style="width: 1100px;height: 300px;position: absolute; left:150px;top: 500px;"></div>
-        <div id="websearch3" style="width: 1100px;height: 300px;position: absolute; left:150px;top: 850px;"></div>
-        <div id="websearch4" style="width: 1100px;height: 300px;position: absolute; left:150px;top: 1200px;"></div>
-        <div id="websearch5" style="width: 1100px;height: 300px;position: absolute; left:150px;top: 1550px;"></div>
-        <div id="websearch6" style="width: 1100px;height: 300px;position: absolute; left:150px;top: 1900px;"></div>
-    </div>
-=======
-	<form method="post" action="searchContainerHistoryData.do"
-		id="listform1">
+	<form method="post" action="searchContainerHistoryData.do" id="listform1">
 		<div class="panel admin-panel">
 			<div class="panel-head">
-				<strong class="icon-reorder"> 容器测试记录查询</strong> <a href=""
-					style="float: right; display: none;">添加字段</a>
+				<strong class="icon-reorder"> 容器资源使用查询</strong>  
 			</div>
 			<div class="padding border-bottom">
 				<ul class="search" style="padding-left: 10px;">
-					<li><a class="button border-main icon-plus-square-o" href="">
+					<li><a class="button border-main icon-plus-square-o">
 							开始时间</a></li>
-					<li><input type="text" placeholder="" name="startTime"
+					<li><input type="text" name="startTime"
 						id="startTime" class="input"
 						style="width: 180px; line-height: 17px; display: inline-block"
 						value="${startTime}" /></li>
-					<li><a class="button border-main icon-plus-square-o" href="">
+					<li><a class="button border-main icon-plus-square-o">
 							结束时间</a></li>
-					<li><input type="text" placeholder="" name="endTime"
+					<li><input type="text" name="endTime"
 						id="endTime" class="input"
 						style="width: 180px; line-height: 17px; display: inline-block"
 						value="${endTime}" /></li>
-					<li><select name="selectOperator" class="input w50"
-						id="selectApp">
+					<li><select name="selectOperator" class="input w50" 
+					    style="width: 180px; line-height: 17px; display: inline-block"
+						id="selectApp" onchange="setAppName()" >
 							<option value="">请选择容器</option>
 							<c:forEach var="list" items="${appNameList}" varStatus="status">
 								<option value="${list}">${list}</option>
 							</c:forEach>
-					</select></li>
-					<input type="hidden" name="applicationName" value="hadoop" id="appName" />
-					<li><input type="button" class="button border-main icon-search"></li>
+					</select>
+					<input type="hidden" name="applicationName" value="" id="appName" />
+					</li>
+					<li><a href="javascript:search();" class="button border-main icon-search"> 查询</a></li>
 				</ul>
 			</div>
 		</div>
@@ -108,7 +92,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div id="websearch6"
 				style="width: 1100px; height: 300px; position: absolute; left: 150px; top: 1900px;"></div>
 		</div>
->>>>>>> refs/remotes/origin/master
 
 	</div>
 	<script type="text/javascript" src="statics/js/jquery-1.9.1.js"></script>
@@ -117,58 +100,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<script type="text/javascript" src="statics/js/laydate.js"></script>
 	<script type="text/javascript" src="statics/js/showBo.js"></script>
 	<script type="text/javascript">
-laydate.render({
-    elem: '#startTime'
-    ,type: 'datetime' //指定元素
-});
-
-laydate.render({
-    elem: '#endTime'
-    ,type: 'datetime' //指定元素
-});
-
-</script>
-<<<<<<< HEAD
-<script type="text/javascript">
-/* function search(){
-=======
-	<script type="text/javascript">
-function search(){
-	
->>>>>>> refs/remotes/origin/master
-	if($("#appName").val()==""){
-		Showbo.Msg.alert("请选择容器");
-<<<<<<< HEAD
-	}
-	else{
-		alert()
-		//$("#listform1").submit; 
-=======
-	}else{
-		//$("#listform1").submit; 
-		alert($("#appName").val)
->>>>>>> refs/remotes/origin/master
-	}
-<<<<<<< HEAD
-} */
-
-Highcharts.setOptions({ global: { useUTC: false } });
-
-
-$("#selectApp").change(function(){
-	var appNames=document.getElementById("selectApp");
-	for ( var i=0;i<appNames.length;i++){
-		if (appNames[i].selected == true){
-			document.getElementById("appName").value = appNames[i].value;
-			break;
-		}
-	}
-	alert($("#appName").val())
-})
+		laydate.render({
+		    elem: '#startTime'
+		    ,type: 'datetime' //指定元素
+		});
+		
+		laydate.render({
+		    elem: '#endTime'
+		    ,type: 'datetime' //指定元素
+		}); 
+	</script>
+	<script type="text/javascript"> 
  	Highcharts.setOptions({ global: { useUTC: false } });
->>>>>>> refs/remotes/origin/master
-    $(document).ready(function() {
-
+    $(document).ready(function() { 
     	Highcharts.chart('websearch1', {
             chart: {
                 type: 'area',
@@ -188,7 +132,8 @@ $("#selectApp").change(function(){
                 title: {
                     text: '使用率%'
                 },
-                min:0
+                min:0,
+                max:100
 
             },
             legend: {
@@ -199,6 +144,9 @@ $("#selectApp").change(function(){
             tooltip: {
                 split: true,
                 valueSuffix: '%'
+            },
+            credits: {
+                enabled: false
             },
             plotOptions: {
                 area: {
@@ -232,7 +180,8 @@ $("#selectApp").change(function(){
                 title: {
                     text: '使用率%'
                 },
-                min:0
+                min:0,
+                max:100
 
             },
             legend: {
@@ -243,6 +192,9 @@ $("#selectApp").change(function(){
             tooltip: {
                 split: true,
                 valueSuffix: '%'
+            },
+            credits: {
+                enabled: false
             },
             plotOptions: {
                 area: {
@@ -263,7 +215,7 @@ $("#selectApp").change(function(){
                 type: 'area'
             },
             title: {
-                text: 'I/O input'
+                text: 'I/O input(kb)'
             },
             xAxis: {
                 categories: ${containerUsageStr6},
@@ -274,7 +226,7 @@ $("#selectApp").change(function(){
             },
             yAxis: {
                 title: {
-                    text: 'MB'
+                    text: 'kb'
                 },
                 min:0
 
@@ -286,7 +238,10 @@ $("#selectApp").change(function(){
             },
             tooltip: {
                 split: true,
-                valueSuffix: ' MB'
+                valueSuffix: ' kb'
+            },
+            credits: {
+                enabled: false
             },
             plotOptions: {
                 area: {
@@ -307,7 +262,7 @@ $("#selectApp").change(function(){
                 type: 'area'
             },
             title: {
-                text: 'I/O output'
+                text: 'I/O output(kb)'
             },
             xAxis: {
                 categories: ${containerUsageStr6},
@@ -318,7 +273,7 @@ $("#selectApp").change(function(){
             },
             yAxis: {
                 title: {
-                    text: 'MB'
+                    text: 'kb'
                 },
                 min:0
 
@@ -330,7 +285,10 @@ $("#selectApp").change(function(){
             },
             tooltip: {
                 split: true,
-                valueSuffix: ' MB'
+                valueSuffix: ' kb'
+            },
+            credits: {
+                enabled: false
             },
             plotOptions: {
                 area: {
@@ -351,7 +309,7 @@ $("#selectApp").change(function(){
                 type: 'area'
             },
             title: {
-                text: 'net input'
+                text: 'net input(kb)'
             },
             xAxis: {
                 categories: ${containerUsageStr6},
@@ -362,7 +320,7 @@ $("#selectApp").change(function(){
             },
             yAxis: {
                 title: {
-                    text: 'MB'
+                    text: 'kb'
                 },
                 min:0
 
@@ -374,7 +332,10 @@ $("#selectApp").change(function(){
             },
             tooltip: {
                 split: true,
-                valueSuffix: ' MB'
+                valueSuffix: ' kb'
+            },
+            credits: {
+                enabled: false
             },
             plotOptions: {
                 area: {
@@ -395,7 +356,7 @@ $("#selectApp").change(function(){
                 type: 'area'
             },
             title: {
-                text: 'net output'
+                text: 'net output(kb)'
             },
             xAxis: {
                 categories: ${containerUsageStr6},
@@ -406,7 +367,7 @@ $("#selectApp").change(function(){
             },
             yAxis: {
                 title: {
-                    text: 'MB'
+                    text: 'kb'
                 },
                 min:0
 
@@ -418,7 +379,10 @@ $("#selectApp").change(function(){
             },
             tooltip: {
                 split: true,
-                valueSuffix: ' MB'
+                valueSuffix: ' kb'
+            },
+            credits: {
+                enabled: false
             },
             plotOptions: {
                 area: {
@@ -433,8 +397,6 @@ $("#selectApp").change(function(){
             },
             series: [${containerUsageStr5}]
         });
-
-
 });
 </script>
 

@@ -111,15 +111,12 @@ public class RecordManageDaoImpl extends MySQLBaseDao implements RecordManageDao
 						System.out.println("日期格式转换错误");
 					}
 					tableContainerresourceusagestart.setTestrecord((byte) testRecordId);
+					tableContainerresourceusagestart.setCpuusagerate(combineList.get(i).getCpuusagerate());
 					tableContainerresourceusagestart.setContainername(combineList.get(i).getContainername());
 					tableContainerresourceusagestart.setIoinput(combineList.get(i).getIoinput());
-					;
 					tableContainerresourceusagestart.setIooutput(combineList.get(i).getIooutput());
-					;
 					tableContainerresourceusagestart.setNetinput(combineList.get(i).getNetinput());
-					;
 					tableContainerresourceusagestart.setNetoutput(combineList.get(i).getNetoutput());
-					;
 					tableContainerresourceusagestart.setMemusageamount(combineList.get(i).getMemusageamount());
 					tableContainerresourceusagestart.setMemusagerate(combineList.get(i).getMemusagerate());
 					// 插入表格

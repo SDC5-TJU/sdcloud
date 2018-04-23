@@ -27,7 +27,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <li> <a class="button border-main icon-plus-square-o" href="addRecordBefore.do"> 添加测试</a> </li>
                 <li>
                     <input type="text" placeholder="请输入搜索关键字" name="keywords" class="input" style="width:250px; line-height:17px;display:inline-block" />
-                    <a href="javascript:void(0)" class="button border-main icon-search" onclick="changesearch()" > 搜索</a>
+                    <a class="button border-main icon-search" > 搜索</a>
                 </li>
                 <li style="padding-right:10px;"><span class="r">共有数据：<strong>${totalCount}</strong> 条</span></li>
             </ul>

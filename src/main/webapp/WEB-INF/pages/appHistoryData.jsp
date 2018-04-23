@@ -15,22 +15,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <title></title>
     <link rel="stylesheet" href="statics/css/pintuer.css">
     <link rel="stylesheet" href="statics/css/admin.css">
-    <script src="statics/js/jquery.js"></script>
+   	<script type="text/javascript" src="statics/js/jquery-1.9.1.js"></script>
     <script src="statics/js/pintuer.js"></script>
+     <script>
+    function search(){
+		document.getElementById("listform1").submit(); 
+    }
+	</script>
 </head>
 <body>
 <form method="post" action="searchAppHistoryData.do" id="listform1">
     <div class="panel admin-panel">
-        <div class="panel-head"><strong class="icon-reorder"> 应用测试记录查询</strong> <a href="" style="float:right; display:none;">添加字段</a></div>
+        <div class="panel-head"><strong class="icon-reorder"> 应用资源使用查询</strong> <a href="" style="float:right; display:none;">添加字段</a></div>
         <div class="padding border-bottom">
             <ul class="search" style="padding-left:10px;">
-                <li> <a class="button border-main icon-plus-square-o" href=""> 开始时间</a> </li>
-                <li><input type="text" placeholder="" name="startTime" id="startTime" class="input" style="width:180px; line-height:17px;
+                <li> <a class="button border-main icon-plus-square-o"> 开始时间</a> </li>
+                <li><input type="text" name="startTime" id="startTime" class="input" style="width:180px; line-height:17px;
                 display:inline-block" value="${startTime}" /></li>
-                <li> <a class="button border-main icon-plus-square-o" href=""> 结束时间</a> </li>
-                <li><input type="text" placeholder="" name="endTime" id="endTime" class="input" style="width:180px; line-height:17px;
+                <li> <a class="button border-main icon-plus-square-o"> 结束时间</a> </li>
+                <li><input type="text" name="endTime" id="endTime" class="input" style="width:180px; line-height:17px;
                 display:inline-block" value="${endTime}"/></li>
-                <li><input type="submit" class="button border-main icon-search" onclick="search();" ></li>
+                <li><a href="javascript:search();" class="button border-main icon-search"> 查询</a></li>
             </ul>
         </div>
     </div>
@@ -46,8 +51,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div id="websearch6" style="width: 1100px;height: 300px;position: absolute; left:150px;top: 1900px;"></div>
     </div>
 
-</div>
-<script type="text/javascript" src="statics/js/jquery-1.9.1.js"></script>
+</div> 
 <script type="text/javascript" src="statics/js/highcharts.js"></script>
 <script type="text/javascript" src="statics/js/highcharts-more.js"></script>
 <script type="text/javascript" src="statics/js/laydate.js"></script>
@@ -64,9 +68,6 @@ laydate.render({
 
 </script>
 <script type="text/javascript">
-function search(){
-	$("#listform1").submit; 
-}
 Highcharts.setOptions({ global: { useUTC: false } });
  	var strs= new Array();//定义数组存储绘图数据
  	
@@ -91,7 +92,8 @@ Highcharts.setOptions({ global: { useUTC: false } });
                 title: {
                     text: '使用率%'
                 },
-                min:0
+                min:0,
+                max:100
 
             },
             legend: {
@@ -102,6 +104,9 @@ Highcharts.setOptions({ global: { useUTC: false } });
             tooltip: {
                 split: true,
                 valueSuffix: '%'
+            },
+            credits: {
+                enabled: false
             },
             plotOptions: {
                 area: {
@@ -135,8 +140,8 @@ Highcharts.setOptions({ global: { useUTC: false } });
                 title: {
                     text: '使用率%'
                 },
-                min:0
-
+                min:0,
+                max:100
             },
             legend: {
                 layout: 'vertical',
@@ -146,6 +151,9 @@ Highcharts.setOptions({ global: { useUTC: false } });
             tooltip: {
                 split: true,
                 valueSuffix: '%'
+            },
+            credits: {
+                enabled: false
             },
             plotOptions: {
                 area: {
@@ -177,7 +185,7 @@ Highcharts.setOptions({ global: { useUTC: false } });
             },
             yAxis: {
                 title: {
-                    text: 'MB'
+                    text: 'kb'
                 },
                 min:0
 
@@ -189,7 +197,10 @@ Highcharts.setOptions({ global: { useUTC: false } });
             },
             tooltip: {
                 split: true,
-                valueSuffix: ' MB'
+                valueSuffix: ' kb'
+            },
+            credits: {
+                enabled: false
             },
             plotOptions: {
                 area: {
@@ -221,7 +232,7 @@ Highcharts.setOptions({ global: { useUTC: false } });
             },
             yAxis: {
                 title: {
-                    text: 'MB'
+                    text: 'kb'
                 },
                 min:0
 
@@ -233,7 +244,10 @@ Highcharts.setOptions({ global: { useUTC: false } });
             },
             tooltip: {
                 split: true,
-                valueSuffix: ' MB'
+                valueSuffix: ' kb'
+            },
+            credits: {
+                enabled: false
             },
             plotOptions: {
                 area: {
@@ -265,7 +279,7 @@ Highcharts.setOptions({ global: { useUTC: false } });
             },
             yAxis: {
                 title: {
-                    text: 'MB'
+                    text: 'kb'
                 },
                 min:0
 
@@ -277,7 +291,10 @@ Highcharts.setOptions({ global: { useUTC: false } });
             },
             tooltip: {
                 split: true,
-                valueSuffix: ' MB'
+                valueSuffix: ' kb'
+            },
+            credits: {
+                enabled: false
             },
             plotOptions: {
                 area: {
@@ -309,7 +326,7 @@ Highcharts.setOptions({ global: { useUTC: false } });
             },
             yAxis: {
                 title: {
-                    text: 'MB'
+                    text: 'kb'
                 },
                 min:0
 
@@ -321,7 +338,10 @@ Highcharts.setOptions({ global: { useUTC: false } });
             },
             tooltip: {
                 split: true,
-                valueSuffix: ' MB'
+                valueSuffix: ' kb'
+            },
+            credits: {
+                enabled: false
             },
             plotOptions: {
                 area: {
