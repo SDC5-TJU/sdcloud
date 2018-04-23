@@ -154,8 +154,8 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 					mem = mem.substring(0, mem.length() - 3);
 					record.setMemusageamount(Float.parseFloat(mem));
 				}else {
-					mem = mem.substring(0, mem.length() - 3);
-					record.setMemusageamount(Float.parseFloat(mem));
+					mem = mem.substring(0, mem.length() - 1);
+					record.setMemusageamount(Float.parseFloat(mem) / 1024f / 1024f);
 				}
 				
 
