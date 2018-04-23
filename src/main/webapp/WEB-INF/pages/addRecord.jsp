@@ -36,7 +36,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>测试描述：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input style="width:80%;height:100px;" type="text" class="input w50" value="" placeholder="请输入测试描述" id="recordDesc" name="recordDesc">
+				<input style="width:50%;height:200px;" type="text" class="input w50" value="" placeholder="请输入测试描述" id="recordDesc" name="recordDesc">
 			</div>
 		</div>
 

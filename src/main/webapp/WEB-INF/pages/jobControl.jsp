@@ -223,7 +223,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
 
     <div id="chart1" style="position: absolute; top:250px;right: 70px; width: 400px; height: 200px;"></div>
-    <div id="chart2" style="position: absolute; top:460px;right: 70px; width: 400px; height: 200px;"></div>
+    <div id="chart2" style="position: absolute;  top:460px;right: 70px; width: 400px; height: 200px;"></div>
 
 
 </div>

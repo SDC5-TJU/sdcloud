@@ -23,7 +23,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link rel="stylesheet" type="text/css" href="statics/css/H-ui.admin.css" />
     <link rel="stylesheet" type="text/css" href="statics/css/iconfont.css" />
 
-    <link rel="stylesheet" type="text/css" href="statics/css/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="statics/css/skin.css" id="skin"/>
     <link rel="stylesheet" type="text/css" href="statics/css/style.css" />
 
     <link href="statics/css/webuploader.css" rel="stylesheet" type="text/css" />

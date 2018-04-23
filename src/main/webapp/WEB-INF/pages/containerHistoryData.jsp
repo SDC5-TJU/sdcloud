@@ -63,10 +63,10 @@ function setAppName(){
 						value="${endTime}" /></li>
 					<li><select name="selectOperator" class="input w50" 
 					    style="width: 180px; line-height: 17px; display: inline-block"
-						id="selectApp" onchange="setAppName()" >
+						id="selectApp" onchange="setAppName()">
 							<option value="">请选择容器</option>
 							<c:forEach var="list" items="${appNameList}" varStatus="status">
-								<option value="${list}">${list}</option>
+								<option value="${list}" >${list}</option>
 							</c:forEach>
 					</select>
 					<input type="hidden" name="applicationName" value="" id="appName" />

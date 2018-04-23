@@ -29,6 +29,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <h2><span class="icon-user"></span>测试管理</h2>
   <ul style="display:block">
     <li><a href="searchRecord.do?page=1" target="right"><span class="icon-caret-right"></span>测试记录</a></li>
+    <li><a href="addRecordBefore.do" target="right"><span class="icon-caret-right"></span>添加测试</a></li>
   </ul>
     <h2><span class="icon-user"></span>资源监控</h2>
     <ul style="display:block">
