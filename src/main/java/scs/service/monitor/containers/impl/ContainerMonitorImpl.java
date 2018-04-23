@@ -149,6 +149,9 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 				record.setCpuusagerate(parse1.floatValue());
 
 				String mem = split[2].split("\\s")[0];
+				if ("K".equalsIgnoreCase(mem.substring(mem.length() - 3,mem.length() - 2))) {
+					
+				}
 				mem = mem.substring(0, mem.length() - 3);
 				record.setMemusageamount(Float.parseFloat(mem));
 
