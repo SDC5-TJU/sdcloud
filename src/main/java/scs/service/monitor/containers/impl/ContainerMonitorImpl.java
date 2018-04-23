@@ -150,10 +150,19 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 
 				String mem = split[2].split("\\s")[0];
 				if ("K".equalsIgnoreCase(mem.substring(mem.length() - 3,mem.length() - 2))) {
-					
+					mem = mem.substring(0, mem.length() - 3);
+					record.setMemusageamount(Float.parseFloat(mem) / 1024f);
+				}else if ("G".equalsIgnoreCase(mem.substring(mem.length() - 3,mem.length() - 2))) {
+					mem = mem.substring(0, mem.length() - 3);
+					record.setMemusageamount(Float.parseFloat(mem) * 1024f);
+				}else if ("M".equalsIgnoreCase(mem.substring(mem.length() - 3,mem.length() - 2))) {
+					mem = mem.substring(0, mem.length() - 3);
+					record.setMemusageamount(Float.parseFloat(mem) * 1024f);
+				}else {
+					mem = mem.substring(0, mem.length() - 3);
+					record.setMemusageamount(Float.parseFloat(mem));
 				}
-				mem = mem.substring(0, mem.length() - 3);
-				record.setMemusageamount(Float.parseFloat(mem));
+				
 
 				Number parse3 = percentInstance.parse(split[3]);
 				record.setMemusagerate(parse3.floatValue());
