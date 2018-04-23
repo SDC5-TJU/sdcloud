@@ -1,6 +1,7 @@
 package scs.service.monitor.cron;
 
 import java.io.InputStream;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -34,6 +35,7 @@ public class CronTasks {
 	public SystemMonitor systemMonitor;
 
 	public void testCron() {
+		System.out.println(new Date(System.currentTimeMillis()));
 		if (Repository.cronFlag != 1) {
 			System.out.println("停止");
 			return;
@@ -75,6 +77,7 @@ public class CronTasks {
 		for (TableSystemresourceusage tableSystemresourceusage : systemDataList) {
 			Repository.systemRealUsageMap.put(tableSystemresourceusage.getHostname(), tableSystemresourceusage);
 		}
+		System.out.println(new Date(System.currentTimeMillis()));
 	}
 
 }
