@@ -103,7 +103,7 @@ public class SystemResourceController {
 			strIoData.append("data:[");
 			strNetData.append("data:[");
 			for (int i = 0; i < testSelect.size(); i++) {
-				float cpuusagerate = testSelect.get(i).getCpuusagerate();
+				float cpuusagerate = testSelect.get(i).getCpuusagerate()*100;
 				float iousagerate = testSelect.get(i).getIousagerate();
 				float netusagerate = testSelect.get(i).getNetusagerate();
 				float memusagerate = testSelect.get(i).getMemusagerate();
