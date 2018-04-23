@@ -57,7 +57,7 @@
 						}
 					}	
 				});
-			},3000);
+			},1000);
 	function start(){
 		if(flag==true){
 			 $.ajax({

@@ -1,7 +1,10 @@
 package scs.controller.monitor.system;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,18 +52,20 @@ public class SystemResourceController {
 	 * @author jztong 前端根据
 	 */
 	@RequestMapping("/monitor/cronFlag.do")
-	@ResponseBody
-	public int JsonChangeCronFlag(@RequestBody int flag) {
+	public void JsonChangeCronFlag(HttpServletResponse response,
+			@RequestParam(value="flag",required=true) int flag) {
 		// 返回操作结果
 		if (flag == 1 && Repository.cronFlag == 0) {
 			// 关闭采集
-			Repository.cronFlag = 1;
-			return Repository.cronFlag;
+			Repository.cronFlag = 1; 
 		} else if (flag == 0 && Repository.cronFlag == 1) {
-			Repository.cronFlag = 0;
-			return Repository.cronFlag;
+			Repository.cronFlag = 0; 
 		}
-		return -1;
+		try {
+			response.getWriter().write(Integer.toString(Repository.cronFlag));
+		} catch (IOException e) { 
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -120,10 +125,11 @@ public class SystemResourceController {
 			model.addAttribute("memory", HMemSeries.toString());
 			model.addAttribute("io", HIoSeries.toString());
 			model.addAttribute("net", HNetSeries.toString());
+			model.addAttribute("cronFlag",Repository.cronFlag);
 		} catch (Exception e) {
 			logger.error("login error" + e);
 			e.printStackTrace();
 		}
-		return "physicalMoniter" + number;
+		return "physicalMonitor";
 	}
 }
