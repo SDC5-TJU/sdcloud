@@ -42,7 +42,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 </div>-->
 <div>
-    <div class="new-page-container" >
+    <div class="new-page-container" style="position: absolute; top:-50px; ">
         <form action="" method="post" class="form form-horizontal" id="form-article-add">
             <!--在线-->
             <div id="online">
@@ -204,7 +204,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </form>
     </div>
 
-    <div id="time" style="position: absolute; top:90px;right: 70px; width: 27%; ">
+    <div id="time" style="position: absolute; top:60px;right: 70px; width: 27%; ">
         <div class="row cl">
             <label style="width: 30%; float: left;text-align: right;" >开始时间：</label>
                 <input style="margin-left:10px; width: 40%;" class="input new-w50 new-col-sm-2 " type="text"  value="${recordBean.startTime}" id="startTime" name="" >
@@ -216,14 +216,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <input style="width:20%；" class="input new-w50" type="button" value="点击结束" id="endButton" >
         </div>
     </div>
-    <div style="position: absolute; top:240px;right: 70px; width: 27%;">
+    <div style="position: absolute; top:200px;right: 70px; width: 27%;">
        <label style="font-size: 18px; float: left;text-align: right; " >观察窗口</label>
-       <input type="button" id="startChartButton" class="editButton" style="float:right;" value="开始">
-       <label style="font-size: 14px; float: right;text-align: middle;" >执行：</label>
+<!--        <input type="button" id="startChartButton" class="editButton" style="float:right;" value="开始">
+       <label style="font-size: 14px; float: right;text-align: middle;" >执行：</label> -->
     </div>
 
-    <div id="chart1" style="position: absolute; top:290px;right: 70px; width: 400px; height: 200px;"></div>
-    <div id="chart2" style="position: absolute; top:500px;right: 70px; width: 400px; height: 200px;"></div>
+    <div id="chart1" style="position: absolute; top:250px;right: 70px; width: 400px; height: 200px;"></div>
+    <div id="chart2" style="position: absolute; top:460px;right: 70px; width: 400px; height: 200px;"></div>
 
 
 </div>
