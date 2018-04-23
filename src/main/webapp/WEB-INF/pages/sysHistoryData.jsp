@@ -14,23 +14,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta name="renderer" content="webkit">
     <title></title>
     <link rel="stylesheet" href="statics/css/pintuer.css">
-    <link rel="stylesheet" href="statics/css/admin.css">
-    <script src="statics/js/jquery.js"></script>
-    <script src="statics/js/pintuer.js"></script>
+    <link rel="stylesheet" href="statics/css/admin.css"> 
+    
+	<script type="text/javascript" src="statics/js/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="statics/js/pintuer.js"></script>
+    <script type="text/javascript">
+    function search(){
+    	document.getElementById("listform").submit();
+    }
+    </script>
 </head>
 <body>
 <form method="post" action="searchSysHistoryData.do" id="listform">
     <div class="panel admin-panel">
-        <div class="panel-head"><strong class="icon-reorder"> 物理机测试记录查询</strong> <a href="" style="float:right; display:none;">添加字段</a></div>
+        <div class="panel-head"><strong class="icon-reorder"> 物理机资源使用查询</strong> <a href="" style="float:right; display:none;">添加字段</a></div>
         <div class="padding border-bottom">
             <ul class="search" style="padding-left:10px;">
-                <li> <a class="button border-main icon-plus-square-o" href=""> 开始时间</a> </li>
-                <li><input type="text" placeholder="" name="startTime" id="startTime" class="input" style="width:180px; line-height:17px;
+                <li><a class="button border-main icon-plus-square-o" > 开始时间</a></li>
+                <li><input type="text" name="startTime" id="startTime" class="input" style="width:180px; line-height:17px;
                 display:inline-block" value="${startTime}" /></li>
-                <li> <a class="button border-main icon-plus-square-o" href=""> 结束时间</a> </li>
-                <li><input type="text" placeholder="" name="endTime" id="endTime" class="input" style="width:180px; line-height:17px;
+                <li> <a class="button border-main icon-plus-square-o" > 结束时间</a> </li>
+                <li><input type="text" name="endTime" id="endTime" class="input" style="width:180px; line-height:17px;
                 display:inline-block" value="${endTime}"/></li>
-                <li><input type="submit" class="button border-main icon-search" onclick="search();" ></li>
+                <li><a href="javascript:search();" class="button border-main icon-search"> 查询</a></li>
             </ul>
         </div>
     </div>
@@ -45,7 +51,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
 
 </div>
-<script type="text/javascript" src="statics/js/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="statics/js/highcharts.js"></script>
 <script type="text/javascript" src="statics/js/highcharts-more.js"></script>
 <script type="text/javascript" src="statics/js/laydate.js"></script>
@@ -62,9 +67,6 @@ laydate.render({
 
 </script>
 <script type="text/javascript">
-function search(){
-	$("#listform").submit;
-}
 Highcharts.setOptions({ global: { useUTC: false } });
  	var strs= new Array();//定义数组存储绘图数据
  	
@@ -77,27 +79,32 @@ Highcharts.setOptions({ global: { useUTC: false } });
              title: {
                  text: '物理机CPU使用情况'
              },
-
              xAxis: {
-                 type: 'datetime',
-                 // maxZoom:24 * 3600 * 1000, // x轴总共显示的时间
-                 //min:<?=strtotime(date('Y-m-d'))?>,
-                 dateTimeLabelFormats: {
-//                   minute: '%H:%M'
+                 type: 'datetime', 
+                 dateTimeLabelFormats: { 
                      day: '%H:%M'
                  }
              },
              yAxis: {
                  title: {
-                     text: 'used rate'
+                     text: 'used rate%'
                  },
-                 min:0
-
+                 min:0,
+                 max:100
              },
              legend: {
                  layout: 'vertical',
                  align: 'right',
                  verticalAlign: 'middle'
+             },
+             tooltip: {
+                 formatter:function(){
+                     return'<strong>'+this.series.name+'</strong><br/>'+
+                         Highcharts.dateFormat('%Y-%m-%d %H:%M:%S',this.x)+'<br/>'+'使用率:'+this.y+' %';
+                 },
+             },
+             credits: {
+                 enabled: false
              },
              colors: ['#058DC7', '#ff3300'],
              plotOptions: {
@@ -135,29 +142,35 @@ Highcharts.setOptions({ global: { useUTC: false } });
                  zoomType: 'x'
              },
              title: {
-                 text: '物理机memory使用情况'
+                 text: '物理机内存使用情况'
              },
 
              xAxis: {
-                 type: 'datetime',
-                 // maxZoom:24 * 3600 * 1000, // x轴总共显示的时间
-                 //min:<?=strtotime(date('Y-m-d'))?>,
-                 dateTimeLabelFormats: {
-//                   minute: '%H:%M'
+                 type: 'datetime', 
+                 dateTimeLabelFormats: { 
                      day: '%H:%M'
                  }
              },
              yAxis: {
                  title: {
-                     text: 'used rate'
+                     text: 'used rate%'
                  },
-                 min:0
-
+                 min:0,
+                 max:100 
              },
              legend: {
                  layout: 'vertical',
                  align: 'right',
                  verticalAlign: 'middle'
+             },
+             tooltip: {
+                 formatter:function(){
+                     return'<strong>'+this.series.name+'</strong><br/>'+
+                         Highcharts.dateFormat('%Y-%m-%d %H:%M:%S',this.x)+'<br/>'+'使用率:'+this.y+' %';
+                 },
+             },
+             credits: {
+                 enabled: false
              },
              colors: ['#058DC7', '#ff3300'],
              plotOptions: {
@@ -199,17 +212,14 @@ Highcharts.setOptions({ global: { useUTC: false } });
              },
 
              xAxis: {
-                 type: 'datetime',
-                 // maxZoom:24 * 3600 * 1000, // x轴总共显示的时间
-                 //min:<?=strtotime(date('Y-m-d'))?>,
-                 dateTimeLabelFormats: {
-//                   minute: '%H:%M'
+                 type: 'datetime', 
+                 dateTimeLabelFormats: { 
                      day: '%H:%M'
                  }
              },
              yAxis: {
                  title: {
-                     text: 'used rate'
+                     text: 'used kb/s'
                  },
                  min:0
 
@@ -218,6 +228,15 @@ Highcharts.setOptions({ global: { useUTC: false } });
                  layout: 'vertical',
                  align: 'right',
                  verticalAlign: 'middle'
+             },
+             tooltip: {
+                 formatter:function(){
+                     return'<strong>'+this.series.name+'</strong><br/>'+
+                         Highcharts.dateFormat('%Y-%m-%d %H:%M:%S',this.x)+'<br/>'+'读写速度:'+this.y+' kb/s';
+                 },
+             },
+             credits: {
+                 enabled: false
              },
              colors: ['#058DC7', '#ff3300'],
              plotOptions: {
@@ -258,17 +277,14 @@ Highcharts.setOptions({ global: { useUTC: false } });
              },
 
              xAxis: {
-                 type: 'datetime',
-                 // maxZoom:24 * 3600 * 1000, // x轴总共显示的时间
-                 //min:<?=strtotime(date('Y-m-d'))?>,
-                 dateTimeLabelFormats: {
-//                   minute: '%H:%M'
+                 type: 'datetime', 
+                 dateTimeLabelFormats: { 
                      day: '%H:%M'
                  }
              },
              yAxis: {
                  title: {
-                     text: 'used rate'
+                     text: 'used kb/s'
                  },
                  min:0
              },
@@ -276,6 +292,15 @@ Highcharts.setOptions({ global: { useUTC: false } });
                  layout: 'vertical',
                  align: 'right',
                  verticalAlign: 'middle'
+             },
+             tooltip: {
+                 formatter:function(){
+                     return'<strong>'+this.series.name+'</strong><br/>'+
+                         Highcharts.dateFormat('%Y-%m-%d %H:%M:%S',this.x)+'<br/>'+'读写速度:'+this.y+' kb/s';
+                 },
+             },
+             credits: {
+                 enabled: false
              },
              colors: ['#058DC7', '#ff3300'],
              plotOptions: {

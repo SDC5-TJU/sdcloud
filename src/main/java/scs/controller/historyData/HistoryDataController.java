@@ -1,6 +1,5 @@
 package scs.controller.historyData;
-
-import org.apache.log4j.Logger; 
+ 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set; 
@@ -21,8 +20,7 @@ import scs.util.repository.Repository;
  *
  */
 @Controller
-public class HistoryDataController {
-	private static Logger logger = Logger.getLogger(HistoryDataController.class.getName());
+public class HistoryDataController { 
 
 	@Resource HistoryDataService service;
 	@Resource RecordManageService rService;
@@ -97,8 +95,7 @@ public class HistoryDataController {
 			} 
 			model.addAttribute("appUsageStr"+6,chartStrList.get(48));//绘制时间轴
 	
-		}catch(Exception e){
-			
+		}catch(Exception e){ 
 			e.printStackTrace();
 		}
 		model.addAttribute("startTime",startTime);
@@ -106,13 +103,8 @@ public class HistoryDataController {
 		return "appHistoryData";
 	}
 	@RequestMapping("/searchContainerHistoryDataBefore.do")
-	public String searchContainerHistoryData(HttpServletRequest request,Model model){
-		List<String> appNameList=new ArrayList<String>();
-		Set<String> appNameSet=Repository.appInfoMap.keySet(); 
-		for(String appName:appNameSet){
-			appNameList.add(appName);
-		}
-		model.addAttribute("appNameList",appNameList);
+	public String searchContainerHistoryData(HttpServletRequest request,Model model){  
+		model.addAttribute("appNameList",Repository.appInfoMap.keySet());
 		return "containerHistoryData";
 	}
 	/**
@@ -154,7 +146,8 @@ public class HistoryDataController {
 			e.printStackTrace();
 		}
 		model.addAttribute("startTime",startTime);
-		model.addAttribute("endTime",endTime);
+		model.addAttribute("endTime",endTime); 
+		model.addAttribute("appNameList",Repository.appInfoMap.keySet());
 		return "containerHistoryData";
 	}
 }
