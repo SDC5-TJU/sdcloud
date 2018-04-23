@@ -26,7 +26,7 @@ public class AppController {
 	private static Logger logger = Logger.getLogger(RecordManageController.class.getName());
 
 	@Autowired
-	@Qualifier("containerMonitor")
+	@Qualifier("appMonitor")
 	public AppMonitor appMonitor;
 
 	@RequestMapping(value="/getAppResourceUse.do")
