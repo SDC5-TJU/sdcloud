@@ -6,13 +6,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 
-import org.aspectj.apache.bcel.classfile.LineNumber;
 import org.junit.Test;
-import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -120,14 +117,14 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 					netIO[1] = Float.parseFloat(netSplit[10]) / 1024f / 1024f / 1024f;
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		return netIO;
 	}
 
-	public ArrayList<TableContainerresourceusage> getContainersPOJO(String hostname, String username, String password ,InputStream in) {
+	public ArrayList<TableContainerresourceusage> getContainersPOJO(String hostname, String username, String password,
+			InputStream in) {
 		if (in == null) {
 			return null;
 		}
@@ -159,16 +156,44 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 				record.setMemusagerate(parse3.floatValue());
 
 				// 容器net 资源监控 start
-				// String[] netArray = split[4].split("/");
-				// record.setNetinput(
-				// Float.parseFloat(netArray[0].trim().substring(0,
-				// netArray[0].trim().length() - 2)) * 1024f);
-				// record.setNetoutput(
-				// Float.parseFloat(netArray[1].trim().substring(0,
-				// netArray[1].trim().length() - 1)) / 1024f / 1024f);
-				float[] containerNetInfoStream = getContainerNetInfoStream(hostname, username, password, split[0]);
-				record.setNetinput(containerNetInfoStream[1]);
-				record.setNetoutput(containerNetInfoStream[0]);
+				String[] netArray = split[4].split("/");
+				if (netArray[0].trim().endsWith("MB")) {
+					record.setNetinput(
+							Float.parseFloat(netArray[0].trim().substring(0, netArray[0].trim().length() - 2)));
+				} else if (netArray[0].trim().endsWith("kB")) {
+					record.setNetinput(
+							Float.parseFloat(netArray[0].trim().substring(0, netArray[0].trim().length() - 2)) / 1024f);
+				} else if (netArray[0].trim().endsWith("GB")) {
+					record.setNetinput(
+							Float.parseFloat(netArray[0].trim().substring(0, netArray[0].trim().length() - 2)) * 1024f);
+				} else if (netArray[0].trim().endsWith("B") && !(netArray[0].trim().endsWith("GB")
+						|| netArray[0].trim().endsWith("kB") || netArray[0].trim().endsWith("MB"))) {
+					record.setNetinput(
+							Float.parseFloat(netArray[0].trim().substring(0, netArray[0].trim().length() - 1)) / 1024f
+									/ 1024f);
+				}
+				if (netArray[1].trim().endsWith("MB")) {
+					record.setNetoutput(
+							Float.parseFloat(netArray[1].trim().substring(0, netArray[1].trim().length() - 2)));
+				} else if (netArray[1].trim().endsWith("kB")) {
+					record.setNetoutput(
+							Float.parseFloat(netArray[1].trim().substring(0, netArray[1].trim().length() - 2)) / 1024f);
+				} else if (netArray[1].trim().endsWith("GB")) {
+					record.setNetoutput(
+							Float.parseFloat(netArray[1].trim().substring(0, netArray[1].trim().length() - 2)) * 1024f);
+				} else if (netArray[1].trim().endsWith("B") && !(netArray[1].trim().endsWith("GB")
+						|| netArray[1].trim().endsWith("kB") || netArray[1].trim().endsWith("MB"))) {
+					record.setNetoutput(
+							Float.parseFloat(netArray[1].trim().substring(0, netArray[1].trim().length() - 1)) / 1024f
+									/ 1024f);
+				}
+//				record.setNetinput(
+//						Float.parseFloat(netArray[0].trim().substring(0, netArray[0].trim().length() - 2)) * 1024f);
+//				record.setNetoutput(Float.parseFloat(netArray[1].trim().substring(0, netArray[1].trim().length() - 1))
+//						/ 1024f / 1024f);
+//				float[] containerNetInfoStream = getContainerNetInfoStream(hostname, username, password, split[0]);
+//				record.setNetinput(containerNetInfoStream[1]);
+//				record.setNetoutput(containerNetInfoStream[0]);
 				// 容器net 资源监控 end
 				String[] ioArray = split[5].split("/");
 				if (ioArray[0].trim().endsWith("MB")) {
