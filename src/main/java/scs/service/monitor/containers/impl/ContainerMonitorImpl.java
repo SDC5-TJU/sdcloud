@@ -117,7 +117,7 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 		}
 		return netIO;
 	}
-
+	
 	public ArrayList<TableContainerresourceusage> getContainersPOJO(String hostname, String username, String password,
 			InputStream in) {
 		if (in == null) {
@@ -141,7 +141,7 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 				NumberFormat percentInstance = NumberFormat.getPercentInstance();
 
 				Number parse1 = percentInstance.parse(split[1]);
-				record.setCpuusagerate(DataFormats.getInstance().subFloat(parse1.floatValue(), 2));
+				record.setCpuusagerate(DataFormats.getInstance().subFloat(parse1.floatValue(), 4));
 
 				String mem = split[2].split("\\s")[0];
 				if ("K".equalsIgnoreCase(mem.substring(mem.length() - 3,mem.length() - 2))) {
@@ -157,11 +157,10 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 					mem = mem.substring(0, mem.length() - 1);
 					record.setMemusageamount(DataFormats.getInstance().subFloat(Float.parseFloat(mem) / 1024f / 1024f, 2));
 				}
-				
 
 				Number parse3 = percentInstance.parse(split[3]);
-				record.setMemusagerate(parse3.floatValue());
-
+				record.setMemusagerate(DataFormats.getInstance().subFloat(parse3.floatValue(), 4));
+				
 				// 容器net 资源监控 start
 				String[] netArray = split[4].split("/");
 				if (netArray[0].trim().endsWith("MB")) {
