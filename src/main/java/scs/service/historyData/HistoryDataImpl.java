@@ -125,7 +125,7 @@ public class HistoryDataImpl implements HistoryDataService {
 			return chartStrList;
 		}
 		/*
-		 * 绘制应用CPU使用率曲线
+		 * 绘制容器CPU使用率曲线
 		 */
 		StringBuffer strName=new StringBuffer();
 		StringBuffer strData=new StringBuffer();
@@ -141,7 +141,7 @@ public class HistoryDataImpl implements HistoryDataService {
 		HSeries.append(strName).append(strData).append(",marker:{enabled:false}}");
 		chartStrList.add(HSeries.toString());
 		/*
-		 * 绘制应用内存使用率曲线
+		 * 绘制容器内存使用率曲线
 		 */
 		strName.setLength(0);
 		strData.setLength(0);
@@ -155,59 +155,63 @@ public class HistoryDataImpl implements HistoryDataService {
 		HSeries.append(strName).append(strData).append(",marker:{enabled:false}}");
 		chartStrList.add(HSeries.toString());
 		/*
-		 * 绘制应用IO input使用量曲线
+		 * 绘制容器IO input使用量曲线
 		 */
 		strName.setLength(0);
 		strData.setLength(0);
 		HSeries.setLength(0);
 		strName.append("{name:'").append(containerName).append("',");
 		strData.append("data:["); 
+		Float originIoInput=list.get(0).getIoInput();
 		for(int i=0;i<size;i++){
-			strData.append(list.get(i).getIoInput()).append(",");
+			strData.append(list.get(i).getIoInput()-originIoInput).append(",");
 		}
-		strData.append(list.get(size).getIoInput()).append("]");
+		strData.append(list.get(size).getIoInput()-originIoInput).append("]");
 		HSeries.append(strName).append(strData).append(",marker:{enabled:false}}");
 		chartStrList.add(HSeries.toString());
 		/*
-		 * 绘制应用IO output使用量曲线
+		 * 绘制容器IO output使用量曲线
 		 */
 		strName.setLength(0);
 		strData.setLength(0);
 		HSeries.setLength(0);
 		strName.append("{name:'").append(containerName).append("',");
 		strData.append("data:[");
+		Float originIoOutput=list.get(0).getIoOutput();
 		for(int i=0;i<size;i++){
-			strData.append(list.get(i).getIoOutput()).append(",");
+			strData.append(list.get(i).getIoOutput()-originIoOutput).append(",");
 		}
-		strData.append(list.get(size).getIoOutput()).append("]");
+		strData.append(list.get(size).getIoOutput()-originIoOutput).append("]");
 		HSeries.append(strName).append(strData).append(",marker:{enabled:false}}");
 		chartStrList.add(HSeries.toString());
 		/*
-		 * 绘制应用Net input使用量曲线
+		 * 绘制容器Net input使用量曲线
 		 */
 		strName.setLength(0);
 		strData.setLength(0);
 		HSeries.setLength(0);
 		strName.append("{name:'").append(containerName).append("',");
 		strData.append("data:["); 
+		Float originNetInput=list.get(0).getNetInput();
 		for(int i=0;i<size;i++){
-			strData.append(list.get(i).getNetInput()).append(",");
+			strData.append(list.get(i).getNetInput()-originNetInput).append(",");
 		}
-		strData.append(list.get(size).getNetInput()).append("]");
+		strData.append(list.get(size).getNetInput()-originNetInput).append("]");
 		HSeries.append(strName).append(strData).append(",marker:{enabled:false}}");
 		chartStrList.add(HSeries.toString());
 		/*
-		 * 绘制应用Net output使用量曲线
+		 * 绘制容器Net output使用量曲线
 		 */
 		strName.setLength(0);
 		strData.setLength(0);
 		HSeries.setLength(0);
 		strName.append("{name:'").append(containerName).append("',");
 		strData.append("data:["); 
+		Float originNetOutput=list.get(0).getNetOutput();
 		for(int i=0;i<size;i++){
-			strData.append(list.get(i).getNetOutput()).append(",");
+			strData.append(list.get(i).getNetOutput()-originNetOutput).append(",");
 		}
-		strData.append(list.get(size).getNetOutput()).append("]");
+		strData.append(list.get(size).getNetOutput()-originNetOutput).append("]");
 		HSeries.append(strName).append(strData).append(",marker:{enabled:false}}");
 		chartStrList.add(HSeries.toString());
 		/*
@@ -292,10 +296,11 @@ public class HistoryDataImpl implements HistoryDataService {
 		HSeries.setLength(0);
 		strName.append("{name:'").append(applicationName).append("',");
 		strData.append("data:["); 
+		Float originIoInput=list.get(0).getIoInput();
 		for(int i=0;i<size;i++){
-			strData.append(list.get(i).getIoInput()).append(",");
+			strData.append(list.get(i).getIoInput()-originIoInput).append(",");
 		}
-		strData.append(list.get(size).getIoInput()).append("]");
+		strData.append(list.get(size).getIoInput()-originIoInput).append("]");
 		HSeries.append(strName).append(strData).append(",marker:{enabled:false}}");
 		chartStrList.add(HSeries.toString());
 		/*
@@ -306,10 +311,11 @@ public class HistoryDataImpl implements HistoryDataService {
 		HSeries.setLength(0);
 		strName.append("{name:'").append(applicationName).append("',");
 		strData.append("data:[");
+		Float originIoOutput=list.get(0).getIoOutput();
 		for(int i=0;i<size;i++){
-			strData.append(list.get(i).getIoOutput()).append(",");
+			strData.append(list.get(i).getIoOutput()-originIoOutput).append(",");
 		}
-		strData.append(list.get(size).getIoOutput()).append("]");
+		strData.append(list.get(size).getIoOutput()-originIoOutput).append("]");
 		HSeries.append(strName).append(strData).append(",marker:{enabled:false}}");
 		chartStrList.add(HSeries.toString());
 		/*
@@ -318,12 +324,13 @@ public class HistoryDataImpl implements HistoryDataService {
 		strName.setLength(0);
 		strData.setLength(0);
 		HSeries.setLength(0);
+		Float originNetInput=list.get(0).getNetInput();
 		strName.append("{name:'").append(applicationName).append("',");
 		strData.append("data:["); 
 		for(int i=0;i<size;i++){
-			strData.append(list.get(i).getNetInput()).append(",");
+			strData.append(list.get(i).getNetInput()-originNetInput).append(",");
 		}
-		strData.append(list.get(size).getNetInput()).append("]");
+		strData.append(list.get(size).getNetInput()-originNetInput).append("]");
 		HSeries.append(strName).append(strData).append(",marker:{enabled:false}}");
 		chartStrList.add(HSeries.toString());
 		/*
@@ -334,10 +341,11 @@ public class HistoryDataImpl implements HistoryDataService {
 		HSeries.setLength(0);
 		strName.append("{name:'").append(applicationName).append("',");
 		strData.append("data:["); 
+		Float originNetOutput=list.get(0).getNetOutput();
 		for(int i=0;i<size;i++){
-			strData.append(list.get(i).getNetOutput()).append(",");
+			strData.append(list.get(i).getNetOutput()-originNetOutput).append(",");
 		}
-		strData.append(list.get(size).getNetOutput()).append("]");
+		strData.append(list.get(size).getNetOutput()-originNetOutput).append("]");
 		HSeries.append(strName).append(strData).append(",marker:{enabled:false}}");
 		chartStrList.add(HSeries.toString());
 		/*

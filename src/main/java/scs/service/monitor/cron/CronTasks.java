@@ -1,7 +1,6 @@
 package scs.service.monitor.cron;
 
 import java.io.InputStream;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -18,7 +17,6 @@ import scs.pojo.TableSystemresourceusage;
 import scs.service.monitor.app.AppMonitor;
 import scs.service.monitor.containers.ContainerMonitor;
 import scs.service.monitor.system.SystemMonitor;
-import scs.util.format.DateFormats;
 import scs.util.repository.Repository;
 
 @Service
@@ -37,7 +35,8 @@ public class CronTasks {
 	public SystemMonitor systemMonitor;
 
 	public void testCron() {
-		System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date(System.currentTimeMillis())));
+		System.out.println(
+				new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date(System.currentTimeMillis())));
 		if (Repository.cronFlag != 1) {
 			System.out.println("停止");
 			return;
@@ -72,6 +71,11 @@ public class CronTasks {
 		// 添加进全局 appRealUsageMap 变量
 		Repository.appRealUsageMap = aggregateAPPResourceUsage;
 
+		System.out.println(
+				new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date(System.currentTimeMillis())));
+	}
+
+	public void testCronSystem() {
 		// 调用systemresourceusage
 		ArrayList<TableSystemresourceusage> systemDataList = systemMonitor.getSystemDataList(Repository.systemInfoMap);
 		systemMonitor.testInsert(systemDataList);
@@ -79,7 +83,5 @@ public class CronTasks {
 		for (TableSystemresourceusage tableSystemresourceusage : systemDataList) {
 			Repository.systemRealUsageMap.put(tableSystemresourceusage.getHostname(), tableSystemresourceusage);
 		}
-		System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date(System.currentTimeMillis())));
 	}
-
 }

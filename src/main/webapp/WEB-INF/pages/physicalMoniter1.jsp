@@ -27,9 +27,13 @@
 		<div id="container1"></div>
 		<div id="container2"></div>
 		<div id="containerControl">
-			<span style="font-family: 微软雅黑; font-size: 14px;">线程控制:</span><input
-				type="button" id="startButton" value="开始" onclick="start();"
-				style="cursor: pointer">
+			<span style="font-family: 微软雅黑; font-size: 14px;">线程控制:</span>
+			<c:if test="${cronFlag==1}">
+			<input type="button" id="startButton" value="暂停" onclick="start();" style="cursor: pointer">
+			</c:if>
+			<c:if test="${cronFlag==0}">
+			<input type="button" id="startButton" value="继续" onclick="start();" style="cursor: pointer">
+			</c:if>
 		</div> 
 		<div id="container3"></div>
 		<div id="container4"></div> 
@@ -56,11 +60,33 @@
 			},3000);
 	function start(){
 		if(flag==true){
-			flag=false;
-			document.getElementById('startButton').value="继续";
+			 $.ajax({
+					async:true,
+					type:"post",
+					url:"monitor/cronFlag.do",
+					data:{flag:0},
+					dataType:"text",
+					success:function(returned){
+						 if(returned=="0"){
+							 flag=false;
+							 document.getElementById('startButton').value="继续";
+						 }
+					}	
+				}); 
 		}else{
-			flag=true;
-			document.getElementById('startButton').value="暂停";
+			$.ajax({
+				async:true,
+				type:"post",
+				url:"monitor/cronFlag.do",
+				data:{flag:1},
+				dataType:"text",
+				success:function(returned){
+					 if(returned=="1"){
+						 flag=true;
+						 document.getElementById('startButton').value="暂停";
+					 }
+				}	
+			});
 		}
 	}
 	 
