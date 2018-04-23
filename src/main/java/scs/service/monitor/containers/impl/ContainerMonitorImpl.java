@@ -173,28 +173,28 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 				String[] ioArray = split[5].split("/");
 				if (ioArray[0].trim().endsWith("MB")) {
 					record.setIoinput(Float.parseFloat(ioArray[0].trim().substring(0, ioArray[0].trim().length() - 2)));
-				} else if (ioArray[0].trim().endsWith("KB")) {
+				} else if (ioArray[0].trim().endsWith("kB")) {
 					record.setIoinput(
 							Float.parseFloat(ioArray[0].trim().substring(0, ioArray[0].trim().length() - 2)) / 1024f);
 				} else if (ioArray[0].trim().endsWith("GB")) {
 					record.setIoinput(
 							Float.parseFloat(ioArray[0].trim().substring(0, ioArray[0].trim().length() - 2)) * 1024f);
 				} else if (ioArray[0].trim().endsWith("B") && !(ioArray[0].trim().endsWith("GB")
-						|| ioArray[0].trim().endsWith("KB") || ioArray[0].trim().endsWith("MB"))) {
+						|| ioArray[0].trim().endsWith("kB") || ioArray[0].trim().endsWith("MB"))) {
 					record.setIoinput(Float.parseFloat(ioArray[0].trim().substring(0, ioArray[0].trim().length() - 1))
 							/ 1024f / 1024f);
 				}
 				if (ioArray[1].trim().endsWith("MB")) {
 					record.setIooutput(
 							Float.parseFloat(ioArray[1].trim().substring(0, ioArray[1].trim().length() - 2)));
-				} else if (ioArray[1].trim().endsWith("KB")) {
+				} else if (ioArray[1].trim().endsWith("kB")) {
 					record.setIooutput(
 							Float.parseFloat(ioArray[1].trim().substring(0, ioArray[1].trim().length() - 2)) / 1024f);
 				} else if (ioArray[1].trim().endsWith("GB")) {
 					record.setIooutput(
 							Float.parseFloat(ioArray[1].trim().substring(0, ioArray[1].trim().length() - 2)) * 1024f);
 				} else if (ioArray[1].trim().endsWith("B") && !(ioArray[1].trim().endsWith("GB")
-						|| ioArray[1].trim().endsWith("KB") || ioArray[1].trim().endsWith("MB"))) {
+						|| ioArray[1].trim().endsWith("kB") || ioArray[1].trim().endsWith("MB"))) {
 					record.setIooutput(Float.parseFloat(ioArray[1].trim().substring(0, ioArray[1].trim().length() - 1))
 							/ 1024f / 1024f);
 				}
