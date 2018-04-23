@@ -44,10 +44,9 @@ public class RecordManageController {
 		return "index";
 	}
 	@RequestMapping("/getCurRecordId.do")
-	public void getCurRecordId(HttpServletRequest request,HttpServletResponse response){	 
-		try {
-			String curRecordId=Integer.toString(Repository.curTestRecordId);
-			response.getWriter().write(curRecordId);
+	public void getCurRecordId(HttpServletResponse response){	 
+		try { 
+			response.getWriter().write(Integer.toString(Repository.curTestRecordId));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -161,7 +160,8 @@ public class RecordManageController {
 		for(int i=0;i<seriesStrList.size()-1;i++){
 			seriesStr.append(seriesStrList.get(i)).append(",");
 		}
-		seriesStr.append(seriesStrList.get(seriesStrList.size()-1));
+		if(seriesStrList.size()>0)
+			seriesStr.append(seriesStrList.get(seriesStrList.size()-1));
 		model.addAttribute("appRecordStr",seriesStr.toString());
 		//System.out.println(seriesStr.toString());
 		/*
@@ -180,7 +180,8 @@ public class RecordManageController {
 		for(int i=0;i<seriesStrList.size()-1;i++){
 			seriesStr.append(seriesStrList.get(i)).append(",");
 		}
-		seriesStr.append(seriesStrList.get(seriesStrList.size()-1));
+		if(seriesStrList.size()>0)
+			seriesStr.append(seriesStrList.get(seriesStrList.size()-1));
 		model.addAttribute("appRecordLineStr",seriesStr.toString());
 		//System.out.println(seriesStr.toString());
 		/*

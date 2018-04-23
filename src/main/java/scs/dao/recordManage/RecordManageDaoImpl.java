@@ -86,7 +86,7 @@ public class RecordManageDaoImpl extends MySQLBaseDao implements RecordManageDao
 				result = startTime;
 				// 代码段开始
 				// 读取容器资源使用信息的调用位置 to do
-				String[] hosts = { "192.168.1.128", "192.168.1.147" };
+			/*	String[] hosts = { "192.168.1.128", "192.168.1.147" };
 				String hostname = "192.168.1.128";
 				String username = "tank";
 				String password = "tanklab";
@@ -121,7 +121,7 @@ public class RecordManageDaoImpl extends MySQLBaseDao implements RecordManageDao
 					tableContainerresourceusagestart.setMemusagerate(combineList.get(i).getMemusagerate());
 					// 插入表格
 					mapper.insert(tableContainerresourceusagestart);
-				}
+				}*/
 				// 代码段结束
 			}
 		} else {

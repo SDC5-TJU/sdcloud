@@ -121,7 +121,7 @@ $(document).ready(function() {
     	    }]
     	},
         title: {
-            text: '物理机CPU使用率'
+            text: '物理机CPU使用率 %'
         },
         yAxis: {
             title: {
@@ -163,7 +163,7 @@ $(document).ready(function() {
 	  	    }]
 	  	},
          title: {
-             text: '物理机memory使用情况'
+             text: '物理机memory使用率 %'
          },
          colors: ['#058DC7', '#ff3300'],
          xAxis:{
@@ -200,7 +200,7 @@ $(document).ready(function() {
   	  	    }]
   	  	},
          title: {
-             text: '物理机I/O使用情况'
+             text: '物理机I/O读写速度 KB/s'
          },
          colors: ['#058DC7', '#ff3300'],
          xAxis:{
@@ -235,7 +235,7 @@ $(document).ready(function() {
   	  	    }]
   	  	},
          title: {
-             text: '物理机网络使用情况'
+             text: '物理机网络读写速度 KB/s'
          },
          colors: ['#058DC7', '#ff3300'],
          xAxis:{
@@ -250,7 +250,7 @@ $(document).ready(function() {
              zoomType: 'x'
          },
          title: {
-             text: '各应用CPU占用情况'
+             text: '各应用CPU使用率 %'
          },
          xAxis: {
              categories: ${appUsageStr6},
@@ -294,7 +294,7 @@ $(document).ready(function() {
              zoomType: 'x'
          },
          title: {
-             text: '各应用内存占用情况'
+             text: '各应用内存使用率 %'
          },
          xAxis: {
              categories: ${appUsageStr6},
@@ -338,7 +338,7 @@ $(document).ready(function() {
              type: 'area'
          },
          title: {
-             text: 'I/O input'
+             text: 'I/O input /MB'
          },
          xAxis: {
              categories: ${appUsageStr6},
@@ -382,7 +382,7 @@ $(document).ready(function() {
              type: 'area'
          },
          title: {
-             text: 'I/O output'
+             text: 'I/O output /MB'
          },
          xAxis: {
              categories: ${appUsageStr6},
@@ -426,7 +426,7 @@ $(document).ready(function() {
              type: 'area'
          },
          title: {
-             text: 'net input'
+             text: 'net input /MB'
          },
          xAxis: {
              categories: ${appUsageStr6},
@@ -470,7 +470,7 @@ $(document).ready(function() {
              type: 'area'
          },
          title: {
-             text: 'net output'
+             text: 'net output /MB'
          },
          xAxis: {
              categories: ${appUsageStr6},

@@ -219,7 +219,7 @@ Highcharts.setOptions({ global: { useUTC: false } });
              },
              yAxis: {
                  title: {
-                     text: 'used kb/s'
+                     text: 'used KB/s'
                  },
                  min:0
 
@@ -232,7 +232,7 @@ Highcharts.setOptions({ global: { useUTC: false } });
              tooltip: {
                  formatter:function(){
                      return'<strong>'+this.series.name+'</strong><br/>'+
-                         Highcharts.dateFormat('%Y-%m-%d %H:%M:%S',this.x)+'<br/>'+'读写速度:'+this.y+' kb/s';
+                         Highcharts.dateFormat('%Y-%m-%d %H:%M:%S',this.x)+'<br/>'+'读写速度:'+this.y+' KB/s';
                  },
              },
              credits: {
@@ -284,7 +284,7 @@ Highcharts.setOptions({ global: { useUTC: false } });
              },
              yAxis: {
                  title: {
-                     text: 'used kb/s'
+                     text: 'used KB/s'
                  },
                  min:0
              },
@@ -296,7 +296,7 @@ Highcharts.setOptions({ global: { useUTC: false } });
              tooltip: {
                  formatter:function(){
                      return'<strong>'+this.series.name+'</strong><br/>'+
-                         Highcharts.dateFormat('%Y-%m-%d %H:%M:%S',this.x)+'<br/>'+'读写速度:'+this.y+' kb/s';
+                         Highcharts.dateFormat('%Y-%m-%d %H:%M:%S',this.x)+'<br/>'+'读写速度:'+this.y+' KB/s';
                  },
              },
              credits: {
