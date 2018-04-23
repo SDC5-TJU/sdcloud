@@ -19,6 +19,8 @@ import ch.ethz.ssh2.StreamGobbler;
 import scs.dao.monitor.DAOmapper.TableContainerresourceusageMapper;
 import scs.pojo.TableContainerresourceusage;
 import scs.service.monitor.containers.ContainerMonitor;
+import scs.util.format.DataFormats;
+import scs.util.format.DateFormats;
 
 @Service("containerMonitor")
 public class ContainerMonitorImpl implements ContainerMonitor {
@@ -141,21 +143,21 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 				NumberFormat percentInstance = NumberFormat.getPercentInstance();
 
 				Number parse1 = percentInstance.parse(split[1]);
-				record.setCpuusagerate(parse1.floatValue());
+				record.setCpuusagerate(DataFormats.getInstance().subFloat(parse1.floatValue(), 2));
 
 				String mem = split[2].split("\\s")[0];
 				if ("K".equalsIgnoreCase(mem.substring(mem.length() - 3,mem.length() - 2))) {
 					mem = mem.substring(0, mem.length() - 3);
-					record.setMemusageamount(Float.parseFloat(mem) / 1024f);
+					record.setMemusageamount(DataFormats.getInstance().subFloat(Float.parseFloat(mem) / 1024f, 2));
 				}else if ("G".equalsIgnoreCase(mem.substring(mem.length() - 3,mem.length() - 2))) {
 					mem = mem.substring(0, mem.length() - 3);
-					record.setMemusageamount(Float.parseFloat(mem) * 1024f);
+					record.setMemusageamount(DataFormats.getInstance().subFloat(Float.parseFloat(mem) * 1024f, 2));
 				}else if ("M".equalsIgnoreCase(mem.substring(mem.length() - 3,mem.length() - 2))) {
 					mem = mem.substring(0, mem.length() - 3);
-					record.setMemusageamount(Float.parseFloat(mem));
+					record.setMemusageamount(DataFormats.getInstance().subFloat(Float.parseFloat(mem), 2));
 				}else {
 					mem = mem.substring(0, mem.length() - 1);
-					record.setMemusageamount(Float.parseFloat(mem) / 1024f / 1024f);
+					record.setMemusageamount(DataFormats.getInstance().subFloat(Float.parseFloat(mem) / 1024f / 1024f, 2));
 				}
 				
 
