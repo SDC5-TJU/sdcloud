@@ -121,11 +121,11 @@ $(document).ready(function() {
     	    }]
     	},
         title: {
-            text: '物理机CPU使用率'
+            text: '物理机CPU使用率 %'
         },
         yAxis: {
             title: {
-                text: 'Exchange rate'
+                text: 'used rate'
             },
        	    min:0,
        	    max:100
@@ -163,11 +163,18 @@ $(document).ready(function() {
 	  	    }]
 	  	},
          title: {
-             text: '物理机memory使用情况'
+             text: '物理机memory使用率 %'
          },
          colors: ['#058DC7', '#ff3300'],
          xAxis:{
            	 plotLines:[${appRecordLineStr}]
+           },
+           yAxis: {
+               title: {
+                   text: 'Exchange rate'
+               },
+          	    min:0,
+          	    max:100
            },
             series: [${sysUsageStr1},${appRecordStr}]
          });
@@ -200,11 +207,17 @@ $(document).ready(function() {
   	  	    }]
   	  	},
          title: {
-             text: '物理机I/O使用情况'
+             text: '物理机I/O读写速度 KB/s'
          },
          colors: ['#058DC7', '#ff3300'],
          xAxis:{
            	 plotLines:[${appRecordLineStr}]
+           },
+           yAxis: {
+               title: {
+                   text: 'speed'
+               },
+          	    min:0 
            },
             series: [${sysUsageStr2},${appRecordStr}]
          });
@@ -235,22 +248,31 @@ $(document).ready(function() {
   	  	    }]
   	  	},
          title: {
-             text: '物理机网络使用情况'
+             text: '物理机网络读写速度 KB/s'
          },
          colors: ['#058DC7', '#ff3300'],
          xAxis:{
            	 plotLines:[${appRecordLineStr}]
            },
+           yAxis: {
+               title: {
+                   text: 'speed'
+               },
+          	    min:0 
+           },
             series: [${sysUsageStr3},${appRecordStr}]
          });
 
      Highcharts.chart('websearch5', {
+    	 credits:{ 
+   	      enabled:false 
+   	    },
          chart: {
              type: 'area',
              zoomType: 'x'
          },
          title: {
-             text: '各应用CPU占用情况'
+             text: '各应用CPU使用率 %'
          },
          xAxis: {
              categories: ${appUsageStr6},
@@ -263,8 +285,8 @@ $(document).ready(function() {
              title: {
                  text: '使用率%'
              },
-             min:0
-
+             min:0,
+             max:100 
          },
          legend: {
              align: 'center', //水平方向位置
@@ -290,12 +312,15 @@ $(document).ready(function() {
          series: [${appUsageStr0}]
      });
      Highcharts.chart('websearch6', {
+    	 credits:{ 
+   	      enabled:false 
+   	    },
          chart: {
              type: 'area',
              zoomType: 'x'
          },
          title: {
-             text: '各应用内存占用情况'
+             text: '各应用内存使用率 %'
          },
          xAxis: {
              categories: ${appUsageStr6},
@@ -308,8 +333,8 @@ $(document).ready(function() {
              title: {
                  text: '使用率%'
              },
-             min:0
-
+             min:0,
+             max:100 
          },
          legend: {
              align: 'center', //水平方向位置
@@ -336,11 +361,14 @@ $(document).ready(function() {
      });
      
      Highcharts.chart('websearch7', {
+    	 credits:{ 
+   	      enabled:false 
+   	    },
          chart: {
              type: 'area'
          },
          title: {
-             text: 'I/O input'
+             text: 'I/O input /MB'
          },
          xAxis: {
              categories: ${appUsageStr6},
@@ -381,11 +409,14 @@ $(document).ready(function() {
      });
      
      Highcharts.chart('websearch8', {
+    	 credits:{ 
+   	      enabled:false 
+   	    },
          chart: {
              type: 'area'
          },
          title: {
-             text: 'I/O output'
+             text: 'I/O output /MB'
          },
          xAxis: {
              categories: ${appUsageStr6},
@@ -426,11 +457,14 @@ $(document).ready(function() {
      });
 
      Highcharts.chart('websearch9', {
+    	 credits:{ 
+   	      enabled:false 
+   	    },
          chart: {
              type: 'area'
          },
          title: {
-             text: 'net input'
+             text: 'net input /MB'
          },
          xAxis: {
              categories: ${appUsageStr6},
@@ -471,11 +505,14 @@ $(document).ready(function() {
      });
      
      Highcharts.chart('websearch10', {
+    	 credits:{ 
+   	      enabled:false 
+   	    },
          chart: {
              type: 'area'
          },
          title: {
-             text: 'net output'
+             text: 'net output /MB'
          },
          xAxis: {
              categories: ${appUsageStr6},

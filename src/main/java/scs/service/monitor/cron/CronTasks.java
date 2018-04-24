@@ -35,10 +35,7 @@ public class CronTasks {
 	public SystemMonitor systemMonitor;
 
 	public void testCron() {
-		System.out.println(
-				new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date(System.currentTimeMillis())));
 		if (Repository.cronFlag != 1) {
-			System.out.println("停止");
 			return;
 		}
 		// Repository.cronFlag = 0;
@@ -70,12 +67,12 @@ public class CronTasks {
 		appMonitor.testInsert(aggregateAPPResourceUsage);
 		// 添加进全局 appRealUsageMap 变量
 		Repository.appRealUsageMap = aggregateAPPResourceUsage;
-
-		System.out.println(
-				new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date(System.currentTimeMillis())));
 	}
 
 	public void testCronSystem() {
+		if (Repository.cronFlag != 1) {
+			return;
+		}
 		// 调用systemresourceusage
 		ArrayList<TableSystemresourceusage> systemDataList = systemMonitor.getSystemDataList(Repository.systemInfoMap);
 		systemMonitor.testInsert(systemDataList);

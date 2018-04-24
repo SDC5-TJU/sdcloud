@@ -44,7 +44,7 @@ public class SystemMonitorImpl implements SystemMonitor {
 			Entry<String, SystemInfoBean> next = iterator.next();
 			try {
 				String addr = "rmi://" + next.getValue().getHostIp() + ":33334/rmiSystemMonitor";
-				System.out.println(addr);
+				// System.out.println(addr);
 				RMISystemMonitorInterface systemMonitorInterface = (RMISystemMonitorInterface) Naming.lookup(addr);
 				TableSystemresourceusage systemData = systemMonitorInterface.getSystemData(next.getKey(), "eth0",
 						currentTime);
@@ -91,13 +91,13 @@ public class SystemMonitorImpl implements SystemMonitor {
 		example.setOrderByClause("collectTime DESC");
 		// limit 60
 		example.setLimit(60);
-		// where hostName = "node28SDC/node26SDC" 
+		// where hostName = "node28SDC/node26SDC"
 		example.createCriteria().andHostnameEqualTo(hostName);
 		List<TableSystemresourceusage> selectByExample = tableSystemresourceusageMapper.selectByExample(example);
 		Collections.reverse(selectByExample);
 		return selectByExample;
 	}
-	
+
 	public int testSelect2(int number) {
 		String hostName = "";
 		if (number == Repository.PhysicalMachine128) {
@@ -112,7 +112,7 @@ public class SystemMonitorImpl implements SystemMonitor {
 		example.setOrderByClause("collectTime DESC");
 		// limit 60
 		example.setLimit(60);
-		// where hostName = "node28SDC/node26SDC" 
+		// where hostName = "node28SDC/node26SDC"
 		example.createCriteria().andHostnameEqualTo(hostName);
 		List<TableSystemresourceusage> selectByExample = tableSystemresourceusageMapper.selectByExample(example);
 		return selectByExample.size();

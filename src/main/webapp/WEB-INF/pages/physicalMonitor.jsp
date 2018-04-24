@@ -25,7 +25,9 @@
 
 	<div id="mainDiv">
 		<div id="container1"></div>
-		<div id="container2"></div>
+		<div id="container2"></div> 
+		<div id="container3"></div>
+		<div id="container4"></div> 
 		<div id="containerControl">
 			<span style="font-family: 微软雅黑; font-size: 14px;">线程控制:</span>
 			<c:if test="${cronFlag==1}">
@@ -35,8 +37,6 @@
 			<input type="button" id="startButton" value="继续" onclick="start();" style="cursor: pointer">
 			</c:if>
 		</div> 
-		<div id="container3"></div>
-		<div id="container4"></div> 
 
 		<script type="text/javascript" src="statics/js/jquery-1.9.1.js"></script>
 		<script type="text/javascript" src="statics/js/highcharts.js"></script>
@@ -57,7 +57,7 @@
 						}
 					}	
 				});
-			},3000);
+			},1000);
 	function start(){
 		if(flag==true){
 			 $.ajax({
@@ -115,7 +115,7 @@
                     	if(flag==true){
 			              if(returnedData!=null){
 			            	    x = returnedData[0].collecttime.time;
-			            	    y = returnedData[0].cpuusagerate;
+			            	    y = returnedData[0].cpuusagerate*100;
 			            	    if(lastcollecttime==null){//如果第一次判断 直接添加点进去
 			            	    	 series.addPoint([x,y], true, true); 
 			            	    	 lastcollecttime = x;
@@ -324,7 +324,7 @@
               }
           },
           title: {
-              text: 'IO used(kb/s)'
+              text: 'IO used(KB/s)'
           },
           xAxis: {
           	type: 'datetime',
@@ -333,7 +333,7 @@
           },
           yAxis: {
               title: {
-                  text: 'usage kb/s'
+                  text: 'usage KB/s'
               },
               plotLines: [{
                   value: 0,
@@ -346,7 +346,7 @@
               formatter: function () {
                   return '<b>' + this.series.name + '</b><br/>' +
                       Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
-                      Highcharts.numberFormat(this.y, 0)+'kb/s';
+                      Highcharts.numberFormat(this.y, 0)+'KB/s';
               }
           },
           legend: {
@@ -419,7 +419,7 @@
                }
            },
            title: {
-               text: 'net used(kb/s)'
+               text: 'net used(KB/s)'
            },
            xAxis: {
            	type: 'datetime',
@@ -428,7 +428,7 @@
            },
            yAxis: {
                title: {
-                   text: 'usage kb/s'
+                   text: 'usage KB/s'
                },
                plotLines: [{
                    value: 0,
@@ -441,7 +441,7 @@
                formatter: function () {
                    return '<b>' + this.series.name + '</b><br/>' +
                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
-                       Highcharts.numberFormat(this.y, 2)+'kb/s';
+                       Highcharts.numberFormat(this.y, 2)+'KB/s';
                }
            },
            legend: {

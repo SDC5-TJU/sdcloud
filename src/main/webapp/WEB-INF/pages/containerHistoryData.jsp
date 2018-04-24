@@ -23,7 +23,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 function search(){
 	var appName=document.getElementById("appName").value;
 	if(appName==""){
-		Showbo.Msg.alert("请选择容器");
+		Showbo.Msg.alert("请选择应用");
 	}else{
 		document.getElementById("listform1").submit();   
 	}
@@ -64,7 +64,7 @@ function setAppName(){
 					<li><select name="selectOperator" class="input w50" 
 					    style="width: 180px; line-height: 17px; display: inline-block"
 						id="selectApp" onchange="setAppName()">
-							<option value="">请选择容器</option>
+							<option value="">请选择应用</option>
 							<c:forEach var="list" items="${appNameList}" varStatus="status">
 								<option value="${list}" >${list}</option>
 							</c:forEach>
@@ -215,7 +215,7 @@ function setAppName(){
                 type: 'area'
             },
             title: {
-                text: 'I/O input(kb)'
+                text: 'I/O input(MB)'
             },
             xAxis: {
                 categories: ${containerUsageStr6},
@@ -226,7 +226,7 @@ function setAppName(){
             },
             yAxis: {
                 title: {
-                    text: 'kb'
+                    text: 'MB'
                 },
                 min:0
 
@@ -238,7 +238,7 @@ function setAppName(){
             },
             tooltip: {
                 split: true,
-                valueSuffix: ' kb'
+                valueSuffix: ' MB'
             },
             credits: {
                 enabled: false
@@ -273,7 +273,7 @@ function setAppName(){
             },
             yAxis: {
                 title: {
-                    text: 'kb'
+                    text: 'MB'
                 },
                 min:0
 
@@ -285,7 +285,7 @@ function setAppName(){
             },
             tooltip: {
                 split: true,
-                valueSuffix: ' kb'
+                valueSuffix: ' MB'
             },
             credits: {
                 enabled: false
@@ -309,7 +309,7 @@ function setAppName(){
                 type: 'area'
             },
             title: {
-                text: 'net input(kb)'
+                text: 'net input(MB)'
             },
             xAxis: {
                 categories: ${containerUsageStr6},
@@ -320,7 +320,7 @@ function setAppName(){
             },
             yAxis: {
                 title: {
-                    text: 'kb'
+                    text: 'MB'
                 },
                 min:0
 
@@ -332,7 +332,7 @@ function setAppName(){
             },
             tooltip: {
                 split: true,
-                valueSuffix: ' kb'
+                valueSuffix: ' MB'
             },
             credits: {
                 enabled: false
@@ -356,7 +356,7 @@ function setAppName(){
                 type: 'area'
             },
             title: {
-                text: 'net output(kb)'
+                text: 'net output(MB)'
             },
             xAxis: {
                 categories: ${containerUsageStr6},
@@ -367,7 +367,7 @@ function setAppName(){
             },
             yAxis: {
                 title: {
-                    text: 'kb'
+                    text: 'MB'
                 },
                 min:0
 
@@ -379,7 +379,7 @@ function setAppName(){
             },
             tooltip: {
                 split: true,
-                valueSuffix: ' kb'
+                valueSuffix: ' MB'
             },
             credits: {
                 enabled: false

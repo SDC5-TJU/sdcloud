@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +18,7 @@ import ch.ethz.ssh2.StreamGobbler;
 import scs.dao.monitor.DAOmapper.TableContainerresourceusageMapper;
 import scs.pojo.TableContainerresourceusage;
 import scs.service.monitor.containers.ContainerMonitor;
+import scs.util.format.DataFormats;
 
 @Service("containerMonitor")
 public class ContainerMonitorImpl implements ContainerMonitor {
@@ -93,11 +93,6 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 		return getCommandInfoStream(hostname, username, password, command);
 	}
 
-	@Test
-	public void tes1t() {
-		getContainerNetInfoStream("192.168.1.128", "tank", "tanklab", "Hadoop6");
-	}
-
 	public float[] getContainerNetInfoStream(String hostname, String username, String password, String containerName) {
 		String command = "cat /proc/`docker inspect --format='{{ .State.Pid }}' \"" + containerName + "\"`/net/dev";
 		InputStream commandInfoStream = getCommandInfoStream(hostname, username, password, command);
@@ -122,7 +117,7 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 		}
 		return netIO;
 	}
-
+	
 	public ArrayList<TableContainerresourceusage> getContainersPOJO(String hostname, String username, String password,
 			InputStream in) {
 		if (in == null) {
@@ -146,15 +141,26 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 				NumberFormat percentInstance = NumberFormat.getPercentInstance();
 
 				Number parse1 = percentInstance.parse(split[1]);
-				record.setCpuusagerate(parse1.floatValue());
+				record.setCpuusagerate(DataFormats.getInstance().subFloat(parse1.floatValue(), 4));
 
 				String mem = split[2].split("\\s")[0];
-				mem = mem.substring(0, mem.length() - 3);
-				record.setMemusageamount(Float.parseFloat(mem));
+				if ("K".equalsIgnoreCase(mem.substring(mem.length() - 3,mem.length() - 2))) {
+					mem = mem.substring(0, mem.length() - 3);
+					record.setMemusageamount(DataFormats.getInstance().subFloat(Float.parseFloat(mem) / 1024f, 2));
+				}else if ("G".equalsIgnoreCase(mem.substring(mem.length() - 3,mem.length() - 2))) {
+					mem = mem.substring(0, mem.length() - 3);
+					record.setMemusageamount(DataFormats.getInstance().subFloat(Float.parseFloat(mem) * 1024f, 2));
+				}else if ("M".equalsIgnoreCase(mem.substring(mem.length() - 3,mem.length() - 2))) {
+					mem = mem.substring(0, mem.length() - 3);
+					record.setMemusageamount(DataFormats.getInstance().subFloat(Float.parseFloat(mem), 2));
+				}else {
+					mem = mem.substring(0, mem.length() - 1);
+					record.setMemusageamount(DataFormats.getInstance().subFloat(Float.parseFloat(mem) / 1024f / 1024f, 2));
+				}
 
 				Number parse3 = percentInstance.parse(split[3]);
-				record.setMemusagerate(parse3.floatValue());
-
+				record.setMemusagerate(DataFormats.getInstance().subFloat(parse3.floatValue(), 4));
+				
 				// 容器net 资源监控 start
 				String[] netArray = split[4].split("/");
 				if (netArray[0].trim().endsWith("MB")) {

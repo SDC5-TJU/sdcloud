@@ -185,7 +185,7 @@ Highcharts.setOptions({ global: { useUTC: false } });
             },
             yAxis: {
                 title: {
-                    text: 'kb'
+                    text: 'MB'
                 },
                 min:0
 
@@ -197,7 +197,7 @@ Highcharts.setOptions({ global: { useUTC: false } });
             },
             tooltip: {
                 split: true,
-                valueSuffix: ' kb'
+                valueSuffix: ' MB'
             },
             credits: {
                 enabled: false
@@ -232,7 +232,7 @@ Highcharts.setOptions({ global: { useUTC: false } });
             },
             yAxis: {
                 title: {
-                    text: 'kb'
+                    text: 'MB'
                 },
                 min:0
 
@@ -244,7 +244,7 @@ Highcharts.setOptions({ global: { useUTC: false } });
             },
             tooltip: {
                 split: true,
-                valueSuffix: ' kb'
+                valueSuffix: ' MB'
             },
             credits: {
                 enabled: false
@@ -279,7 +279,7 @@ Highcharts.setOptions({ global: { useUTC: false } });
             },
             yAxis: {
                 title: {
-                    text: 'kb'
+                    text: 'MB'
                 },
                 min:0
 
@@ -291,7 +291,7 @@ Highcharts.setOptions({ global: { useUTC: false } });
             },
             tooltip: {
                 split: true,
-                valueSuffix: ' kb'
+                valueSuffix: ' MB'
             },
             credits: {
                 enabled: false
@@ -326,7 +326,7 @@ Highcharts.setOptions({ global: { useUTC: false } });
             },
             yAxis: {
                 title: {
-                    text: 'kb'
+                    text: 'MB'
                 },
                 min:0
 
@@ -338,7 +338,7 @@ Highcharts.setOptions({ global: { useUTC: false } });
             },
             tooltip: {
                 split: true,
-                valueSuffix: ' kb'
+                valueSuffix: ' MB'
             },
             credits: {
                 enabled: false

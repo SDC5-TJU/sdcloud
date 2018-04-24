@@ -94,13 +94,13 @@ public class AppMonitorImpl implements AppMonitor {
 					appresourceusage.setCollecttime(container.getCollecttime());
 				}
 				// 求平均值
-				appresourceusage.setCpuusagerate(cpuusage 		/ sum);
-				appresourceusage.setMemusageamount(memAmount 	/ sum);
-				appresourceusage.setMemusagerate(memusage 		/ sum);
-				appresourceusage.setNetinput(netInput			/sum);
-				appresourceusage.setNetoutput(netOutput 		/sum);
-				appresourceusage.setIoinput(ioInput				/sum);
-				appresourceusage.setIooutput(ioOutput			/sum);
+				appresourceusage.setCpuusagerate(cpuusage 		);
+				appresourceusage.setMemusageamount(memAmount 	);
+				appresourceusage.setMemusagerate(memusage 		);
+				appresourceusage.setNetinput(netInput			);
+				appresourceusage.setNetoutput(netOutput 		);
+				appresourceusage.setIoinput(ioInput				);
+				appresourceusage.setIooutput(ioOutput			);
 				/*
 				 * appresourceusage.setIousagerate(iousage /sum);
 				 * appresourceusage.setBlockio(blockiousage /sum);

@@ -9,12 +9,12 @@
     height: 600px;
     z-index: 6;
     top: 0px;
-    width: 1100px;
+    width: 600px;
 }
 
 #container1 {
     position: absolute;
-    width: 500px;
+    width: 600px;
     height: 200px;
     left: -600px;
     top: 0px;
@@ -22,7 +22,7 @@
 
 #container2 {
     position: absolute;
-    width: 500px;
+    width: 600px;
     height: 200px;
     left: 50px;
     top: 0px;
@@ -30,7 +30,7 @@
 
 #container3 {
     position: absolute;
-    width: 500px;
+    width: 600px;
     height: 200px;
     left:-600px;
     top: 200px;
@@ -38,7 +38,7 @@
 
 #container4 {
     position: absolute;
-    width: 500px;
+    width: 600px;
     height: 200px;
     left: 50px;
     top: 200px;
