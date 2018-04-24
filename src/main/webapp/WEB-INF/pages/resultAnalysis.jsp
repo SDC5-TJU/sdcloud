@@ -125,7 +125,7 @@ $(document).ready(function() {
         },
         yAxis: {
             title: {
-                text: 'Exchange rate'
+                text: 'used rate'
             },
        	    min:0,
        	    max:100
@@ -169,6 +169,13 @@ $(document).ready(function() {
          xAxis:{
            	 plotLines:[${appRecordLineStr}]
            },
+           yAxis: {
+               title: {
+                   text: 'Exchange rate'
+               },
+          	    min:0,
+          	    max:100
+           },
             series: [${sysUsageStr1},${appRecordStr}]
          });
 
@@ -206,6 +213,12 @@ $(document).ready(function() {
          xAxis:{
            	 plotLines:[${appRecordLineStr}]
            },
+           yAxis: {
+               title: {
+                   text: 'speed'
+               },
+          	    min:0 
+           },
             series: [${sysUsageStr2},${appRecordStr}]
          });
 
@@ -241,10 +254,19 @@ $(document).ready(function() {
          xAxis:{
            	 plotLines:[${appRecordLineStr}]
            },
+           yAxis: {
+               title: {
+                   text: 'speed'
+               },
+          	    min:0 
+           },
             series: [${sysUsageStr3},${appRecordStr}]
          });
 
      Highcharts.chart('websearch5', {
+    	 credits:{ 
+   	      enabled:false 
+   	    },
          chart: {
              type: 'area',
              zoomType: 'x'
@@ -263,8 +285,8 @@ $(document).ready(function() {
              title: {
                  text: '使用率%'
              },
-             min:0
-
+             min:0,
+             max:100 
          },
          legend: {
              layout: 'vertical',
@@ -289,6 +311,9 @@ $(document).ready(function() {
          series: [${appUsageStr0}]
      });
      Highcharts.chart('websearch6', {
+    	 credits:{ 
+   	      enabled:false 
+   	    },
          chart: {
              type: 'area',
              zoomType: 'x'
@@ -307,8 +332,8 @@ $(document).ready(function() {
              title: {
                  text: '使用率%'
              },
-             min:0
-
+             min:0,
+             max:100 
          },
          legend: {
              layout: 'vertical',
@@ -334,6 +359,9 @@ $(document).ready(function() {
      });
      
      Highcharts.chart('websearch7', {
+    	 credits:{ 
+   	      enabled:false 
+   	    },
          chart: {
              type: 'area'
          },
@@ -378,6 +406,9 @@ $(document).ready(function() {
      });
      
      Highcharts.chart('websearch8', {
+    	 credits:{ 
+   	      enabled:false 
+   	    },
          chart: {
              type: 'area'
          },
@@ -422,6 +453,9 @@ $(document).ready(function() {
      });
 
      Highcharts.chart('websearch9', {
+    	 credits:{ 
+   	      enabled:false 
+   	    },
          chart: {
              type: 'area'
          },
@@ -466,6 +500,9 @@ $(document).ready(function() {
      });
      
      Highcharts.chart('websearch10', {
+    	 credits:{ 
+   	      enabled:false 
+   	    },
          chart: {
              type: 'area'
          },
