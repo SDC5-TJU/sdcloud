@@ -61,17 +61,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div id="websearch4"
 				style="width: 1200px; height: 400px; position: absolute; left: 50px; top: 1450px;"></div>
 			<div id="websearch5"
-				style="width: 1200px; height: 400px; position: absolute; left: 50px; top: 1900px;"></div>
+				style="width: 1235px; height: 400px; position: absolute; left: -15px; top: 1900px;"></div>
 			<div id="websearch6"
-				style="width: 1200px; height: 400px; position: absolute; left: 50px; top: 2350px;"></div>
+				style="width: 1235px; height: 400px; position: absolute; left: -15px; top: 2350px;"></div>
 			<div id="websearch7"
-				style="width: 1200px; height: 400px; position: absolute; left: 50px; top: 2800px;"></div>
+				style="width: 1235px; height: 400px; position: absolute; left: -15px; top: 2800px;"></div>
 			<div id="websearch8"
-				style="width: 1200px; height: 400px; position: absolute; left: 50px; top: 3250px;"></div>
+				style="width: 1235px; height: 400px; position: absolute; left: -15px; top: 3250px;"></div>
 			<div id="websearch9"
-				style="width: 1200px; height: 400px; position: absolute; left: 50px; top: 3700px;"></div>
+				style="width: 1235px; height: 400px; position: absolute; left: -15px; top: 3700px;"></div>
 			<div id="websearch10"
-				style="width: 1200px; height: 400px; position: absolute; left: 50px; top: 4150px;"></div>
+				style="width: 1235px; height: 400px; position: absolute; left: -15px; top: 4150px;"></div>
 		</div>
 
 
