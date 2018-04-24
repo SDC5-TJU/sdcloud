@@ -267,9 +267,10 @@ $(document).ready(function() {
 
          },
          legend: {
-             layout: 'vertical',
-             align: 'right',
-             verticalAlign: 'middle'
+             align: 'center', //水平方向位置
+             verticalAlign: 'bottom', //垂直方向位置
+             x: 0, //距离x轴的距离
+             y: 0 //距离Y轴的距离
          },
          tooltip: {
              split: true,
@@ -311,9 +312,10 @@ $(document).ready(function() {
 
          },
          legend: {
-             layout: 'vertical',
-             align: 'right',
-             verticalAlign: 'middle'
+             align: 'center', //水平方向位置
+             verticalAlign: 'bottom', //垂直方向位置
+             x: 0, //距离x轴的距离
+             y: 0 //距离Y轴的距离
          },
          tooltip: {
              split: true,
@@ -355,9 +357,10 @@ $(document).ready(function() {
 
          },
          legend: {
-             layout: 'vertical',
-             align: 'right',
-             verticalAlign: 'middle'
+             align: 'center', //水平方向位置
+             verticalAlign: 'bottom', //垂直方向位置
+             x: 0, //距离x轴的距离
+             y: 0 //距离Y轴的距离
          },
          tooltip: {
              split: true,
@@ -399,9 +402,10 @@ $(document).ready(function() {
 
          },
          legend: {
-             layout: 'vertical',
-             align: 'right',
-             verticalAlign: 'middle'
+             align: 'center', //水平方向位置
+             verticalAlign: 'bottom', //垂直方向位置
+             x: 0, //距离x轴的距离
+             y: 0 //距离Y轴的距离
          },
          tooltip: {
              split: true,
@@ -443,9 +447,10 @@ $(document).ready(function() {
 
          },
          legend: {
-             layout: 'vertical',
-             align: 'right',
-             verticalAlign: 'middle'
+             align: 'center', //水平方向位置
+             verticalAlign: 'bottom', //垂直方向位置
+             x: 0, //距离x轴的距离
+             y: 0 //距离Y轴的距离
          },
          tooltip: {
              split: true,
@@ -487,9 +492,10 @@ $(document).ready(function() {
 
          },
          legend: {
-             layout: 'vertical',
-             align: 'right',
-             verticalAlign: 'middle'
+             align: 'center', //水平方向位置
+             verticalAlign: 'bottom', //垂直方向位置
+             x: 0, //距离x轴的距离
+             y: 0 //距离Y轴的距离
          },
          tooltip: {
              split: true,
