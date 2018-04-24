@@ -21,7 +21,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <div class="logo margin-big-left fadein-top">
     <h1>SDC云计算评测系统</h1>
   </div>
-  <div class="head-l" style="color:#fff;font-size:17px;position: absolute; right:150px;top:20px">当前测试记录: <span id="recordValue"></span></div>
+    <div class="logo fadein-top" style="position: absolute; right:0px;">
+    <img alt="" src="statics/images/logo.png" width="288" height="60">
+  </div>
+  <!-- <div class="head-l" style="color:#fff;font-size:17px;position: absolute; right:150px;top:20px">当前测试记录: <span id="recordValue"></span></div> -->
 </div>
 <div class="leftnav">
   <div class="leftnav-title"><strong><span class="icon-list"></span>菜单列表</strong></div>
@@ -85,6 +88,8 @@ $(function(){
 <ul class="bread">
   <li><a href="{:U('Index/info')}" target="right" class="icon-home"> 首页</a></li>
   <li><a href="##" id="a_leader_txt">管理中心</a></li>
+  <li style="font-size:15px;position: absolute; right:150px;color:black"><strong>当前测试记录:</strong> <span id="recordValue"></span></li>
+<!--     <div class="head-l" style="color:#fff;font-size:17px;position: absolute; right:150px;top:20px">当前测试记录: <span id="recordValue"></span></div> -->
   <!--<li><b>当前用户：</b><span style="color:red;">yanan</span>-->
 </ul>
 <div class="admin">
