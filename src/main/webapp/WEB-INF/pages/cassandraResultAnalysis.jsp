@@ -75,7 +75,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <th style="background:#f9f9f9" width="25%">变化率</th>
                     </tr>
                     <tr>
-                    	<td style="background:#f1f5fa">响应时间90th /ms</td>
+                    	<td style="background:#f1f5fa">响应时间90th /us</td>
                         <td style="background:#f9f9f9">${cassandraBaseResult.nintyTh}</td>
                         <td style="background:#f1f5fa">${cassandraResult.nintyTh}</td>
                       <c:choose>
@@ -91,7 +91,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</c:choose>
                     </tr>
                     <tr>
-                    	<td style="background:#f1f5fa">响应时间95th /ms</td>						 
+                    	<td style="background:#f1f5fa">响应时间95th /us</td>						 
                         <td style="background:#f9f9f9" >${cassandraBaseResult.nintyFiveTh}</td>
                         <td style="background:#f1f5fa" >${cassandraResult.nintyFiveTh}</td>
                         <c:choose>
@@ -107,7 +107,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</c:choose>
                     </tr>
                     <tr>
-                    	<td style="background:#f1f5fa"> 响应时间99th /ms</td>
+                    	<td style="background:#f1f5fa"> 响应时间99th /us</td>
                         <td style="background:#f9f9f9" >${cassandraBaseResult.nintyNineTh}</td>
                         <td style="background:#f1f5fa" >${cassandraResult.nintyNineTh}</td>
                          <c:choose>
@@ -139,7 +139,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</c:choose> 
                     </tr>
                     <tr>
-                   	 	<td style="background:#f1f5fa"> 响应时间平均值 /ms</td>                                        
+                   	 	<td style="background:#f1f5fa"> 响应时间平均值 /us</td>                                        
                         <td style="background:#f9f9f9" >${cassandraBaseResult.mean}</td>
                         <td style="background:#f1f5fa" >${cassandraResult.mean}</td>
                          <c:choose>
@@ -155,7 +155,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</c:choose>
                     </tr>
                     <tr>
-                   	 	<td style="background:#f1f5fa"> 响应时间最小值 /ms</td>  						  
+                   	 	<td style="background:#f1f5fa"> 响应时间最小值 /us</td>  						  
                         <td style="background:#f9f9f9" >${cassandraBaseResult.min}</td>
                         <td style="background:#f1f5fa" >${cassandraResult.min}</td>
                          <c:choose>
@@ -171,7 +171,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</c:choose> 
                     </tr>
                     <tr>
-                    	<td style="background:#f1f5fa"> 响应时间最大值 /ms</td>  
+                    	<td style="background:#f1f5fa"> 响应时间最大值 /us</td>  
                         <td style="background:#f9f9f9" >${cassandraBaseResult.max}</td>
                         <td style="background:#f1f5fa" >${cassandraResult.max}</td>
                          <c:choose>
@@ -230,7 +230,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
             xAxis: {
                 title: {
-                    text: '响应时间/ms'
+                    text: '响应时间/us'
                 },
                 min:0
             },
@@ -320,13 +320,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             } ,
             yAxis: {
                 title: {
-                    text: '响应时间/ms'
+                    text: '响应时间/us'
                 },
             },
             tooltip: {
                 formatter:function(){
                     return'<strong>'+this.series.name+'</strong><br/>'+
-                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S.%L',this.x)+'<br/>'+'响应时间：'+this.y+' ms';
+                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S.%L',this.x)+'<br/>'+'响应时间：'+this.y+' us';
                 },
             },
             series: [${diffBean.baseTimeStr}]
@@ -360,13 +360,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             colors: ['#ff3300'],
             yAxis: {
                 title: {
-                    text: '响应时间/ms'
+                    text: '响应时间/us'
                 },
             },
             tooltip: {
                 formatter:function(){
                     return'<strong>'+this.series.name+'</strong><br/>'+
-                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S.%L',this.x)+'<br/>'+'响应时间：'+this.y+' ms';
+                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S.%L',this.x)+'<br/>'+'响应时间：'+this.y+' us';
                 },
             },
             series: [${diffBean.timeStr}]
