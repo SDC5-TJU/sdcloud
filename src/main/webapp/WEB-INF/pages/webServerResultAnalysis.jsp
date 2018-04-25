@@ -211,6 +211,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="statics/js/highcharts-more.js"></script>
 <script type="text/javascript" src="statics/js/showBo.js"></script>
 <script type="text/javascript">
+Highcharts.setOptions({ global: { useUTC: false } });
     $(document).ready(function() {
     	  var message="${message}";
           if(message!=null&&message!=""){
