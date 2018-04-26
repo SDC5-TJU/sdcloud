@@ -70,7 +70,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <th style="background:#f9f9f9" width="25%">变化率</th>
                     </tr>
                     <tr>
-                    	    <td style="background:#f1f5fa">响应时间90th /us</td>
+                    	    <td style="background:#f1f5fa">响应时间90th /ms</td>
                             <td style="background:#f9f9f9">${MemcachedBaseResult.nintyTh}</td>
                             <td style="background:#f1f5fa" >${MemcachedResult.nintyTh}</td>
                             <c:choose>
@@ -86,7 +86,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             </c:choose>
                     </tr>
                     <tr>
-                    		<td style="background:#f1f5fa">响应时间95th /us</td>	                            
+                    		<td style="background:#f1f5fa">响应时间95th /ms</td>	                            
                             <td style="background:#f9f9f9">${MemcachedBaseResult.nintyFiveTh}</td>
                             <td style="background:#f1f5fa" >${MemcachedResult.nintyFiveTh}</td>
                             <c:choose>
@@ -102,7 +102,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             </c:choose>
                     </tr>
                     <tr>
-                    	<td style="background:#f1f5fa"> 响应时间99th /us</td>
+                    	<td style="background:#f1f5fa"> 响应时间99th /ms</td>
                         <td style="background:#f9f9f9">${MemcachedBaseResult.nintyNineTh}</td>
                         <td style="background:#f1f5fa">${MemcachedResult.nintyNineTh}</td>
                         <c:choose>
@@ -118,7 +118,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         </c:choose>
                     </tr>
                     <tr>
-                   	 	<td style="background:#f1f5fa"> 响应时间方差 /us</td>                          
+                   	 	<td style="background:#f1f5fa"> 响应时间方差 /ms</td>                          
                         <td style="background:#f9f9f9">${MemcachedBaseResult.var}</td>
                         <td style="background:#f1f5fa" >${MemcachedResult.var}</td>
                         <c:choose>
@@ -134,7 +134,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         </c:choose>
                     </tr>
                     <tr>
-                        <td style="background:#f1f5fa"> 平均延迟 /us</td>
+                        <td style="background:#f1f5fa"> 平均延迟 /ms</td>
                         <td style="background:#f9f9f9">${MemcachedBaseResult.mean}</td>
                         <td style="background:#f1f5fa" >${MemcachedResult.mean}</td>
                         <c:choose>
@@ -150,7 +150,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         </c:choose>
                     </tr>
                     <tr>
-                   	 	<td style="background:#f1f5fa"> 响应时间最小值 /us</td>                           
+                   	 	<td style="background:#f1f5fa"> 响应时间最小值 /ms</td>                           
                         <td style="background:#f9f9f9">${MemcachedBaseResult.min}</td>
                         <td style="background:#f1f5fa" >${MemcachedResult.min}</td>
                         <c:choose>
@@ -166,7 +166,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         </c:choose>
                     </tr>
                     <tr>
-                    	<td style="background:#f1f5fa"> 响应时间最大值 /us</td>  
+                    	<td style="background:#f1f5fa"> 响应时间最大值 /ms</td>  
                         <td style="background:#f9f9f9">${MemcachedBaseResult.max}</td>
                         <td style="background:#f1f5fa" >${MemcachedResult.max}</td>
                         <c:choose>

@@ -82,6 +82,8 @@ public class JobSchedulController {
 		strData.append("[").append(System.currentTimeMillis()).append(",").append(time).append("]]");
 		HSeries.append(strName).append(strData).append(",marker: {enabled: true}}");
 		model.addAttribute("webServerStr",HSeries.toString());
+		model.addAttribute("appConfigSize",Repository.appConfigMap.size());
+		model.addAttribute("testRecordId",testRecordId);
 		return "jobControl";
 
 	}

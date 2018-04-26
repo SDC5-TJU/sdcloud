@@ -75,7 +75,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     	<td style="background:#f1f5fa">响应时间90th /ms</td>
                         <td style="background:#f9f9f9">${siloBaseResult.nintyTh}</td>
                         <td style="background:#f1f5fa">${siloResult.nintyTh}</td>
-                      <c:choose>
+                      	<c:choose>
 							<c:when test="${diffBean.nintyThDiff>0}">
                                <td style="background:#f9f9f9"><img src="statics/images/up.png"/>${diffBean.nintyThDiff}%</td>							
                             </c:when>

@@ -66,7 +66,7 @@ public class Repository{
 	 * String:hostname
 	 */
 	public static Map<String,TableSystemresourceusage> systemRealUsageMap=new HashMap<String,TableSystemresourceusage>();
-	public static int cronFlag = 1;
+	public static int cronFlag = 0; //默认关闭监控
 	public static int PhysicalMachine128 = 1;
 	public static int PhysicalMachine147 = 2;
 	

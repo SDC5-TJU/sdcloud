@@ -10,6 +10,7 @@ import scs.pojo.TimeResultBean;
  */
 public class AdapterForResult {
 	static ResultParser result = new ResultParser();
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static  TimeResultBean adapter(String name,List list){
 		TimeResultBean bean = new TimeResultBean();
 		switch(name){

@@ -61,7 +61,7 @@
 	function start(){
 		if(flag==true){
 			 $.ajax({
-					async:true,
+					async:false,
 					type:"post",
 					url:"monitor/cronFlag.do",
 					data:{flag:0},
@@ -75,7 +75,7 @@
 				}); 
 		}else{
 			$.ajax({
-				async:true,
+				async:false,
 				type:"post",
 				url:"monitor/cronFlag.do",
 				data:{flag:1},

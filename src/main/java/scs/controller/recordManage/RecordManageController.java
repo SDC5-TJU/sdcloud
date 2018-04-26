@@ -153,7 +153,7 @@ public class RecordManageController {
 			seriesStr.append("{").append("x:").append(format.dateStringToTime(pair.get(pair.size()-1).getEventTime())).append(",title:'")
 			.append(i).append("',text:'").append(pair.get(pair.size()-1).getApplicationName()).append(pair.get(pair.size()-1).getIsBase()==1?"基准测试":"正式测试")
 			.append(pair.get(pair.size()-1).getAction()).append("'}");
-			seriesStr.append("],onSeries:'dataseries',shape:'squarepin',width:16,color:Highcharts.getOptions().colors[").append(i).append("],fillColor:Highcharts.getOptions().colors[").append(i).append("]}");
+			seriesStr.append("],onSeries:'dataseries',shape:'squarepin',width:16,color:Highcharts.getOptions().colors[").append(i%10).append("],fillColor:Highcharts.getOptions().colors[").append(i).append("]}");
 			seriesStrList.add(seriesStr.toString());
 		} 
 		seriesStr.setLength(0);
@@ -172,7 +172,7 @@ public class RecordManageController {
 			List<ExecuteRecordBean> pair=pairList.get(i);
 			for(int j=0;j<pair.size();j++){
 				seriesStr.setLength(0);
-				seriesStr.append("{color:Highcharts.getOptions().colors[").append(i).append("],dashStyle:'longdashdot',value:").append(format.dateStringToTime(pair.get(j).getEventTime())).append(",width:2}");
+				seriesStr.append("{color:Highcharts.getOptions().colors[").append(i%10).append("],dashStyle:'longdashdot',value:").append(format.dateStringToTime(pair.get(j).getEventTime())).append(",width:2}");
 				seriesStrList.add(seriesStr.toString());
 			}
 		} 

@@ -41,7 +41,7 @@
 				}
 			}
 		});
-	}, 3000);
+	}, 1000);
 
 	//实时数据表格
 	var tableTitle = "<table  class=\"table table-hover text-center\" >"
@@ -51,7 +51,7 @@
 	var tableContent = "";
 	var tableClass = "";
 
-	var containerName = null;
+	var applicationname = null;
 	var cpuusagerate = null;
 	var memusagerate = null;
 	var memamount = null;
@@ -65,7 +65,7 @@
 			if (lastTime == null) {
 				for (var i = 0; i < returnedData.length; i++) {
 					if (returnedData[i] != null && returnedData[i] != "") {
-						containerName = returnedData[i].containername;
+						applicationname = returnedData[i].applicationname;
 						cpuusagerate = returnedData[i].cpuusagerate * 100;
 						memusagerate = returnedData[i].memusagerate * 100;
 						memamount = returnedData[i].memusageamount;
@@ -75,7 +75,7 @@
 						iooutput = returnedData[i].iooutput;
 						//第一次添加
 						tableContent += "<tr align='center'  >" + "<td>"
-								+ containerName + "</td>" + "<td>"
+								+ applicationname + "</td>" + "<td>"
 								+ cpuusagerate + "</td>" + "<td>"
 								+ memusagerate + "</td>" + "<td>" + memamount
 								+ "MB" + "</td>" + "<td>" + netinput + "MB/"
@@ -93,7 +93,7 @@
 				if (lastTime < returnedData[0].collecttime.time) {
 					for (var i = 0; i < returnedData.length; i++) {
 						if (returnedData[i] != null && returnedData[i] != "") {
-							containerName = returnedData[i].containername;
+							applicationname = returnedData[i].applicationname;
 							cpuusagerate = returnedData[i].cpuusagerate * 100;
 							memusagerate = returnedData[i].memusagerate * 100;
 							memamount = returnedData[i].memusageamount;
@@ -103,7 +103,7 @@
 							iooutput = returnedData[i].iooutput;
 							//时间戳不同的时候添加
 							tableContent += "<tr align='center'  >" + "<td>"
-									+ containerName + "</td>" + "<td>"
+									+ applicationname + "</td>" + "<td>"
 									+ cpuusagerate + "</td>" + "<td>"
 									+ memusagerate + "</td>" + "<td>" + memamount
 									+ "MB" + "</td>" + "<td>" + netinput + "MB/"

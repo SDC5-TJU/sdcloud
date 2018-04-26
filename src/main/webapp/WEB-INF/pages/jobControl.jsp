@@ -25,22 +25,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
     <link rel="stylesheet" type="text/css" href="statics/css/skin.css" id="skin" />
     <link rel="stylesheet" type="text/css" href="statics/css/style.css" />
-
-    <link href="statics/css/webuploader.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="statics/css/showBo.css"/> 
 
 </head>
 <body>
-<!--<div >
-    <ul class="nav nav-tabs" >
-        <li class="active" style="float: left;">
-            <a  href="#home" id="onlineControl">在线服务</a>
-        </li>
-        <li class="" style="float: left;">
-            <a  href="#" id="offlineControl">离线服务</a>
-        </li>
-    </ul>
-
-</div>-->
+ 
 <div>
     <div class="new-page-container" style="position: absolute; top:-50px; ">
         <form action="" method="post" class="form form-horizontal" id="form-article-add">
@@ -232,12 +221,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src="statics/js/jquery.js"></script>
 <script src="statics/js/pintuer.js"></script>
 <script type="text/javascript" src="statics/js/highcharts.js"></script>
-<script type="text/javascript" src="statics/js/highcharts-more.js"></script>
+<script type="text/javascript" src="statics/js/highcharts-more.js"></script> 
+<script type="text/javascript" src="statics/js/showBo.js"></script>
 <script type="text/javascript">
+$(document).ready(function() {
+    var appConfigSize="${appConfigSize}";
+    if(appConfigSize!=null&&appConfigSize==0){
+    	Showbo.Msg.alert("尚未进行应用参数配置!",function(){window.location='getAppConfig.do?testRecordId='+${testRecordId};});
+    }
+});
 //开启chart按钮
 	var flag1=false;
 	var flag2=false;
- 
 	$("#startChartButton").click(function(){
 		if(flag==true){
 			flag=false;
@@ -658,10 +653,7 @@ $(document).ready(function (){
         },
         series:[${webServerStr}]
     });
-    });
-
-
-
+ });
 </script>
 </body>
 </html>

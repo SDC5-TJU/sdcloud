@@ -47,7 +47,9 @@ public class CronTasks {
 		ArrayList<TableContainerresourceusage> combineList = new ArrayList<>();
 		for (int i = 0; i < len; i++) {
 			hostname = hosts[i];
+			long start=System.currentTimeMillis();
 			InputStream containerInfoStream = containerMonitor.getContainerInfoStream(hostname, username, password);
+			System.out.println((System.currentTimeMillis()-start)/1000.0);
 			ArrayList<TableContainerresourceusage> containersPOJO = containerMonitor.getContainersPOJO(hostname,
 					username, password, containerInfoStream);
 			combineList.addAll(containersPOJO);
@@ -60,12 +62,14 @@ public class CronTasks {
 				Repository.containerRealUsageMap.put(tableContainerresourceusage.getContainername(),
 						tableContainerresourceusage);
 			}
+			
 		}
 		// 统计
 		Map<String, List<String>> appNames = appMonitor.getAPPName(Repository.appInfoMap);
 		Map<String, TableAppresourceusage> aggregateAPPResourceUsage = appMonitor.aggregateAPP(combineList, appNames);
 		appMonitor.testInsert(aggregateAPPResourceUsage);
 		// 添加进全局 appRealUsageMap 变量
+		Repository.appRealUsageMap.clear();
 		Repository.appRealUsageMap = aggregateAPPResourceUsage;
 	}
 
