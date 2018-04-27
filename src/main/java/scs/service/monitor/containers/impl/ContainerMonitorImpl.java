@@ -4,14 +4,18 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import scs.pojo.TwoTuple;
 import ch.ethz.ssh2.Connection;
 import ch.ethz.ssh2.Session;
 import ch.ethz.ssh2.StreamGobbler;
@@ -19,11 +23,12 @@ import scs.dao.monitor.DAOmapper.TableContainerresourceusageMapper;
 import scs.pojo.TableContainerresourceusage;
 import scs.service.monitor.containers.ContainerMonitor;
 import scs.util.format.DataFormats;
+import scs.util.repository.Repository;
 import scs.util.tools.SSHConnection;
 
 @Service("containerMonitor")
 public class ContainerMonitorImpl implements ContainerMonitor {
-
+	private SSHConnection connection=SSHConnection.getInstance();
 	// public static String DOCKER_COMMAND = "sudo docker info";
 	@Autowired
 	public TableContainerresourceusageMapper containerresourceusageMapper;
@@ -46,48 +51,30 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 		// TODO Auto-generated constructor stub
 	}
 
-	public InputStream getCommandInfoStream(String hostname, String username, String password, String command) {
-		String host = hostname;
-		String user = username;
-		String passwd = password;
+	private InputStream getCommandInfoStream(String hostname, String username, String password, String command) {
+		try { 
+			//Connection conn = new Connection(host);
 
-		try {
-			/* Create a connection instance */
-			Connection conn = new Connection(host);
+			//conn.connect();
 
-			/* Now connect */
-			conn.connect();
+			//boolean isAuthenticated = conn.authenticateWithPassword(user, passwd);
 
-			/*
-			 * Authenticate. If you get an IOException saying something like
-			 * "Authentication method password not supported by the server at this stage."
-			 * then please check the FAQ.
-			 */
-			boolean isAuthenticated = conn.authenticateWithPassword(user, passwd);
+			//if (isAuthenticated == false)
+			//	throw new IOException("Authentication failed.");
 
-			if (isAuthenticated == false)
-				throw new IOException("Authentication failed.");
-
-			/* Create a session */
-			//Connection conn=SSHConnection.getInstance().getConn(hostname);
+			Connection conn=SSHConnection.getInstance().getConn(hostname);
 			Session sess = conn.openSession();
-
 			sess.execCommand(command);
 
-			/*
-			 * This basic example does not handle stderr, which is sometimes
-			 * dangerous (please read the FAQ).
-			 */
-			InputStream stdout = new StreamGobbler(sess.getStdout());
-
+			InputStream stdout = new StreamGobbler(sess.getStdout()); 
 			return stdout;
 
 		} catch (IOException e) {
-			e.printStackTrace(System.err);
+			e.printStackTrace();
 			System.exit(2);
 			return null;
-		}
-	};
+		} 
+	}
 
 	public InputStream getContainerInfoStream(String hostname, String username, String password) {
 		String command = "sudo docker stats --no-stream --format \"{{.Name}}:{{.CPUPerc}}:{{.MemUsage}}:{{.MemPerc}}:{{.NetIO}}:{{.BlockIO}}\"";
@@ -96,49 +83,108 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 
 	public float[] getContainerNetInfoStream(String hostname, String username, String password, String containerName) {
 		String command = "cat /proc/`docker inspect --format='{{ .State.Pid }}' \"" + containerName + "\"`/net/dev";
-		InputStream commandInfoStream = getCommandInfoStream(hostname, username, password, command);
-		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(commandInfoStream));
-		boolean checked = false;
-		float[] netIO = new float[2];
-		while (!checked && true) {
-			String line;
-			try {
-				line = bufferedReader.readLine();
-				if (line == null)
-					break;
-				if (line.contains("eth1")) {
-					checked = true;
-					String[] netSplit = line.split("\\s+");
-					netIO[0] = Float.parseFloat(netSplit[2]) / 1024f / 1024f / 1024f;
-					netIO[1] = Float.parseFloat(netSplit[10]) / 1024f / 1024f / 1024f;
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return netIO;
-	}
-	
-	public ArrayList<TableContainerresourceusage> getContainersPOJO(String hostname, String username, String password,
-			InputStream in) {
-		if (in == null) {
-			return null;
-		}
-		BufferedReader reader = null;
-		ArrayList<TableContainerresourceusage> arrayList = new ArrayList<>();
+		Connection conn=connection.getConn(hostname);
+		Session sess=null;
 		try {
-			reader = new BufferedReader(new InputStreamReader(in));
-			// container类
-			Date date = new Date();
-			while (true) {
-				String line = reader.readLine();
-				if (line == null)
+			sess = conn.openSession();
+			sess.execCommand(command);  
+			InputStream in = new StreamGobbler(sess.getStdout());  
+			LineNumberReader input = new LineNumberReader(new InputStreamReader(in));   
+			String line = null; 
+			int i=0;
+			float[] netIO = new float[2];
+			while ((line = input.readLine()) != null) {
+				i++;
+				if(i==5){ 
+					String[] netSplit = line.split("\\s+");
+					netIO[0] = Float.parseFloat(netSplit[2])/1024f; 
+					netIO[1] = Float.parseFloat(netSplit[10])/1024f; 
 					break;
-				TableContainerresourceusage record = new TableContainerresourceusage();
+				} 
+			}
+			return netIO;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally{
+			if(sess!=null)
+				sess.close(); 
+		}
+		return null; 
+	}
+//	public Map<String,TwoTuple<Float,Float>> getContainerNetUsage(){
+//		Map<String,TwoTuple<Float,Float>> containerNetUseMap=new HashMap<String,TwoTuple<Float,Float>>();
+//		Set<String> containerNameSet=Repository.containerInfoMap.keySet();
+//		String command="";
+//		String hostName="192.168.1.128";
+//		for(String containerName:containerNameSet){  
+//			System.out.println(Repository.containerInfoMap.get(containerName).getContainerHostName());
+//			if(Repository.containerInfoMap.get(containerName).getContainerHostName().contains("6")){
+//				hostName="192.168.1.147";
+//			}
+//			long start=System.currentTimeMillis();
+//			 
+//			Connection conn=connection.getConn(hostName);
+//			Session sess=null;
+//			try {
+//				sess=conn.openSession();
+//				command="cat /proc/`docker inspect --format='{{ .State.Pid }}' \""+containerName+"\"`/net/dev";
+//				sess.execCommand(command);  
+//				InputStream is = new StreamGobbler(sess.getStdout());//获得标准输出流
+//		        BufferedReader brs = new BufferedReader(new InputStreamReader(is));
+//				 
+//				
+//		        long start1=System.currentTimeMillis();
+//				System.out.println("start1="+(start1-start));
+//				String line = null; 
+//				int i=0;
+//				float[] netIO = new float[2];
+//				 
+//				line = brs.readLine();  
+//				long start2=System.currentTimeMillis();
+//				System.out.println("start2="+(start2-start1));
+//				while (line != null) {  
+//					i++;
+//					if(i==5){ 
+//						String[] netSplit = line.split("\\s+");
+//						netIO[0] = Long.parseLong(netSplit[2])>>20; 
+//						netIO[1] = Long.parseLong(netSplit[10])>>20; 
+//						break;
+//					}  
+//					line=brs.readLine();  
+//				} 
+//				 
+//				containerNetUseMap.put(containerName,new TwoTuple<Float,Float>(netIO[0],netIO[1]));
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}finally{
+//				if(sess!=null)
+//					sess.close(); 
+//			}  
+//			long end=System.currentTimeMillis();
+//			System.out.println("for="+(end-start));
+//		}
+//		return containerNetUseMap; 
+//	}
+	public ArrayList<TableContainerresourceusage> getContainersPOJO(String hostname, String username, String password,
+			InputStream inputStream) {
+	//	Map<String,TwoTuple<Float,Float>> containerNetUseMap=this.getContainerNetUsage(); 
+		String command = "sudo docker stats --no-stream --format \"{{.Name}}:{{.CPUPerc}}:{{.MemUsage}}:{{.MemPerc}}:{{.NetIO}}:{{.BlockIO}}\"";
+		Session sess=null;
+		try {
+			Connection conn=connection.getConn(hostname);
+			sess = conn.openSession();
+			sess.execCommand(command); 
+			InputStream in = new StreamGobbler(sess.getStdout()); 
+			LineNumberReader input = new LineNumberReader(new InputStreamReader(in)); 
+			 
+			Date date = new Date();
+			ArrayList<TableContainerresourceusage> arrayList = new ArrayList<>();
+			String line = null; 
+			while ((line = input.readLine()) != null) {
+				TableContainerresourceusage record = new TableContainerresourceusage(); 
 				String[] split = line.split(":");
 
 				record.setContainername(split[0]);
-
 				NumberFormat percentInstance = NumberFormat.getPercentInstance();
 
 				Number parse1 = percentInstance.parse(split[1]);
@@ -161,9 +207,9 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 
 				Number parse3 = percentInstance.parse(split[3]);
 				record.setMemusagerate(DataFormats.getInstance().subFloat(parse3.floatValue(), 4));
-				
+
 				// 容器net 资源监控 start
-				String[] netArray = split[4].split("/");
+				/*String[] netArray = split[4].split("/");
 				if (netArray[0].trim().endsWith("MB")) {
 					record.setNetinput(
 							Float.parseFloat(netArray[0].trim().substring(0, netArray[0].trim().length() - 2)));
@@ -177,7 +223,7 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 						|| netArray[0].trim().endsWith("kB") || netArray[0].trim().endsWith("MB"))) {
 					record.setNetinput(
 							Float.parseFloat(netArray[0].trim().substring(0, netArray[0].trim().length() - 1)) / 1024f
-									/ 1024f);
+							/ 1024f);
 				}
 				if (netArray[1].trim().endsWith("MB")) {
 					record.setNetoutput(
@@ -192,16 +238,15 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 						|| netArray[1].trim().endsWith("kB") || netArray[1].trim().endsWith("MB"))) {
 					record.setNetoutput(
 							Float.parseFloat(netArray[1].trim().substring(0, netArray[1].trim().length() - 1)) / 1024f
-									/ 1024f);
-				}
-//				record.setNetinput(
-//						Float.parseFloat(netArray[0].trim().substring(0, netArray[0].trim().length() - 2)) * 1024f);
-//				record.setNetoutput(Float.parseFloat(netArray[1].trim().substring(0, netArray[1].trim().length() - 1))
-//						/ 1024f / 1024f);
-//				float[] containerNetInfoStream = getContainerNetInfoStream(hostname, username, password, split[0]);
-//				record.setNetinput(containerNetInfoStream[1]);
-//				record.setNetoutput(containerNetInfoStream[0]);
+							/ 1024f);
+				}*/
+				//record.setNetinput(Float.parseFloat(netArray[0].trim().substring(0, netArray[0].trim().length() - 2)) * 1024f);
+				//record.setNetoutput(Float.parseFloat(netArray[1].trim().substring(0, netArray[1].trim().length() - 1))/ 1024f / 1024f);
+
 				// 容器net 资源监控 end
+				/*
+				 * 采集容器io使用
+				 */
 				String[] ioArray = split[5].split("/");
 				if (ioArray[0].trim().endsWith("MB")) {
 					record.setIoinput(Float.parseFloat(ioArray[0].trim().substring(0, ioArray[0].trim().length() - 2)));
@@ -229,14 +274,25 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 						|| ioArray[1].trim().endsWith("kB") || ioArray[1].trim().endsWith("MB"))) {
 					record.setIooutput(Float.parseFloat(ioArray[1].trim().substring(0, ioArray[1].trim().length() - 1))
 							/ 1024f / 1024f);
-				}
+				} 
+				//record.setNetinput(containerNetUseMap.get(split[0]).second);
+				//record.setNetoutput(containerNetUseMap.get(split[0]).first);
+				float[] containerNetInfoStream = getContainerNetInfoStream(hostname, username, password, split[0]);
+				record.setNetinput(containerNetInfoStream[1]);
+				record.setNetoutput(containerNetInfoStream[0]);  
+
 				record.setCollecttime(date);
 				arrayList.add(record);
-			}
+			} 
+ 
+			return arrayList;
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally{
+			if(sess!=null)
+				sess.close(); 
 		}
-
-		return arrayList;
+		return null;
 	}
+
 }

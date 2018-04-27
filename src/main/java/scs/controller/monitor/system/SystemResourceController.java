@@ -10,8 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.ui.Model; 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +21,7 @@ import scs.controller.recordManage.RecordManageController;
 import scs.pojo.TableSystemresourceusage;
 import scs.service.monitor.system.SystemMonitor;
 import scs.util.repository.Repository;
+import scs.util.tools.SSHConnection;
 
 @Controller("sysController")
 public class SystemResourceController {
@@ -56,10 +56,11 @@ public class SystemResourceController {
 			@RequestParam(value="flag",required=true) int flag) {
 		// 返回操作结果
 		if (flag == 1 && Repository.cronFlag == 0) {
-			// 关闭采集
+			// 开启采集
 			Repository.cronFlag = 1; 
 		} else if (flag == 0 && Repository.cronFlag == 1) {
 			Repository.cronFlag = 0; 
+			SSHConnection.getInstance().closeConn();//关闭建立的ssh2连接
 		}
 		try {
 			response.getWriter().write(Integer.toString(Repository.cronFlag));

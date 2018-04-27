@@ -1,7 +1,5 @@
 package scs.service.monitor.cron;
-
-import java.io.InputStream;
-import java.text.SimpleDateFormat;
+ 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -10,14 +8,14 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-
+  
 import scs.pojo.TableAppresourceusage;
 import scs.pojo.TableContainerresourceusage;
 import scs.pojo.TableSystemresourceusage;
 import scs.service.monitor.app.AppMonitor;
 import scs.service.monitor.containers.ContainerMonitor;
 import scs.service.monitor.system.SystemMonitor;
-import scs.util.repository.Repository;
+import scs.util.repository.Repository; 
 
 @Service
 public class CronTasks {
@@ -46,12 +44,15 @@ public class CronTasks {
 		int len = hosts.length;
 		ArrayList<TableContainerresourceusage> combineList = new ArrayList<>();
 		for (int i = 0; i < len; i++) {
-			hostname = hosts[i];
-			long start=System.currentTimeMillis();
-			InputStream containerInfoStream = containerMonitor.getContainerInfoStream(hostname, username, password);
-			System.out.println((System.currentTimeMillis()-start)/1000.0);
+			hostname = hosts[i]; 
+			//InputStream containerInfoStream = containerMonitor.getContainerInfoStream(hostname, username, password);
+			
+			/*
+			 * This basic example does not handle stderr, which is sometimes
+			 * dangerous (please read the FAQ).
+			 */ 
 			ArrayList<TableContainerresourceusage> containersPOJO = containerMonitor.getContainersPOJO(hostname,
-					username, password, containerInfoStream);
+					username, password, null);
 			combineList.addAll(containersPOJO);
 			containerMonitor.testInsert(containersPOJO);
 			Iterator<TableContainerresourceusage> iterator = containersPOJO.iterator();
