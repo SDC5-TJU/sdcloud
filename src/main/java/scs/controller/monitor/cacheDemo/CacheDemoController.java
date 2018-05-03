@@ -4,7 +4,6 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.Arrays;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -26,29 +25,19 @@ public class CacheDemoController {
 		String[][] cacheData = null;
 		try {
 			systemMonitorInterface = (RMISystemMonitorInterface) Naming
-					.lookup("rmi://" + "192.168.1.128" + ":33334/rmiSystemMonitor");
+					.lookup("rmi://192.168.1.128:33334/rmiSystemMonitor");
 			cacheData = systemMonitorInterface.parseCacheData();
-//			System.out.println(Arrays.toString(cacheData[0]));
 		} catch (MalformedURLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (RemoteException e1) {
 			System.out.println("异常");
-			// TODO Auto-generated catch block
 			logger.info(e1);
 			e1.printStackTrace();
 		} catch (NotBoundException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		JSONArray json = JSONArray.fromObject(cacheData);
 		return json;
-	}
-
-	public static void main(String[] args) {
-		for (int i = 0; i < 10; i++) {
-			new CacheDemoController().getCacheUse();
-		}
 	}
 
 	@RequestMapping("/cacheMonitorDemo.do")

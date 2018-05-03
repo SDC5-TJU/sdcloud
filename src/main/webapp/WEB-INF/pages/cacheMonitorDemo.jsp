@@ -41,7 +41,7 @@
 				}
 			}
 		});
-	}, 1000);
+	}, 3000);
 
 	//实时数据表格
 	var tableTitle = "<table  class=\"table table-hover text-center\" >"
