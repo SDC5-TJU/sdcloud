@@ -69,7 +69,6 @@
 						+ l1d_misses + "</td>" + "<td>" + l3_load + "</td>"
 						+ "<td>" + l3_misses + "</td>" + "</tr>";
 			}
-			lastTime = returnedData[0].collecttime.time;
 			realTable = tableTitle + tableContent + "</table>";
 			document.getElementById('tableDiv').innerHTML = "";
 			document.getElementById("tableDiv").innerHTML = realTable;
