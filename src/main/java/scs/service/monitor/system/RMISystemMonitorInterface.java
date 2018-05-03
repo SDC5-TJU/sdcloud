@@ -4,6 +4,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Date;
 
+import scs.pojo.CombinationPOJO;
 import scs.pojo.TableSystemresourceusage;
 
 public interface RMISystemMonitorInterface extends Remote{
@@ -17,30 +18,38 @@ public interface RMISystemMonitorInterface extends Remote{
 	 * @throws RemoteException
 	 */
 	public TableSystemresourceusage getSystemData(String hostname, String iface, Date date) throws RemoteException;
-	
+	public void test111() throws RemoteException; 
 	/**
 	 * @author jztong
 	 * @return 返回cpu的使用率，使用combined值，即 system % + user%
 	 */
-	public float cpuData();
+	public float cpuData() throws RemoteException;
 	
 	/**
 	 * @author jztong
 	 * @return 返回2个对象的数组，arr[0] 为使用率， arr[1]为使用量
 	 */
-	public float[] memData();
+	public float[] memData() throws RemoteException;
 	
 	/**
 	 * @author jztong
 	 * @return 返回磁盘io的使用率, 该值为读和写的相加值
 	 */
-	public float ioData();
+	public float ioData() throws RemoteException;
 	
 	/**
 	 * @author jztong
 	 * @param iface 网卡名
 	 * @return 返回网口io的使用率, 该值为读和写的相加值
 	 */
-	public float netData(String iface);
+	public float netData(String iface) throws RemoteException;
+	
+	public void cacheMisses() throws RemoteException;
+	
+	public String[][] parseCacheData() throws RemoteException;
+	
+	public CombinationPOJO combine(String hostname, String iface, Date date) throws RemoteException;
+	
+	public String[][] cacheData() throws RemoteException;
 	
 }
