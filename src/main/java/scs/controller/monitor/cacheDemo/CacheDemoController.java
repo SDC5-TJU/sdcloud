@@ -6,24 +6,17 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.sf.json.JSONArray;
 import scs.controller.recordManage.RecordManageController;
-import scs.service.monitor.app.AppMonitor;
 import scs.service.monitor.system.RMISystemMonitorInterface;
 
-@Controller("appController")
+@Controller("cacheDemoController")
 public class CacheDemoController {
 	private static Logger logger = Logger.getLogger(RecordManageController.class.getName());
-
-	@Autowired
-	@Qualifier("appMonitor")
-	public AppMonitor appMonitor;
 
 	@RequestMapping(value="/getCacheUse.do")
 	@ResponseBody
@@ -39,6 +32,7 @@ public class CacheDemoController {
 			} catch (RemoteException e1) {
 				System.out.println("异常");
 				// TODO Auto-generated catch block
+				logger.info(e1);
 				e1.printStackTrace();
 			} catch (NotBoundException e1) {
 				// TODO Auto-generated catch block
