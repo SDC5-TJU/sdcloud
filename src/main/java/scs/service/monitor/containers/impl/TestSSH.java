@@ -13,7 +13,7 @@ import ch.ethz.ssh2.StreamGobbler;
 public class TestSSH {
 
 	public static void dockerMonitor() {
-		String hostname = "192.168.1.147";
+		String hostname = "192.168.1.128";
 		String username = "tank";
 		String password = "tanklab";
 
@@ -21,35 +21,25 @@ public class TestSSH {
 		try {
 			/* Create a connection instance */
 			Connection conn = new Connection(hostname);
-
 			/* Now connect */
-
 			conn.connect();
-
 			/*
 			 * Authenticate. If you get an IOException saying something like
 			 * "Authentication method password not supported by the server at this stage."
 			 * then please check the FAQ.
 			 */
-
 			boolean isAuthenticated = conn.authenticateWithPassword(username, password);
-
 			if (isAuthenticated == false)
 				throw new IOException("Authentication failed.");
-
 			/* Create a session */
-
 			Session sess = conn.openSession();
-
-			sess.execCommand("sudo docker stats --no-stream --format \"table {{.Container}}\t{{.CPUPerc}}\t{{.MemUsage}}\"");
-
+//			sess.execCommand("sudo docker stats --no-stream --format \"table {{.Container}}\t{{.CPUPerc}}\t{{.MemUsage}}\"");
+			sess.execCommand("sudo perf stat -e cache-misses -C 0 sleep 1");
 			System.out.println("Here is some information about the remote host:");
-
 			/*
 			 * This basic example does not handle stderr, which is sometimes
 			 * dangerous (please read the FAQ).
 			 */
-
 			InputStream stdout = new StreamGobbler(sess.getStdout());
 
 			br = new BufferedReader(new InputStreamReader(stdout));
@@ -87,74 +77,7 @@ public class TestSSH {
 		}
 	}
 	
-	public static InputStream dockerDataStream(String hostname, String username, String password) {
-		String host = hostname;
-		String user = username;
-		String passwd = password;
-
-		try {
-			/* Create a connection instance */
-			Connection conn = new Connection(host);
-
-			/* Now connect */
-
-			conn.connect();
-
-			/*
-			 * Authenticate. If you get an IOException saying something like
-			 * "Authentication method password not supported by the server at this stage."
-			 * then please check the FAQ.
-			 */
-
-			boolean isAuthenticated = conn.authenticateWithPassword(user, passwd);
-
-			if (isAuthenticated == false)
-				throw new IOException("Authentication failed.");
-
-			/* Create a session */
-
-			Session sess = conn.openSession();
-
-			sess.execCommand("sudo docker stats --no-stream --format \"{{.Name}}:{{.CPUPerc}}:{{.MemUsage}}:{{.MemPerc}}:{{.NetIO}}:{{.BlockIO}}\"");
-
-			System.out.println("Here is some information about the remote host:");
-
-			/*
-			 * This basic example does not handle stderr, which is sometimes
-			 * dangerous (please read the FAQ).
-			 */
-
-			InputStream stdout = new StreamGobbler(sess.getStdout());
-			
-			return stdout;
-
-		} catch (IOException e) {
-			e.printStackTrace(System.err);
-			System.exit(2);
-			return null;
-		} 
-	}
-	
-	public static int process(InputStream in){
-		if (in == null) {
-			return -1;
-		}
-		BufferedReader reader = null;
-		try {
-			reader = new BufferedReader(new InputStreamReader(in));
-			//container类
-			while (true) {
-				String line = reader.readLine();
-				if (line == null)
-					break;
-				
-				String[] split = line.split(":");
-				
-				System.out.println(Arrays.toString(split));
-			}
-		} catch (Exception e) {
-		}
-		
-		return 0;
+	public static void main(String[] args) {
+		TestSSH.dockerMonitor();
 	}
 }
