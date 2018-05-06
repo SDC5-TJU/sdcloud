@@ -1,10 +1,13 @@
 package scs.controller.monitor.cache;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Date;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,8 +56,8 @@ public class CacheDemoController {
 	}
 
 	@RequestMapping(value = "/getPqos.do")
-	@ResponseBody
-	public String getPqos(@RequestParam("no") int number) {
+	public void getPqos(HttpServletResponse response,
+			@RequestParam("no") int number) {
 		float[][] misses = null;
 		float[] bandwidth = null;
 		if (number == Repository.PhysicalMachine128) {
@@ -69,7 +72,12 @@ public class CacheDemoController {
 		StringBuffer strJson = new StringBuffer();
 		strJson.append(
 				"{time:" + time + ",mbl:" + bandwidth[0] + ",mbr:" + bandwidth[1] + ",llc:" + misses[2][1] + "}");
-		return strJson.toString();
+	
+		try {
+			response.getWriter().write(strJson.toString());
+		} catch (IOException e) { 
+			e.printStackTrace();
+		}
 	}
 
 	@RequestMapping("/cacheMonitorDemo.do")
