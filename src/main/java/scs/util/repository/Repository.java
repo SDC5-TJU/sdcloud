@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.springframework.web.servlet.FlashMap;
+
 import net.sf.json.JSONArray;
 import scs.pojo.AppConfigBean;
 import scs.pojo.AppInfoBean;
@@ -66,6 +68,18 @@ public class Repository{
 	 * String:hostname
 	 */
 	public static Map<String,TableSystemresourceusage> systemRealUsageMap=new HashMap<String,TableSystemresourceusage>();
+	/*
+	 * String:hostname
+	 */
+	public static float[] bandwidth128 = {0,0f,0,0f};
+	public static float[] bandwidth147 = {0,0f,0,0f};
+	/*
+	 * String:hostname
+	 */
+	public static float[][] cache128 = new float[3][2];
+	public static float[][] cache147 = new float[3][2];
+	
+	
 	public static int cronFlag = 0; //默认关闭监控
 	public static int PhysicalMachine128 = 1;
 	public static int PhysicalMachine147 = 2;

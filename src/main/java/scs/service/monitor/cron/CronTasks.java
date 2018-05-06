@@ -14,6 +14,7 @@ import scs.pojo.TableContainerresourceusage;
 import scs.pojo.TableSystemresourceusage;
 import scs.service.monitor.app.AppMonitor;
 import scs.service.monitor.containers.ContainerMonitor;
+import scs.service.monitor.pqos.PqosResourceMonitor;
 import scs.service.monitor.system.SystemMonitor;
 import scs.util.repository.Repository; 
 
@@ -31,6 +32,10 @@ public class CronTasks {
 	@Autowired
 	@Qualifier("systemMonitor")
 	public SystemMonitor systemMonitor;
+	
+	@Autowired
+	@Qualifier("pqosMonitor")
+	public PqosResourceMonitor pqosResourceMonitor;
 
 	public void testCron() {
 		if (Repository.cronFlag != 1) {
@@ -85,5 +90,14 @@ public class CronTasks {
 		for (TableSystemresourceusage tableSystemresourceusage : systemDataList) {
 			Repository.systemRealUsageMap.put(tableSystemresourceusage.getHostname(), tableSystemresourceusage);
 		}
+	}
+	
+	public void testPqos() {
+		if (Repository.cronFlag != 1) {
+			return;
+		}
+		// 调用pqosresource
+		pqosResourceMonitor.updateBamdwidthUsage(Repository.systemInfoMap);
+		pqosResourceMonitor.updateCachemiss(Repository.systemInfoMap);
 	}
 }
