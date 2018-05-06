@@ -72,7 +72,9 @@ public class Repository{
 	 * String:hostname
 	 */
 	public static float[] bandwidth128 = {0,0f,0,0f};
+	public static long time128 = 0l;
 	public static float[] bandwidth147 = {0,0f,0,0f};
+	public static long time147 = 0l;
 	/*
 	 * String:hostname
 	 */

@@ -44,6 +44,21 @@
     top: 200px;
 } 
 
+#container5 {
+    position: absolute;
+    width: 600px;
+    height: 200px;
+    left:-600px;
+    top: 400px;
+}
+
+#container6 {
+    position: absolute;
+    width: 600px;
+    height: 200px;
+    left: 50px;
+    top: 400px;
+} 
 #containerControl {
     position: absolute;
     width: 100px;

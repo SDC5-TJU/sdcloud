@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -27,6 +28,7 @@ public class PqosResourceMonitorImpl implements PqosResourceMonitor {
 		Set<Entry<String, SystemInfoBean>> entrySet = hostnameMap.entrySet();
 		Iterator<Entry<String, SystemInfoBean>> iterator = entrySet.iterator();
 		float[][] systemCachePercentData = null;
+		long time =new Date().getTime();
 		while (iterator.hasNext()) {
 			Entry<String, SystemInfoBean> next = iterator.next();
 			try {
@@ -39,8 +41,10 @@ public class PqosResourceMonitorImpl implements PqosResourceMonitor {
 				}
 				if (hostIp.endsWith("147")) {
 					Repository.cache147 = systemCachePercentData;
+					Repository.time147 = time;
 				}else if (hostIp.endsWith("128")) {
 					Repository.cache128 = systemCachePercentData;
+					Repository.time128 = time;
 				}
 			} catch (MalformedURLException e) {
 				e.printStackTrace();

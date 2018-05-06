@@ -126,11 +126,50 @@ public class SystemResourceController {
 			model.addAttribute("memory", HMemSeries.toString());
 			model.addAttribute("io", HIoSeries.toString());
 			model.addAttribute("net", HNetSeries.toString());
-			model.addAttribute("cronFlag",Repository.cronFlag);
+			
+			/*
+			 * 绘制llc和mbl mbr的初始点
+			 */
+			StringBuffer strName=new StringBuffer();
+			StringBuffer strData=new StringBuffer();
+			StringBuffer HSeries=new StringBuffer();
+			strName.append("{name:'llc',");//type: 'area',
+			strData.append("data:[");
+			int value=0;
+			for(int i=0;i<59;i++){
+				strData.append("[").append(System.currentTimeMillis()).append(",").append(value).append("],");
+			}
+			strData.append("[").append(System.currentTimeMillis()).append(",").append(value).append("]]");
+			HSeries.append(strName).append(strData).append(",marker: {enabled: false}}");
+			model.addAttribute("llc",HSeries.toString());
+			strName.setLength(0);
+			strData.setLength(0);
+			HSeries.setLength(0);
+			strName.append("{name:'mbl',type:'line',color:Highcharts.getOptions().colors[0],");//type: 'line',
+			strData.append("data:[");
+			for(int i=0;i<59;i++){
+				strData.append("[").append(System.currentTimeMillis()).append(",").append(value).append("],");
+			}
+			strData.append("[").append(System.currentTimeMillis()).append(",").append(value).append("]]");
+			HSeries.append(strName).append(strData).append(",marker: {enabled: false}},");
+			strName.setLength(0);
+			strData.setLength(0); 
+			strName.append("{name:'mbr',type:'line',color:Highcharts.getOptions().colors[1],");//type: 'line',
+			strData.append("data:[");
+			for(int i=0;i<59;i++){
+				strData.append("[").append(System.currentTimeMillis()).append(",").append(value).append("],");
+			}
+			strData.append("[").append(System.currentTimeMillis()).append(",").append(value).append("]]");
+			HSeries.append(strName).append(strData).append(",marker: {enabled: false}}");
+			model.addAttribute("mbm",HSeries.toString());
+			
+			model.addAttribute("cronFlag",Repository.cronFlag);//监控是否开启的标志
+			model.addAttribute("no",number);//当前物理机的编号
 		} catch (Exception e) {
 			logger.error("login error" + e);
 			e.printStackTrace();
 		}
+		
 		return "physicalMonitor";
 	}
 }

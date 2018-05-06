@@ -1,11 +1,9 @@
 package scs.controller.monitor.cache;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.Date;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,9 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.sf.json.JSONArray;
 import scs.controller.recordManage.RecordManageController;
+import scs.pojo.PQOSBean;
 import scs.service.monitor.pqos.PqosResourceMonitor;
 import scs.service.monitor.system.RMISystemMonitorInterface;
-import scs.service.monitor.system.SystemMonitor;
 import scs.util.repository.Repository;
 
 @Controller("cacheDemoController")
@@ -56,32 +54,33 @@ public class CacheDemoController {
 	}
 
 	@RequestMapping(value = "/getPqos.do")
-	public void getPqos(HttpServletResponse response,
-			@RequestParam("no") int number) {
+	public String getPqos(HttpServletResponse response, @RequestParam("no") int number) {
 		float[][] misses = null;
 		float[] bandwidth = null;
+		long time = 0l;
 		if (number == Repository.PhysicalMachine128) {
 			misses = Repository.cache128;
 			bandwidth = Repository.bandwidth128;
+			time = Repository.time128;
 		} else if (number == Repository.PhysicalMachine147) {
 			misses = Repository.cache147;
 			bandwidth = Repository.bandwidth147;
+			time = Repository.time147;
 		}
-
-		long time = new Date().getTime();
-		StringBuffer strJson = new StringBuffer();
-		strJson.append(
-				"{time:" + time + ",mbl:" + bandwidth[0] + ",mbr:" + bandwidth[1] + ",llc:" + misses[2][1] + "}");
-	
-		try {
-			response.getWriter().write(strJson.toString());
-		} catch (IOException e) { 
-			e.printStackTrace();
-		}
+		
+		PQOSBean bean = new PQOSBean();
+		bean.setTime(time);
+		bean.setMbl(bandwidth[0]);
+		bean.setMbr(bandwidth[1]);
+		bean.setCachemiss(misses[2][1]);
+		
+		return JSONArray.fromObject(bean).toString();
+		
 	}
 
 	@RequestMapping("/cacheMonitorDemo.do")
 	public String getContainerMonitor() {
 		return "cacheMonitorDemo";
 	}
+	
 }

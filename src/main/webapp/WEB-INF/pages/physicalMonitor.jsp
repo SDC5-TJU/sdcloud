@@ -22,12 +22,13 @@
 </head>
 
 <body>
-
 	<div id="mainDiv">
 		<div id="container1"></div>
-		<div id="container2"></div> 
+		<div id="container2"></div>
 		<div id="container3"></div>
-		<div id="container4"></div> 
+		<div id="container4"></div>
+		<div id="container5"></div>
+		<div id="container6"></div>
 		<div id="containerControl">
 			<span style="font-family: 微软雅黑; font-size: 14px;">线程控制:</span>
 			<c:if test="${cronFlag==1}">
@@ -43,12 +44,28 @@
 		<script type="text/javascript" src="statics/js/highcharts-more.js"></script>
 		<script type="text/javascript">
 		var returnedData = null; 
-		var flag=true;
-		 setInterval(function() { 
+		var returnedPqosData = null;
+		var flag=false;
+		var no=${no};
+		setInterval(function() {
+			if(flag==true){
 				$.ajax({
 					async:true,
 					type:"get",
-					url:"getPhyResourceUse.do?no=1",
+					url:"getPqos.do?no="+no,
+					data:{},
+					dataType:"json",
+					success:function(returned) { 
+						console.log(returned)
+						if(returned!=null&&returned!=""&&returned!="null"){
+							returnedPqosData = returned; 
+						}
+					}	
+				});
+				$.ajax({
+					async:true,
+					type:"get",
+					url:"getPhyResourceUse.do?no="+no,
 					data:{},
 					dataType:"json",
 					success:function(returned) { 
@@ -57,7 +74,9 @@
 						}
 					}	
 				});
-			},1000);
+		   }
+	    },1000);
+	 
 	function start(){
 		if(flag==true){
 			 $.ajax({
@@ -98,9 +117,12 @@
         }
     });
     /**
-    * solrCloud
+    * cpu
     */
      Highcharts.chart('container1', {
+    	 credits:{ 
+     	      enabled:false 
+     		},
         chart: {
             type: 'line',
             animation: Highcharts.svg, // don't animate in old IE
@@ -194,9 +216,12 @@
         series:[${cpu}]
     });
      /**
-      *memory
+      * memory
       */
       Highcharts.chart('container2', {
+    	  credits:{ 
+      	      enabled:false 
+      		},
          chart: {
              type: 'line',
              animation: Highcharts.svg, // don't animate in old IE
@@ -292,6 +317,9 @@
        * IO
        */
        Highcharts.chart('container3', {
+    	   credits:{ 
+       	      enabled:false 
+       		},
           chart: {
               type: 'line',
               animation: Highcharts.svg, // don't animate in old IE
@@ -387,6 +415,9 @@
         * net
         */
         Highcharts.chart('container4', {
+        	credits:{ 
+        	      enabled:false 
+        		},
            chart: {
                type: 'line',
                animation: Highcharts.svg, // don't animate in old IE
@@ -478,6 +509,178 @@
            },
            series:[${net}]
        });
+       /**
+       * LLC miss
+       */
+        Highcharts.chart('container5', {
+        	credits:{ 
+        	      enabled:false 
+        		},
+            chart: {
+                type: 'line',
+                animation: Highcharts.svg, // don't animate in old IE
+                marginRight: 10,
+                events: {
+                    load: function () {
+                        // set up the updating of the chart each second
+                        var series = this.series[0];
+                        var lastcollecttime=null;
+                        var x,y;
+                        setInterval(function (){
+                        	if(flag==true){
+    			              if(returnedPqosData!=null){
+    			            	    x = returnedPqosData.time;
+    			            	    y = returnedPqosData.llc;
+    			            	    if(lastcollecttime==null){//如果第一次判断 直接添加点进去
+    			            	    	 series.addPoint([x,y], true, true); 
+    			            	    	 lastcollecttime = x;
+    			            	    }else{ 
+    			            	    	if(lastcollecttime<x){//如果不是第一次判断，则只有上次时间小于当前时间时才添加点
+    			            	    		series.addPoint([x,y], true, true); 
+    				            	    	lastcollecttime = x; 
+    			            	    	}
+    			            	    }
+    				               
+    			               }    
+                        	}
+                        }, 200);
+                    }
+                }
+            },
+            title: {
+                text: 'LLC miss(%)'
+            },
+            xAxis: {
+            	type: 'datetime',
+                tickPixelInterval: 150,
+                gridLineWidth: 1
+            },
+            yAxis: {
+                title: {
+                    text: 'used rate'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }],
+                max:100,
+    			min:0,
+            },
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.series.name + '</b><br/>' +
+                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                        Highcharts.numberFormat(this.y, 2)+'%';
+                }
+            },
+            legend: {
+                enabled: false
+            },
+             plotOptions: {
+                area: {
+                    fillColor: {
+                        linearGradient: {
+                            x1: 0,
+                            y1: 0,
+                            x2: 0,
+                            y2: 1
+                        },
+                        stops: [
+                            [0, Highcharts.getOptions().colors[0]],
+                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                        ]
+                    },
+                    marker: {
+                        radius: 2
+                    },
+                    lineWidth: 1,
+                    states: {
+                        hover: {
+                            lineWidth: 1
+                        }
+                    },
+                    threshold: null
+                }
+            },
+            exporting: {
+                enabled: false
+            },
+            series:[${llc}]
+        });
+        Highcharts.chart('container6', {
+        	credits:{ 
+        	      enabled:false 
+        		},
+            chart: {
+                type: 'line',
+                animation: Highcharts.svg, // don't animate in old IE
+                marginRight: 10,
+                events: {
+                    load: function () {
+                        // set up the updating of the chart each second
+                        var series0 = this.series[0];
+                        var series1 = this.series[1];
+                        var lastcollecttime=null;
+                        var x,y;
+                        setInterval(function (){
+                     	   if(flag==true){
+      			              if(returnedPqosData!=null){
+      			            	    x = returnedPqosData.time;
+      			            	    y = returnedPqosData.mbl;
+      			            	    z=  returnedPqosData.mbr;
+      			            	    if(lastcollecttime==null){
+      			            	    	 series0.addPoint([x,y], true, true); 
+      			            	    	 series1.addPoint([x,z], true, true); 
+      			            	    	 lastcollecttime = x;
+      			            	    }else{
+      			            	    	if(lastcollecttime<x){
+      			            	    		series0.addPoint([x,y], true, true); 
+      			            	    		series1.addPoint([x,z], true, true); 
+      				            	    	lastcollecttime = x;
+      			            	    	}
+      			            	    }
+      				               
+      			               }    
+                          	}
+                        }, 200);
+                    }
+                }
+            },
+            title: {
+                text: 'MemBandwith used(MB/s)'
+            },
+            xAxis: {
+            	type: 'datetime',
+                tickPixelInterval: 150,
+                gridLineWidth: 1
+            },
+            yAxis: {
+                title: {
+                    text: 'usage MB/s'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }], 
+    				min:0,
+            },
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.series.name + '</b><br/>' +
+                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                        Highcharts.numberFormat(this.y, 2)+'MB/s';
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            exporting: {
+                enabled: false
+            },
+            series:[${mbm}]
+        });
  });
 </script>
 	</div>
