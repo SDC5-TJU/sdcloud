@@ -51,6 +51,7 @@
 	<context:component-scan base-package="scs.service.monitor.containers" />
  	<context:component-scan base-package="scs.service.monitor.app" />
  	<context:component-scan base-package="scs.service.monitor.system" />
+ 	<context:component-scan base-package="scs.service.monitor.pqos" />
 	
 	<!-- 数据库配置-前期关闭 -->
 	<!-- 定时器 -->
