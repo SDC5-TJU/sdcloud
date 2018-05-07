@@ -55,8 +55,7 @@
 					url:"getPqos.do?no="+no,
 					data:{},
 					dataType:"json",
-					success:function(returned) { 
-						console.log(returned)
+					success:function(returned) {  
 						if(returned!=null&&returned!=""&&returned!="null"){
 							returnedPqosData = returned; 
 						}
@@ -528,9 +527,9 @@
                         var x,y;
                         setInterval(function (){
                         	if(flag==true){
-    			              if(returnedPqosData!=null){
-    			            	    x = returnedPqosData.time;
-    			            	    y = returnedPqosData.llc;
+    			              if(returnedPqosData!=null&&returnedPqosData[0].time!=0){
+    			            	    x = returnedPqosData[0].time;
+    			            	    y = returnedPqosData[0].cachemiss;
     			            	    if(lastcollecttime==null){//如果第一次判断 直接添加点进去
     			            	    	 series.addPoint([x,y], true, true); 
     			            	    	 lastcollecttime = x;
@@ -625,10 +624,10 @@
                         var x,y;
                         setInterval(function (){
                      	   if(flag==true){
-      			              if(returnedPqosData!=null){
-      			            	    x = returnedPqosData.time;
-      			            	    y = returnedPqosData.mbl;
-      			            	    z=  returnedPqosData.mbr;
+      			              if(returnedPqosData!=null&&returnedPqosData[0].time!=0){
+      			            	    x = returnedPqosData[0].time;
+      			            	    y = returnedPqosData[0].mbl;
+      			            	    z=  returnedPqosData[0].mbr;
       			            	    if(lastcollecttime==null){
       			            	    	 series0.addPoint([x,y], true, true); 
       			            	    	 series1.addPoint([x,z], true, true); 

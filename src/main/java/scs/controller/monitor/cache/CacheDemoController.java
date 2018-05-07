@@ -54,6 +54,7 @@ public class CacheDemoController {
 	}
 
 	@RequestMapping(value = "/getPqos.do")
+	@ResponseBody
 	public String getPqos(HttpServletResponse response, @RequestParam("no") int number) {
 		float[][] misses = null;
 		float[] bandwidth = null;
