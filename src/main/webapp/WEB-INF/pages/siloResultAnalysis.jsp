@@ -140,10 +140,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <td style="background:#f9f9f9">${siloBaseResult.mean}</td>
                         <td style="background:#f1f5fa">${siloResult.mean}</td>
                          <c:choose>
-							<c:when test="${diffBean.varDiff>0}">
+							<c:when test="${diffBean.meanDiff>0}">
                                <td style="background:#f9f9f9"><img src="statics/images/up.png"/>${diffBean.meanDiff}%</td>							
                             </c:when>
-                            <c:when test="${diffBean.varDiff<0}">
+                            <c:when test="${diffBean.meanDiff<0}">
                                <td style="background:#f9f9f9"><img src="statics/images/down.png"/>${diffBean.meanDiff}%</td>							
                             </c:when>
 							<c:otherwise>

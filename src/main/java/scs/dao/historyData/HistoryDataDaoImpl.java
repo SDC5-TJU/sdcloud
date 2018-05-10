@@ -124,16 +124,16 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 
 	@Override
 	public List<SiloDataBean> searchSiloData(int testRecordId, int isBase) {
-		String sql="select queryTime from data_silo_base where testRecordId=?";
+		String sql="select totalTime from data_silo_base where testRecordId=?";
 		if(isBase==0){
-			sql="select queryTime from data_silo where testRecordId=?";
+			sql="select totalTime from data_silo where testRecordId=?";
 		}
 		List<SiloDataBean> list=jt.query(sql,new Object[]{testRecordId},new ResultSetExtractor<List<SiloDataBean>>() {
 			public List<SiloDataBean> extractData(ResultSet rs) throws SQLException, DataAccessException {
 				List<SiloDataBean> list = new ArrayList<SiloDataBean>();
 				while (rs.next()) {
 					SiloDataBean bean=new SiloDataBean();
-					bean.setQueryTime(rs.getFloat(1));
+					bean.setTotalTime(rs.getFloat(1));
 					list.add(bean);
 				}
 				return list;

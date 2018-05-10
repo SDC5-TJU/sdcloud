@@ -213,7 +213,7 @@ class ResultParser {
 		TimeResultBean bean = new TimeResultBean();
 		List<Float> newlist = new ArrayList<Float>();
 		for(int i =0; i < silo.size(); i++){
-			newlist.add(silo.get(i).getQueryTime());
+			newlist.add(silo.get(i).getTotalTime());
 		}
 		Collections.sort(newlist);
 		bean.setMax(getMax(newlist));
@@ -221,7 +221,7 @@ class ResultParser {
 		bean.setMin(getMin(newlist));
 		bean.setNintyFiveTh(getNintyFiveTh(newlist));
 		bean.setNintyNineTh(getNintyNinth(newlist));
-		bean.setNintyNineTh(getNintyTh(newlist));
+		bean.setNintyTh(getNintyTh(newlist));
 		bean.setCDF(getCDF(newlist));
 		bean.setVar(format.subFloat(getVar(newlist),2));
 		//miss

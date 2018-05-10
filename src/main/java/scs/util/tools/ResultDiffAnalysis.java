@@ -228,9 +228,9 @@ public class ResultDiffAnalysis {
 		strData.append("data:[");
 		int size=baseTimeList.size()-1;
 		for(int i=0;i<size;i++){
-			strData.append(baseTimeList.get(i).getQueryTime()).append(",");
+			strData.append(baseTimeList.get(i).getTotalTime()).append(",");
 		}
-		strData.append(baseTimeList.get(size).getQueryTime()).append("]");
+		strData.append(baseTimeList.get(size).getTotalTime()).append("]");
 		HSeries.append(strName).append(strData).append("}");
 		diffBean.setBaseTimeStr(HSeries.toString()); 
 		/*
@@ -243,9 +243,9 @@ public class ResultDiffAnalysis {
 		strData.append("data:[");
 		size=timeList.size()-1;
 		for(int i=0;i<size;i++){
-			strData.append(timeList.get(i).getQueryTime()).append(",");
+			strData.append(timeList.get(i).getTotalTime()).append(",");
 		}
-		strData.append(timeList.get(size).getQueryTime()).append("]");
+		strData.append(timeList.get(size).getTotalTime()).append("]");
 		HSeries.append(strName).append(strData).append("}");
 		diffBean.setTimeStr(HSeries.toString()); 
 		/*
