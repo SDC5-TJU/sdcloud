@@ -13,7 +13,13 @@ import scs.pojo.AppInfoBean;
 import scs.pojo.ContainerInfoBean;
 import scs.pojo.SystemInfoBean;
 import scs.util.tools.DatabaseDriver;
-
+/**
+ * 静态仓库类对应dao层
+ * 因为静态仓库加载的时候,springMVC框架的jdbc并没有加载
+ * 所以此次手写jdbc驱动进行数据库查询
+ * @author yanan
+ *
+ */
 public class RepositoryDao {
 	private static Connection conn = null;
 	private static PreparedStatement pst = null;
@@ -122,8 +128,15 @@ public class RepositoryDao {
 		}
 		return map;
 	}
+	/**
+	 * 更新应用执行记录
+	 * @param appName 应用名称
+ 	 * @param eventTime 事件名称
+	 * @param action 执行的动作
+	 * @param isBase 是否为基准测试
+	 * @return 整数型的执行结果
+	 */
 	public static int updateExecuteRecord(String appName,String eventTime,String action,int isBase) {
-		System.out.println(appName+" "+action+" isbase="+isBase);
 		int result=0;
 		try {
 			conn = DatabaseDriver.getInstance().getConn();

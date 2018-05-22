@@ -8,6 +8,7 @@ import scs.pojo.MemcachedDataBean;
 import scs.pojo.SiloDataBean;
 import scs.pojo.TimeResultBean;
 import scs.pojo.TwoTuple;
+import scs.pojo.XapianDataBean;
 import scs.util.format.DataFormats;
 import scs.util.repository.Repository;
 /**
@@ -231,8 +232,29 @@ class ResultParser {
 		bean.setMissRate(format.subFloat(miss,2));
 		return bean;
 	}
-
-	public List<TwoTuple<Float,Float>>  getCDF(List<Float> newlist){
+	public TimeResultBean calculateX(List<XapianDataBean> xapian){
+		TimeResultBean bean = new TimeResultBean();
+		List<Float> newlist = new ArrayList<Float>();
+		for(int i =0; i < xapian.size(); i++){
+			newlist.add(xapian.get(i).getTotalTime());
+		}
+		Collections.sort(newlist);
+		bean.setMax(getMax(newlist));
+		bean.setMean(format.subFloat(getMean(newlist),3));
+		bean.setMin(getMin(newlist));
+		bean.setNintyFiveTh(getNintyFiveTh(newlist));
+		bean.setNintyNineTh(getNintyNinth(newlist));
+		bean.setNintyTh(getNintyTh(newlist));
+		bean.setCDF(getCDF(newlist));
+		bean.setVar(format.subFloat(getVar(newlist),2));
+		//miss
+		String countRequest = Repository.appConfigMap.get("xapian").getRequestCount();
+		int count = Integer.parseInt(countRequest) * 2;
+		float miss  = 1- count/(float)newlist.size();
+		bean.setMissRate(format.subFloat(miss,2));
+		return bean;
+	}
+	public List<TwoTuple<Float,Float>> getCDF(List<Float> newlist){
 		List<TwoTuple<Float,Float>> cdf = new ArrayList<TwoTuple<Float,Float>>();
 		float percent;
 		int sumcount = 0;

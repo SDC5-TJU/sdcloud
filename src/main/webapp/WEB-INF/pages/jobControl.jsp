@@ -121,6 +121,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </div>
                 </div>
                 </c:if>
+                 <c:if test="${xapian.enable==1}">
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">xapian:</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="${xapian.requestCount}" placeholder="20000" id="config9-1" name="requestCount">
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${xapian.warmUpCount}" placeholder="2000" id="config9-2" name="warmUpCount" >
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="均匀" placeholder="" id="" name="" disabled="disabled">
+						<input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${xapian.intensity}" placeholder="2000" id="config9-3" name="intensity">
+                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="xapianButton">
+                        <input style="margin-left:20px; " type="button"  class="config" onclick="" value="基准采集" id="xapianAverButton">
+                    </div>
+                </div>
+                </c:if>
+                <c:if test="${redis.enable==1}">
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">redis:</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="${redis.requestCount}" placeholder="20000" id="config10-1" name="requestCount">
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${redis.warmUpCount}" placeholder="2000" id="config10-2" name="warmUpCount" >
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="${redis.pattern}" placeholder="" id="" name="" disabled="disabled">
+						<input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${redis.intensity}" placeholder="2000" id="config10-3" name="intensity">
+                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="redisButton">
+                        <input style="margin-left:20px; " type="button"  class="config" onclick="" value="基准采集" id="redisAverButton">
+                    </div>
+                </div>
+                </c:if>
             </div>
 
             <!--离线-->
@@ -150,8 +176,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <c:if test="${scimark.enable==1}">
                 <div class="row cl">
                     <label class="col-xs-4 new-col-sm-2 new-center1"></label>
-                    <label class="col-xs-4 new-col-sm-2 new-center1" >请求总数</label>
-                    <label class="col-xs-4 new-col-sm-2 new-center1">预热次数</label>
+                    <label class="col-xs-4 new-col-sm-2 new-center1" >--</label>
+                    <label class="col-xs-4 new-col-sm-2 new-center1">--</label>
                     <label class="col-xs-4 new-col-sm-2 new-center1">负载策略</label>
                     <label class="col-xs-4 new-col-sm-2 new-center1">线程数量</label>
                     <label class="col-xs-4 new-col-sm-2 new-center1"></label>
@@ -167,6 +193,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </div>
                 </div>
                 </c:if>
+                
                 <c:if test="${hadoop.enable==1}">
                 <div class="row cl">
                     <label class="col-xs-4 new-col-sm-2 new-center1"></label>
@@ -184,6 +211,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${hadoop.pattern}" placeholder="IO密集型/CPU密集型/综合" id="" name="pattern" >
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${hadoop.intensity}" placeholder="" id="" name="intensity" >
                         <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="hadoopButton">
+                    </div>
+                </div>
+                </c:if>
+                <c:if test="${dwarf.enable==1}">
+                <div class="row cl">
+                    <label class="col-xs-4 new-col-sm-2 new-center1"></label>
+                    <label class="col-xs-4 new-col-sm-2 new-center1" >--</label>
+                    <label class="col-xs-4 new-col-sm-2 new-center1">--</label>
+                    <label class="col-xs-4 new-col-sm-2 new-center1">负载策略</label>
+                    <label class="col-xs-4 new-col-sm-2 new-center1">线程数量</label>
+                    <label class="col-xs-4 new-col-sm-2 new-center1"></label>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">dwarf：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="" placeholder="" id="" name="" disabled="disabled">
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="" placeholder="" id="config11-1" name="" disabled="disabled">
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="单次" placeholder="" id="" name="" disabled="disabled">
+                        <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${dwarf.intensity}" placeholder="" id="" name="intensity" >
+                        <input style="margin-left:20px; " type="button"  class="config " onclick="" value="开启" id="dwarfButton">
                     </div>
                 </div>
                 </c:if>
@@ -293,14 +340,20 @@ $("#endButton").click(function(){
 							$("#memcachedAverButton").attr("disabled", returned[0].memcached);
 							$("#siloButton").attr("disabled", returned[0].silo);
 							$("#siloAverButton").attr("disabled", returned[0].silo);
+							$("#cassandraButton").attr("disabled", returned[0].cassandra);
+							$("#cassandraAverButton").attr("disabled", returned[0].cassandra);
+							$("#xapianButton").attr("disabled", returned[0].xapian);
+							$("#xapianAverButton").attr("disabled", returned[0].xapian);
+							$("#redisButton").attr("disabled", returned[0].redis);
+							$("#redisAverButton").attr("disabled", returned[0].redis);
 							if(isDoingStop==false){ 
 								$("#bonnieButton").attr("disabled", returned[0].bonnie);
 								$("#bonnieAverButton").attr("disabled",!returned[0].bonnie);
 							}
 							$("#scimarkButton").attr("disabled", returned[0].scimark);
 							$("#hadoopButton").attr("disabled", returned[0].hadoop);
-							$("#cassandraButton").attr("disabled", returned[0].cassandra);
-							$("#cassandraAverButton").attr("disabled", returned[0].cassandra);
+							$("#dwarfButton").attr("disabled", returned[0].dwarf);
+							
 					 } 
 					//to do
 					/*遍历json数组，获取并判断每个应有的状态，为true 则disable的按钮 为false 则相反*/ 
@@ -423,6 +476,86 @@ $("#siloAverButton").click(function(){
 		}	
 	});
 });
+//Cassandra
+$("#cassandraButton").click(function(){
+	$("#cassandraButton").attr("disabled",true);
+	$("#cassandraAverButton").attr("disabled",true);
+		    $.ajax({
+				async:true,
+				type:"post",
+				url:"executeCassandraApp.do",
+				data:{isBase:0},
+				dataType:"text",
+				success:function(returned){ 
+				}	
+			});
+});
+$("#cassandraAverButton").click(function(){
+	$("#cassandraButton").attr("disabled",true);
+	$("#cassandraAverButton").attr("disabled",true);
+	    $.ajax({
+			async:true,
+			type:"post",
+			url:"executeCassandraApp.do",
+			data:{isBase:1},
+			dataType:"text",
+			success:function(returned){ 
+			}	
+		});
+});
+//xapian
+$("#xapianButton").click(function(){
+	$("#xapianButton").attr("disabled",true);
+	$("#xapianAverButton").attr("disabled",true);
+		    $.ajax({
+				async:true,
+				type:"post",
+				url:"executeXapianApp.do",
+				data:{isBase:0},
+				dataType:"text",
+				success:function(returned){ 
+				}	
+			});
+});
+$("#xapianAverButton").click(function(){
+	$("#xapianAverButton").attr("disabled",true);
+	$("#xapianAverButton").attr("disabled",true);
+    $.ajax({
+		async:true,
+		type:"post",
+		url:"executeXapianApp.do",
+		data:{isBase:1},
+		dataType:"text",
+		success:function(returned){ 
+		}	
+	});
+});
+$("#redisButton").click(function(){
+	$("#redisButton").attr("disabled",true);
+	$("#redisAverButton").attr("disabled",true);
+		    $.ajax({
+				async:true,
+				type:"post",
+				url:"executeRedisApp.do",
+				data:{isBase:0},
+				dataType:"text",
+				success:function(returned){ 
+				}	
+			});
+});
+$("#redisAverButton").click(function(){
+	$("#redisAverButton").attr("disabled",true);
+	$("#redisAverButton").attr("disabled",true);
+    $.ajax({
+		async:true,
+		type:"post",
+		url:"executeRedisApp.do",
+		data:{isBase:1},
+		dataType:"text",
+		success:function(returned){ 
+		}	
+	});
+});
 //startBonnie
 $("#bonnieButton").click(function(){
 	$("#bonnieButton").attr("disabled",true);
@@ -465,6 +598,19 @@ $("#scimarkButton").click(function(){
 				}	
 			});
 });
+//scimark
+$("#dwarfButton").click(function(){
+	$("#dwarfButton").attr("disabled",true);
+		    $.ajax({
+				async:true,
+				type:"post",
+				url:"executeDwarfApp.do",
+				data:{},
+				dataType:"text",
+				success:function(returned){ 
+				}	
+			});
+});
 //Hadoop
 $("#hadoopButton").click(function(){
 	$("#hadoopButton").attr("disabled",true);
@@ -478,33 +624,7 @@ $("#hadoopButton").click(function(){
 				}	
 			});
 });
-//Cassandra
-$("#cassandraButton").click(function(){
-	$("#cassandraButton").attr("disabled",true);
-	$("#cassandraAverButton").attr("disabled",true);
-		    $.ajax({
-				async:true,
-				type:"post",
-				url:"executeCassandraApp.do",
-				data:{isBase:0},
-				dataType:"text",
-				success:function(returned){ 
-				}	
-			});
-});
-$("#cassandraAverButton").click(function(){
-	$("#cassandraButton").attr("disabled",true);
-	$("#cassandraAverButton").attr("disabled",true);
-	    $.ajax({
-			async:true,
-			type:"post",
-			url:"executeCassandraApp.do",
-			data:{isBase:1},
-			dataType:"text",
-			success:function(returned){ 
-			}	
-		});
-});
+
 </script>
 <script type="text/javascript">
 var flag=false;

@@ -20,6 +20,7 @@ import scs.pojo.TestRecordBean;
 import scs.pojo.TimeResultBean;
 import scs.pojo.TimeResultDiffBean;
 import scs.pojo.TwoTuple;
+import scs.pojo.XapianDataBean;
 import scs.service.appConfig.AppConfigService;
 import scs.service.historyData.HistoryDataService;
 import scs.service.jobSchedul.JobSchedulService;
@@ -126,8 +127,32 @@ public class JobSchedulController {
 	@RequestMapping("/executeSiloApp.do")
 	public void executeSiloApp(HttpServletRequest request,HttpServletResponse response,
 			@RequestParam(value="isBase",required=true) int isBase){
-		try{ 
+		try{
 			int result=service.executeSiloApp(isBase);
+			response.getWriter().print(result);
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
+	}
+	@RequestMapping("/executeXapianApp.do")
+	public void executeXapianApp(HttpServletRequest request,HttpServletResponse response,
+			@RequestParam(value="isBase",required=true) int isBase){
+		try{
+			int result=service.executeXapianApp(isBase);
+			response.getWriter().print(result);
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
+	}
+	@RequestMapping("/executeRedisApp.do")
+	public void executeRedisApp(HttpServletRequest request,HttpServletResponse response,
+			@RequestParam(value="isBase",required=true) int isBase){
+		try{ 
+			int result=service.executeRedisApp(isBase);
 			response.getWriter().print(result);
 
 		}catch(Exception e){
@@ -177,6 +202,18 @@ public class JobSchedulController {
 	public void executeScimarkApp(HttpServletRequest request,HttpServletResponse response){
 		try{ 
 			int result=service.executeScimarkApp();
+			response.getWriter().print(result);
+
+		}catch(Exception e){
+			
+			e.printStackTrace();
+		}
+
+	}
+	@RequestMapping("/executeDwarfApp.do")
+	public void executeDwarfApp(HttpServletRequest request,HttpServletResponse response){
+		try{ 
+			int result=service.executeDwarfApp();
 			response.getWriter().print(result);
 
 		}catch(Exception e){
@@ -386,6 +423,51 @@ public class JobSchedulController {
 		}
 		return "cassandraResultAnalysis";
 	}
+	@RequestMapping("/getRedisResult.do")
+	public String getRedisResult(HttpServletRequest request,HttpServletResponse response,Model model,
+			@RequestParam(value="testRecordId",required=true) int testRecordId){
+		try{ 
+			List<TwoTuple<Long, Integer>> resultBaseList=null;
+			List<TwoTuple<Long, Integer>> resultList=null;
+			if(testRecordId==Repository.curTestRecordId){
+				//如果要查看结果的测试记录id等于当前的测试记录,直接把静态仓库里的数据提出 
+				resultBaseList=Repository.redisBaseDataList;
+				resultList=Repository.redisDataList;
+			}else{
+				//否则,从数据库中读取历史记录 
+				resultBaseList=hService.searchRedisData(testRecordId,1);//读取基准数据
+				resultList=hService.searchRedisData(testRecordId,0);//读取测试数据
+			}
+			/*
+			 * 判断是否缺少数据 (基准和正式都要有才可以进行差异值计算)
+			 */
+			String appName="redis";
+			if(resultBaseList.size()==0){
+				model.addAttribute("message","尚未进行"+appName+"基准测试");
+				return "redisResultAnalysis";
+			}else if(resultList.size()==0){
+				model.addAttribute("message","尚未进行"+appName+"正式测试");
+				return "redisResultAnalysis";
+			} 
+			//计算基准数据和正式数据的各项指标
+			TimeResultBean resultBaseIndex= AdapterForResult.adapter(appName,resultBaseList); 
+			TimeResultBean resultIndex=AdapterForResult.adapter(appName,resultList);
+			model.addAttribute(appName+"BaseResult",resultBaseIndex);
+			model.addAttribute(appName+"Result",resultIndex);
+			//计算各项指标差异值
+			TimeResultDiffBean diffBean=ResultDiffAnalysis.getInstance().getResultDiff(resultBaseList,resultList,resultBaseIndex,resultIndex);
+			model.addAttribute("diffBean",diffBean);
+			//封装appconfig配置信息
+			List<AppConfigBean> appConfiglist=aService.getAppConfig(testRecordId);
+			for(AppConfigBean bean:appConfiglist){
+				model.addAttribute(bean.getApplicationName(),bean);
+			}
+			model.addAttribute("testRecordId",testRecordId);
+		}catch(Exception e){ 
+			e.printStackTrace();
+		}
+		return "redisResultAnalysis";
+	}
 	@RequestMapping("/getSiloResult.do")
 	public String getSiloResult(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="testRecordId",required=true) int testRecordId){
@@ -418,7 +500,7 @@ public class JobSchedulController {
 			model.addAttribute(appName+"BaseResult",resultBaseIndex);
 			model.addAttribute(appName+"Result",resultIndex);
 			//计算各项指标差异值
-			TimeResultDiffBean diffBean=ResultDiffAnalysis.getInstance().getsiloResultDiff(resultBaseList,resultList,resultBaseIndex,resultIndex);
+			TimeResultDiffBean diffBean=ResultDiffAnalysis.getInstance().getSiloResultDiff(resultBaseList,resultList,resultBaseIndex,resultIndex);
 			model.addAttribute("diffBean",diffBean);
 			//封装appconfig配置信息
 			List<AppConfigBean> appConfiglist=aService.getAppConfig(testRecordId);
@@ -431,7 +513,51 @@ public class JobSchedulController {
 		}
 		return "siloResultAnalysis";
 	}
- 
+	@RequestMapping("/getXapianResult.do")
+	public String getXapianResult(HttpServletRequest request,HttpServletResponse response,Model model,
+			@RequestParam(value="testRecordId",required=true) int testRecordId){
+		try{
+			List<XapianDataBean> resultBaseList=null;
+			List<XapianDataBean> resultList=null;
+			if(testRecordId==Repository.curTestRecordId){
+				//如果要查看结果的测试记录id等于当前的测试记录,直接把静态仓库里的数据提出 
+				resultBaseList=Repository.xapianBaseDataList;
+				resultList=Repository.xapianDataList;
+			}else{
+				//否则,从数据库中读取历史记录 
+				resultBaseList=hService.searchXapianData(testRecordId,1);//读取基准数据
+				resultList=hService.searchXapianData(testRecordId,0);//读取测试数据
+			}
+			/*
+			 * 判断是否缺少数据 (基准和正式都要有才可以进行差异值计算)
+			 */
+			String appName="xapian";
+			if(resultBaseList.size()==0){
+				model.addAttribute("message","尚未进行"+appName+"基准测试");
+				return "xapianResultAnalysis";
+			}else if(resultList.size()==0){
+				model.addAttribute("message","尚未进行"+appName+"正式测试");
+				return "xapianResultAnalysis";
+			} 
+			//计算基准数据和正式数据的各项指标
+			TimeResultBean resultBaseIndex= AdapterForResult.adapter(appName,resultBaseList); 
+			TimeResultBean resultIndex=AdapterForResult.adapter(appName,resultList);
+			model.addAttribute(appName+"BaseResult",resultBaseIndex);
+			model.addAttribute(appName+"Result",resultIndex);
+			//计算各项指标差异值
+			TimeResultDiffBean diffBean=ResultDiffAnalysis.getInstance().getXapianResultDiff(resultBaseList,resultList,resultBaseIndex,resultIndex);
+			model.addAttribute("diffBean",diffBean);
+			//封装appconfig配置信息
+			List<AppConfigBean> appConfiglist=aService.getAppConfig(testRecordId);
+			for(AppConfigBean bean:appConfiglist){ 
+				model.addAttribute(bean.getApplicationName(),bean); 
+			}
+			model.addAttribute("testRecordId",testRecordId);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return "xapianResultAnalysis";
+	}
 	@RequestMapping("/getWebSearchQueryTime.do")
 	public void getWebSearchQueryTime(HttpServletRequest request,HttpServletResponse response,Model model){
 		try{ 

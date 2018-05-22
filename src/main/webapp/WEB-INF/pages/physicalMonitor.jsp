@@ -46,6 +46,10 @@
 		var returnedData = null; 
 		var returnedPqosData = null;
 		var flag=false;
+		var cornFlag="<%=request.getAttribute("cronFlag")%>";
+		if(cornFlag=="1"){
+			flag=true;
+		} 
 		var no=${no};
 		setInterval(function() {
 			if(flag==true){
@@ -516,7 +520,7 @@
         	      enabled:false 
         		},
             chart: {
-                type: 'line',
+                type: 'area',
                 animation: Highcharts.svg, // don't animate in old IE
                 marginRight: 10,
                 events: {
@@ -556,15 +560,15 @@
             },
             yAxis: {
                 title: {
-                    text: 'used rate'
+                    text: 'miss rate'
                 },
                 plotLines: [{
                     value: 0,
                     width: 1,
                     color: '#808080'
                 }],
-                max:100,
-    			min:0,
+               // max:100,
+    			min:0
             },
             tooltip: {
                 formatter: function () {
@@ -576,7 +580,7 @@
             legend: {
                 enabled: false
             },
-             plotOptions: {
+            plotOptions: {
                 area: {
                     fillColor: {
                         linearGradient: {
@@ -665,6 +669,9 @@
                 }], 
     			min:0
             },
+            legend: {
+               enabled:false
+            },
             tooltip: {
                 formatter: function () {
                     return '<b>' + this.series.name + '</b><br/>' +
@@ -672,9 +679,7 @@
                         Highcharts.numberFormat(this.y, 2)+'MB/s';
                 }
             },
-            legend: {
-                enabled: false
-            },
+            
             exporting: {
                 enabled: false
             },

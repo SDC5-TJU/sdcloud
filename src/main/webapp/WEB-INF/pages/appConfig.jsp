@@ -117,6 +117,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</c:choose>                    
 					</div>
                 </div> 
+                 <div class="row cl">
+                   <label class="form-label col-xs-4 col-sm-2">redis:</label>
+                   <div class="formControls col-xs-8 col-sm-9">
+                       <input class="input new-w50 new-col-sm-2" type="text"  value="${redis.requestCount}" placeholder="" id="config10-1" name="requestCount" >
+                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${redis.warmUpCount}" placeholder="" id="config10-2" name="warmUpCount">
+                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${redis.pattern}" readonly="true" id="config10-3" name="pattern" >
+                       <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="${redis.intensity}" placeholder="" id="config10-4" name="intensity">
+                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${redis.testRecordId}" id="config10-5" name="testRecordId">
+                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${redis.applicationName}" id="config10-6" name="applicationName">
+                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${redis.enable}" id="config10-7" name="enable">
+                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${redis.applicationType}" id="config10-8" name="applicationType">
+                          <c:choose>
+							<c:when test="${redis.enable==1}">
+								<input style="margin-left:40px;" type="button" class="config" value="禁用" id="config10">
+							</c:when>
+							<c:otherwise>
+								<input style="margin-left:40px; background:#22cc77;" type="button" class="config" value="开启" id="config10">
+							</c:otherwise>
+						</c:choose>   
+					</div>
+               </div>
                <div class="row cl">
                    <label class="col-xs-4 col-sm-2 new-center"></label>
                    <label class="col-xs-4 new-col-sm-2 new-center1" >请求总数</label>
@@ -129,9 +150,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                    <label class="form-label col-xs-4 col-sm-2">memcached:</label>
                    <div class="formControls col-xs-8 col-sm-9">
                       <input  class="input new-w50 new-col-sm-2" type="text"  value="${memcached.requestCount}" id="config3-1" name="requestCount" >
-                       <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="${memcached.warmUpCount}" id="config3-2" name="intensity">
+                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="${memcached.warmUpCount}" id="config3-2" name="warmUpCount">
                        <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${memcached.pattern}" readonly="true" id="config3-3" name="pattern" >
-                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${memcached.intensity}" id="config3-4" name="warmUpCount">
+                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${memcached.intensity}" id="config3-4" name="intensity">
                        <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${memcached.testRecordId}" id="config3-5" name="testRecordId">
                        <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${memcached.applicationName}" id="config3-6" name="applicationName">
                        <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${memcached.enable}" id="config3-7" name="enable">
@@ -167,6 +188,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</c:choose>   
 					</div>
                </div>
+               <div class="row cl">
+                   <label class="form-label col-xs-4 col-sm-2">xapian:</label>
+                   <div class="formControls col-xs-8 col-sm-9">
+                       <input class="input new-w50 new-col-sm-2" type="text"  value="${xapian.requestCount}" placeholder="" id="config9-1" name="requestCount" >
+                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${xapian.warmUpCount}" placeholder="" id="config9-2" name="warmUpCount">
+                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${xapian.pattern}" readonly="true" id="config9-3" name="pattern" >
+                       <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="${xapian.intensity}" placeholder="" id="config9-4" name="intensity">
+                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${xapian.testRecordId}" id="config9-5" name="testRecordId">
+                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${xapian.applicationName}" id="config9-6" name="applicationName">
+                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${xapian.enable}" id="config9-7" name="enable">
+                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${xapian.applicationType}" id="config9-8" name="applicationType">
+                          <c:choose>
+							<c:when test="${xapian.enable==1}">
+								<input style="margin-left:40px;" type="button" class="config" value="禁用" id="config9">
+							</c:when>
+							<c:otherwise>
+								<input style="margin-left:40px; background:#22cc77;" type="button" class="config" value="开启" id="config9">
+							</c:otherwise>
+						</c:choose>   
+					</div>
+               </div>
+              
            </div>
 
             <!--离线-->
@@ -254,6 +297,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							</c:when>
 							<c:otherwise>
 								<input style="margin-left:40px; background:#22cc77;" type="button" class="config" value="开启" id="config7">
+							</c:otherwise>
+						</c:choose>                         
+					</div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">dwarf：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                       <input class="input new-w50 new-col-sm-2" type="text"  value="${dwarf.requestCount}" readonly="true" placeholder="" id="config11-1" name="requestCount" >
+                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${dwarf.warmUpCount}" readonly="true" placeholder="" id="config11-2" name="warmUpCount">
+                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text"  value="${dwarf.pattern}" placeholder="IO密集型/CPU密集型/综合" id="config11-3" name="pattern" >
+                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="${dwarf.intensity}" placeholder="" id="config11-4" name="intensity">
+                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${dwarf.testRecordId}" id="config11-5" name="testRecordId">
+                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${dwarf.applicationName}" id="config11-6" name="applicationName">
+                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${dwarf.enable}" id="config11-7" name="enable">
+                       <input  style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="hidden"  value="${dwarf.applicationType}" id="config11-8" name="applicationType">
+                          <c:choose>
+							<c:when test="${dwarf.enable==1}">
+								<input style="margin-left:40px;" type="button" class="config" value="禁用" id="config11">
+							</c:when>
+							<c:otherwise>
+								<input style="margin-left:40px; background:#22cc77;" type="button" class="config" value="开启" id="config11">
 							</c:otherwise>
 						</c:choose>                         
 					</div>
@@ -401,8 +465,48 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 $("#config8-7").val("1");
             }
         })
-        
-        //a();
+        $("#config9").click(function(){
+            if ($("#config9").val()=="禁用")
+            { 
+            	$("#config9").css("background","#22cc77");
+                $("#config9").val("开启");
+                $("#config9-7").val("0");
+            }
+            else if ($("#config9").val()=="开启")
+            { 
+            	$("#config9").css("background","#21A1D3");
+                $("#config9").val("禁用"); 
+                $("#config9-7").val("1");
+            }
+        }) 
+        $("#config10").click(function(){
+            if ($("#config10").val()=="禁用")
+            { 
+            	$("#config10").css("background","#22cc77");
+                $("#config10").val("开启");
+                $("#config10-7").val("0");
+            }
+            else if ($("#config10").val()=="开启")
+            { 
+            	$("#config10").css("background","#21A1D3");
+                $("#config10").val("禁用"); 
+                $("#config10-7").val("1");
+            }
+        })
+        $("#config11").click(function(){
+            if ($("#config11").val()=="禁用")
+            { 
+            	$("#config11").css("background","#22cc77");
+                $("#config11").val("开启");
+                $("#config11-7").val("0");
+            }
+            else if ($("#config11").val()=="开启")
+            { 
+            	$("#config11").css("background","#21A1D3");
+                $("#config11").val("禁用"); 
+                $("#config11-7").val("1");
+            }
+        })
     });
     function save(){
     	$("#appConfig-form").submit();

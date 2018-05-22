@@ -54,6 +54,7 @@ public class HttpClientPool {
 		return httpClientDemo;
 	}
 	
+	@SuppressWarnings("static-access")
 	public void init(){  
 		try {  
 			SSLContext sslcontext = SSLContexts.custom().loadTrustMaterial(null,  

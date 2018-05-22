@@ -64,16 +64,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
     <!--图-->
     <div style="width: 900px;" id="chart">
-        <div id="websearch1" style="width: 550px;height: 300px; position: absolute;top: 150px;left:150px;"></div>
-        <div id="websearch2" style="width: 550px;height: 300px;position: absolute; left:750px;top: 150px;"></div>
-        <div id="websearch3" style="width: 550px;height: 300px;position: absolute; left:150px;top: 500px;"></div>
-        <div id="websearch4" style="width: 550px;height: 300px;position: absolute; left:750px;top: 500px;"></div>
+        <div id="redis1" style="width: 550px;height: 300px; position: absolute;top: 150px;left:150px;"></div>
+        <div id="redis2" style="width: 550px;height: 300px;position: absolute; left:750px;top: 150px;"></div>
+        <div id="redis3" style="width: 550px;height: 300px;position: absolute; left:150px;top: 500px;"></div>
+        <div id="redis4" style="width: 550px;height: 300px;position: absolute; left:750px;top: 500px;"></div>
     </div>
     <!--表-->
         <div style=" width: 1100px; position: absolute; top: 850px;left: 200px;" id="table">
         <form method="post" action="" id="">
             <div class="panel admin-panel">
-                <div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:web搜索</strong> <a href="" style="float:right; display:none;">添加字段</a></div>
+                <div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:redis</strong> <a href="" style="float:right; display:none;">添加字段</a></div>
 
                 <table class="table table-hover text-center">
                     <tr>
@@ -84,8 +84,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </tr>
                     <tr>
                     	<td style="background:#f1f5fa">响应时间90th /ms</td>
-                        <td style="background:#f9f9f9">${webSearchBaseResult.nintyTh}</td>
-                        <td style="background:#f1f5fa">${webSearchResult.nintyTh}</td>
+                        <td style="background:#f9f9f9">${redisBaseResult.nintyTh}</td>
+                        <td style="background:#f1f5fa">${redisResult.nintyTh}</td>
                       	<c:choose>
 							<c:when test="${diffBean.nintyThDiff>0}">
                                <td style="background:#f9f9f9"><img src="statics/images/up.png"/>${diffBean.nintyThDiff}%</td>							
@@ -100,8 +100,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </tr>
                     <tr>
                     	<td style="background:#f1f5fa">响应时间95th /ms</td>						 
-                        <td style="background:#f9f9f9" >${webSearchBaseResult.nintyFiveTh}</td>
-                        <td style="background:#f1f5fa" >${webSearchResult.nintyFiveTh}</td>
+                        <td style="background:#f9f9f9" >${redisBaseResult.nintyFiveTh}</td>
+                        <td style="background:#f1f5fa" >${redisResult.nintyFiveTh}</td>
                         <c:choose>
 							<c:when test="${diffBean.nintyFiveThDiff>0}">
                                <td style="background:#f9f9f9"><img src="statics/images/up.png"/>${diffBean.nintyFiveThDiff}%</td>							
@@ -116,8 +116,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </tr>
                     <tr>
                     	<td style="background:#f1f5fa"> 响应时间99th /ms</td>
-                        <td style="background:#f9f9f9" >${webSearchBaseResult.nintyNineTh}</td>
-                        <td style="background:#f1f5fa" >${webSearchResult.nintyNineTh}</td>
+                        <td style="background:#f9f9f9" >${redisBaseResult.nintyNineTh}</td>
+                        <td style="background:#f1f5fa" >${redisResult.nintyNineTh}</td>
                          <c:choose>
 							<c:when test="${diffBean.nintyNineThDiff>0}">
                                <td style="background:#f9f9f9"><img src="statics/images/up.png"/>${diffBean.nintyNineThDiff}%</td>							
@@ -132,8 +132,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </tr>
                     <tr>
                    	 	<td style="background:#f1f5fa"> 响应时间方差</td>    						
-                        <td style="background:#f9f9f9" >${webSearchBaseResult.var}</td>
-                        <td style="background:#f1f5fa" >${webSearchResult.var}</td>
+                        <td style="background:#f9f9f9" >${redisBaseResult.var}</td>
+                        <td style="background:#f1f5fa" >${redisResult.var}</td>
                          <c:choose>
 							<c:when test="${diffBean.varDiff>0}">
                                <td style="background:#f9f9f9"><img src="statics/images/up.png"/>${diffBean.varDiff}%</td>							
@@ -148,8 +148,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </tr>
                     <tr>
                    	 	<td style="background:#f1f5fa"> 响应时间平均值 /ms</td>                                        
-                        <td style="background:#f9f9f9" >${webSearchBaseResult.mean}</td>
-                        <td style="background:#f1f5fa" >${webSearchResult.mean}</td>
+                        <td style="background:#f9f9f9" >${redisBaseResult.mean}</td>
+                        <td style="background:#f1f5fa" >${redisResult.mean}</td>
                          <c:choose>
 							<c:when test="${diffBean.varDiff>0}">
                                <td style="background:#f9f9f9"><img src="statics/images/up.png"/>${diffBean.meanDiff}%</td>							
@@ -164,8 +164,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </tr>
                     <tr>
                    	 	<td style="background:#f1f5fa"> 响应时间最小值 /ms</td>  						  
-                        <td style="background:#f9f9f9" >${webSearchBaseResult.min}</td>
-                        <td style="background:#f1f5fa" >${webSearchResult.min}</td>
+                        <td style="background:#f9f9f9" >${redisBaseResult.min}</td>
+                        <td style="background:#f1f5fa" >${redisResult.min}</td>
                          <c:choose>
 							<c:when test="${diffBean.minDiff>0}">
                                <td style="background:#f9f9f9"><img src="statics/images/up.png"/>${diffBean.minDiff}%</td>							
@@ -180,8 +180,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </tr>
                     <tr>
                     	<td style="background:#f1f5fa"> 响应时间最大值 /ms</td>  
-                        <td style="background:#f9f9f9" >${webSearchBaseResult.max}</td>
-                        <td style="background:#f1f5fa" >${webSearchResult.max}</td>
+                        <td style="background:#f9f9f9" >${redisBaseResult.max}</td>
+                        <td style="background:#f1f5fa" >${redisResult.max}</td>
                          <c:choose>
 							<c:when test="${diffBean.maxDiff>0}">
                                <td style="background:#f9f9f9"><img src="statics/images/up.png"/>${diffBean.maxDiff}%</td>							
@@ -196,8 +196,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </tr>
                     <tr>
                     	<td style="background:#f1f5fa"> 缺失率</td> 						
-                        <td style="background:#f9f9f9" >${webSearchBaseResult.missRate}</td>
-                        <td style="background:#f1f5fa" >${webSearchResult.missRate}</td>
+                        <td style="background:#f9f9f9" >${redisBaseResult.missRate}</td>
+                        <td style="background:#f1f5fa" >${redisResult.missRate}</td>
                          <c:choose>
 							<c:when test="${diffBean.missRateDiff>0}">
                                <td style="background:#f9f9f9" ><img src="statics/images/up.png"/>${diffBean.missRateDiff}%</td>							
@@ -229,12 +229,12 @@ Highcharts.setOptions({ global: { useUTC: false } });
     	   Showbo.Msg.alert(message)
        }
 
-        Highcharts.chart('websearch1', {
+        Highcharts.chart('redis1', {
             chart: {
                 zoomType: 'x'
             },
             title: {
-                text: 'webSearch尾延迟累积分布'
+                text: 'redis尾延迟累积分布'
             },
 
             xAxis: {
@@ -264,14 +264,14 @@ Highcharts.setOptions({ global: { useUTC: false } });
 
 
 });
-        Highcharts.chart('websearch2', {
+        Highcharts.chart('redis2', {
 
             chart: {
                 type: 'column',
                 zoomType: 'x'
             },
             title: {
-                text: 'websearch各项指标变化率'
+                text: 'redis各项指标变化率'
             },
             xAxis: {
                 categories: ['90th', '95th', '99th', '方差', '平均值','最小值','最大值','缺失率']
@@ -294,7 +294,7 @@ Highcharts.setOptions({ global: { useUTC: false } });
                 enabled: false
             },
             series: [{
-            	name:'webSearch',
+            	name:'redis',
                 data: [${diffBean.nintyThDiff}, ${diffBean.nintyFiveThDiff}, ${diffBean.nintyNineThDiff},
                        ${diffBean.varDiff}, ${diffBean.meanDiff},${diffBean.minDiff},${diffBean.maxDiff},${diffBean.missRateDiff}]
             }]
@@ -302,7 +302,7 @@ Highcharts.setOptions({ global: { useUTC: false } });
 
         });
         
-        Highcharts.chart('websearch3', {
+        Highcharts.chart('redis3', {
             chart: {
                 type: 'scatter',
                 zoomType: 'x'
@@ -341,7 +341,7 @@ Highcharts.setOptions({ global: { useUTC: false } });
             series: [${diffBean.baseTimeStr}]
         });
         
-        Highcharts.chart('websearch4', {
+        Highcharts.chart('redis4', {
             chart: {
                 type: 'scatter',
                 zoomType: 'x'

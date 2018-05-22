@@ -145,7 +145,7 @@ public class SystemResourceController {
 			strName.setLength(0);
 			strData.setLength(0);
 			HSeries.setLength(0);
-			strName.append("{name:'mbl',type:'line',color:Highcharts.getOptions().colors[0],");//type: 'line',
+			strName.append("{name:'mbl',color:Highcharts.getOptions().colors[0],");//type: 'line',
 			strData.append("data:[");
 			for(int i=0;i<59;i++){
 				strData.append("[").append(System.currentTimeMillis()).append(",").append(value).append("],");
@@ -154,7 +154,7 @@ public class SystemResourceController {
 			HSeries.append(strName).append(strData).append(",marker: {enabled: false}},");
 			strName.setLength(0);
 			strData.setLength(0); 
-			strName.append("{name:'mbr',type:'line',color:Highcharts.getOptions().colors[1],");//type: 'line',
+			strName.append("{name:'mbr',color:Highcharts.getOptions().colors[1],");//type: 'line',
 			strData.append("data:[");
 			for(int i=0;i<59;i++){
 				strData.append("[").append(System.currentTimeMillis()).append(",").append(value).append("],");

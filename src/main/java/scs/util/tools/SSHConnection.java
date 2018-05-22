@@ -4,7 +4,13 @@ import java.io.IOException;
 
 import ch.ethz.ssh2.Connection;
 import scs.util.repository.Repository;
-
+/**
+ * 远程ssh连接池
+ * 由于监控模块每次获取数据需要ssh到远程节点上，比较耗时
+ * 这里做了一个固定的连接池，连接一次，多次使用
+ * @author yanan
+ *
+ */
 public class SSHConnection {
 	private Connection node26conn=null; 
 	private Connection node28conn=null; 

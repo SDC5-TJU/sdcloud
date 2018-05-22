@@ -48,6 +48,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					href="getCassandraResult.do?testRecordId=${testRecordId}"
 					target="_blank" id="memcached">cassandra</a></li>
 			</c:if>
+			<c:if test="${redis.enable==1}">
+				<li class="" style="float: left;"><a
+					href="getRedisResult.do?testRecordId=${testRecordId}"
+					target="_blank" id="redis">redis</a></li>
+			</c:if>
+			<c:if test="${xapian.enable==1}">
+				<li class="" style="float: left;"><a
+					href="getXapianResult.do?testRecordId=${testRecordId}"
+					target="_blank" id="xapian">xapian</a></li>
+			</c:if>
 		</ul>
 
 		<!--图-->

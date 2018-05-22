@@ -13,6 +13,7 @@ import scs.pojo.MemcachedDataBean;
 import scs.pojo.SiloDataBean;
 import scs.pojo.SystemResourceUsageBean;
 import scs.pojo.TwoTuple;
+import scs.pojo.XapianDataBean;
 import scs.util.format.DateFormats;
 
 @Service
@@ -379,7 +380,13 @@ public class HistoryDataImpl implements HistoryDataService {
 	@Override
 	public List<SiloDataBean> searchSiloData(int testRecordId, int isBase) {
 		// TODO Auto-generated method stub
-		return dao.searchSiloData(testRecordId, isBase);
+		return dao.searchSiloData(testRecordId,isBase);
+	}
+
+	@Override
+	public List<XapianDataBean> searchXapianData(int testRecordId, int isBase) {
+		// TODO Auto-generated method stub
+		return dao.searchXapianData(testRecordId,isBase);
 	}
 
 	@Override
@@ -398,6 +405,12 @@ public class HistoryDataImpl implements HistoryDataService {
 	public List<TwoTuple<Long, Integer>> searchCassandraData(int testRecordId, int isBase) {
 		// TODO Auto-generated method stub
 		return dao.searchCassandraData(testRecordId, isBase);
+	}
+
+	@Override
+	public List<TwoTuple<Long, Integer>> searchRedisData(int testRecordId, int isBase) {
+		// TODO Auto-generated method stub
+		return dao.searchRedisData(testRecordId, isBase);
 	}
 
 	@Override

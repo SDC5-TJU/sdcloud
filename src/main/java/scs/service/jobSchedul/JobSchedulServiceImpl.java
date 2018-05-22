@@ -74,6 +74,32 @@ public class JobSchedulServiceImpl implements JobSchedulService {
 		return result;
 	}
 	@Override
+	public int executeXapianApp(int isBase) {
+		int result=0;
+		if(driver.execute("xapian",isBase)!=0){
+			int testRecordId=rDao.getLatestRecordId();
+			if(isBase==1){
+				result=dao.addXapianData(Repository.xapianBaseDataList,testRecordId,isBase);
+			}else{
+				result=dao.addXapianData(Repository.xapianDataList,testRecordId,isBase);
+			}
+		}
+		return result;
+	}
+	@Override
+	public int executeRedisApp(int isBase) {
+		int result=0;
+		if(driver.execute("redis",isBase)!=0){
+			int testRecordId=rDao.getLatestRecordId();
+			if(isBase==1){
+				result=dao.addRedisData(Repository.redisBaseDataList,testRecordId,isBase);
+			}else{
+				result=dao.addRedisData(Repository.redisDataList,testRecordId,isBase);
+			}
+		}
+		return result;
+	}
+	@Override
 	public int executeCassandraApp(int isBase) {
 		int result=0;
 		if(driver.execute("cassandra",isBase)!=0){
@@ -100,6 +126,11 @@ public class JobSchedulServiceImpl implements JobSchedulService {
 	@Override
 	public int executeScimarkApp() {
 		return driver.execute("scimark",-1); 
+	}
+	
+	@Override
+	public int executeDwarfApp() {
+		return driver.execute("dwarf",-1); 
 	}
 
 	@Override

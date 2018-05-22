@@ -3,16 +3,19 @@ package scs.util.jobSchedul;
 import scs.util.format.DateFormats;
 import scs.util.jobSchedul.jobImpl.bonnie.BonnieJobImpl;
 import scs.util.jobSchedul.jobImpl.cassandra.CassandraJobImpl;
+import scs.util.jobSchedul.jobImpl.dwarf.DwarfJobImpl;
 import scs.util.jobSchedul.jobImpl.hadoop.HadoopJobImpl;
 import scs.util.jobSchedul.jobImpl.memcached.MemcachedJobImpl;
+import scs.util.jobSchedul.jobImpl.redis.RedisJobImpl;
 import scs.util.jobSchedul.jobImpl.scimark.ScimarkJobImpl;
 import scs.util.jobSchedul.jobImpl.silo.SiloJobImpl;
 import scs.util.jobSchedul.jobImpl.webSearch.WebSearchJobImpl;
 import scs.util.jobSchedul.jobImpl.webServer.WebServerJobImpl;
+import scs.util.jobSchedul.jobImpl.xapian.XapianJobImpl;
 import scs.util.repository.Repository;
 import scs.util.repository.RepositoryDao;
 /**
- * 应用调度配置驱动类
+ * 应用调度配置驱动类,由jobSchedul的service层调用,负责下层应用的启动与停止调度
  * @author yanan
  *
  */
@@ -85,18 +88,27 @@ public class JobSchedulDriver {
 	 */
 	private JobInterface getJobExecuteInstance(String appName){
 		JobInterface instance=null;
-		switch (appName){
-		case "memcached":
-			instance=MemcachedJobImpl.getInstance();
-			break; 
+		switch (appName){ 
 		case "webServer":
 			instance=WebServerJobImpl.getInstance();
 			break;
 		case "webSearch":
 			instance=WebSearchJobImpl.getInstance();
-			break;
+			break; 
+		case "memcached":
+			instance=MemcachedJobImpl.getInstance();
+			break; 
 		case "silo":
 			instance=SiloJobImpl.getInstance();
+			break; 
+		case "cassandra":
+			instance=CassandraJobImpl.getInstance();
+			break;
+		case "xapian":
+			instance=XapianJobImpl.getInstance();
+			break; 
+		case "redis":
+			instance=RedisJobImpl.getInstance();
 			break; 
 		case "hadoop":
 			instance=HadoopJobImpl.getInstance();
@@ -107,9 +119,10 @@ public class JobSchedulDriver {
 		case "bonnie":
 			instance=BonnieJobImpl.getInstance();
 			break;
-		case "cassandra":
-			instance=CassandraJobImpl.getInstance();
+		case "dwarf":
+			instance=DwarfJobImpl.getInstance();
 			break;
+		
 		}
 		return instance; 
 	}

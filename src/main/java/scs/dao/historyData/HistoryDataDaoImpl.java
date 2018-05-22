@@ -16,6 +16,7 @@ import scs.pojo.MemcachedDataBean;
 import scs.pojo.SiloDataBean;
 import scs.pojo.SystemResourceUsageBean;
 import scs.pojo.TwoTuple;
+import scs.pojo.XapianDataBean;
 import scs.util.format.DataFormats;
 import scs.util.format.DateFormats;
 
@@ -124,16 +125,38 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 
 	@Override
 	public List<SiloDataBean> searchSiloData(int testRecordId, int isBase) {
-		String sql="select totalTime from data_silo_base where testRecordId=?";
+		String sql="select queryTime,totalTime from data_silo_base where testRecordId=?";
 		if(isBase==0){
-			sql="select totalTime from data_silo where testRecordId=?";
+			sql="select queryTime,totalTime from data_silo where testRecordId=?";
 		}
 		List<SiloDataBean> list=jt.query(sql,new Object[]{testRecordId},new ResultSetExtractor<List<SiloDataBean>>() {
 			public List<SiloDataBean> extractData(ResultSet rs) throws SQLException, DataAccessException {
 				List<SiloDataBean> list = new ArrayList<SiloDataBean>();
-				while (rs.next()) {
+				while(rs.next()){
 					SiloDataBean bean=new SiloDataBean();
-					bean.setTotalTime(rs.getFloat(1));
+				    bean.setQueryTime(rs.getFloat(1));
+					bean.setTotalTime(rs.getFloat(2));
+					list.add(bean);
+				}
+				return list;
+			}
+		});
+		return list;
+	}
+
+	@Override
+	public List<XapianDataBean> searchXapianData(int testRecordId, int isBase){
+		String sql="select queryTime,totalTime from data_xapian_base where testRecordId=?";
+		if(isBase==0){
+			sql="select queryTime,totalTime from data_xapian where testRecordId=?";
+		}
+		List<XapianDataBean> list=jt.query(sql,new Object[]{testRecordId},new ResultSetExtractor<List<XapianDataBean>>() {
+			public List<XapianDataBean> extractData(ResultSet rs) throws SQLException, DataAccessException {
+				List<XapianDataBean> list = new ArrayList<XapianDataBean>();
+				while(rs.next()){
+					XapianDataBean bean=new XapianDataBean();
+					bean.setQueryTime(rs.getFloat(1));
+					bean.setTotalTime(rs.getFloat(2));
 					list.add(bean);
 				}
 				return list;
@@ -185,6 +208,25 @@ public class HistoryDataDaoImpl extends MySQLBaseDao implements HistoryDataDao {
 		String sql="select generateTime,queryTime from data_cassandra_base where testRecordId=? order by generateTime asc";
 		if(isBase==0){
 			sql="select generateTime,queryTime from data_cassandra where testRecordId=? order by generateTime asc";
+		}
+		List<TwoTuple<Long,Integer>> list=jt.query(sql,new Object[]{testRecordId},new ResultSetExtractor<List<TwoTuple<Long,Integer>>>() {
+			public List<TwoTuple<Long,Integer>> extractData(ResultSet rs) throws SQLException, DataAccessException {
+				List<TwoTuple<Long,Integer>> list = new ArrayList<TwoTuple<Long,Integer>>();
+				while (rs.next()) {
+					TwoTuple<Long,Integer> bean=new TwoTuple<Long,Integer>(rs.getLong(1),rs.getInt(2));
+					list.add(bean);
+				}
+				return list;
+			}
+		});
+		return list;
+	}
+
+	@Override
+	public List<TwoTuple<Long, Integer>> searchRedisData(int testRecordId, int isBase) {
+		String sql="select generateTime,queryTime from data_redis_base where testRecordId=? order by generateTime asc";
+		if(isBase==0){
+			sql="select generateTime,queryTime from data_redis where testRecordId=? order by generateTime asc";
 		}
 		List<TwoTuple<Long,Integer>> list=jt.query(sql,new Object[]{testRecordId},new ResultSetExtractor<List<TwoTuple<Long,Integer>>>() {
 			public List<TwoTuple<Long,Integer>> extractData(ResultSet rs) throws SQLException, DataAccessException {

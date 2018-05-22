@@ -1,7 +1,11 @@
 package scs.util.tools;
  
 import java.util.Random;
-
+/**
+ * 随机字符串生成器类
+ * @author yanan
+ *
+ */
 public class RandomString {
 	private static Random rand=new Random();
     public static final String SOURCES ="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";

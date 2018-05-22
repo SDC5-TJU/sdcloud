@@ -26,8 +26,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <ul class="nav nav-tabs" >
        <c:if test="${webSearch.enable==1}">
-        <li class="" style="float: left;">
-            <a  href="getWebSearchResult.do?testRecordId=${testRecordId}" target="_blank" id="webSearch">web搜索</a>
+        <li class="active1" style="float: left;">
+            <a  href="getWebSearchResult.do?testRecordId=${testRecordId}" target="_blank" id="xapian">web搜索</a>
         </li>
        </c:if>
        <c:if test="${webServer.enable==1}">
@@ -46,9 +46,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </li>
        </c:if>
        <c:if test="${cassandra.enable==1}">
-		<li class="active1" style="float: left;">
+		<li class="" style="float: left;">
 		    <a href="getCassandraResult.do?testRecordId=${testRecordId}"target="_blank" id="memcached">cassandra</a></li>
 	   </c:if> 
+	   <c:if test="${redis.enable==1}">
+		<li class="" style="float: left;">
+		    <a href="getRedisResult.do?testRecordId=${testRecordId}"target="_blank" id="memcached">redis</a></li>
+	   </c:if>
+	   <c:if test="${xapian.enable==1}">
+		<li class="" style="float: left;">
+		    <a href="getXapianResult.do?testRecordId=${testRecordId}"target="_blank" id="memcached">xapian</a></li>
+	   </c:if>
     </ul>
 
 </div>

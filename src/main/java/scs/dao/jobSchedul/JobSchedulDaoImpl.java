@@ -6,6 +6,7 @@ import scs.dao.MySQLBaseDao;
 import scs.pojo.MemcachedDataBean;
 import scs.pojo.SiloDataBean;
 import scs.pojo.TwoTuple;
+import scs.pojo.XapianDataBean;
 @Repository
 public class JobSchedulDaoImpl extends MySQLBaseDao implements JobSchedulDao{
 
@@ -73,7 +74,21 @@ public class JobSchedulDaoImpl extends MySQLBaseDao implements JobSchedulDao{
 		}
 		return result;
 	}
-
+	@Override
+	public int addXapianData(List<XapianDataBean> list,int testRecordId,int isBase) {
+		// TODO Auto-generated method stub
+		String sql="";
+		if(isBase==1){
+			sql="insert into data_xapian_base(queueTime,queryTime,totalTime,testRecordId) values(?,?,?,?)";
+		}else{
+			sql="insert into data_xapian(queueTime,queryTime,totalTime,testRecordId) values(?,?,?,?)";
+		}
+		int result=0;
+		for(XapianDataBean bean:list){
+			result+=this.jt.update(sql,new Object[]{bean.getQueueTime(),bean.getQueryTime(),bean.getTotalTime(),testRecordId});
+		}
+		return result;
+	}
 	@Override
 	public int addCassandraData(List<TwoTuple<Long, Integer>> list, int testRecordId, int isBase) {
 		String sql="";
@@ -88,6 +103,23 @@ public class JobSchedulDaoImpl extends MySQLBaseDao implements JobSchedulDao{
 		}
 		return result;
 	}
+
+	@Override
+	public int addRedisData(List<TwoTuple<Long, Integer>> list, int testRecordId, int isBase) {
+		String sql="";
+		if(isBase==1){
+			sql="insert into data_redis_base(generateTime,queryTime,testRecordId) values(?,?,?)";
+		}else{
+			sql="insert into data_redis(generateTime,queryTime,testRecordId) values(?,?,?)";
+		}
+		int result=0;
+		for(TwoTuple<Long, Integer> item:list){
+			result+=this.jt.update(sql,new Object[]{item.first,item.second,testRecordId});
+		}
+		return result;
+	}
+
+	 
  
 
 	 
