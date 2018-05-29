@@ -8,14 +8,10 @@ import java.io.LineNumberReader;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import scs.pojo.TwoTuple;
 import ch.ethz.ssh2.Connection;
 import ch.ethz.ssh2.Session;
 import ch.ethz.ssh2.StreamGobbler;
@@ -23,7 +19,6 @@ import scs.dao.monitor.DAOmapper.TableContainerresourceusageMapper;
 import scs.pojo.TableContainerresourceusage;
 import scs.service.monitor.containers.ContainerMonitor;
 import scs.util.format.DataFormats;
-import scs.util.repository.Repository;
 import scs.util.tools.SSHConnection;
 
 @Service("containerMonitor")
@@ -48,7 +43,6 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 	}
 
 	public ContainerMonitorImpl() {
-		// TODO Auto-generated constructor stub
 	}
 
 	private InputStream getCommandInfoStream(String hostname, String username, String password, String command) {
@@ -165,8 +159,10 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 //		}
 //		return containerNetUseMap; 
 //	}
+	
+	
 	public ArrayList<TableContainerresourceusage> getContainersPOJO(String hostname, String username, String password,
-			InputStream inputStream) {
+			InputStream input) {
 	//	Map<String,TwoTuple<Float,Float>> containerNetUseMap=this.getContainerNetUsage(); 
 		String command = "sudo docker stats --no-stream --format \"{{.Name}}:{{.CPUPerc}}:{{.MemUsage}}:{{.MemPerc}}:{{.NetIO}}:{{.BlockIO}}\"";
 		Session sess=null;
@@ -174,13 +170,15 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 			Connection conn=connection.getConn(hostname);
 			sess = conn.openSession();
 			sess.execCommand(command); 
-			InputStream in = new StreamGobbler(sess.getStdout()); 
-			LineNumberReader input = new LineNumberReader(new InputStreamReader(in)); 
-			 
+//			InputStream in = new StreamGobbler(sess.getStdout()); 
+			if (input == null) {
+				System.out.println("docker stats没有取到值");
+			}
+			BufferedReader bfReader = new BufferedReader(new InputStreamReader(input));
 			Date date = new Date();
 			ArrayList<TableContainerresourceusage> arrayList = new ArrayList<>();
 			String line = null; 
-			while ((line = input.readLine()) != null) {
+			while ((line = bfReader.readLine()) != null) {
 				TableContainerresourceusage record = new TableContainerresourceusage(); 
 				String[] split = line.split(":");
 
@@ -277,9 +275,12 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 				} 
 				//record.setNetinput(containerNetUseMap.get(split[0]).second);
 				//record.setNetoutput(containerNetUseMap.get(split[0]).first);
-				float[] containerNetInfoStream = getContainerNetInfoStream(hostname, username, password, split[0]);
-				record.setNetinput(containerNetInfoStream[1]);
-				record.setNetoutput(containerNetInfoStream[0]);  
+				
+				//float[] containerNetInfoStream = getContainerNetInfoStream(hostname, username, password, split[0]);
+				//record.setNetinput(containerNetInfoStream[1]);
+				//record.setNetoutput(containerNetInfoStream[0]);  
+				record.setNetinput(0.0f);
+				record.setNetoutput(0.0f);  
 
 				record.setCollecttime(date);
 				arrayList.add(record);

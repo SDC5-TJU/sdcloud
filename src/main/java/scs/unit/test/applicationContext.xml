@@ -20,6 +20,7 @@
  	<context:component-scan base-package="scs.service.monitor.containers" />
  	<context:component-scan base-package="scs.service.monitor.app" />
  	<context:component-scan base-package="scs.service.monitor.system" />
+ 	<context:component-scan base-package="scs.service.monitor.pqos" />
 	
 	<bean id="datasource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
@@ -32,6 +33,8 @@
 		p:dataSource-ref="datasource">
 		<property name="configLocation" value="classpath:scs/unit/test/mybatis.xml"></property>
 	</bean>
+	
+	<bean class="scs.service.monitor.cron.CronTasks"></bean>
 	
 	<mybatis:scan base-package="scs.dao.monitor.DAOmapper" /> 
 

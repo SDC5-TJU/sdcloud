@@ -1,14 +1,16 @@
 package scs.service.monitor.cron;
  
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-  
+
 import scs.pojo.TableAppresourceusage;
 import scs.pojo.TableContainerresourceusage;
 import scs.pojo.TableSystemresourceusage;
@@ -16,7 +18,7 @@ import scs.service.monitor.app.AppMonitor;
 import scs.service.monitor.containers.ContainerMonitor;
 import scs.service.monitor.pqos.PqosResourceMonitor;
 import scs.service.monitor.system.SystemMonitor;
-import scs.util.repository.Repository; 
+import scs.util.repository.Repository;
 
 @Service
 public class CronTasks {
@@ -36,13 +38,14 @@ public class CronTasks {
 	@Autowired
 	@Qualifier("pqosMonitor")
 	public PqosResourceMonitor pqosResourceMonitor;
-
+	
 	public void testCron() {
 		if (Repository.cronFlag != 1) {
 			return;
 		}
 		// Repository.cronFlag = 0;
-		String[] hosts = { "192.168.1.128", "192.168.1.147" };
+		//String[] hosts = { "192.168.1.128", "192.168.1.147" };
+		String[] hosts = { "192.168.1.128"};
 		String hostname = "192.168.1.128";
 		String username = "tank";
 		String password = "tanklab";
@@ -50,14 +53,13 @@ public class CronTasks {
 		ArrayList<TableContainerresourceusage> combineList = new ArrayList<>();
 		for (int i = 0; i < len; i++) {
 			hostname = hosts[i]; 
-			//InputStream containerInfoStream = containerMonitor.getContainerInfoStream(hostname, username, password);
-			
+			InputStream containerInfoStream = containerMonitor.getContainerInfoStream(hostname, username, password);
 			/*
 			 * This basic example does not handle stderr, which is sometimes
 			 * dangerous (please read the FAQ).
 			 */ 
 			ArrayList<TableContainerresourceusage> containersPOJO = containerMonitor.getContainersPOJO(hostname,
-					username, password, null);
+					username, password, containerInfoStream);
 			combineList.addAll(containersPOJO);
 			containerMonitor.testInsert(containersPOJO);
 			Iterator<TableContainerresourceusage> iterator = containersPOJO.iterator();
@@ -68,6 +70,7 @@ public class CronTasks {
 				Repository.containerRealUsageMap.put(tableContainerresourceusage.getContainername(),
 						tableContainerresourceusage);
 			}
+			
 			
 		}
 		// 统计
