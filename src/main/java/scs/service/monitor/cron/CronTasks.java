@@ -44,8 +44,7 @@ public class CronTasks {
 			return;
 		}
 		// Repository.cronFlag = 0;
-		//String[] hosts = { "192.168.1.128", "192.168.1.147" };
-		String[] hosts = { "192.168.1.128"};
+		String[] hosts = { "192.168.1.128", "192.168.1.147" };
 		String hostname = "192.168.1.128";
 		String username = "tank";
 		String password = "tanklab";
