@@ -19,13 +19,13 @@ public class SSHConnection {
 	 */
 	private static SSHConnection connection=null;
 	private SSHConnection(){
-		try { 
+		/*try { 
 			this.initNode26Conn();
 			this.initNode28Conn();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 
 	}
 	public synchronized static SSHConnection getInstance() {
@@ -59,7 +59,6 @@ public class SSHConnection {
 		if(hostName!=null&&hostName.equals("192.168.1.147")){
 			if(node26conn==null&&Repository.cronFlag==1){
 				try {
-					System.out.println("147重新认证");
 					this.initNode26Conn();
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -68,8 +67,7 @@ public class SSHConnection {
 			return node26conn;
 		}else{
 			if(node28conn==null&&Repository.cronFlag==1){
-				try {
-					System.out.println("128重新认证");
+				try { 
 					this.initNode28Conn();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -81,8 +79,10 @@ public class SSHConnection {
 	}  
 	public void closeConn(){
 		node26conn.close(); 
+		System.out.println("147 close");
 		node26conn=null; 
 		node28conn.close();
 		node28conn=null; 
+		System.out.println("128 close");
 	}
 }

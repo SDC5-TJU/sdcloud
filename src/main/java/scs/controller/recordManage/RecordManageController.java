@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import javax.annotation.Resource;
@@ -205,5 +206,164 @@ public class RecordManageController {
 		model.addAttribute("testRecordId",testRecordId);
 		return "resultAnalysis";
 	}
+	
+	
+	@RequestMapping("/demo.do")
+	public String demo(HttpServletRequest request,Model model) throws InterruptedException{
+		StringBuffer strName=new StringBuffer();
+		StringBuffer strData=new StringBuffer();
+		StringBuffer HSeries=new StringBuffer();
+		strName.append("{name:'").append("node28SDC").append("',lineWidth:1,");
+		strData.append("data:["); 
+		Random rand=new Random();
+		List<List<Long>> pairList=new ArrayList<List<Long>>();
+		List<Long> list1=new ArrayList<Long>();
+		List<Long> list2=new ArrayList<Long>();
+		List<Long> list3=new ArrayList<Long>();
+		 long start=System.currentTimeMillis();
+		for(int i=0;i<8;i++){
+			Thread.sleep(1000);
+			strData.append("[").append(System.currentTimeMillis()).append(",").append(rand.nextInt(3)).append("],");
+		}
+		System.out.println("开启查询 "+System.currentTimeMillis());
+		list1.add(System.currentTimeMillis());
+		for(int i=0;i<13;i++){
+			Thread.sleep(1000);
+			strData.append("[").append(System.currentTimeMillis()).append(",").append(13+rand.nextInt(5)).append("],");
+		}
+		System.out.println("开启干扰 "+System.currentTimeMillis());
+		list2.add(System.currentTimeMillis());
+		for(int i=0;i<3;i++){
+			Thread.sleep(1000);
+			strData.append("[").append(System.currentTimeMillis()).append(",").append(50+rand.nextInt(10)).append("],");
+		}
+		for(int i=0;i<24;i++){
+			Thread.sleep(1000);
+			strData.append("[").append(System.currentTimeMillis()).append(",").append(90+rand.nextInt(10)).append("],");
+		}
+		System.out.println("开启标签化 "+System.currentTimeMillis());
+		list3.add(System.currentTimeMillis());
+		for(int i=0;i<33;i++){
+			Thread.sleep(1000);
+			strData.append("[").append(System.currentTimeMillis()).append(",").append(90+rand.nextInt(10)).append("],");
+		}
+		System.out.println("查询结束 "+System.currentTimeMillis());
+		list1.add(System.currentTimeMillis());
+		for(int i=0;i<8;i++){ 
+			Thread.sleep(1000); 
+			strData.append("[").append(System.currentTimeMillis()).append(",").append(88+rand.nextInt(10)).append("],");
+		}
+		System.out.println("干扰结束 "+System.currentTimeMillis());
+		list2.add(System.currentTimeMillis());
+		for(int i=0;i<3;i++){
+			Thread.sleep(1000);
+			strData.append("[").append(System.currentTimeMillis()).append(",").append(40+rand.nextInt(10)).append("],");
+		}
+		for(int i=0;i<25;i++){
+			Thread.sleep(1000);
+			strData.append("[").append(System.currentTimeMillis()).append(",").append(rand.nextInt(3)).append("],");
+		} 
+		Thread.sleep(1000);
+		strData.append("[").append(System.currentTimeMillis()).append(",").append(rand.nextInt(2)).append("]]");
+		HSeries.append(strName).append(strData).append(",marker:{enabled:false}}");
+		model.addAttribute("str1",HSeries.toString());
+		
+		long end=System.currentTimeMillis()-start;
+		System.out.println(end);
+		pairList.add(list1);
+		pairList.add(list2);
+		pairList.add(list3);
+		
+		 strName.setLength(0);
+		 strData.setLength(0);
+		 HSeries.setLength(0);
+		strName.append("{name:'webSearch',");//type: 'area',
+		strData.append("data:["); 
+		for(int i=0;i<80;i++){
+			Thread.sleep(100);
+			//strData.append("[").append(System.currentTimeMillis()-end).append(",").append(0).append("],");
+		} 
+		for(int i=0;i<130;i++){
+			Thread.sleep(100);
+			strData.append("[").append(System.currentTimeMillis()-end).append(",").append(rand.nextInt(35)).append("],");
+		}
+		for(int i=0;i<30;i++){
+			Thread.sleep(100);
+			strData.append("[").append(System.currentTimeMillis()-end).append(",").append(rand.nextInt(289)).append("],");
+		}
+		for(int i=0;i<240;i++){
+			Thread.sleep(100);
+			strData.append("[").append(System.currentTimeMillis()-end).append(",").append(rand.nextInt(366)).append("],");
+		} 
+		for(int i=0;i<330;i++){
+			Thread.sleep(100);
+			strData.append("[").append(System.currentTimeMillis()-end).append(",").append(rand.nextInt(133)).append("],");
+		} 
+		/*for(int i=0;i<80;i++){ 
+			Thread.sleep(100); 
+			strData.append("[").append(System.currentTimeMillis()-end).append(",").append(88+rand.nextInt(10)).append("],");
+		} 
+		for(int i=0;i<250;i++){
+			Thread.sleep(100);
+			strData.append("[").append(System.currentTimeMillis()-end).append(",").append(rand.nextInt(3)).append("],");
+		} */
+		Thread.sleep(100);
+		strData.append("[").append(System.currentTimeMillis()-end).append(",").append(rand.nextInt(30)).append("]]");
+		HSeries.append(strName).append(strData).append(",marker:{enabled:true}}");
 
+		model.addAttribute("solrCloudStr",HSeries.toString());
+		/*
+		 * 绘制应用的启动结束标识点
+		 */
+		 List<String> seriesStrList=new ArrayList<String>();
+		StringBuilder seriesStr=new StringBuilder();
+		for(int i=0;i<pairList.size();i++){ 
+			List<Long> pair=pairList.get(i); 
+			seriesStr.setLength(0);
+			seriesStr.append("{type:'flags',style:{color:'white'},data:[");
+			for(int j=0;j<pair.size()-1;j++){
+				seriesStr.append("{").append("x:").append(pair.get(j)).append(",title:'")
+				.append(i).append("',text:'").append("正式测试").append("'},");
+			}
+			seriesStr.append("{").append("x:").append(pair.get(pair.size()-1)).append(",title:'")
+			.append(i).append("',text:'").append("正式测试").append("'}");
+			seriesStr.append("],onSeries:'dataseries',shape:'squarepin',width:16,color:Highcharts.getOptions().colors[").append(i%10).append("],fillColor:Highcharts.getOptions().colors[").append(i).append("]}");
+			seriesStrList.add(seriesStr.toString());
+		} 
+		seriesStr.setLength(0);
+		for(int i=0;i<seriesStrList.size()-1;i++){
+			seriesStr.append(seriesStrList.get(i)).append(",");
+		}
+		if(seriesStrList.size()>0)
+			seriesStr.append(seriesStrList.get(seriesStrList.size()-1));
+		model.addAttribute("appRecordStr",seriesStr.toString());
+		//System.out.println(seriesStr.toString());
+		/*
+		 * 绘制x轴标识线
+		 */
+		seriesStrList.clear();
+		for(int i=0;i<pairList.size();i++){ 
+			List<Long> pair=pairList.get(i);
+			for(int j=0;j<pair.size();j++){
+				seriesStr.setLength(0);
+				seriesStr.append("{color:Highcharts.getOptions().colors[").append(i%10).append("],dashStyle:'longdashdot',value:").append(pair.get(j)).append(",width:2}");
+				seriesStrList.add(seriesStr.toString());
+			}
+		} 
+		seriesStr.setLength(0);
+		for(int i=0;i<seriesStrList.size()-1;i++){
+			seriesStr.append(seriesStrList.get(i)).append(",");
+		}
+		if(seriesStrList.size()>0)
+			seriesStr.append(seriesStrList.get(seriesStrList.size()-1));
+		model.addAttribute("appRecordLineStr",seriesStr.toString());
+
+
+		return "demo";
+	}
+	@RequestMapping("/demo2.do")
+	public String demo2(HttpServletRequest request,Model model) throws InterruptedException{
+		 
+		return "demo2";
+	}
 }

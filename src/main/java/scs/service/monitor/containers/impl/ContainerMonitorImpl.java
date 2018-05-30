@@ -59,7 +59,7 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 			Connection conn=SSHConnection.getInstance().getConn(hostname);
 			Session sess = conn.openSession();
 			sess.execCommand(command);
-
+	
 			InputStream stdout = new StreamGobbler(sess.getStdout()); 
 			return stdout;
 
@@ -166,19 +166,18 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 	//	Map<String,TwoTuple<Float,Float>> containerNetUseMap=this.getContainerNetUsage(); 
 		String command = "sudo docker stats --no-stream --format \"{{.Name}}:{{.CPUPerc}}:{{.MemUsage}}:{{.MemPerc}}:{{.NetIO}}:{{.BlockIO}}\"";
 		Session sess=null;
-		try {
-			Connection conn=connection.getConn(hostname);
-			sess = conn.openSession();
-			sess.execCommand(command); 
-//			InputStream in = new StreamGobbler(sess.getStdout()); 
-			if (input == null) {
-				System.out.println("docker stats没有取到值");
-			}
-			BufferedReader bfReader = new BufferedReader(new InputStreamReader(input));
+		try { 
+
+			Connection conn=connection.getConn(hostname); 
+			sess = conn.openSession(); 
+			sess.execCommand(command);  
+			InputStream in = new StreamGobbler(sess.getStdout());  
+		 
+			BufferedReader bfReader = new BufferedReader(new InputStreamReader(in));
 			Date date = new Date();
 			ArrayList<TableContainerresourceusage> arrayList = new ArrayList<>();
 			String line = null; 
-			while ((line = bfReader.readLine()) != null) {
+			while ((line = bfReader.readLine()) != null) { 
 				TableContainerresourceusage record = new TableContainerresourceusage(); 
 				String[] split = line.split(":");
 
@@ -284,14 +283,13 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 				record.setNetoutput(0.0f);  
 				record.setCollecttime(date);
 				arrayList.add(record);
-			} 
- 
+			}  
 			return arrayList;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
 			if(sess!=null)
-				sess.close(); 
+				sess.close();  
 		}
 		return null;
 	}
