@@ -31,7 +31,7 @@ public class SystemResourceController {
 	@Autowired
 	@Qualifier("systemMonitor")
 	public SystemMonitor systemMonitor;
-	
+
 
 	/**
 	 * @author jztong
@@ -103,30 +103,38 @@ public class SystemResourceController {
 			strMemData.append("data:[");
 			strIoData.append("data:[");
 			strNetData.append("data:[");
-			for (int i = 0; i < testSelect.size(); i++) {
-				float cpuusagerate = testSelect.get(i).getCpuusagerate()*100;
-				float iousagerate = testSelect.get(i).getIousagerate();
-				float netusagerate = testSelect.get(i).getNetusagerate();
-				float memusagerate = testSelect.get(i).getMemusagerate();
-				Date collecttime = testSelect.get(i).getCollecttime();
-				strCpuData.append("[").append(collecttime.getTime()).append(",").append(cpuusagerate).append("],");
-				strMemData.append("[").append(collecttime.getTime()).append(",").append(memusagerate).append("],");
-				strIoData.append("[").append(collecttime.getTime()).append(",").append(iousagerate).append("],");
-				strNetData.append("[").append(collecttime.getTime()).append(",").append(netusagerate).append("],");
+			if(testSelect.size()==0){
+				strCpuData.append("],marker: {enabled: false}}");
+				strMemData.append("],marker: {enabled: false}}");
+				strIoData.append("],marker: {enabled: false}}");
+				strNetData.append("],marker: {enabled: false}}");
+			}else{
+				for (int i = 0; i < testSelect.size(); i++) {
+					float cpuusagerate = testSelect.get(i).getCpuusagerate()*100;
+					float iousagerate = testSelect.get(i).getIousagerate();
+					float netusagerate = testSelect.get(i).getNetusagerate();
+					float memusagerate = testSelect.get(i).getMemusagerate();
+					Date collecttime = testSelect.get(i).getCollecttime();
+					strCpuData.append("[").append(collecttime.getTime()).append(",").append(cpuusagerate).append("],");
+					strMemData.append("[").append(collecttime.getTime()).append(",").append(memusagerate).append("],");
+					strIoData.append("[").append(collecttime.getTime()).append(",").append(iousagerate).append("],");
+					strNetData.append("[").append(collecttime.getTime()).append(",").append(netusagerate).append("],");
+				}
+				strCpuData.replace(strCpuData.length() - 1, strCpuData.length(), "]");
+				strMemData.replace(strMemData.length() - 1, strMemData.length(), "]");
+				strIoData.replace(strIoData.length() - 1, strIoData.length(), "]");
+				strNetData.replace(strNetData.length() - 1, strNetData.length(), "]");
+				HCpuSeries.append(strCpuName).append(strCpuData).append(",marker: {enabled: false}}");
+				HMemSeries.append(strMemName).append(strMemData).append(",marker: {enabled: false}}");
+				HIoSeries.append(strIoName).append(strIoData).append(",marker: {enabled: false}}");
+				HNetSeries.append(strNetName).append(strNetData).append(",marker: {enabled: false}}");
 			}
-			strCpuData.replace(strCpuData.length() - 1, strCpuData.length(), "]");
-			strMemData.replace(strMemData.length() - 1, strMemData.length(), "]");
-			strIoData.replace(strIoData.length() - 1, strIoData.length(), "]");
-			strNetData.replace(strNetData.length() - 1, strNetData.length(), "]");
-			HCpuSeries.append(strCpuName).append(strCpuData).append(",marker: {enabled: false}}");
-			HMemSeries.append(strMemName).append(strMemData).append(",marker: {enabled: false}}");
-			HIoSeries.append(strIoName).append(strIoData).append(",marker: {enabled: false}}");
-			HNetSeries.append(strNetName).append(strNetData).append(",marker: {enabled: false}}");
+
 			model.addAttribute("cpu", HCpuSeries.toString());
 			model.addAttribute("memory", HMemSeries.toString());
 			model.addAttribute("io", HIoSeries.toString());
 			model.addAttribute("net", HNetSeries.toString());
-			
+
 			/*
 			 * 绘制llc和mbl mbr的初始点
 			 */
@@ -162,14 +170,14 @@ public class SystemResourceController {
 			strData.append("[").append(System.currentTimeMillis()).append(",").append(value).append("]]");
 			HSeries.append(strName).append(strData).append(",marker: {enabled: false}}");
 			model.addAttribute("mbm",HSeries.toString());
-			
+
 			model.addAttribute("cronFlag",Repository.cronFlag);//监控是否开启的标志
 			model.addAttribute("no",number);//当前物理机的编号
 		} catch (Exception e) {
 			logger.error("login error" + e);
 			e.printStackTrace();
 		}
-		
+
 		return "physicalMonitor";
 	}
 }

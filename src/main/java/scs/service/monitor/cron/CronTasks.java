@@ -44,21 +44,21 @@ public class CronTasks {
 			return;
 		}
 		// Repository.cronFlag = 0;
-		String[] hosts = { "192.168.1.128", "192.168.1.147" };
+		String[] hosts = { "192.168.1.128","192.168.1.147"};
 		String hostname = "192.168.1.128";
 		String username = "tank";
 		String password = "tanklab";
 		int len = hosts.length;
 		ArrayList<TableContainerresourceusage> combineList = new ArrayList<>();
 		for (int i = 0; i < len; i++) {
-			hostname = hosts[i]; 
-			InputStream containerInfoStream = containerMonitor.getContainerInfoStream(hostname, username, password);
+			 
+		//	InputStream containerInfoStream = containerMonitor.getContainerInfoStream(hostname, username, password);
 			/*
 			 * This basic example does not handle stderr, which is sometimes
 			 * dangerous (please read the FAQ).
 			 */ 
-			ArrayList<TableContainerresourceusage> containersPOJO = containerMonitor.getContainersPOJO(hostname,
-					username, password, containerInfoStream);
+			ArrayList<TableContainerresourceusage> containersPOJO = containerMonitor.getContainersPOJO("192.168.1.147",
+					username, password, null);
 			combineList.addAll(containersPOJO);
 			containerMonitor.testInsert(containersPOJO);
 			Iterator<TableContainerresourceusage> iterator = containersPOJO.iterator();
@@ -69,7 +69,8 @@ public class CronTasks {
 				Repository.containerRealUsageMap.put(tableContainerresourceusage.getContainername(),
 						tableContainerresourceusage);
 			}
-			
+			System.out.println(hosts[i]+" "+i+ "  "+Repository.containerRealUsageMap.size());
+			 
 			
 		}
 		// 统计
@@ -101,5 +102,19 @@ public class CronTasks {
 		// 调用pqosresource
 		pqosResourceMonitor.updateBamdwidthUsage(Repository.systemInfoMap);
 		pqosResourceMonitor.updateCachemiss(Repository.systemInfoMap);
+	}
+	public static void main(String[] args){
+		String[] hosts = { "192.168.1.128","192.168.1.147"};
+		String hostname = "192.168.1.128";
+		String username = "tank";
+		String password = "tanklab";
+		int len = hosts.length;
+		System.out.println(len);
+		for (int i = 0; i < len; i++) {
+			System.out.println(hosts[i]);
+			 
+			
+		}
+		
 	}
 }

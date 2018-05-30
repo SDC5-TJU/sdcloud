@@ -669,6 +669,13 @@ $(document).ready(function (){
                     }
                 }
         },
+        plotOptions: {
+            series: {
+                marker: {
+                    radius: 2
+                }
+            }
+        },
         title: {
             text: 'solrCloud query benchmark'
         },
@@ -739,6 +746,13 @@ $(document).ready(function (){
                     },1000);
                     }
                 }
+        },
+        plotOptions: {
+            series: {
+                marker: {
+                    radius: 2
+                }
+            }
         },
         title: {
             text: 'webServer query benchmark'
