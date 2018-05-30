@@ -361,9 +361,14 @@ public class RecordManageController {
 
 		return "demo";
 	}
-	@RequestMapping("/demo2.do")
+	@RequestMapping("/getResultResult.do")
 	public String demo2(HttpServletRequest request,Model model) throws InterruptedException{
 		 
 		return "demo2";
+	}
+	@RequestMapping("/getResult.do")
+	public String demo3(HttpServletRequest request,Model model) throws InterruptedException{
+		 
+		return "demo3";
 	}
 }

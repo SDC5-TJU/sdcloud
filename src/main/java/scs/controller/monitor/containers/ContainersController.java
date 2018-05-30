@@ -17,6 +17,7 @@ import net.sf.json.JSONArray;
 import scs.controller.recordManage.RecordManageController;
 import scs.pojo.TableContainerresourceusage;
 import scs.service.monitor.containers.ContainerMonitor;
+import scs.util.format.DataFormats;
 import scs.util.repository.Repository;
 
 @Controller("containerController")
@@ -39,8 +40,8 @@ public class ContainersController {
 			ArrayList<TableContainerresourceusage> arrayList = new ArrayList<>();
 			while (iterator.hasNext()) {
 				TableContainerresourceusage value = iterator.next().getValue();
-				value.setCpuusagerate(value.getCpuusagerate() * 100);
-				value.setMemusagerate(value.getMemusagerate() * 100);
+				value.setCpuusagerate(DataFormats.getInstance().subFloat(value.getCpuusagerate(),2));
+				value.setMemusagerate(DataFormats.getInstance().subFloat(value.getMemusagerate(),2));
 				arrayList.add(value);
 			}
 			JSONArray json = JSONArray.fromObject(arrayList);

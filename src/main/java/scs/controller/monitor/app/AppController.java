@@ -19,6 +19,7 @@ import scs.pojo.TableAppresourceusage;
 import scs.pojo.TableContainerresourceusage;
 import scs.service.monitor.app.AppMonitor;
 import scs.service.monitor.containers.ContainerMonitor;
+import scs.util.format.DataFormats;
 import scs.util.repository.Repository;
 
 @Controller("appController")
@@ -40,8 +41,8 @@ public class AppController {
 			ArrayList<TableAppresourceusage> arrayList = new ArrayList<>();
 			while (iterator.hasNext()) {
 				TableAppresourceusage value = iterator.next().getValue();
-				value.setCpuusagerate(value.getCpuusagerate() * 100);
-				value.setMemusagerate(value.getMemusagerate() * 100);
+				 value.setCpuusagerate(DataFormats.getInstance().subFloat(value.getCpuusagerate(),2));
+				value.setMemusagerate(DataFormats.getInstance().subFloat(value.getMemusagerate(),2));
 				arrayList.add(value);
 			}
 			JSONArray json = JSONArray.fromObject(arrayList);

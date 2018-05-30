@@ -45,7 +45,7 @@
 
 	//实时数据表格
 	var tableTitle = "<table  class=\"table table-hover text-center\" >"
-				+ "<tr><th width= \"200px\">容器名称</th><th width = \"340px\">CPU使用率%</th><th  width = \"340px\">内存使用率%</th><th  width = \"340px\">内存使用量</th>"
+				+ "<tr><th width= \"200px\">容器名称</th><th width = \"340px\">CPU使用率/core</th><th  width = \"340px\">内存使用率(0,1)</th><th  width = \"340px\">内存使用量</th>"
 				+ "<th  width = \"340px\">NET I/O</th><th  width = \"340px\">BLOCK I/O</th>"
 				+ "</tr>"; 
 	var tableContent = "";
@@ -66,8 +66,8 @@
 				for (var i = 0; i < returnedData.length; i++) {
 					if (returnedData[i] != null && returnedData[i] != "") {
 						applicationname = returnedData[i].applicationname;
-						cpuusagerate = returnedData[i].cpuusagerate * 100;
-						memusagerate = returnedData[i].memusagerate * 100;
+						cpuusagerate = returnedData[i].cpuusagerate ;
+						memusagerate = returnedData[i].memusagerate ;
 						memamount = returnedData[i].memusageamount;
 						netinput = returnedData[i].netinput;
 						netoutput = returnedData[i].netoutput;
@@ -94,8 +94,8 @@
 					for (var i = 0; i < returnedData.length; i++) {
 						if (returnedData[i] != null && returnedData[i] != "") {
 							applicationname = returnedData[i].applicationname;
-							cpuusagerate = returnedData[i].cpuusagerate * 100;
-							memusagerate = returnedData[i].memusagerate * 100;
+							cpuusagerate = returnedData[i].cpuusagerate ;
+							memusagerate = returnedData[i].memusagerate ;
 							memamount = returnedData[i].memusageamount;
 							netinput = returnedData[i].netinput;
 							netoutput = returnedData[i].netoutput;

@@ -32,7 +32,7 @@ class ResultParser {
 	 float max; //响应时间最大值
 	 float miss; // 响应缺失值
 	 */
-	public TimeResultBean  calculate(List<TwoTuple<Long, Integer>> list){
+	public TimeResultBean calculate(List<TwoTuple<Long, Integer>> list){
 
 		TimeResultBean bean = new TimeResultBean();
 

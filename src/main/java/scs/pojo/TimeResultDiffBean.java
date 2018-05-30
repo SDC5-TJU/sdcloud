@@ -92,6 +92,39 @@ public class TimeResultDiffBean {
 		return meanDiff;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("TimeResultDiffBean [format=");
+		builder.append(format);
+		builder.append(", baseTimeStr=");
+		builder.append(baseTimeStr);
+		builder.append(", timeStr=");
+		builder.append(timeStr);
+		builder.append(", baseCDFStr=");
+		builder.append(baseCDFStr);
+		builder.append(", CDFStr=");
+		builder.append(CDFStr);
+		builder.append(", nintyThDiff=");
+		builder.append(nintyThDiff);
+		builder.append(", nintyFiveThDiff=");
+		builder.append(nintyFiveThDiff);
+		builder.append(", nintyNineThDiff=");
+		builder.append(nintyNineThDiff);
+		builder.append(", varDiff=");
+		builder.append(varDiff);
+		builder.append(", meanDiff=");
+		builder.append(meanDiff);
+		builder.append(", minDiff=");
+		builder.append(minDiff);
+		builder.append(", maxDiff=");
+		builder.append(maxDiff);
+		builder.append(", missRateDiff=");
+		builder.append(missRateDiff);
+		builder.append("]");
+		return builder.toString();
+	}
+
 	public void setMeanDiff(float meanDiff) {
 		this.meanDiff = format.subFloat(meanDiff,2);
 	}

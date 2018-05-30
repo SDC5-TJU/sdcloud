@@ -46,8 +46,7 @@ public class CronTasks {
 			return;
 		}
 		// Repository.cronFlag = 0;
-		String[] hosts = { "192.168.1.128","192.168.1.147"};
-		String hostname = "192.168.1.128";
+		String[] hosts = { "192.168.1.128","192.168.1.147"}; 
 		String username = "tank";
 		String password = "tanklab";
 		int len = hosts.length;
@@ -100,18 +99,5 @@ public class CronTasks {
 		pqosResourceMonitor.updateBamdwidthUsage(Repository.systemInfoMap);
 		pqosResourceMonitor.updateCachemiss(Repository.systemInfoMap);
 	}
-	public static void main(String[] args){
-		String[] hosts = { "192.168.1.128","192.168.1.147"};
-		String hostname = "192.168.1.128";
-		String username = "tank";
-		String password = "tanklab";
-		int len = hosts.length;
-		System.out.println(len);
-		for (int i = 0; i < len; i++) {
-			System.out.println(hosts[i]);
-			 
-			
-		}
-		
-	}
+	 
 }
