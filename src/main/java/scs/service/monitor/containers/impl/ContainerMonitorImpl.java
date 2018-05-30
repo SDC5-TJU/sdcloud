@@ -19,6 +19,7 @@ import scs.dao.monitor.DAOmapper.TableContainerresourceusageMapper;
 import scs.pojo.TableContainerresourceusage;
 import scs.service.monitor.containers.ContainerMonitor;
 import scs.util.format.DataFormats;
+import scs.util.repository.Repository;
 import scs.util.tools.SSHConnection;
 
 @Service("containerMonitor")
@@ -180,7 +181,9 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 			while ((line = bfReader.readLine()) != null) { 
 				TableContainerresourceusage record = new TableContainerresourceusage(); 
 				String[] split = line.split(":");
-
+				if (!Repository.containerInfoMap.containsKey(split[0])) {
+					continue;
+				}
 				record.setContainername(split[0]);
 				NumberFormat percentInstance = NumberFormat.getPercentInstance();
 
