@@ -13,7 +13,7 @@ import ch.ethz.ssh2.StreamGobbler;
 public class TestSSH {
 
 	public static void dockerMonitor() {
-		String hostname = "192.168.1.128";
+		String hostname = "192.168.1.147";
 		String username = "tank";
 		String password = "tanklab";
 
@@ -34,7 +34,7 @@ public class TestSSH {
 			/* Create a session */
 			Session sess = conn.openSession();
 //			sess.execCommand("sudo docker stats --no-stream --format \"table {{.Container}}\t{{.CPUPerc}}\t{{.MemUsage}}\"");
-			sess.execCommand("sudo perf stat -e cache-misses -C 0 sleep 1");
+			sess.execCommand("sudo docker stats --no-stream --format {{.Name}}:{{.CPUPerc}}:{{.MemUsage}}:{{.MemPerc}}:{{.NetIO}}:{{.BlockIO}}");
 			System.out.println("Here is some information about the remote host:");
 			/*
 			 * This basic example does not handle stderr, which is sometimes

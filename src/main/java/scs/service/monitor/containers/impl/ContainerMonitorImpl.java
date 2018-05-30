@@ -245,6 +245,7 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 				/*
 				 * 采集容器io使用
 				 */
+				
 				String[] ioArray = split[5].split("/");
 				if (ioArray[0].trim().endsWith("MB")) {
 					record.setIoinput(Float.parseFloat(ioArray[0].trim().substring(0, ioArray[0].trim().length() - 2)));
@@ -281,7 +282,6 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 				//record.setNetoutput(containerNetInfoStream[0]);  
 				record.setNetinput(0.0f);
 				record.setNetoutput(0.0f);  
-
 				record.setCollecttime(date);
 				arrayList.add(record);
 			} 
