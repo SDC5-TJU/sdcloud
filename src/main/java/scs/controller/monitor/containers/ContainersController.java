@@ -38,7 +38,10 @@ public class ContainersController {
 			Iterator<Entry<String, TableContainerresourceusage>> iterator = entrySet.iterator();
 			ArrayList<TableContainerresourceusage> arrayList = new ArrayList<>();
 			while (iterator.hasNext()) {
-				arrayList.add(iterator.next().getValue());
+				TableContainerresourceusage value = iterator.next().getValue();
+				value.setCpuusagerate(value.getCpuusagerate() * 100);
+				value.setMemusagerate(value.getMemusagerate() * 100);
+				arrayList.add(value);
 			}
 			JSONArray json = JSONArray.fromObject(arrayList);
 			return json;

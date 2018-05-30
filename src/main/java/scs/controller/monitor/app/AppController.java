@@ -39,7 +39,10 @@ public class AppController {
 			Iterator<Entry<String, TableAppresourceusage>> iterator = entrySet.iterator();
 			ArrayList<TableAppresourceusage> arrayList = new ArrayList<>();
 			while (iterator.hasNext()) {
-				arrayList.add(iterator.next().getValue());
+				TableAppresourceusage value = iterator.next().getValue();
+				value.setCpuusagerate(value.getCpuusagerate() * 100);
+				value.setMemusagerate(value.getMemusagerate() * 100);
+				arrayList.add(value);
 			}
 			JSONArray json = JSONArray.fromObject(arrayList);
 			return json;

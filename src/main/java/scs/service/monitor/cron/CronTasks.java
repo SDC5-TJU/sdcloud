@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,13 +56,14 @@ public class CronTasks {
 			  
 			ArrayList<TableContainerresourceusage> containersPOJO = containerMonitor.getContainersPOJO(hosts[i],
 					username, password, null);
-		 
+			
 			combineList.addAll(containersPOJO); 
 			containerMonitor.testInsert(containersPOJO); 
 			Iterator<TableContainerresourceusage> iterator = containersPOJO.iterator(); 
 			// 添加进全局 containerRealUsageMap 变量
 		 
 			while (iterator.hasNext()) {
+				//前端展示
 				TableContainerresourceusage tableContainerresourceusage = (TableContainerresourceusage) iterator.next();
 				// containerName：Hadoop1 container类对象最新的资源使用情况
 				Repository.containerRealUsageMap.put(tableContainerresourceusage.getContainername(),tableContainerresourceusage);
