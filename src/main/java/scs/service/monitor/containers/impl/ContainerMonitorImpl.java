@@ -166,35 +166,18 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 	//	Map<String,TwoTuple<Float,Float>> containerNetUseMap=this.getContainerNetUsage(); 
 		String command = "sudo docker stats --no-stream --format \"{{.Name}}:{{.CPUPerc}}:{{.MemUsage}}:{{.MemPerc}}:{{.NetIO}}:{{.BlockIO}}\"";
 		Session sess=null;
-		Connection conn=null;
-		System.out.println(1);
-		try {
-			 conn = new Connection(hostname);
-			 System.out.println(2);
-			conn.connect();
-			System.out.println(3);
-			boolean isAuthenticated = conn.authenticateWithPassword(username, password);
-			System.out.println(4);
-			if (isAuthenticated == false)
-				throw new IOException("Authentication failed.");
+		try { 
 
-			//Connection conn=connection.getConn(hostname);
-			System.out.println(5);
-			sess = conn.openSession();
-			System.out.println(6);
-			sess.execCommand(command); 
-			System.out.println(7);
-			InputStream in = new StreamGobbler(sess.getStdout()); 
-			System.out.println(8);
-			/*if (input == null) {
-				System.out.println("docker stats没有取到值");
-			}*/
+			Connection conn=connection.getConn(hostname); 
+			sess = conn.openSession(); 
+			sess.execCommand(command);  
+			InputStream in = new StreamGobbler(sess.getStdout());  
+		 
 			BufferedReader bfReader = new BufferedReader(new InputStreamReader(in));
 			Date date = new Date();
 			ArrayList<TableContainerresourceusage> arrayList = new ArrayList<>();
 			String line = null; 
-			while ((line = bfReader.readLine()) != null) {
-				System.out.println(line);
+			while ((line = bfReader.readLine()) != null) { 
 				TableContainerresourceusage record = new TableContainerresourceusage(); 
 				String[] split = line.split(":");
 
@@ -300,16 +283,13 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 
 				record.setCollecttime(date);
 				arrayList.add(record);
-			} 
-			System.out.println(arrayList.size());
+			}  
 			return arrayList;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
 			if(sess!=null)
-				sess.close(); 
-			if(conn!=null)
-				conn.close();
+				sess.close();  
 		}
 		return null;
 	}

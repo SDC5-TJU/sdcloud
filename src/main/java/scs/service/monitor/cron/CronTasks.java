@@ -51,27 +51,21 @@ public class CronTasks {
 		int len = hosts.length;
 		ArrayList<TableContainerresourceusage> combineList = new ArrayList<>();
 		for (int i = 0; i < len; i++) {
-			 
-		//	InputStream containerInfoStream = containerMonitor.getContainerInfoStream(hostname, username, password);
-			/*
-			 * This basic example does not handle stderr, which is sometimes
-			 * dangerous (please read the FAQ).
-			 */ 
-			ArrayList<TableContainerresourceusage> containersPOJO = containerMonitor.getContainersPOJO("192.168.1.147",
+			  
+			ArrayList<TableContainerresourceusage> containersPOJO = containerMonitor.getContainersPOJO(hosts[i],
 					username, password, null);
-			combineList.addAll(containersPOJO);
-			containerMonitor.testInsert(containersPOJO);
-			Iterator<TableContainerresourceusage> iterator = containersPOJO.iterator();
+		 
+			combineList.addAll(containersPOJO); 
+			containerMonitor.testInsert(containersPOJO); 
+			Iterator<TableContainerresourceusage> iterator = containersPOJO.iterator(); 
 			// 添加进全局 containerRealUsageMap 变量
+		 
 			while (iterator.hasNext()) {
 				TableContainerresourceusage tableContainerresourceusage = (TableContainerresourceusage) iterator.next();
 				// containerName：Hadoop1 container类对象最新的资源使用情况
-				Repository.containerRealUsageMap.put(tableContainerresourceusage.getContainername(),
-						tableContainerresourceusage);
-			}
-			System.out.println(hosts[i]+" "+i+ "  "+Repository.containerRealUsageMap.size());
-			 
-			
+				Repository.containerRealUsageMap.put(tableContainerresourceusage.getContainername(),tableContainerresourceusage);
+			}  
+			  
 		}
 		// 统计
 		Map<String, List<String>> appNames = appMonitor.getAPPName(Repository.appInfoMap);
