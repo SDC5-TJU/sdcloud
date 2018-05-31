@@ -73,7 +73,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </c:if>
                 <c:if test="${cassandra.enable==1}"> 
                 <div class="row cl">
-                    <label class="form-label col-xs-4 col-sm-2">Cassandra：</label>
+                    <label class="form-label col-xs-4 col-sm-2">cassandra：</label>
                     <div class="formControls col-xs-8 col-sm-9">
                         <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="${cassandra.requestCount}" placeholder="" id="config8-1" name="requestCount" >
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="${cassandra.warmUpCount}" placeholder="" id="config8-2" name="warmUpCount" >
@@ -162,7 +162,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <label class="col-xs-4 new-col-sm-2 new-center1"></label>
                 </div>
                 <div class="row cl">
-                    <label class="form-label col-xs-4 col-sm-2">Bonnie：</label>
+                    <label class="form-label col-xs-4 col-sm-2">bonnie：</label>
                     <div class="formControls col-xs-8 col-sm-9">
                         <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="" placeholder="按块读取" id="" name="" disabled="disabled">
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="" placeholder="按块写入" id="config5-1" name="" disabled="disabled">
@@ -204,7 +204,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <label class="col-xs-4 new-col-sm-2 new-center1"></label>
                 </div>
                 <div class="row cl">
-                    <label class="form-label col-xs-4 col-sm-2">Hadoop：</label>
+                    <label class="form-label col-xs-4 col-sm-2">hadoop：</label>
                     <div class="formControls col-xs-8 col-sm-9">
                         <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="" placeholder="" id="config7-1" name="" disabled="disabled">
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="" placeholder="" id="config7-2" name="" disabled="disabled">
@@ -224,7 +224,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <label class="col-xs-4 new-col-sm-2 new-center1"></label>
                 </div>
                 <div class="row cl">
-                    <label class="form-label col-xs-4 col-sm-2">dwarf：</label>
+                    <label class="form-label col-xs-4 col-sm-2">bigDatadwarf：</label>
                     <div class="formControls col-xs-8 col-sm-9">
                         <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="" placeholder="" id="" name="" disabled="disabled">
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="" placeholder="" id="config11-1" name="" disabled="disabled">
@@ -677,7 +677,7 @@ $(document).ready(function (){
             }
         },
         title: {
-            text: 'solrCloud query benchmark'
+            text: 'webSearch服务响应时间'
         },
         xAxis: {
             type: 'datetime',
@@ -755,7 +755,7 @@ $(document).ready(function (){
             }
         },
         title: {
-            text: 'webServer query benchmark'
+            text: 'webServer服务响应时间'
         },
         xAxis: {
             type: 'datetime',

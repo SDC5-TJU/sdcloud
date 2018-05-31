@@ -38,7 +38,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div style=" width: 1200px; position: absolute; top: 1420px;left: 160px;" id="table">
         <form method="post" action="" id="">
             <div class="panel admin-panel">
-                <div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:web搜索</strong> <a href="" style="float:right; display:none;">添加字段</a></div>
+                <div class="panel-head"><strong class="icon-reorder">webSearch服务指标对比差异</strong> <a href="" style="float:right; display:none;">添加字段</a></div>
 
                 <table class="table table-hover text-center">
                     <tr>
@@ -355,6 +355,9 @@ Highstock.setOptions({
     });
 $(document).ready(function() {
 	Highcharts.chart('websearch6', {
+		credits:{ 
+    	      enabled:false 
+    	},
         chart: {
             type: 'scatter',
             zoomType: 'x'
@@ -376,7 +379,7 @@ $(document).ready(function() {
             max:1527644317128
         },
         title: {
-            text: '在线访问延迟分布'
+            text: '在线服务延迟分布'
         },
         legend: {                                                                    
             enabled: false                                                           

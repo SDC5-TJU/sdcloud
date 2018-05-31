@@ -158,7 +158,7 @@
             }
         },
         title: {
-            text: 'CPU used(%)'
+            text: 'CPU使用率'
         },
         xAxis: {
         	type: 'datetime',
@@ -167,7 +167,7 @@
         },
         yAxis: {
             title: {
-                text: 'used rate'
+                text: '使用率 %'
             },
             plotLines: [{
                 value: 0,
@@ -257,7 +257,7 @@
              }
          },
          title: {
-             text: 'memory used(%)'
+             text: '内存使用率'
          },
          xAxis: {
         	 type: 'datetime',
@@ -265,7 +265,7 @@
          },
          yAxis: {
              title: {
-                 text: 'used rate'
+                 text: '使用率 %'
              },
              plotLines: [{
                  value: 0,
@@ -355,7 +355,7 @@
               }
           },
           title: {
-              text: 'IO used(KB/s)'
+              text: 'IO使用'
           },
           xAxis: {
           	type: 'datetime',
@@ -364,7 +364,7 @@
           },
           yAxis: {
               title: {
-                  text: 'usage KB/s'
+                  text: '读写速度 KB/s'
               },
               plotLines: [{
                   value: 0,
@@ -453,7 +453,7 @@
                }
            },
            title: {
-               text: 'net used(KB/s)'
+               text: '网络使用'
            },
            xAxis: {
            	type: 'datetime',
@@ -462,7 +462,7 @@
            },
            yAxis: {
                title: {
-                   text: 'usage KB/s'
+                   text: '读写速度 KB/s'
                },
                plotLines: [{
                    value: 0,
@@ -551,7 +551,7 @@
                 }
             },
             title: {
-                text: 'LLC miss(%)'
+                text: '缓存缺失率'
             },
             xAxis: {
             	type: 'datetime',
@@ -560,7 +560,7 @@
             },
             yAxis: {
                 title: {
-                    text: 'miss rate'
+                    text: '缺失率 %'
                 },
                 plotLines: [{
                     value: 0,
@@ -651,7 +651,7 @@
                 }
             },
             title: {
-                text: 'MemBandwith used(MB/s)'
+                text: '内存带宽使用'
             },
             xAxis: {
             	type: 'datetime',
@@ -660,7 +660,7 @@
             },
             yAxis: {
                 title: {
-                    text: 'usage MB/s'
+                    text: '读写速度  MB/s'
                 },
                 plotLines: [{
                     value: 0,

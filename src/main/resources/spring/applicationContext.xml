@@ -88,12 +88,12 @@
 	<bean id="CronTriggerBean1"
 		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="SpringQtzJobMethod1"></property>
-		<property name="cronExpression" value="0/10 * * * * ?"></property>
+		<property name="cronExpression" value="0/3 * * * * ?"></property>
 	</bean>
 	<bean id="CronTriggerBean2"
 		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="SpringQtzJobMethod2"></property>
-		<property name="cronExpression" value="0/3 * * * * ?"></property>
+		<property name="cronExpression" value="0/1 * * * * ?"></property>
 	</bean>
 	<bean id="CronTriggerBean3"
 		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
