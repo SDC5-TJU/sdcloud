@@ -18,10 +18,11 @@ public class TimeResultBean {
 	private float min; //响应时间最小值
 	private float max; //响应时间最大值
 	private float missRate;//缺失率
-	
+	private float EA; //体验可用性
+
 	public TimeResultBean(){}
 	public TimeResultBean(int rps, float getSetRate, float nintyTh, float nintyFiveTh, float nintyNineTh,
-			List<TwoTuple<Float, Float>> cDF, float var, float mean, float min, float max, float missRate) {
+			List<TwoTuple<Float, Float>> cDF, float var, float mean, float min, float max, float missRate,float EA) {
 		super();
 		this.rps = rps;
 		this.getSetRate = getSetRate;
@@ -34,6 +35,7 @@ public class TimeResultBean {
 		this.min = min;
 		this.max = max;
 		this.missRate = missRate;
+		this.EA=EA;
 	}
 	public int getRps() {
 		return rps;
@@ -101,13 +103,11 @@ public class TimeResultBean {
 	public void setMissRate(float missRate) {
 		this.missRate = missRate;
 	}
-	@Override
-	public String toString() {
-		return "TimeResultBean [rps=" + rps + ", getSetRate=" + getSetRate + ", nintyTh=" + nintyTh + ", nintyFiveTh="
-				+ nintyFiveTh + ", nintyNineTh=" + nintyNineTh + ", CDF=" + CDF + ", var=" + var + ", mean=" + mean
-				+ ", min=" + min + ", max=" + max + ", missRate=" + missRate + "]";
+	public float getEA() {
+		return EA;
 	}
-	
-	 
+	public void setEA(float eA) {
+		EA = eA;
+	}
+	   
 }
-	 

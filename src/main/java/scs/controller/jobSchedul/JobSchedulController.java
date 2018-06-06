@@ -315,7 +315,9 @@ public class JobSchedulController {
 				return "webServerResultAnalysis";
 			} 
 			//计算基准数据和正式数据的各项指标
+			Repository.EAThreshold=Float.MAX_VALUE;
 			TimeResultBean resultBaseIndex= AdapterForResult.adapter(appName,resultBaseList); 
+			Repository.EAThreshold=resultBaseIndex.getNintyNineTh();
 			TimeResultBean resultIndex=AdapterForResult.adapter(appName,resultList);
 			model.addAttribute(appName+"BaseResult",resultBaseIndex);
 			model.addAttribute(appName+"Result",resultIndex);
@@ -360,7 +362,9 @@ public class JobSchedulController {
 				return "webSearchResultAnalysis"; 
 			} 
 			//计算基准数据和正式数据的各项指标
-			TimeResultBean resultBaseIndex= AdapterForResult.adapter(appName,resultBaseList); 
+			Repository.EAThreshold=Float.MAX_VALUE;
+			TimeResultBean resultBaseIndex= AdapterForResult.adapter(appName,resultBaseList);
+			Repository.EAThreshold=resultBaseIndex.getNintyNineTh();
 			TimeResultBean resultIndex=AdapterForResult.adapter(appName,resultList);
 			model.addAttribute(appName+"BaseResult",resultBaseIndex);
 			model.addAttribute(appName+"Result",resultIndex);
@@ -405,7 +409,9 @@ public class JobSchedulController {
 				return "cassandraResultAnalysis";
 			} 
 			//计算基准数据和正式数据的各项指标
-			TimeResultBean resultBaseIndex= AdapterForResult.adapter(appName,resultBaseList); 
+			Repository.EAThreshold=Float.MAX_VALUE;
+			TimeResultBean resultBaseIndex= AdapterForResult.adapter(appName,resultBaseList);
+			Repository.EAThreshold=resultBaseIndex.getNintyNineTh();
 			TimeResultBean resultIndex=AdapterForResult.adapter(appName,resultList);
 			model.addAttribute(appName+"BaseResult",resultBaseIndex);
 			model.addAttribute(appName+"Result",resultIndex);
@@ -450,7 +456,9 @@ public class JobSchedulController {
 				return "redisResultAnalysis";
 			} 
 			//计算基准数据和正式数据的各项指标
-			TimeResultBean resultBaseIndex= AdapterForResult.adapter(appName,resultBaseList); 
+			Repository.EAThreshold=Float.MAX_VALUE;
+			TimeResultBean resultBaseIndex= AdapterForResult.adapter(appName,resultBaseList);
+			Repository.EAThreshold=resultBaseIndex.getNintyNineTh();
 			TimeResultBean resultIndex=AdapterForResult.adapter(appName,resultList);
 			model.addAttribute(appName+"BaseResult",resultBaseIndex);
 			model.addAttribute(appName+"Result",resultIndex);
@@ -495,7 +503,9 @@ public class JobSchedulController {
 				return "siloResultAnalysis";
 			} 
 			//计算基准数据和正式数据的各项指标
+			Repository.EAThreshold=Float.MAX_VALUE;
 			TimeResultBean resultBaseIndex= AdapterForResult.adapter(appName,resultBaseList); 
+			Repository.EAThreshold=resultBaseIndex.getNintyNineTh();
 			TimeResultBean resultIndex=AdapterForResult.adapter(appName,resultList);
 			model.addAttribute(appName+"BaseResult",resultBaseIndex);
 			model.addAttribute(appName+"Result",resultIndex);
@@ -540,7 +550,9 @@ public class JobSchedulController {
 				return "xapianResultAnalysis";
 			} 
 			//计算基准数据和正式数据的各项指标
+			Repository.EAThreshold=Float.MAX_VALUE;
 			TimeResultBean resultBaseIndex= AdapterForResult.adapter(appName,resultBaseList); 
+			Repository.EAThreshold=resultBaseIndex.getNintyNineTh();
 			TimeResultBean resultIndex=AdapterForResult.adapter(appName,resultList);
 			model.addAttribute(appName+"BaseResult",resultBaseIndex);
 			model.addAttribute(appName+"Result",resultIndex);

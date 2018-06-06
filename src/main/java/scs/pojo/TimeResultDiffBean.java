@@ -21,6 +21,7 @@ public class TimeResultDiffBean {
 	private float minDiff; //响应时间最小值差异
 	private float maxDiff; //响应时间最大值差异
 	private float missRateDiff;//缺失率差异 
+	private float EADiff;
 	
 	public TimeResultDiffBean(){}
  
@@ -151,6 +152,14 @@ public class TimeResultDiffBean {
 
 	public void setMissRateDiff(float missRateDiff) {
 		this.missRateDiff = format.subFloat(missRateDiff,2);
+	}
+
+	public float getEADiff() {
+		return EADiff;
+	}
+
+	public void setEADiff(float eADiff) {
+		EADiff = format.subFloat(eADiff,2);
 	}
  
  

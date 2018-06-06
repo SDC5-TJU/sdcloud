@@ -24,8 +24,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div>
 		<ul class="nav nav-tabs" style="">
 			<c:if test="${webSearch.enable==1}">
-				<li class="" style="float: left;"><!-- <a href="getWebSearchResult.do?testRecordId=${testRecordId}" -->
-					<a href="getResult.do"
+				<li class="" style="float: left;"><!-- <a href="getResult.do" -->
+				<a href="getWebSearchResult.do?testRecordId=${testRecordId}"
 					target="_blank" id="websearch">web搜索</a></li>
 			</c:if>
 			<c:if test="${webServer.enable==1}">

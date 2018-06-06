@@ -207,6 +207,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							</c:otherwise>
 						</c:choose>   						
                     </tr>
+                    <tr>
+                    	<td style="background:#f1f5fa"> 用户体验可用性</td> 						
+                        <td style="background:#f9f9f9" >${siloBaseResult.EA}</td>
+                        <td style="background:#f1f5fa" >${siloResult.EA}</td>
+                         <c:choose>
+							<c:when test="${diffBean.EADiff>0}">
+                               <td style="background:#f9f9f9" ><img src="statics/images/up.png"/>${diffBean.EADiff}%</td>							
+                            </c:when>
+							<c:when test="${diffBean.EADiff<0}">
+							   <td style="background:#f9f9f9" ><img src="statics/images/down.png"/>${diffBean.EADiff}%</td>							
+							</c:when>
+							<c:otherwise>
+							   <td style="background:#f9f9f9" >${diffBean.EADiff}%</td>							
+							</c:otherwise>
+						</c:choose>   						
+                    </tr>
                 </table>
             </div>
         </form>

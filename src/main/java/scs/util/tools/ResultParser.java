@@ -1,9 +1,8 @@
-//package cn.tju.scs;
 package scs.util.tools; 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
- 
+import java.util.List; 
+
 import scs.pojo.MemcachedDataBean;
 import scs.pojo.SiloDataBean;
 import scs.pojo.TimeResultBean;
@@ -18,7 +17,7 @@ import scs.util.repository.Repository;
  */
 //加一个缺失率，65535
 // 适配器--名字
-class ResultParser {
+public class ResultParser {
 	private DataFormats format=DataFormats.getInstance();
 	/*
 	 * 计算如下值：
@@ -149,6 +148,33 @@ class ResultParser {
 		miss = missCount / size;
 		bean.setMissRate(miss);
 
+		/**
+		 * 计算用户体验可用性
+		 */
+		int PIECE=10;
+		float Satisfaction=0;
+		int pieceSize=size/PIECE;
+		List<Float> timeList=new ArrayList<Float>();
+		for(int curPiece=1;curPiece<PIECE;curPiece++){
+			for(int i=(curPiece-1)*pieceSize;i<curPiece*pieceSize;i++){
+				timeList.add((float)list.get(i).second);
+			}
+			Collections.sort(timeList); 
+			if(this.getNintyNinth(timeList)<=Repository.EAThreshold){
+				Satisfaction++;
+			}
+			timeList.clear();
+		}		
+		// 处理剩余的最后一组数据
+		for(int i=(PIECE-1)*pieceSize;i<size;i++){
+			timeList.add((float)list.get(i).second);
+		}
+		Collections.sort(timeList);
+		if(this.getNintyNinth(timeList)<=Repository.EAThreshold){
+			Satisfaction++;
+		}   
+		bean.setEA(Satisfaction/PIECE);
+
 		return bean;
 	}
 	public TimeResultBean calculateM( List<MemcachedDataBean> memcache){
@@ -230,6 +256,7 @@ class ResultParser {
 		int count = Integer.parseInt(countRequest) * 2;
 		float miss  = 1- count/(float)newlist.size();
 		bean.setMissRate(format.subFloat(miss,2));
+		bean.setEA(getEA(newlist));
 		return bean;
 	}
 	public TimeResultBean calculateX(List<XapianDataBean> xapian){
@@ -252,6 +279,7 @@ class ResultParser {
 		int count = Integer.parseInt(countRequest) * 2;
 		float miss  = 1- count/(float)newlist.size();
 		bean.setMissRate(format.subFloat(miss,2));
+		bean.setEA(getEA(newlist));
 		return bean;
 	}
 	public List<TwoTuple<Float,Float>> getCDF(List<Float> newlist){
@@ -325,7 +353,12 @@ class ResultParser {
 		nintyFiveTh = (float) ((size * 0.95 - j)*( xj - xj_1) + xj_1);
 		return nintyFiveTh;
 	}
-	public float getNintyNinth(List<Float>  newlist){
+	/**
+	 * newlist的size越小，精度越不准，如果size=1，则此函数会报错
+	 * @param newlist
+	 * @return
+	 */
+	public float getNintyNinth(List<Float> newlist){
 		float nintyNineTh = 0.0f;
 		int size = newlist.size();
 		int j = (int)((size) * 0.99);
@@ -335,4 +368,38 @@ class ResultParser {
 		nintyNineTh = (float) ((size * 0.99 - j)*( xj - xj_1) + xj_1);
 		return nintyNineTh;
 	}
+	/**
+	 * 计算用户体验可用性
+	 * @param list
+	 * @return
+	 */
+	public float getEA(List<Float> list){
+		int size=list.size();
+		int PIECE=10;
+		float Satisfaction=0;
+		int pieceSize=size/PIECE;
+		List<Float> timeList=new ArrayList<Float>();
+		for(int curPiece=1;curPiece<PIECE;curPiece++){
+			for(int i=(curPiece-1)*pieceSize;i<curPiece*pieceSize;i++){
+				timeList.add((float)list.get(i));
+			}
+			Collections.sort(timeList); 
+			if(this.getNintyNinth(timeList)<=Repository.EAThreshold){
+				Satisfaction++;
+			}
+			timeList.clear();
+		}		
+		// 处理剩余的最后一组数据
+		for(int i=(PIECE-1)*pieceSize;i<size;i++){
+			timeList.add((float)list.get(i));
+		}
+		Collections.sort(timeList);
+		if(this.getNintyNinth(timeList)<=Repository.EAThreshold){
+			Satisfaction++;
+		}   
+		return (Satisfaction/PIECE);
+
+	}
+
+
 }
