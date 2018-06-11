@@ -286,7 +286,7 @@ Highcharts.setOptions({ global: { useUTC: false } });
                 text: 'websever各项指标变化率'
             },
             xAxis: {
-                categories: ['90th', '95th', '99th', '方差', '平均值','最小值','最大值']
+                categories: ['90th', '95th', '99th', '方差', '平均值','最小值','最大值','缺失率']
             },
             yAxis: {
                 title: {
@@ -309,7 +309,7 @@ Highcharts.setOptions({ global: { useUTC: false } });
             series: [{
             	name:'webSever',
                 data: [${diffBean.nintyThDiff}, ${diffBean.nintyFiveThDiff}, ${diffBean.nintyNineThDiff},
-                       ${diffBean.varDiff}, ${diffBean.meanDiff},${diffBean.minDiff},${diffBean.maxDiff}]
+                       ${diffBean.varDiff}, ${diffBean.meanDiff},${diffBean.minDiff},${diffBean.maxDiff},${diffBean.missRateDiff}]
             }]
 
 

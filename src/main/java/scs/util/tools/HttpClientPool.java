@@ -31,8 +31,8 @@ import scs.util.jobSchedul.jobImpl.bonnie.BonnieJobImpl;
   */
 public class HttpClientPool {
 	private PoolingHttpClientConnectionManager poolConnManager;
-	private final int maxTotalPool = 5;
-	private final int maxConPerRoute = 5;
+	private final int maxTotalPool = 100;
+	private final int maxConPerRoute = 100;
 	private final int socketTimeout = 15000;
 	private final int connectionRequestTimeout = 15000;
 	private final int connectTimeout = 15000;
@@ -133,5 +133,30 @@ public class HttpClientPool {
 		}
 		return costTime;
 	}
-
+	/**
+	 * 计算响应时间
+	 * @param httpclient对象
+	 * @param URL 要访问的链接
+	 * @return 响应耗费的毫秒数
+	 */
+	public static int getResponseTime(CloseableHttpClient httpclient,String URL){
+		int costTime=65535;
+		long begin=0L,end=0L;
+		HttpGet httpget=new HttpGet(URL);
+		try {
+			begin=System.currentTimeMillis();
+			HttpResponse response=httpclient.execute(httpget); 
+			if(response.getStatusLine().getStatusCode()==200){
+				end=System.currentTimeMillis();//状态码为200代表成功响应,计算耗时
+			}
+			costTime=(int)(end-begin);
+		}catch(IOException e){
+			e.printStackTrace();
+			costTime=65535;
+		}finally{
+			httpget.releaseConnection();//释放连接
+		}
+		return costTime;
+	}
+ 
 }

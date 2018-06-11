@@ -109,5 +109,35 @@ public class TimeResultBean {
 	public void setEA(float eA) {
 		EA = eA;
 	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("TimeResultBean [rps=");
+		builder.append(rps);
+		builder.append(", getSetRate=");
+		builder.append(getSetRate);
+		builder.append(", nintyTh=");
+		builder.append(nintyTh);
+		builder.append(", nintyFiveTh=");
+		builder.append(nintyFiveTh);
+		builder.append(", nintyNineTh=");
+		builder.append(nintyNineTh);
+		builder.append(", CDF=");
+		builder.append(CDF);
+		builder.append(", var=");
+		builder.append(var);
+		builder.append(", mean=");
+		builder.append(mean);
+		builder.append(", min=");
+		builder.append(min);
+		builder.append(", max=");
+		builder.append(max);
+		builder.append(", missRate=");
+		builder.append(missRate);
+		builder.append(", EA=");
+		builder.append(EA);
+		builder.append("]");
+		return builder.toString();
+	}
 	   
 }

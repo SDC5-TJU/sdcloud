@@ -252,10 +252,14 @@ public class ResultParser {
 		bean.setCDF(getCDF(newlist));
 		bean.setVar(format.subFloat(getVar(newlist),2));
 		//miss
-		String countRequest = Repository.appConfigMap.get("silo").getRequestCount();
-		int count = Integer.parseInt(countRequest) * 2;
-		float miss  = 1- count/(float)newlist.size();
-		bean.setMissRate(format.subFloat(miss,2));
+		if(Repository.appConfigMap.get("silo")==null){
+			bean.setMissRate(0);
+		}else{
+			String countRequest = Repository.appConfigMap.get("silo").getRequestCount();
+			int count = Integer.parseInt(countRequest) * 2;
+			float miss  = 1- count/(float)newlist.size();
+			bean.setMissRate(format.subFloat(miss,2));
+		}
 		bean.setEA(getEA(newlist));
 		return bean;
 	}
@@ -275,10 +279,14 @@ public class ResultParser {
 		bean.setCDF(getCDF(newlist));
 		bean.setVar(format.subFloat(getVar(newlist),2));
 		//miss
-		String countRequest = Repository.appConfigMap.get("xapian").getRequestCount();
-		int count = Integer.parseInt(countRequest) * 2;
-		float miss  = 1- count/(float)newlist.size();
-		bean.setMissRate(format.subFloat(miss,2));
+		if(Repository.appConfigMap.get("xapian")==null){
+			bean.setMissRate(0);
+		}else{
+			String countRequest = Repository.appConfigMap.get("xapian").getRequestCount();
+			int count = Integer.parseInt(countRequest) * 2;
+			float miss  = 1- count/(float)newlist.size();
+			bean.setMissRate(format.subFloat(miss,2));
+		}
 		bean.setEA(getEA(newlist));
 		return bean;
 	}

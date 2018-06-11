@@ -243,7 +243,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 text: 'memcached各项指标变化率'
             },
             xAxis: {
-                categories: ['90th', '95th', '99th', '方差', '平均延迟','最小值','最大值','缺失率']
+                categories: ['90th', '95th', '99th', '方差', '平均值','最小值','最大值','缺失率']
             },
             yAxis: {
                 title: {

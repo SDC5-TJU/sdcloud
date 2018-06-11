@@ -105,9 +105,9 @@
 		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>    
-			 <ref bean="CronTriggerBean1" />
+			<!--  <ref bean="CronTriggerBean1" />
 			 <ref bean="CronTriggerBean2" /> 
-			 <ref bean="CronTriggerBean3" /> 
+			 <ref bean="CronTriggerBean3" />  -->
 			</list>
 		</property>
 	</bean>

@@ -1,8 +1,13 @@
 package scs.controller.jobSchedul;
 
 import org.apache.log4j.Logger;
- 
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.Random;
 
 import javax.annotation.Resource;
@@ -12,9 +17,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-  
+
+import net.sf.json.JSONArray;
 import scs.pojo.AppConfigBean;
 import scs.pojo.MemcachedDataBean;
+import scs.pojo.QueryData;
 import scs.pojo.SiloDataBean;
 import scs.pojo.TestRecordBean;
 import scs.pojo.TimeResultBean;
@@ -25,8 +32,11 @@ import scs.service.appConfig.AppConfigService;
 import scs.service.historyData.HistoryDataService;
 import scs.service.jobSchedul.JobSchedulService;
 import scs.service.recordManage.RecordManageService;
+import scs.util.jobSchedul.jobImpl.webServer.WebServerJobImpl;
+import scs.util.loadGen.driver.WebSearchDriver;
 import scs.util.repository.Repository;
 import scs.util.tools.AdapterForResult;
+import scs.util.tools.ReadFile;
 import scs.util.tools.ResultDiffAnalysis; 
 
 /**
@@ -39,13 +49,13 @@ import scs.util.tools.ResultDiffAnalysis;
 public class JobSchedulController {
 	private static Logger logger = Logger.getLogger(JobSchedulController.class.getName());
 	private Random rand=new Random();
-	
+
 	@Resource JobSchedulService service; 
 	@Resource AppConfigService aService;
 	@Resource RecordManageService rService;
 	@Resource HistoryDataService hService;
-	
-	
+
+
 	@RequestMapping("/jobSchedulBefore.do")
 	public String jobSchedulBefore(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="testRecordId",required=true) int testRecordId){
@@ -119,7 +129,7 @@ public class JobSchedulController {
 			int result=service.executeWebServerApp(isBase);
 			response.getWriter().print(result); 
 		}catch(Exception e){
-			
+
 			e.printStackTrace();
 		}
 
@@ -156,7 +166,7 @@ public class JobSchedulController {
 			response.getWriter().print(result);
 
 		}catch(Exception e){
-			
+
 			e.printStackTrace();
 		}
 
@@ -169,7 +179,7 @@ public class JobSchedulController {
 			response.getWriter().print(result);
 
 		}catch(Exception e){
-			
+
 			e.printStackTrace();
 		}
 
@@ -181,7 +191,7 @@ public class JobSchedulController {
 			response.getWriter().print(result);
 
 		}catch(Exception e){
-			
+
 			e.printStackTrace();
 		}
 
@@ -193,7 +203,7 @@ public class JobSchedulController {
 			response.getWriter().print(result);
 
 		}catch(Exception e){
-			
+
 			e.printStackTrace();
 		}
 
@@ -205,7 +215,7 @@ public class JobSchedulController {
 			response.getWriter().print(result);
 
 		}catch(Exception e){
-			
+
 			e.printStackTrace();
 		}
 
@@ -217,19 +227,19 @@ public class JobSchedulController {
 			response.getWriter().print(result);
 
 		}catch(Exception e){
-			
+
 			e.printStackTrace();
 		}
 
 	}
- 
+
 	@RequestMapping("/executeHadoopApp.do")
 	public void executeHadoopApp(HttpServletRequest request,HttpServletResponse response){
 		try{ 
 			int result=service.executeHadoopApp();
 			response.getWriter().print(result);
 		}catch(Exception e){
-			
+
 			e.printStackTrace();
 		}
 
@@ -241,7 +251,7 @@ public class JobSchedulController {
 			response.getWriter().print(resultStr);
 			//[{"memcached":false,"scimark":false,"bonnie":false,"webSearch":false,"cassandra":false,"webServer":false,"hadoop":false,"silo":false}]
 		}catch(Exception e){
-			
+
 			e.printStackTrace();
 		}
 	}
@@ -286,7 +296,7 @@ public class JobSchedulController {
 			}
 			model.addAttribute("testRecordId",testRecordId);
 		}catch(Exception e){
-			
+
 			e.printStackTrace();
 		}
 		return "memResultAnalysis";
@@ -571,24 +581,214 @@ public class JobSchedulController {
 		return "xapianResultAnalysis";
 	}
 	@RequestMapping("/getWebSearchQueryTime.do")
-	public void getWebSearchQueryTime(HttpServletRequest request,HttpServletResponse response,Model model){
+	public void getWebSearchQueryTime(HttpServletRequest request,HttpServletResponse response){
 		try{ 
 			int time=service.getWebSearchQueryTime();
 			response.getWriter().print(time);   
 		}catch(Exception e){
-			
+
 			e.printStackTrace();
 		}
 	}
 	@RequestMapping("/getWebServerQueryTime.do")
-	public void getWebServerQueryTime(HttpServletRequest request,HttpServletResponse response,Model model){
+	public void getWebServerQueryTime(HttpServletRequest request,HttpServletResponse response){
 		try{ 
 			int time=service.getWebServerQueryTime();
 			response.getWriter().print(time);   
 		}catch(Exception e){
-			
 			e.printStackTrace();
 		}
 	}
 
+	@RequestMapping("/startOnlineQuery.do")
+	public void startOnlineQuery(HttpServletRequest request,HttpServletResponse response){
+		try{
+			System.out.println("start");  
+			Repository.onlineDataFlag=true;
+			WebSearchDriver.getInstance().executeJob(-1,"possion",10);
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	@RequestMapping("/stopOnlineQuery.do")
+	public void stopOnlineQuery(HttpServletRequest request,HttpServletResponse response){
+		try{
+			Repository.onlineDataFlag=false; 
+			System.out.println("stop");  
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	@RequestMapping("/goOnlineQuery.do")
+	public String goOnlineQuery(HttpServletRequest request,HttpServletResponse response,Model model){
+		StringBuffer strName=new StringBuffer();
+		StringBuffer strData=new StringBuffer();
+		StringBuffer HSeries=new StringBuffer();
+		strName.append("{name:'queryTime',"); 
+		strData.append("data:[");
+		int size= 300;
+		for(int i=0;i<size;i++){
+			strData.append("[").append(System.currentTimeMillis()).append(",").append(0).append("],");
+		}
+		strData.append("[").append(System.currentTimeMillis()).append(",").append(0).append("]]");
+		HSeries.append(strName).append(strData).append("}");
+		model.addAttribute("seriesStr",HSeries.toString()); 
+
+		return "onlineData";
+	}
+	List<QueryData> curTimeList=new ArrayList<QueryData>();
+	int sumCount=0;
+	@RequestMapping("/getOnlineQueryTime.do")
+	public void getOnlineQueryTime(HttpServletRequest request,HttpServletResponse response){
+		try{
+			curTimeList.clear();
+			while(Repository.onlineDataList.size()==0){
+				Thread.sleep(50);
+			}
+			curTimeList.addAll(Repository.onlineDataList); 
+			Repository.onlineDataList.clear();
+			int sum=0;
+			for(QueryData item:curTimeList){
+				sum+=item.getQueryTime();
+			}
+			sum=sum/curTimeList.size();
+			sumCount+=curTimeList.size();
+			QueryData data=new QueryData();
+			data.setGenerateTime(curTimeList.get(curTimeList.size()-1).getGenerateTime());
+			data.setQueryTime(sum);
+			data.setQps(curTimeList.size());
+			//System.out.println(sumCount);
+			response.getWriter().write(JSONArray.fromObject(data).toString());
+
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
+
+	@RequestMapping("/getRiscvXapianResult.do")
+	public String getRiscvXapianResult(HttpServletRequest request,HttpServletResponse response,Model model){
+
+		List<XapianDataBean> resultBaseList=new ArrayList<XapianDataBean>();
+		List<XapianDataBean> resultList=new ArrayList<XapianDataBean>();
+		List<XapianDataBean> resultLableList=new ArrayList<XapianDataBean>();
+
+		try{
+			Properties prop = new Properties();
+			InputStream is = WebServerJobImpl.class.getResourceAsStream("/conf/sys.properties");
+			try {
+				prop.load(is);
+			} catch (IOException e) { 
+				e.printStackTrace();
+			}
+			String riscvDataPath=prop.getProperty("riscv_data_path").trim();
+			File file=new File(riscvDataPath+"lats1.txt");
+			if(file.exists()){
+				resultBaseList=service.getRiscvXapianResult(riscvDataPath+"lats1.txt");
+			}
+			file=new File(riscvDataPath+"lats2.txt");
+			if(file.exists()){
+				resultList=service.getRiscvXapianResult(riscvDataPath+"lats2.txt");
+			}
+			file=new File(riscvDataPath+"lats3.txt");
+			if(file.exists()){
+				resultLableList=service.getRiscvXapianResult(riscvDataPath+"lats3.txt");
+			}
+			file=new File(riscvDataPath+".qps");
+			if(file.exists()){
+				String qps=ReadFile.getInstance().readRedisQpsFile(riscvDataPath+".qps");
+				model.addAttribute("qps",qps);
+			}
+			/*
+			 * 判断是否缺少数据 (基准和正式都要有才可以进行差异值计算)
+			 */
+			String appName="xapian";
+
+			//计算基准数据和正式数据的各项指标
+			Repository.EAThreshold=Float.MAX_VALUE;
+			TimeResultBean resultBaseIndex= AdapterForResult.adapter(appName,resultBaseList); 
+			Repository.EAThreshold=resultBaseIndex.getNintyNineTh();
+			TimeResultBean resultIndex=AdapterForResult.adapter(appName,resultList);
+			TimeResultBean resultLabelIndex=AdapterForResult.adapter(appName,resultLableList);
+			model.addAttribute("BaseResult",resultBaseIndex);
+			model.addAttribute("Result",resultIndex);
+			model.addAttribute("LabelResult",resultLabelIndex);
+			//计算各项指标差异值
+			TimeResultDiffBean diffBean1=ResultDiffAnalysis.getInstance().getXapianResultDiff(resultBaseList,resultList,resultBaseIndex,resultIndex);
+			model.addAttribute("diffBean1",diffBean1);
+			TimeResultDiffBean diffBean2=ResultDiffAnalysis.getInstance().getXapianResultDiff(resultList,resultLableList,resultIndex,resultLabelIndex);
+			model.addAttribute("diffBean2",diffBean2); 
+			diffBean2.setCDFStr(diffBean2.getCDFStr().replace("干扰下","隔离后"));
+			model.addAttribute("CDFStrs",diffBean1.getBaseCDFStr()+","+diffBean1.getCDFStr()+","+diffBean2.getCDFStr()); 
+			model.addAttribute("appName",appName);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return "demo_redis";
+	}
+	@RequestMapping("/getRiscvRedisResult.do")
+	public String getRiscvRedisResult(HttpServletRequest request,HttpServletResponse response,Model model,
+			@RequestParam(value="type",required=true) String type){
+		List<TwoTuple<Long,Integer>> resultBaseList=new ArrayList<TwoTuple<Long,Integer>>();
+		List<TwoTuple<Long,Integer>> resultList=new ArrayList<TwoTuple<Long,Integer>>();
+		List<TwoTuple<Long,Integer>> resultLableList=new ArrayList<TwoTuple<Long,Integer>>();
+
+		try{
+			Properties prop = new Properties();
+			InputStream is = WebServerJobImpl.class.getResourceAsStream("/conf/sys.properties");
+			try {
+				prop.load(is);
+			} catch (IOException e) { 
+				e.printStackTrace();
+			}
+			String riscvDataPath=prop.getProperty("riscv_data_path").trim();
+			File file=new File(riscvDataPath+type+"1.lats");
+			if(file.exists()){
+				resultBaseList=service.getRiscvRedisResult(riscvDataPath+type+"1.lats"); 
+			}
+			file=new File(riscvDataPath+type+"2.lats");
+			if(file.exists()){
+				resultList=service.getRiscvRedisResult(riscvDataPath+type+"2.lats"); 
+			}
+			file=new File(riscvDataPath+type+"3.lats");
+			if(file.exists()){
+				resultLableList=service.getRiscvRedisResult(riscvDataPath+type+"3.lats"); 
+			}
+			
+			file=new File(riscvDataPath+type+".qps");
+			if(file.exists()){
+				String qps=ReadFile.getInstance().readRedisQpsFile(riscvDataPath+type+".qps");
+				model.addAttribute("qps",qps);
+			}
+			/*
+			 * 判断是否缺少数据 (基准和正式都要有才可以进行差异值计算)
+			 */
+			String appName="redis";
+
+			//计算基准数据和正式数据的各项指标
+			Repository.EAThreshold=Float.MAX_VALUE;
+			TimeResultBean resultBaseIndex= AdapterForResult.adapter(appName,resultBaseList); 
+			Repository.EAThreshold=resultBaseIndex.getNintyNineTh();
+			TimeResultBean resultIndex=AdapterForResult.adapter(appName,resultList);
+			TimeResultBean resultLabelIndex=AdapterForResult.adapter(appName,resultLableList);
+			model.addAttribute("BaseResult",resultBaseIndex);
+			model.addAttribute("Result",resultIndex);
+			model.addAttribute("LabelResult",resultLabelIndex);
+			//计算各项指标差异值 
+			TimeResultDiffBean diffBean1=ResultDiffAnalysis.getInstance().getResultDiff(resultBaseList,resultList,resultBaseIndex,resultIndex);
+			model.addAttribute("diffBean1",diffBean1);
+			TimeResultDiffBean diffBean2=ResultDiffAnalysis.getInstance().getResultDiff(resultList,resultLableList,resultIndex,resultLabelIndex);
+			model.addAttribute("diffBean2",diffBean2); 
+			diffBean2.setCDFStr(diffBean2.getCDFStr().replace("干扰下","隔离后"));
+			model.addAttribute("CDFStrs",diffBean1.getBaseCDFStr()+","+diffBean1.getCDFStr()+","+diffBean2.getCDFStr()); 
+			model.addAttribute("appName",appName+type);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return "demo_redis";
+	}
+ 
 }

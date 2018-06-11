@@ -11,6 +11,7 @@ import scs.pojo.AppConfigBean;
 import scs.pojo.AppInfoBean;
 import scs.pojo.ContainerInfoBean;
 import scs.pojo.MemcachedDataBean;
+import scs.pojo.QueryData;
 import scs.pojo.SiloDataBean;
 import scs.pojo.SystemInfoBean;
 import scs.pojo.TableAppresourceusage;
@@ -36,6 +37,7 @@ public class Repository{
 	}  
 	public static int curTestRecordId=0; //当前测试记录
 	public static float EAThreshold=100; //体验可用性99分位数阈值
+	public static boolean onlineDataFlag=false; //在线请求查询标志
 	/**
 	 * 作业调度模块配置信息变量
 	 */
@@ -66,6 +68,8 @@ public class Repository{
 	public static List<TwoTuple<Long, Integer>> cassandraBaseDataList=new ArrayList<TwoTuple<Long, Integer>>();
 	public static List<TwoTuple<Long, Integer>> redisDataList=new ArrayList<TwoTuple<Long, Integer>>();
 	public static List<TwoTuple<Long, Integer>> redisBaseDataList=new ArrayList<TwoTuple<Long, Integer>>();
+	
+	public static List<QueryData> onlineDataList=new ArrayList<QueryData>();
 	
 	/*
 	 * 物理机/容器/服务 资源监控数组
@@ -104,7 +108,7 @@ public class Repository{
 	 * 静态块
 	 */
 	static {
-		containerInfoMap=RepositoryDao.initContainerInfoMap();//初始化容器信息map 
+		/*containerInfoMap=RepositoryDao.initContainerInfoMap();//初始化容器信息map 
 		System.out.println("初始化 containerInfoMap size="+containerInfoMap.size());
 		appInfoMap=RepositoryDao.initAppInfoMap();//初始化app信息map 
 		System.out.println("初始化 appInfoMap  size="+appInfoMap.size());
@@ -113,7 +117,7 @@ public class Repository{
 			appStatusMap.put(appName,false);//系统初始化,所有应用默认为未执行
 			System.out.println("初始化app执行状态 "+appName+"=false");
 		}
-		systemInfoMap=RepositoryDao.initSystemInfoMap();
+		systemInfoMap=RepositoryDao.initSystemInfoMap();*/
 	}
 	/**
 	 * 对外提供的app状态查询接口

@@ -1,13 +1,20 @@
 package scs.service.jobSchedul;
   
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource; 
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.springframework.stereotype.Service; 
 import scs.dao.jobSchedul.JobSchedulDao;
-import scs.dao.recordManage.RecordManageDao; 
-import scs.util.jobSchedul.JobSchedulDriver;
+import scs.dao.recordManage.RecordManageDao;
+import scs.pojo.TwoTuple;
+import scs.pojo.XapianDataBean;
+import scs.util.jobSchedul.JobSchedulDriver; 
 import scs.util.repository.Repository;
 import scs.util.tools.HttpClientPool;
+import scs.util.tools.ReadFile;
 
 
 @Service
@@ -156,7 +163,31 @@ public class JobSchedulServiceImpl implements JobSchedulService {
 		// TODO Auto-generated method stub
 		return HttpClientPool.getResponseTime(httpclient,0);
 	}
-
+	
+	@Override
+	public List<XapianDataBean> getRiscvXapianResult(String filePath){
+		List<XapianDataBean> list=new ArrayList<XapianDataBean>();
+		try {
+			list=ReadFile.getInstance().readXapianFile(filePath);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+		
+	}
+	@Override
+	public List<TwoTuple<Long, Integer>> getRiscvRedisResult(String filePath){
+		List<TwoTuple<Long, Integer>> list=new ArrayList<TwoTuple<Long, Integer>>();
+		try {
+			list=ReadFile.getInstance().readRedisFile(filePath);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
 	
  
 }

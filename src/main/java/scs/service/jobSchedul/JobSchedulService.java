@@ -1,5 +1,10 @@
 package scs.service.jobSchedul;
-  
+
+import java.util.List;
+
+import scs.pojo.TwoTuple;
+import scs.pojo.XapianDataBean;
+
 /**
  * 登录service层接口
  * @author YangYanan
@@ -25,4 +30,7 @@ public interface JobSchedulService {
 	public int getWebSearchQueryTime();
 	public int getWebServerQueryTime();
 	public String getAppStatus();
+	
+	public List<XapianDataBean> getRiscvXapianResult(String filePath);
+	public List<TwoTuple<Long, Integer>> getRiscvRedisResult(String filePath);
 }
