@@ -65,8 +65,8 @@ public class ResultParser {
 		//mean
 		float sum1 = (float)sum;
 		float mean = sum1 / size;
-		//System.out.println("SUM IS "+sum1 + " MEAN IS: " + mean);
 		bean.setMean(format.subFloat(mean,0));
+		
 		//var
 		float var =0.0f;		
 		for(int i = 0; i <size; i++ ) {
