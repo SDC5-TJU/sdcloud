@@ -106,11 +106,8 @@ public class ReadRiscvFilesImpl implements ReadRiscvFiles {
 		return result;
 	}
 	public static void main(String[] args) {
-		ArrayList<Double> readRiskvMemory = new ReadRiscvFilesImpl().read60("H:/mem.csv");
-		System.out.println(readRiskvMemory.size());
-		for (Double double1 : readRiskvMemory) {
-			System.out.println(double1);
-		}
+		System.out.println(new ReadRiscvFilesImpl().readRiscvMemory("H://cpu_usage.csv"));
+		 
 	}
 
 }

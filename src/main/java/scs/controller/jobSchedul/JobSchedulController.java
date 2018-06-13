@@ -869,6 +869,7 @@ public class JobSchedulController {
 			SystemResourceUsageBean bean=new SystemResourceUsageBean();
 			bean.setCollectTime(System.currentTimeMillis());
 			bean.setMemUsageRate((float)read.readRiscvMemory(prop.getProperty("riscv_monitor_path").trim()+"mem.csv")*100);
+			 
 			response.getWriter().write(JSONArray.fromObject(bean).toString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -887,7 +888,8 @@ public class JobSchedulController {
 			} 
 			SystemResourceUsageBean bean=new SystemResourceUsageBean();
 			bean.setCollectTime(System.currentTimeMillis());
-			bean.setMemUsageRate((float)read.readRiscvMemory(prop.getProperty("riscv_monitor_path").trim()+"cpu_usage.csv")*100);
+			bean.setCpuUsageRate((float)read.readRiscvMemory(prop.getProperty("riscv_monitor_path").trim()+"cpu_usage.csv")*100);
+			 
 			response.getWriter().write(JSONArray.fromObject(bean).toString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
