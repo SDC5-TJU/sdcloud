@@ -1,14 +1,13 @@
 package scs.service.monitor.riscv.impl;
 
-import java.awt.RadialGradientPaint;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
+
 import org.springframework.stereotype.Service;
 
 import scs.service.monitor.riscv.ReadRiscvFiles;
@@ -107,12 +106,12 @@ public class ReadRiscvFilesImpl implements ReadRiscvFiles {
 		
 		return result;
 	}
-//	public static void main(String[] args) {
-//		ArrayList<Double> readRiskvMemory = new ReadRiskvFilesImpl().read60("/Users/jztong/Desktop/");
-//		System.out.println(readRiskvMemory.size());
-//		for (Double double1 : readRiskvMemory) {
-//			System.out.println(double1);
-//		}
-//	}
+	public static void main(String[] args) {
+		ArrayList<Double> readRiskvMemory = new ReadRiscvFilesImpl().read60("/Users/jztong/Desktop/");
+		System.out.println(readRiskvMemory.size());
+		for (Double double1 : readRiskvMemory) {
+			System.out.println(double1);
+		}
+	}
 
 }
