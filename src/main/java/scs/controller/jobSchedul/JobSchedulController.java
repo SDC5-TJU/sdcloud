@@ -21,8 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import net.sf.json.JSONArray;
 import scs.pojo.AppConfigBean;
 import scs.pojo.MemcachedDataBean;
-import scs.pojo.QueryData;
+import scs.pojo.QueryData; 
 import scs.pojo.SiloDataBean;
+import scs.pojo.SystemResourceUsageBean;
 import scs.pojo.TestRecordBean;
 import scs.pojo.TimeResultBean;
 import scs.pojo.TimeResultDiffBean;
@@ -31,6 +32,8 @@ import scs.pojo.XapianDataBean;
 import scs.service.appConfig.AppConfigService;
 import scs.service.historyData.HistoryDataService;
 import scs.service.jobSchedul.JobSchedulService;
+import scs.service.monitor.riscv.ReadRiscvFiles;
+import scs.service.monitor.riscv.impl.ReadRiscvFilesImpl; 
 import scs.service.recordManage.RecordManageService;
 import scs.util.jobSchedul.jobImpl.webServer.WebServerJobImpl;
 import scs.util.loadGen.driver.WebSearchDriver;
@@ -684,7 +687,7 @@ public class JobSchedulController {
 			} catch (IOException e) { 
 				e.printStackTrace();
 			}
-			String riscvDataPath=prop.getProperty("riscv_data_path").trim();
+			String riscvDataPath=prop.getProperty("riscv_xapian_data_path").trim();
 			File file=new File(riscvDataPath+"lats1.txt");
 			if(file.exists()){
 				resultBaseList=service.getRiscvXapianResult(riscvDataPath+"lats1.txt");
@@ -744,7 +747,7 @@ public class JobSchedulController {
 			} catch (IOException e) { 
 				e.printStackTrace();
 			}
-			String riscvDataPath=prop.getProperty("riscv_data_path").trim();
+			String riscvDataPath=prop.getProperty("riscv_redis_data_path").trim();
 			File file=new File(riscvDataPath+type+"1.lats");
 			if(file.exists()){
 				resultBaseList=service.getRiscvRedisResult(riscvDataPath+type+"1.lats"); 
@@ -757,7 +760,7 @@ public class JobSchedulController {
 			if(file.exists()){
 				resultLableList=service.getRiscvRedisResult(riscvDataPath+type+"3.lats"); 
 			}
-			
+
 			file=new File(riscvDataPath+type+".qps");
 			if(file.exists()){
 				String qps=ReadFile.getInstance().readRedisQpsFile(riscvDataPath+type+".qps");
@@ -790,5 +793,108 @@ public class JobSchedulController {
 		}
 		return "demo_redis";
 	}
- 
+	private ReadRiscvFiles read=new ReadRiscvFilesImpl();
+	@RequestMapping("/goRiscvUsage.do")
+	public String goRiscvUsage(HttpServletRequest request,HttpServletResponse response,Model model){
+
+		Properties prop = new Properties();
+		InputStream is = WebServerJobImpl.class.getResourceAsStream("/conf/sys.properties");
+		try {
+			prop.load(is);
+		} catch (IOException e) { 
+			e.printStackTrace();
+		} 
+		Long curTime=System.currentTimeMillis();
+		List<Double> dataList=new ArrayList<Double>();
+		while(dataList.size()<60){//小于60个点 需要睡眠等待
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			dataList=read.read60(prop.getProperty("riscv_monitor_path").trim()+"mem.csv");
+		}
+
+		StringBuffer strName=new StringBuffer();
+		StringBuffer strData=new StringBuffer();
+		StringBuffer HSeries=new StringBuffer();
+		strName.append("{name:'memUsage',type:'area',"); 
+		strData.append("data:[");		
+		for(int i=59;i>0;i--){
+			strData.append("[").append(curTime-i*1000).append(",").append(dataList.get(59-i)*100).append("],");
+		}
+		strData.append("[").append(curTime).append(",").append(dataList.get(59)*100).append("]]");
+		HSeries.append(strName).append(strData).append(",marker: {enabled: false}}");
+		model.addAttribute("memStr",HSeries.toString()); 
+
+		/**
+		 * cpu
+		 */
+		curTime=System.currentTimeMillis();
+		dataList=new ArrayList<Double>();
+		while(dataList.size()<60){//小于60个点 需要睡眠等待
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			dataList=read.read60(prop.getProperty("riscv_monitor_path").trim()+"cpu_usage.csv");
+		}
+		strName.setLength(0);
+		strData.setLength(0);
+		HSeries.setLength(0);
+		strName.append("{name:'cpuUsage',type:'area',"); 
+		strData.append("data:[");		
+		for(int i=59;i>0;i--){
+			strData.append("[").append(curTime-i*1000).append(",").append(dataList.get(59-i)*100).append("],");
+		}
+		strData.append("[").append(curTime).append(",").append(dataList.get(59)*100).append("]]");
+		HSeries.append(strName).append(strData).append(",marker: {enabled: false}}");
+		model.addAttribute("cpuStr",HSeries.toString()); 
+		
+		return "demo_riscv_monitor";
+	}
+	@RequestMapping("/getRiscvMemUsage.do")
+	public void getRiscvMemUsage(HttpServletRequest request,HttpServletResponse response){
+		try {
+			Properties prop = new Properties();
+			InputStream is = WebServerJobImpl.class.getResourceAsStream("/conf/sys.properties");
+			try {
+				prop.load(is);
+			} catch (IOException e) { 
+				e.printStackTrace();
+			} 
+			SystemResourceUsageBean bean=new SystemResourceUsageBean();
+			bean.setCollectTime(System.currentTimeMillis());
+			bean.setMemUsageRate((float)read.readRiscvMemory(prop.getProperty("riscv_monitor_path").trim()+"mem.csv")*100);
+			 
+			response.getWriter().write(JSONArray.fromObject(bean).toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	@RequestMapping("/getRiscvCpuUsage.do")
+	public void getRiscvCpuUsage(HttpServletRequest request,HttpServletResponse response){
+		try {
+			Properties prop = new Properties();
+			InputStream is = WebServerJobImpl.class.getResourceAsStream("/conf/sys.properties");
+			try {
+				prop.load(is);
+			} catch (IOException e) { 
+				e.printStackTrace();
+			} 
+			SystemResourceUsageBean bean=new SystemResourceUsageBean();
+			bean.setCollectTime(System.currentTimeMillis());
+			bean.setCpuUsageRate((float)read.readRiscvMemory(prop.getProperty("riscv_monitor_path").trim()+"cpu_usage.csv")*100);
+			 
+			response.getWriter().write(JSONArray.fromObject(bean).toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 }

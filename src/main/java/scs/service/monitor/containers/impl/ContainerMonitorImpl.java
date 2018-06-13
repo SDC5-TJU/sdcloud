@@ -279,9 +279,9 @@ public class ContainerMonitorImpl implements ContainerMonitor {
 				//record.setNetinput(containerNetUseMap.get(split[0]).second);
 				//record.setNetoutput(containerNetUseMap.get(split[0]).first);
 				
-				//float[] containerNetInfoStream = getContainerNetInfoStream(hostname, username, password, split[0]);
-				//record.setNetinput(containerNetInfoStream[1]);
-				//record.setNetoutput(containerNetInfoStream[0]);  
+				float[] containerNetInfoStream = getContainerNetInfoStream(hostname, username, password, split[0]);
+				record.setNetinput(containerNetInfoStream[1]);
+				record.setNetoutput(containerNetInfoStream[0]);  
 				record.setNetinput(0.0f);
 				record.setNetoutput(0.0f);  
 				record.setCollecttime(date);
