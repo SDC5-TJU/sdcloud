@@ -6,9 +6,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -20,8 +23,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import net.sf.json.JSONArray;
 import scs.pojo.AppConfigBean;
-import scs.pojo.MemcachedDataBean;
-import scs.pojo.QueryData; 
+import scs.pojo.MemcachedDataBean; 
+import scs.pojo.RiscvLLCGroup;
+import scs.pojo.RiscvLLCPOJO;
 import scs.pojo.SiloDataBean;
 import scs.pojo.SystemResourceUsageBean;
 import scs.pojo.TestRecordBean;
@@ -36,7 +40,8 @@ import scs.service.monitor.riscv.ReadRiscvFiles;
 import scs.service.monitor.riscv.impl.ReadRiscvFilesImpl; 
 import scs.service.recordManage.RecordManageService;
 import scs.util.jobSchedul.jobImpl.webServer.WebServerJobImpl;
-import scs.util.loadGen.driver.WebSearchDriver;
+import scs.util.loadGen.genDriver.WebSearchDriver;
+import scs.util.loadGen.recordDriver.RecordDriver;
 import scs.util.repository.Repository;
 import scs.util.tools.AdapterForResult;
 import scs.util.tools.ReadFile;
@@ -572,6 +577,7 @@ public class JobSchedulController {
 			//计算各项指标差异值
 			TimeResultDiffBean diffBean=ResultDiffAnalysis.getInstance().getXapianResultDiff(resultBaseList,resultList,resultBaseIndex,resultIndex);
 			model.addAttribute("diffBean",diffBean);
+
 			//封装appconfig配置信息
 			List<AppConfigBean> appConfiglist=aService.getAppConfig(testRecordId);
 			for(AppConfigBean bean:appConfiglist){ 
@@ -583,6 +589,12 @@ public class JobSchedulController {
 		}
 		return "xapianResultAnalysis";
 	}
+	/**
+	 * jobControl页面web搜索的观察窗口
+	 * 每次返回一次查询的时间,在曲线上绘制出来
+	 * @param request
+	 * @param response
+	 */
 	@RequestMapping("/getWebSearchQueryTime.do")
 	public void getWebSearchQueryTime(HttpServletRequest request,HttpServletResponse response){
 		try{ 
@@ -593,6 +605,12 @@ public class JobSchedulController {
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * jobControl页面webServer的观察窗口
+	 * 每次返回一次查询的时间,在曲线上绘制出来
+	 * @param request
+	 * @param response
+	 */
 	@RequestMapping("/getWebServerQueryTime.do")
 	public void getWebServerQueryTime(HttpServletRequest request,HttpServletResponse response){
 		try{ 
@@ -604,12 +622,28 @@ public class JobSchedulController {
 	}
 
 	@RequestMapping("/startOnlineQuery.do")
-	public void startOnlineQuery(HttpServletRequest request,HttpServletResponse response){
+	public void startOnlineQuery(HttpServletRequest request,HttpServletResponse response,
+			@RequestParam(value="intensity",required=true) int intensity){
 		try{
 			System.out.println("start");  
 			Repository.onlineDataFlag=true;
-			WebSearchDriver.getInstance().executeJob(-1,"possion",10);
+			if(intensity<=0)
+				intensity=1;
+			Repository.onlineRequestIntensity=intensity;
+			RecordDriver.getInstance().execute();
+			WebSearchDriver.getInstance().executeJob("possion");
 
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	@RequestMapping("/setIntensity.do")
+	public void setIntensity(HttpServletRequest request,HttpServletResponse response,
+			@RequestParam(value="intensity",required=true) int intensity){
+		try{ 
+			if(intensity<=0)
+				intensity=1;
+			Repository.onlineRequestIntensity=intensity;
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -631,7 +665,7 @@ public class JobSchedulController {
 		StringBuffer HSeries=new StringBuffer();
 		strName.append("{name:'queryTime',"); 
 		strData.append("data:[");
-		int size= 300;
+		int size= 60;
 		for(int i=0;i<size;i++){
 			strData.append("[").append(System.currentTimeMillis()).append(",").append(0).append("],");
 		}
@@ -641,31 +675,12 @@ public class JobSchedulController {
 
 		return "onlineData";
 	}
-	List<QueryData> curTimeList=new ArrayList<QueryData>();
-	int sumCount=0;
+
+
 	@RequestMapping("/getOnlineQueryTime.do")
 	public void getOnlineQueryTime(HttpServletRequest request,HttpServletResponse response){
 		try{
-			curTimeList.clear();
-			while(Repository.onlineDataList.size()==0){
-				Thread.sleep(50);
-			}
-			curTimeList.addAll(Repository.onlineDataList); 
-			Repository.onlineDataList.clear();
-			int sum=0;
-			for(QueryData item:curTimeList){
-				sum+=item.getQueryTime();
-			}
-			sum=sum/curTimeList.size();
-			sumCount+=curTimeList.size();
-			QueryData data=new QueryData();
-			data.setGenerateTime(curTimeList.get(curTimeList.size()-1).getGenerateTime());
-			data.setQueryTime(sum);
-			data.setQps(curTimeList.size());
-			//System.out.println(sumCount);
-			response.getWriter().write(JSONArray.fromObject(data).toString());
-
-
+			response.getWriter().write(JSONArray.fromObject(Repository.latestOnlineData).toString());
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -730,7 +745,7 @@ public class JobSchedulController {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return "demo_redis";
+		return "demo_riscv_latency";
 	}
 	@RequestMapping("/getRiscvRedisResult.do")
 	public String getRiscvRedisResult(HttpServletRequest request,HttpServletResponse response,Model model,
@@ -791,11 +806,12 @@ public class JobSchedulController {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return "demo_redis";
+		return "demo_riscv_latency";
 	}
 	private ReadRiscvFiles read=new ReadRiscvFilesImpl();
 	@RequestMapping("/goRiscvUsage.do")
-	public String goRiscvUsage(HttpServletRequest request,HttpServletResponse response,Model model){
+	public String goRiscvUsage(HttpServletRequest request,HttpServletResponse response,Model model,
+			@RequestParam(value="riscvId",required=true) int riscvId){
 
 		Properties prop = new Properties();
 		InputStream is = WebServerJobImpl.class.getResourceAsStream("/conf/sys.properties");
@@ -804,6 +820,9 @@ public class JobSchedulController {
 		} catch (IOException e) { 
 			e.printStackTrace();
 		} 
+		/**
+		 * mem
+		 */
 		Long curTime=System.currentTimeMillis();
 		List<Double> dataList=new ArrayList<Double>();
 		while(dataList.size()<60){//小于60个点 需要睡眠等待
@@ -813,7 +832,7 @@ public class JobSchedulController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			dataList=read.read60(prop.getProperty("riscv_monitor_path").trim()+"mem.csv");
+			dataList=read.read60(prop.getProperty("riscv_monitor_path").trim()+"mem_"+riscvId+".csv");
 		}
 
 		StringBuffer strName=new StringBuffer();
@@ -840,7 +859,7 @@ public class JobSchedulController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			dataList=read.read60(prop.getProperty("riscv_monitor_path").trim()+"cpu_usage.csv");
+			dataList=read.read60(prop.getProperty("riscv_monitor_path").trim()+"cpu_usage_"+riscvId+".csv");
 		}
 		strName.setLength(0);
 		strData.setLength(0);
@@ -853,11 +872,69 @@ public class JobSchedulController {
 		strData.append("[").append(curTime).append(",").append(dataList.get(59)*100).append("]]");
 		HSeries.append(strName).append(strData).append(",marker: {enabled: false}}");
 		model.addAttribute("cpuStr",HSeries.toString()); 
-		
+		/**
+		 * llc and mem bandwidth
+		 */
+		ArrayList<RiscvLLCGroup> dataList2=new ArrayList<RiscvLLCGroup>();
+		while(dataList2.size()<60){//小于60个点 需要睡眠等待
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			dataList2=read.readLLC(prop.getProperty("riscv_monitor_path").trim()+"llc_mb_"+riscvId+".csv",true);
+		}
+
+		Map<Integer,RiscvLLCPOJO> map=new HashMap<Integer,RiscvLLCPOJO>();
+		List<RiscvLLCPOJO> AvgList=new ArrayList<RiscvLLCPOJO>(); 
+		double missRate=0;
+		double bandwidth=0;
+		for(int i=0;i<dataList.size();i++){
+			map=dataList2.get(i).getMap();
+			Set<Integer> keySet=map.keySet();
+			missRate=0;
+			bandwidth=0;
+			for(Integer j:keySet){
+				missRate+=map.get(j).getMissesPercent();
+				bandwidth+=map.get(j).getBandwidth();
+			}
+			RiscvLLCPOJO bean=new RiscvLLCPOJO();
+			bean.setBandwidth(bandwidth/map.size());
+			bean.setLlcMisses(missRate/map.size()); 
+			AvgList.add(bean);
+		}
+		curTime=System.currentTimeMillis();
+		strName.setLength(0);
+		strData.setLength(0);
+		HSeries.setLength(0);
+		strName.append("{name:'llcMissRate',type:'area',"); 
+		strData.append("data:[");		
+		for(int i=59;i>0;i--){
+			strData.append("[").append(curTime-i*1000).append(",").append(AvgList.get(59-i).getLlcMisses()).append("],");
+		}
+		strData.append("[").append(curTime).append(",").append(AvgList.get(59).getLlcMisses()).append("]]");
+		HSeries.append(strName).append(strData).append(",marker: {enabled: false}}");
+		model.addAttribute("llcStr",HSeries.toString()); 
+		//内存带宽
+		strName.setLength(0);
+		strData.setLength(0);
+		HSeries.setLength(0);
+		strName.append("{name:'memBandWidth',type:'area',"); 
+		strData.append("data:[");		
+		for(int i=59;i>0;i--){
+			strData.append("[").append(curTime-i*1000).append(",").append(AvgList.get(59-i).getBandwidth()).append("],");
+		}
+		strData.append("[").append(curTime).append(",").append(AvgList.get(59).getBandwidth()).append("]]");
+		HSeries.append(strName).append(strData).append(",marker: {enabled: false}}");
+		model.addAttribute("memBDStr",HSeries.toString()); 
+
+		model.addAttribute("riscvId",riscvId);
 		return "demo_riscv_monitor";
 	}
 	@RequestMapping("/getRiscvMemUsage.do")
-	public void getRiscvMemUsage(HttpServletRequest request,HttpServletResponse response){
+	public void getRiscvMemUsage(HttpServletRequest request,HttpServletResponse response,
+			@RequestParam(value="riscvId",required=true) int riscvId){
 		try {
 			Properties prop = new Properties();
 			InputStream is = WebServerJobImpl.class.getResourceAsStream("/conf/sys.properties");
@@ -868,8 +945,8 @@ public class JobSchedulController {
 			} 
 			SystemResourceUsageBean bean=new SystemResourceUsageBean();
 			bean.setCollectTime(System.currentTimeMillis());
-			bean.setMemUsageRate((float)read.readRiscvMemory(prop.getProperty("riscv_monitor_path").trim()+"mem.csv")*100);
-			 
+			bean.setMemUsageRate((float)read.readRiscvMemory(prop.getProperty("riscv_monitor_path").trim()+"mem_"+riscvId+".csv")*100);
+
 			response.getWriter().write(JSONArray.fromObject(bean).toString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -877,7 +954,8 @@ public class JobSchedulController {
 		}
 	}
 	@RequestMapping("/getRiscvCpuUsage.do")
-	public void getRiscvCpuUsage(HttpServletRequest request,HttpServletResponse response){
+	public void getRiscvCpuUsage(HttpServletRequest request,HttpServletResponse response,
+			@RequestParam(value="riscvId",required=true) int riscvId){
 		try {
 			Properties prop = new Properties();
 			InputStream is = WebServerJobImpl.class.getResourceAsStream("/conf/sys.properties");
@@ -888,13 +966,45 @@ public class JobSchedulController {
 			} 
 			SystemResourceUsageBean bean=new SystemResourceUsageBean();
 			bean.setCollectTime(System.currentTimeMillis());
-			bean.setCpuUsageRate((float)read.readRiscvMemory(prop.getProperty("riscv_monitor_path").trim()+"cpu_usage.csv")*100);
-			 
+			bean.setCpuUsageRate((float)read.readRiscvMemory(prop.getProperty("riscv_monitor_path").trim()+"cpu_usage_"+riscvId+".csv")*100);
+
 			response.getWriter().write(JSONArray.fromObject(bean).toString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	@RequestMapping("/getRiscvLLCdRAM.do")
+	public void getRiscvLLCdRAM(HttpServletRequest request,HttpServletResponse response,
+			@RequestParam(value="riscvId",required=true) int riscvId){
+		try {
+			Properties prop = new Properties();
+			InputStream is = WebServerJobImpl.class.getResourceAsStream("/conf/sys.properties");
+			try {
+				prop.load(is);
+			} catch (IOException e) { 
+				e.printStackTrace();
+			} 
+			ArrayList<RiscvLLCGroup> list=read.readLLC(prop.getProperty("riscv_monitor_path").trim()+"llc_mb_"+riscvId+".csv",false);
+			Map<Integer, RiscvLLCPOJO> map=list.get(0).getMap();
+			Set<Integer> keySet=map.keySet();
+			double missRate=0;
+			double bandwidth=0;
+			for(Integer i:keySet){
+				missRate+=map.get(i).getMissesPercent();
+				bandwidth+=map.get(i).getBandwidth();
+			}
+			RiscvLLCPOJO bean=new RiscvLLCPOJO();
+			bean.setBandwidth(bandwidth/map.size());
+			bean.setLlcMisses(missRate/map.size()); 
+			bean.setCollectTime(System.currentTimeMillis());
+
+			response.getWriter().write(JSONArray.fromObject(bean).toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 
 }

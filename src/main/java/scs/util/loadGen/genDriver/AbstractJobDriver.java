@@ -1,4 +1,4 @@
-package scs.util.loadGen.driver;
+package scs.util.loadGen.genDriver;
  
 import java.util.List;
 import java.util.Random;
@@ -25,7 +25,7 @@ public abstract class AbstractJobDriver {
 	 * @param intensity 请求强度
 	 * @return 请求结果<请求发出时间,响应耗时>
 	 */
-	public abstract List<TwoTuple<Long,Integer>> executeJob(int requestCount,String pattern,int intensity);//执行请求作业
+	public abstract List<TwoTuple<Long,Integer>> executeJob(String pattern);//执行请求作业
 	/**
 	 * 选择该次在线类应用负载的模式
 	 * @param pattern 参数 "index" "possion" "random" ...

@@ -29,6 +29,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div id="cpuUsage"
 				style="width: 1220px; height: 350px; position: absolute; left: 110px; top: 380px;"></div>
 		</div>
+		<div id="QpsDiv"
+				style="width: 50px; height: 50px; position: absolute; left: 1250px; top: 360px;">QPS:<span id="qps"></span></div>
 	</div>
 	<script type="text/javascript" src="statics/js/jquery-1.9.1.js"></script>
 	<script type="text/javascript" src="statics/js/highcharts.js"></script>
@@ -47,6 +49,8 @@ Highstock.setOptions({
 		useUTC: false 
 		} 
     });
+    var lastcollecttime=null;
+    var element=document.getElementById('qps');
 $(document).ready(function() {
 	Highcharts.chart('websearch', {
         chart: {
@@ -65,10 +69,22 @@ $(document).ready(function() {
         					dataType:"json",
             				success:function(returned){
             					if(returned!=null&&returned!=""){
-	     								 x = returned[0].generateTime;
-	     							     y = returned[0].queryTime;
-	     							   	 series.addPoint([x,y], true, true); 
-     							     
+            						x = returned[0].generateTime;
+    							    y = returned[0].queryTime;
+    							    z = returned[0].qps;
+            						if(lastcollecttime==null){//如果第一次判断 直接添加点进去
+      			            	    	 series.addPoint([x,y], true, true); 
+      			            	    	 element.innerHTML='';
+      			            	    	 element.innerHTML=z;
+      			            	    	 lastcollecttime = x;
+      			            	    }else{ 
+      			            	    	if(lastcollecttime<x){//如果不是第一次判断，则只有上次时间小于当前时间时才添加点
+      			            	    		series.addPoint([x,y], true, true); 
+      			            	    		element.innerHTML='';
+      			            	    		element.innerHTML=z;
+      				            	    	lastcollecttime = x; 
+      			            	    	}
+      			            	    } 
             					}
             				}	
             			}); 

@@ -43,7 +43,9 @@ public class ResultDiffAnalysis {
 	 */
 	public TimeResultDiffBean getResultDiff(List<TwoTuple<Long,Integer>> baseTimeList,List<TwoTuple<Long,Integer>> timeList,TimeResultBean baseBean,TimeResultBean bean){
 		TimeResultDiffBean diffBean=new TimeResultDiffBean();
-
+		nintythDiff=0;nintyFiveThDiff=0;nintyNineThDiff=0;
+		varDiff=0;meanDiff=0;minDiff=0;maxDiff=0;
+		missRateDiff=0;EADiff=0;
 		//计算90分位数
 		if(baseBean.getNintyTh()!=0){
 			nintythDiff=(bean.getNintyTh()-baseBean.getNintyTh())/baseBean.getNintyTh()*100;
@@ -183,7 +185,9 @@ public class ResultDiffAnalysis {
 	 */
 	public TimeResultDiffBean getSiloResultDiff(List<SiloDataBean> baseTimeList,List<SiloDataBean> timeList,TimeResultBean baseBean,TimeResultBean bean){
 		TimeResultDiffBean diffBean=new TimeResultDiffBean();
-
+		nintythDiff=0;nintyFiveThDiff=0;nintyNineThDiff=0;
+		varDiff=0;meanDiff=0;minDiff=0;maxDiff=0;
+		missRateDiff=0;EADiff=0;
 		//计算90分位数
 		if(baseBean.getNintyTh()!=0){
 			nintythDiff=(bean.getNintyTh()-baseBean.getNintyTh())/baseBean.getNintyTh()*100;
@@ -307,7 +311,9 @@ public class ResultDiffAnalysis {
 	 */
 	public TimeResultDiffBean getXapianResultDiff(List<XapianDataBean> baseTimeList,List<XapianDataBean> timeList,TimeResultBean baseBean,TimeResultBean bean){
 		TimeResultDiffBean diffBean=new TimeResultDiffBean();
-
+		nintythDiff=0;nintyFiveThDiff=0;nintyNineThDiff=0;
+		varDiff=0;meanDiff=0;minDiff=0;maxDiff=0;
+		missRateDiff=0;EADiff=0;
 		//计算90分位数
 		if(baseBean.getNintyTh()!=0){
 			nintythDiff=(bean.getNintyTh()-baseBean.getNintyTh())/baseBean.getNintyTh()*100;
@@ -430,7 +436,9 @@ public class ResultDiffAnalysis {
 	 */
 	public TimeResultDiffBean getMemResultDiff(TimeResultBean baseBean,TimeResultBean bean){
 		TimeResultDiffBean diffBean=new TimeResultDiffBean();
-
+		nintythDiff=0;nintyFiveThDiff=0;nintyNineThDiff=0;
+		varDiff=0;meanDiff=0;minDiff=0;maxDiff=0;
+		missRateDiff=0;EADiff=0;
 		//计算90分位数
 		if(baseBean.getNintyTh()!=0){
 			nintythDiff=(bean.getNintyTh()-baseBean.getNintyTh())/baseBean.getNintyTh()*100;

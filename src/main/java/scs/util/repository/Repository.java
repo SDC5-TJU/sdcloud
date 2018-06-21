@@ -1,11 +1,10 @@
 package scs.util.repository;
- 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-  
+import java.util.Map; 
+
 import net.sf.json.JSONArray;
 import scs.pojo.AppConfigBean;
 import scs.pojo.AppInfoBean;
@@ -19,13 +18,13 @@ import scs.pojo.TableContainerresourceusage;
 import scs.pojo.TableSystemresourceusage;
 import scs.pojo.TwoTuple;
 import scs.pojo.XapianDataBean; 
- /**
-  * 系统静态仓库类
-  * 通过静态变量的形式为系统运行中需要用到的数据提供内存型存储
-  * 包括一些系统参数，应用运行数据，控制标志等
-  * @author yanan
-  *
-  */
+/**
+ * 系统静态仓库类
+ * 通过静态变量的形式为系统运行中需要用到的数据提供内存型存储
+ * 包括一些系统参数，应用运行数据，控制标志等
+ * @author yanan
+ *
+ */
 public class Repository{ 
 	private static Repository repository=null;
 	private Repository(){}
@@ -35,9 +34,10 @@ public class Repository{
 		}
 		return repository;
 	}  
+
 	public static int curTestRecordId=0; //当前测试记录
 	public static float EAThreshold=100; //体验可用性99分位数阈值
-	public static boolean onlineDataFlag=false; //在线请求查询标志
+
 	/**
 	 * 作业调度模块配置信息变量
 	 */
@@ -47,7 +47,7 @@ public class Repository{
 	public static Map<String,AppInfoBean> appInfoMap=new HashMap<String,AppInfoBean>(); //应用信息map
 	public static Map<String,ContainerInfoBean> containerInfoMap=new HashMap<String,ContainerInfoBean>();//容器信息map
 	public static Map<String,SystemInfoBean> systemInfoMap=new HashMap<String,SystemInfoBean>(); //系统信息map
-	
+
 	/**
 	 * 在线应用数据存储数组
 	 * Base代表基准测试(即无干扰下)
@@ -58,7 +58,7 @@ public class Repository{
 	public static List<SiloDataBean> siloBaseDataList=new ArrayList<SiloDataBean>();
 	public static List<XapianDataBean> xapianDataList=new ArrayList<XapianDataBean>(); 
 	public static List<XapianDataBean> xapianBaseDataList=new ArrayList<XapianDataBean>();
-	
+
 	//下面的几个应用采用java rmi远程调用机制 发出的负载,数据采用List<TwoTuple<Long, Integer>>格式返回
 	public static List<TwoTuple<Long, Integer>> webServerDataList=new ArrayList<TwoTuple<Long, Integer>>();
 	public static List<TwoTuple<Long, Integer>> webServerBaseDataList=new ArrayList<TwoTuple<Long, Integer>>();
@@ -68,56 +68,59 @@ public class Repository{
 	public static List<TwoTuple<Long, Integer>> cassandraBaseDataList=new ArrayList<TwoTuple<Long, Integer>>();
 	public static List<TwoTuple<Long, Integer>> redisDataList=new ArrayList<TwoTuple<Long, Integer>>();
 	public static List<TwoTuple<Long, Integer>> redisBaseDataList=new ArrayList<TwoTuple<Long, Integer>>();
-	
-	public static List<QueryData> onlineDataList=new ArrayList<QueryData>();
-	
-	/*
+
+	/**
 	 * 物理机/容器/服务 资源监控数组
 	 */
-	/*
-	 * String:containerName
-	 */
-	public static Map<String,TableContainerresourceusage> containerRealUsageMap=new HashMap<String,TableContainerresourceusage>();
-	/*
-	 * String:applicationName
-	 */
-	public static Map<String,TableAppresourceusage> appRealUsageMap=new HashMap<String,TableAppresourceusage>();
-	/*
-	 * String:hostname
-	 */
-	public static Map<String,TableSystemresourceusage> systemRealUsageMap=new HashMap<String,TableSystemresourceusage>();
-	/*
-	 * String:hostname
-	 */
-	public static float[] bandwidth128 = {0,0f,0,0f};
+	public static Map<String,TableContainerresourceusage> containerRealUsageMap=new HashMap<String,TableContainerresourceusage>();//容器资源监控数据
+	public static Map<String,TableAppresourceusage> appRealUsageMap=new HashMap<String,TableAppresourceusage>();//应用资源监控数据
+	public static Map<String,TableSystemresourceusage> systemRealUsageMap=new HashMap<String,TableSystemresourceusage>();//系统资源监控数据
+
+	public static float[] bandwidth128 = {0,0f,0,0f};//内存带宽监控数据 物理机128
 	public static long time128 = 0l;
-	public static float[] bandwidth147 = {0,0f,0,0f};
+	public static float[] bandwidth147 = {0,0f,0,0f};//内存带宽监控数据 物理机147
 	public static long time147 = 0l;
-	/*
-	 * String:hostname
-	 */
-	public static float[][] cache128 = new float[3][2];
-	public static float[][] cache147 = new float[3][2];
-	
-	
-	public static int cronFlag = 0; //默认关闭监控
+
+	public static float[][] cache128 = new float[3][2];//llc缓存监控数据 物理机128
+	public static float[][] cache147 = new float[3][2];//llc缓存监控数据 物理机147
+
+	public static int cronFlag = 0; //监控开启标志，0默认关闭监控
 	public static int PhysicalMachine128 = 1; //物理机1
 	public static int PhysicalMachine147 = 2; //物理机2
+
+
+	/**
+	 * 
+	 */
+	public static boolean onlineDataFlag=false; //在线请求查询标志,false默认关闭
+	public static int onlineRequestIntensity=10; //在线请求每秒钟请求数 QPS
+	private static int windowOnLineDataListCount=0;//窗口数组计数器,默认0开始,每次计数++1
+	public static List<QueryData> onlineDataList=new ArrayList<QueryData>();//负载产生器一直填充的数组
+	public static List<QueryData> tempOnlineDataList=new ArrayList<QueryData>();//计算每秒钟的请求响应时间均值时存储数据的临时数组
+	private static List<QueryData> windowOnlineDataList=new ArrayList<QueryData>();//窗口请求数据记录数组,循环记录每秒钟的数据平均值
+	private static List<QueryData> tempWindowOnlineDataList=new ArrayList<QueryData>();//窗口请求数据记录数组,循环记录每秒钟的数据平均值
 	
+	public static QueryData latestOnlineData=new QueryData();
+ 
 	/**
 	 * 静态块
 	 */
 	static {
-//		containerInfoMap=RepositoryDao.initContainerInfoMap();//初始化容器信息map 
-//		System.out.println("初始化 containerInfoMap size="+containerInfoMap.size());
-//		appInfoMap=RepositoryDao.initAppInfoMap();//初始化app信息map 
-//		System.out.println("初始化 appInfoMap  size="+appInfoMap.size());
-//		Set<String> appNameSet = appInfoMap.keySet(); //取出所有应用的名称
-//		for(String appName:appNameSet){ 
-//			appStatusMap.put(appName,false);//系统初始化,所有应用默认为未执行
-//			System.out.println("初始化app执行状态 "+appName+"=false");
-//		}
-//		systemInfoMap=RepositoryDao.initSystemInfoMap();
+		//		containerInfoMap=RepositoryDao.initContainerInfoMap();//初始化容器信息map 
+		//		System.out.println("初始化 containerInfoMap size="+containerInfoMap.size());
+		//		appInfoMap=RepositoryDao.initAppInfoMap();//初始化app信息map 
+		//		System.out.println("初始化 appInfoMap  size="+appInfoMap.size());
+		//		Set<String> appNameSet = appInfoMap.keySet(); //取出所有应用的名称
+		//		for(String appName:appNameSet){ 
+		//			appStatusMap.put(appName,false);//系统初始化,所有应用默认为未执行
+		//			System.out.println("初始化app执行状态 "+appName+"=false");
+		//		}
+		//		systemInfoMap=RepositoryDao.initSystemInfoMap();
+			QueryData data=new QueryData();
+			for(int i=0;i<60;i++){ 
+				windowOnlineDataList.add(data);
+			}
+		
 	}
 	/**
 	 * 对外提供的app状态查询接口
@@ -129,6 +132,36 @@ public class Repository{
 		return JSONArray.fromObject(appStatusMap).toString();
 	}
 	
+	public void addWindowOnlineDataList(QueryData data){
+		latestOnlineData=data;
+		windowOnlineDataList.set(windowOnLineDataListCount%60,data);
+		windowOnLineDataListCount++;
+		//System.out.println(windowOnlineDataList.size()+" "+windowOnlineDataList.get(windowOnLineDataListCount%5).getGenerateTime()+" "+windowOnLineDataListCount%5);
+	}
 	
+	/**
+	 * 计算查询时间的度量值
+	 * @return 返回float类型的数组 {平均值,最大值}
+	 */
+	public float[] getQueryTimeMetric(){
+		tempWindowOnlineDataList.clear();
+		tempWindowOnlineDataList=Repository.windowOnlineDataList;
+		int size=tempWindowOnlineDataList.size();//size 应该为固定值60
+		int avgQueryTime=0;
+		int maxQueryTime=0;
+		for(QueryData item:tempWindowOnlineDataList){
+			if(item.getQueryTime()>maxQueryTime){
+				maxQueryTime=item.getQueryTime();
+			}
+			avgQueryTime+=item.getQueryTime();
+		}
+		avgQueryTime=avgQueryTime/size;
+		float[] result=new float[2];
+		result[0]=(float) avgQueryTime;
+		result[1]=(float) maxQueryTime;
+		
+		return result;
+		 
+	}
 
 }

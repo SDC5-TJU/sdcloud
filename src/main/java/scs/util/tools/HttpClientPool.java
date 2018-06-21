@@ -33,9 +33,9 @@ public class HttpClientPool {
 	private PoolingHttpClientConnectionManager poolConnManager;
 	private final int maxTotalPool = 100;
 	private final int maxConPerRoute = 100;
-	private final int socketTimeout = 15000;
-	private final int connectionRequestTimeout = 15000;
-	private final int connectTimeout = 15000;
+	private final int socketTimeout = 30000;
+	private final int connectionRequestTimeout = 30000;
+	private final int connectTimeout = 30000;
 	private static String serverBaseURL="";
 	private static String searchBaseURL="";
 	private static String url=""; 

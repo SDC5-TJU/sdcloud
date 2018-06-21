@@ -23,8 +23,8 @@
 
 <body>
 	<div id="mainDiv">
-		<div id="container1"></div>
-		<div id="container2"></div>
+		<div id="container1" style="display:none;"></div>
+		<div id="container2" style="display:none;"></div>
 		<div id="container3"></div>
 		<div id="container4"></div>
 		<div id="container5"></div>
@@ -42,8 +42,25 @@
 		<script type="text/javascript">
 		 
 		var flag=false;
-		 
-	 
+		var returnedPqosData = null;
+		var riscvId=${riscvId};
+		setInterval(function() {
+			if(flag==true){
+				$.ajax({
+					async:true,
+					type:"get",
+					url:"getRiscvLLCdRAM.do?riscvId="+riscvId,
+					data:{},
+					dataType:"json",
+					success:function(returned) {  
+						if(returned!=null&&returned!=""&&returned!="null"){
+							returnedPqosData = returned; 
+						}
+					}	
+				});
+			 
+		   }
+	    },1000);
 	 
 	function start(){
 		if(flag==true){
@@ -84,7 +101,7 @@
                     		$.ajax({
             					async:true,
             					type:"get",
-            					url:"getRiscvCpuUsage.do",
+            					url:"getRiscvCpuUsage.do?riscvId="+riscvId,
             					data:{},
             					dataType:"json",
             					success:function(returnedData) { 
@@ -193,7 +210,7 @@
                       		$.ajax({
               					async:true,
               					type:"get",
-              					url:"getRiscvMemUsage.do",
+              					url:"getRiscvMemUsage.do?riscvId="+riscvId,
               					data:{},
               					dataType:"json",
               					success:function(returnedData) { 
@@ -279,7 +296,201 @@
          },
          series:[${memStr}]
      });
-
+      /**
+       * llc缺失率
+       */
+       Highcharts.chart('container3', {
+     	  credits:{ 
+       	      enabled:false 
+       		},
+          chart: {
+              type: 'line',
+              animation: Highcharts.svg, // don't animate in old IE
+              marginRight: 10,
+              events: {
+             	  load: function () {
+                       // set up the updating of the chart each second
+                       var series = this.series[0];
+                       var lastcollecttime=null;
+                       var x,y;
+                       setInterval(function (){
+                       	if(flag==true){
+   			              if(returnedPqosData!=null){
+   			            	    x = returnedPqosData[0].collectTime;
+   			            	    y = returnedPqosData[0].llcMisses;
+   			            	    if(lastcollecttime==null){//如果第一次判断 直接添加点进去
+   			            	    	 series.addPoint([x,y], true, true); 
+   			            	    	 lastcollecttime = x;
+   			            	    }else{ 
+   			            	    	if(lastcollecttime<x){//如果不是第一次判断，则只有上次时间小于当前时间时才添加点
+   			            	    		series.addPoint([x,y], true, true); 
+   				            	    	lastcollecttime = x; 
+   			            	    	}
+   			            	    }
+   				               
+   			               }    
+                       	}
+                       }, 200);
+                    }
+              }
+          },
+          title: {
+              text: '末级缓存'
+          },
+          xAxis: {
+         	 type: 'datetime',
+              tickPixelInterval: 150,
+          },
+          yAxis: {
+              title: {
+                  text: '缺失率 %'
+              },
+              plotLines: [{
+                  value: 0,
+                  width: 1,
+                  color: '#808080'
+              }],
+  			 min:0,
+          },
+          tooltip: {
+              formatter: function () {
+                  return '<b>' + this.series.name + '</b><br/>' +
+                      Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                      Highcharts.numberFormat(this.y, 2)+'%';
+              }
+          },
+          legend: {
+              enabled: false
+          },
+           plotOptions: {
+              area: {
+                  fillColor: {
+                      linearGradient: {
+                          x1: 0,
+                          y1: 0,
+                          x2: 0,
+                          y2: 1
+                      },
+                      stops: [
+                          [0, Highcharts.getOptions().colors[0]],
+                          [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                      ]
+                  },
+                  marker: {
+                      radius: 2
+                  },
+                  lineWidth: 1,
+                  states: {
+                      hover: {
+                          lineWidth: 1
+                      }
+                  },
+                  threshold: null
+              }
+          },
+          exporting: {
+              enabled: false
+          },
+          series:[${llcStr}]
+      });
+       /**
+        * 内存带宽请求数
+        */
+        Highcharts.chart('container4', {
+      	  credits:{ 
+        	      enabled:false 
+        		},
+           chart: {
+               type: 'line',
+               animation: Highcharts.svg, // don't animate in old IE
+               marginRight: 10,
+               events: {
+              	  load: function () {
+                        // set up the updating of the chart each second
+                        var series = this.series[0];
+                        var lastcollecttime=null;
+                        var x,y;
+                        setInterval(function (){
+                        	if(flag==true){
+    			              if(returnedPqosData!=null){
+    			            	    x = returnedPqosData[0].collectTime;
+    			            	    y = returnedPqosData[0].bandwidth;
+    			            	    if(lastcollecttime==null){//如果第一次判断 直接添加点进去
+    			            	    	 series.addPoint([x,y], true, true); 
+    			            	    	 lastcollecttime = x;
+    			            	    }else{ 
+    			            	    	if(lastcollecttime<x){//如果不是第一次判断，则只有上次时间小于当前时间时才添加点
+    			            	    		series.addPoint([x,y], true, true); 
+    				            	    	lastcollecttime = x; 
+    			            	    	}
+    			            	    }
+    				               
+    			               }    
+                        	}
+                        }, 200);
+                     }
+               }
+           },
+           title: {
+               text: '内存带宽'
+           },
+           xAxis: {
+          	 type: 'datetime',
+               tickPixelInterval: 150,
+           },
+           yAxis: {
+               title: {
+                   text: '请求数/s'
+               },
+               plotLines: [{
+                   value: 0,
+                   width: 1,
+                   color: '#808080'
+               }],
+             
+   			 min:0,
+           },
+           tooltip: {
+               formatter: function () {
+                   return '<b>' + this.series.name + '</b><br/>' +
+                       Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                       Highcharts.numberFormat(this.y, 0)+'/s';
+               }
+           },
+           legend: {
+               enabled: false
+           },
+            plotOptions: {
+               area: {
+                   fillColor: {
+                       linearGradient: {
+                           x1: 0,
+                           y1: 0,
+                           x2: 0,
+                           y2: 1
+                       },
+                       stops: [
+                           [0, Highcharts.getOptions().colors[0]],
+                           [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                       ]
+                   },
+                   marker: {
+                       radius: 2
+                   },
+                   lineWidth: 1,
+                   states: {
+                       hover: {
+                           lineWidth: 1
+                       }
+                   },
+                   threshold: null
+               }
+           },
+           exporting: {
+               enabled: false
+           },
+           series:[${memBDStr}]
+       });
  });
 </script>
 	</div>

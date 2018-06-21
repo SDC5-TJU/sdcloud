@@ -205,10 +205,16 @@ public class RecordManageController {
 		model.addAttribute("testRecordId",testRecordId);
 		return "resultAnalysis";
 	}
-	
-	
-	@RequestMapping("/getResult.do")
-	public String demo3(HttpServletRequest request,Model model) throws InterruptedException{
+		
+	/**
+	 * 未来的展示目标页面
+	 * @param request
+	 * @param model
+	 * @return
+	 * @throws InterruptedException
+	 */
+	@RequestMapping("/getTarget.do")
+	public String demo_target(HttpServletRequest request,Model model) throws InterruptedException{
 		 
 		return "demo_target";
 	}

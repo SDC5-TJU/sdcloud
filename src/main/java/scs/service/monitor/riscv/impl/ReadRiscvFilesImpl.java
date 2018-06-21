@@ -177,7 +177,11 @@ public class ReadRiscvFilesImpl implements ReadRiscvFiles {
 							llcpojo.setBandwidth(Double.parseDouble(dataArr[1]));
 							llcpojo.setLlcRequest(Double.parseDouble(dataArr[2]));
 							llcpojo.setLlcMisses(Double.parseDouble(dataArr[3]));
-							llcpojo.setMissesPercent(Double.parseDouble(dataArr[4]));
+							if(dataArr[4]==null||dataArr[4].equals("nan")){
+								llcpojo.setMissesPercent(0);
+							}else{
+								llcpojo.setMissesPercent(Double.parseDouble(dataArr[4]));
+							}
 							llcpojo.setLlcUsedCapacity(Double.parseDouble(dataArr[5]));
 							llcpojo.setLlcUsedPercent(Double.parseDouble(dataArr[6]));
 							dataMap.put(Integer.parseInt(dataArr[0]), llcpojo);			
@@ -185,7 +189,11 @@ public class ReadRiscvFilesImpl implements ReadRiscvFiles {
 							llcpojo.setBandwidth(Double.parseDouble(dataArr[1]));
 							llcpojo.setLlcRequest(Double.parseDouble(dataArr[2]));
 							llcpojo.setLlcMisses(Double.parseDouble(dataArr[3]));
-							llcpojo.setMissesPercent(Double.parseDouble(dataArr[4]));
+							if(dataArr[4]==null||dataArr[4].equals("nan")){
+								llcpojo.setMissesPercent(0);
+							}else{
+								llcpojo.setMissesPercent(Double.parseDouble(dataArr[4]));
+							}
 							llcpojo.setLlcUsedCapacity(Double.parseDouble(dataArr[5]));
 							llcpojo.setLlcUsedPercent(Double.parseDouble(dataArr[6]));
 							dataMap.put(Integer.parseInt(dataArr[0]), llcpojo);

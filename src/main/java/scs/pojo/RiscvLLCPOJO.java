@@ -9,6 +9,8 @@ public class RiscvLLCPOJO implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	private long collectTime;
+	
 	private double bandwidth;
 	
 	private double llcRequest;
@@ -20,6 +22,14 @@ public class RiscvLLCPOJO implements Serializable{
 	private double llcUsedCapacity;
 	
 	private double llcUsedPercent;
+
+	public long getCollectTime() {
+		return collectTime;
+	}
+
+	public void setCollectTime(long collectTime) {
+		this.collectTime = collectTime;
+	}
 
 	public double getBandwidth() {
 		return bandwidth;
