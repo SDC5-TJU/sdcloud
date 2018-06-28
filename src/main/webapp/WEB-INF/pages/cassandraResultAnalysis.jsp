@@ -27,12 +27,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <ul class="nav nav-tabs" >
        <c:if test="${webSearch.enable==1}">
         <li class="active1" style="float: left;">
-            <a  href="getWebSearchResult.do?testRecordId=${testRecordId}" target="_blank" id="xapian">web搜索</a>
+            <a  href="getWebSearchResult.do?testRecordId=${testRecordId}" target="_blank" id="xapian">webSearch</a>
         </li>
        </c:if>
        <c:if test="${webServer.enable==1}">
         <li class="" style="float: left;">
-            <a  href="getWebServerResult.do?testRecordId=${testRecordId}" target="_blank" id="webserver">电商服务</a>
+            <a  href="getWebServerResult.do?testRecordId=${testRecordId}" target="_blank" id="webserver">webServer</a>
         </li>
        </c:if>
        <c:if test="${silo.enable==1}">        
@@ -250,7 +250,7 @@ Highcharts.setOptions({ global: { useUTC: false } });
                 zoomType: 'x'
             },
             title: {
-                text: 'Casssndra尾延迟累积分布'
+                text: 'casssndra尾延迟累积分布'
             },
 
             xAxis: {
@@ -287,7 +287,7 @@ Highcharts.setOptions({ global: { useUTC: false } });
                 zoomType: 'x'
             },
             title: {
-                text: 'Casssndra各项指标变化率'
+                text: 'casssndra各项指标变化率'
             },
             xAxis: {
                 categories: ['90th', '95th', '99th', '方差', '平均值','最小值','最大值','缺失率']

@@ -25,12 +25,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <ul class="nav nav-tabs" >
        <c:if test="${webSearch.enable==1}">
         <li class="active1" style="float: left;">
-            <a  href="getWebSearchResult.do?testRecordId=${testRecordId}" target="_blank" id="xapian">web搜索</a>
+            <a  href="getWebSearchResult.do?testRecordId=${testRecordId}" target="_blank" id="webSearch">webSearch</a>
         </li>
        </c:if>
        <c:if test="${webServer.enable==1}">
         <li class="" style="float: left;">
-            <a  href="getWebServerResult.do?testRecordId=${testRecordId}" target="_blank" id="webserver">电商服务</a>
+            <a  href="getWebServerResult.do?testRecordId=${testRecordId}" target="_blank" id="webServer">webServer</a>
         </li>
        </c:if>
        <c:if test="${silo.enable==1}">        
@@ -70,7 +70,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div style=" width: 1100px; position: absolute; top: 850px;left: 200px;" id="table">
         <form method="post" action="" id="">
             <div class="panel admin-panel">
-                <div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:电商服务</strong> <a href="" style="float:right; display:none;">添加字段</a></div>
+                <div class="panel-head"><strong class="icon-reorder">计算同无干扰下的响应对比差异:webServer</strong> <a href="" style="float:right; display:none;">添加字段</a></div>
 
                 <table class="table table-hover text-center">
                     <tr>

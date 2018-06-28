@@ -27,12 +27,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <ul class="nav nav-tabs" >
        <c:if test="${webSearch.enable==1}">
         <li class="active1" style="float: left;">
-            <a  href="getWebSearchResult.do?testRecordId=${testRecordId}" target="_blank" id="xapian">web搜索</a>
+            <a  href="getWebSearchResult.do?testRecordId=${testRecordId}" target="_blank" id="webSearch">webSearch</a>
         </li>
        </c:if>
        <c:if test="${webServer.enable==1}">
         <li class="" style="float: left;">
-            <a  href="getWebServerResult.do?testRecordId=${testRecordId}" target="_blank" id="webserver">电商服务</a>
+            <a  href="getWebServerResult.do?testRecordId=${testRecordId}" target="_blank" id="webServer">webServer</a>
         </li>
        </c:if>
        <c:if test="${silo.enable==1}">        

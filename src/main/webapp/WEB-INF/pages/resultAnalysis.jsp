@@ -26,12 +26,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<c:if test="${webSearch.enable==1}">
 				<li class="" style="float: left;"><!-- <a href="getResult.do" -->
 				<a href="getWebSearchResult.do?testRecordId=${testRecordId}"
-					target="_blank" id="websearch">web搜索</a></li>
+					target="_blank" id="webSearch">webSearch</a></li>
 			</c:if>
 			<c:if test="${webServer.enable==1}">
 				<li class="" style="float: left;"><a
 					href="getWebServerResult.do?testRecordId=${testRecordId}"
-					target="_blank" id="webserver">电商服务</a></li>
+					target="_blank" id="webServer">webServer</a></li>
 			</c:if>
 			<c:if test="${silo.enable==1}">
 				<li class="" style="float: left;"><a
@@ -217,7 +217,7 @@ $(document).ready(function() {
   	  	    }]
   	  	},
          title: {
-             text: '物理机I/O读写速度 KB/s'
+             text: '物理机磁盘读写速度 KB/s'
          },
          colors: ['#058DC7', '#ff3300'],
          xAxis:{

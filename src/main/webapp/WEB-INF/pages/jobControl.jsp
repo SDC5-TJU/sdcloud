@@ -47,7 +47,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </c:if>    
                 <c:if test="${webSearch.enable==1}"> 
                 <div class="row cl">
-                    <label class="form-label col-xs-4 col-sm-2">web搜索：</label>
+                    <label class="form-label col-xs-4 col-sm-2">webSearch：</label>
                     <div class="formControls col-xs-8 col-sm-9">
                         <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="${webSearch.requestCount}" placeholder="5000" id="config1-1" name="requestCount" >
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="${webSearch.warmUpCount}" placeholder="" id="config1-2" name="warmUpCount">
@@ -60,7 +60,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </c:if>
                 <c:if test="${webServer.enable==1}">
                <div class="row cl">
-                    <label class="form-label col-xs-4 col-sm-2">电商服务：</label>
+                    <label class="form-label col-xs-4 col-sm-2">webServer：</label>
                     <div class="formControls col-xs-8 col-sm-9">
                         <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="${webServer.requestCount}" placeholder="5000" id="config2-1" name="requestCount">
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="${webServer.warmUpCount}" placeholder="" id="config2-2" name="warmUpCount">
@@ -224,7 +224,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <label class="col-xs-4 new-col-sm-2 new-center1"></label>
                 </div>
                 <div class="row cl">
-                    <label class="form-label col-xs-4 col-sm-2">bigDatadwarf：</label>
+                    <label class="form-label col-xs-4 col-sm-2">bigDataDwarf：</label>
                     <div class="formControls col-xs-8 col-sm-9">
                         <input style="margin-left:-20px; " class="input new-w50 new-col-sm-2 " type="text"  value="" placeholder="" id="" name="" disabled="disabled">
                         <input style="margin-left:20px; " class="input new-w50 new-col-sm-2" type="text" value="" placeholder="" id="config11-1" name="" disabled="disabled">

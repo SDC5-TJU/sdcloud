@@ -25,12 +25,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
      <ul class="nav nav-tabs" >
        <c:if test="${webSearch.enable==1}">
         <li class="active1" style="float: left;">
-            <a  href="getWebSearchResult.do?testRecordId=${testRecordId}" target="_blank" id="xapian">web搜索</a>
+            <a  href="getWebSearchResult.do?testRecordId=${testRecordId}" target="_blank" id="webSearch">webSearch</a>
         </li>
        </c:if>
        <c:if test="${webServer.enable==1}">
         <li class="" style="float: left;">
-            <a  href="getWebServerResult.do?testRecordId=${testRecordId}" target="_blank" id="webserver">电商服务</a>
+            <a  href="getWebServerResult.do?testRecordId=${testRecordId}" target="_blank" id="webserver">webServer</a>
         </li>
        </c:if>
        <c:if test="${silo.enable==1}">        
@@ -45,15 +45,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
        </c:if>
        <c:if test="${cassandra.enable==1}">
 		<li class="" style="float: left;">
-		    <a href="getCassandraResult.do?testRecordId=${testRecordId}"target="_blank" id="memcached">cassandra</a></li>
+		    <a href="getCassandraResult.do?testRecordId=${testRecordId}"target="_blank" id="cassandra">cassandra</a></li>
 	   </c:if> 
 	   <c:if test="${redis.enable==1}">
 		<li class="" style="float: left;">
-		    <a href="getRedisResult.do?testRecordId=${testRecordId}"target="_blank" id="memcached">redis</a></li>
+		    <a href="getRedisResult.do?testRecordId=${testRecordId}"target="_blank" id="redis">redis</a></li>
 	   </c:if>
 	   <c:if test="${xapian.enable==1}">
 		<li class="" style="float: left;">
-		    <a href="getXapianResult.do?testRecordId=${testRecordId}"target="_blank" id="memcached">xapian</a></li>
+		    <a href="getXapianResult.do?testRecordId=${testRecordId}"target="_blank" id="xapian">xapian</a></li>
 	   </c:if>
     </ul>
 
