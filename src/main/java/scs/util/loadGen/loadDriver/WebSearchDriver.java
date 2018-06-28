@@ -1,4 +1,4 @@
-package scs.util.loadGen.genDriver;
+package scs.util.loadGen.loadDriver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +61,7 @@ public class WebSearchDriver extends AbstractJobDriver{
 					e.printStackTrace();
 				}
 			}
-			executor.execute(new ExecuteThread(httpclient,queryItemsStr+rand.nextInt(99999999)));//防止客户端缓存
+			executor.execute(new LoadExecThread(httpclient,queryItemsStr+rand.nextInt(99999999)));//防止客户端缓存
 			try {
 				Thread.sleep(333*pattern.getIntervalTime()/Repository.onlineRequestIntensity);
 			} catch(InterruptedException e){

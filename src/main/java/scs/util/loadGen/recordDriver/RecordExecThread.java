@@ -3,7 +3,7 @@ package scs.util.loadGen.recordDriver;
 import scs.pojo.QueryData; 
 import scs.util.repository.Repository; 
 
-public class ExecuteThread extends Thread{
+public class RecordExecThread extends Thread{
  
 
 	/**
@@ -12,7 +12,7 @@ public class ExecuteThread extends Thread{
 	 * @param url 要访问的链接 
 	 */
 	private int executeInterval;
-	public ExecuteThread(int executeInterval){
+	public RecordExecThread(int executeInterval){
 		this.executeInterval=executeInterval;
 	}
 

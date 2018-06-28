@@ -1,7 +1,6 @@
 package scs.controller.jobSchedul;
 
-import org.apache.log4j.Logger;
-
+import org.apache.log4j.Logger; 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,9 +38,7 @@ import scs.service.jobSchedul.JobSchedulService;
 import scs.service.monitor.riscv.ReadRiscvFiles;
 import scs.service.monitor.riscv.impl.ReadRiscvFilesImpl; 
 import scs.service.recordManage.RecordManageService;
-import scs.util.jobSchedul.jobImpl.webServer.WebServerJobImpl;
-import scs.util.loadGen.genDriver.WebSearchDriver;
-import scs.util.loadGen.recordDriver.RecordDriver;
+import scs.util.jobSchedul.jobImpl.webServer.WebServerJobImpl; 
 import scs.util.repository.Repository;
 import scs.util.tools.AdapterForResult;
 import scs.util.tools.ReadFile;
@@ -620,73 +617,6 @@ public class JobSchedulController {
 			e.printStackTrace();
 		}
 	}
-
-	@RequestMapping("/startOnlineQuery.do")
-	public void startOnlineQuery(HttpServletRequest request,HttpServletResponse response,
-			@RequestParam(value="intensity",required=true) int intensity){
-		try{
-			System.out.println("start");  
-			Repository.onlineDataFlag=true;
-			if(intensity<=0)
-				intensity=1;
-			Repository.onlineRequestIntensity=intensity;
-			RecordDriver.getInstance().execute();
-			WebSearchDriver.getInstance().executeJob("possion");
-
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-	@RequestMapping("/setIntensity.do")
-	public void setIntensity(HttpServletRequest request,HttpServletResponse response,
-			@RequestParam(value="intensity",required=true) int intensity){
-		try{ 
-			if(intensity<=0)
-				intensity=1;
-			Repository.onlineRequestIntensity=intensity;
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-	@RequestMapping("/stopOnlineQuery.do")
-	public void stopOnlineQuery(HttpServletRequest request,HttpServletResponse response){
-		try{
-			Repository.onlineDataFlag=false; 
-			System.out.println("stop");  
-
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-	@RequestMapping("/goOnlineQuery.do")
-	public String goOnlineQuery(HttpServletRequest request,HttpServletResponse response,Model model){
-		StringBuffer strName=new StringBuffer();
-		StringBuffer strData=new StringBuffer();
-		StringBuffer HSeries=new StringBuffer();
-		strName.append("{name:'queryTime',"); 
-		strData.append("data:[");
-		int size= 60;
-		for(int i=0;i<size;i++){
-			strData.append("[").append(System.currentTimeMillis()).append(",").append(0).append("],");
-		}
-		strData.append("[").append(System.currentTimeMillis()).append(",").append(0).append("]]");
-		HSeries.append(strName).append(strData).append("}");
-		model.addAttribute("seriesStr",HSeries.toString()); 
-
-		return "onlineData";
-	}
-
-
-	@RequestMapping("/getOnlineQueryTime.do")
-	public void getOnlineQueryTime(HttpServletRequest request,HttpServletResponse response){
-		try{
-			response.getWriter().write(JSONArray.fromObject(Repository.latestOnlineData).toString());
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-
-
 	@RequestMapping("/getRiscvXapianResult.do")
 	public String getRiscvXapianResult(HttpServletRequest request,HttpServletResponse response,Model model){
 

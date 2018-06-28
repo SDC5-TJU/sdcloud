@@ -1,4 +1,4 @@
-package scs.util.loadGen.genDriver;
+package scs.util.loadGen.loadDriver;
  
 import java.util.List;
 import java.util.Random;

@@ -17,7 +17,8 @@ import scs.pojo.TableAppresourceusage;
 import scs.pojo.TableContainerresourceusage;
 import scs.pojo.TableSystemresourceusage;
 import scs.pojo.TwoTuple;
-import scs.pojo.XapianDataBean; 
+import scs.pojo.XapianDataBean;
+import scs.util.rmi.LoadService; 
 /**
  * 系统静态仓库类
  * 通过静态变量的形式为系统运行中需要用到的数据提供内存型存储
@@ -90,18 +91,18 @@ public class Repository{
 
 
 	/**
-	 * 
+	 * Heracles系统在线负载生成器模块变量
 	 */
 	public static boolean onlineDataFlag=false; //在线请求查询标志,false默认关闭
 	public static int onlineRequestIntensity=10; //在线请求每秒钟请求数 QPS
-	private static int windowOnLineDataListCount=0;//窗口数组计数器,默认0开始,每次计数++1
+	private static int windowOnLineDataListCount=0;//窗口数组计数器,默认0开始,每次计数+1
 	public static List<QueryData> onlineDataList=new ArrayList<QueryData>();//负载产生器一直填充的数组
 	public static List<QueryData> tempOnlineDataList=new ArrayList<QueryData>();//计算每秒钟的请求响应时间均值时存储数据的临时数组
 	private static List<QueryData> windowOnlineDataList=new ArrayList<QueryData>();//窗口请求数据记录数组,循环记录每秒钟的数据平均值
 	private static List<QueryData> tempWindowOnlineDataList=new ArrayList<QueryData>();//窗口请求数据记录数组,循环记录每秒钟的数据平均值
-	
+
 	public static QueryData latestOnlineData=new QueryData();
- 
+
 	/**
 	 * 静态块
 	 */
@@ -116,11 +117,11 @@ public class Repository{
 		//			System.out.println("初始化app执行状态 "+appName+"=false");
 		//		}
 		//		systemInfoMap=RepositoryDao.initSystemInfoMap();
-			QueryData data=new QueryData();
-			for(int i=0;i<60;i++){ 
-				windowOnlineDataList.add(data);
-			}
-		
+		QueryData data=new QueryData();
+		for(int i=0;i<60;i++){ 
+			windowOnlineDataList.add(data);
+		}
+		LoadService.getInstance().service("192.168.1.129", 22222);//开启rmi服务端
 	}
 	/**
 	 * 对外提供的app状态查询接口
@@ -131,14 +132,18 @@ public class Repository{
 	public String getAppStatus(){
 		return JSONArray.fromObject(appStatusMap).toString();
 	}
-	
+	/**
+	 * 向窗口数组里添加一个新的数据 
+	 * 大小60,循环赋值
+	 * @param data 新数据
+	 */
 	public void addWindowOnlineDataList(QueryData data){
 		latestOnlineData=data;
 		windowOnlineDataList.set(windowOnLineDataListCount%60,data);
 		windowOnLineDataListCount++;
 		//System.out.println(windowOnlineDataList.size()+" "+windowOnlineDataList.get(windowOnLineDataListCount%5).getGenerateTime()+" "+windowOnLineDataListCount%5);
 	}
-	
+
 	/**
 	 * 计算查询时间的度量值
 	 * @return 返回float类型的数组 {平均值,最大值}
@@ -159,9 +164,23 @@ public class Repository{
 		float[] result=new float[2];
 		result[0]=(float) avgQueryTime;
 		result[1]=(float) maxQueryTime;
-		
-		return result;
-		 
-	}
 
+		return result;
+	}
+	/**
+	 * 计算查询时间的度量值
+	 * @return 返回float类型平均值
+	 */
+	public float getAvgQueryTime(){  
+		tempWindowOnlineDataList.clear();
+		tempWindowOnlineDataList=Repository.windowOnlineDataList;
+		int size=tempWindowOnlineDataList.size();//size 应该为固定值60
+		int avgQueryTime=0;
+		for(QueryData item:tempWindowOnlineDataList){
+			avgQueryTime+=item.getQueryTime();
+		}
+		avgQueryTime=avgQueryTime/size; 
+		
+		return (float)avgQueryTime; 
+	} 
 }
