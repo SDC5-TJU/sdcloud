@@ -12,7 +12,11 @@ import java.util.List;
 
 import scs.pojo.TwoTuple;
 import scs.pojo.XapianDataBean; 
-
+/**
+ * 供X86下的sdcloud系统使用
+ * @author yanan
+ *
+ */
 public class ReadFile {
 	private static ReadFile readFile=null;
 	private ReadFile(){}

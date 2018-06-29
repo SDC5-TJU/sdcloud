@@ -1,39 +1,37 @@
 package scs.service.monitor.riscv.impl;
- 
+
 import java.io.BufferedReader; 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader; 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
+import java.util.HashMap; 
+import java.util.Map; 
 
 import org.springframework.stereotype.Service;
 
 import scs.pojo.RiscvLLCGroup;
 import scs.pojo.RiscvLLCPOJO;
+import scs.pojo.RiscvRedisRealDataBean;
 import scs.service.monitor.riscv.ReadRiscvFiles;
 
 @Service("RiscvFileMonitor")
 public class ReadRiscvFilesImpl implements ReadRiscvFiles {
 
 	@Override
-	public double readRiscvMemory(String filePath) {
-//		if (filePath == null || filePath == "") {
-//			System.out.println("没有参数");
-//		} else if (!filePath.startsWith("/")) {
-//			System.out.println("不合法的目录");
-//		}
-//
-//		if (!filePath.endsWith("/")) {
-//			filePath += "/";
-//		}
-//
-//		filePath += "mem.csv";
+	public double readRiscvResourceUsageFile(String filePath) {
+		//		if (filePath == null || filePath == "") {
+		//			System.out.println("没有参数");
+		//		} else if (!filePath.startsWith("/")) {
+		//			System.out.println("不合法的目录");
+		//		}
+		//
+		//		if (!filePath.endsWith("/")) {
+		//			filePath += "/";
+		//		}
+		//
+		//		filePath += "mem.csv";
 
 		BufferedReader readWorker = null;
 		double parseDouble = 0;
@@ -59,10 +57,10 @@ public class ReadRiscvFilesImpl implements ReadRiscvFiles {
 	}
 
 	@Override
-	public ArrayList<Double> read60(String filePath) {
+	public ArrayList<Double> readRiscvWindowResourceUsageFile(String filePath) {
 		int totalLine=0;
 		BufferedReader readWorker = null;
- 
+
 		try {
 			readWorker = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)));
 			String mString="";
@@ -101,39 +99,24 @@ public class ReadRiscvFilesImpl implements ReadRiscvFiles {
 			System.out.println("没有该文件");
 			e.printStackTrace();
 		}
-//		if (filePath == null || filePath == "") {
-//			System.out.println("没有参数");
-//		} else if (!filePath.startsWith("/")) {
-//			System.out.println("不合法的目录");
-//		}
-//
-//		if (!filePath.endsWith("/")) {
-//			filePath += "/";
-//		}
-		
+		//		if (filePath == null || filePath == "") {
+		//			System.out.println("没有参数");
+		//		} else if (!filePath.startsWith("/")) {
+		//			System.out.println("不合法的目录");
+		//		}
+		//
+		//		if (!filePath.endsWith("/")) {
+		//			filePath += "/";
+		//		}
+
 		return result;
 	}
-	
-	
-	
-	public static void main(String[] args) {
-//		System.out.println(new ReadRiscvFilesImpl().readRiscvMemory("H://cpu_usage.csv"));
-		
-		//测试llc & bandwidth
-//		ArrayList<RiscvLLCGroup> readLLC = new ReadRiscvFilesImpl().readLLC("/Users/jztong/Desktop/llc_mb.csv", false);
-//		Map<Integer, RiscvLLCPOJO> map = readLLC.get(0).getMap();
-//		Set<Entry<Integer, RiscvLLCPOJO>> entrySet = map.entrySet();
-//		Iterator<Entry<Integer, RiscvLLCPOJO>> iterator = entrySet.iterator();
-//		while(iterator.hasNext()){
-//			Entry<Integer, RiscvLLCPOJO> next = iterator.next();
-//			System.out.println(next.getKey());
-//			System.out.println(next.getValue().toString());
-//		}
-	}
+
+
 
 	@Override
 	public ArrayList<RiscvLLCGroup> readLLC(String filePath, boolean readSixty) {
-		
+
 		int totalLine=0;
 		BufferedReader readWorker = null;
 		try {
@@ -165,7 +148,7 @@ public class ReadRiscvFilesImpl implements ReadRiscvFiles {
 			readWorker = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)));
 			String mString="";
 			int currentLine=0;
-			
+
 			try {
 				RiscvLLCPOJO llcpojo = new RiscvLLCPOJO();
 				Map<Integer,RiscvLLCPOJO> dataMap = new HashMap<>();
@@ -214,5 +197,111 @@ public class ReadRiscvFilesImpl implements ReadRiscvFiles {
 		}
 		return list;
 	}
-	
+
+	@Override
+	public RiscvRedisRealDataBean readRiscvQueryTimeFile(String filePath) {  
+		RiscvRedisRealDataBean bean=new RiscvRedisRealDataBean();
+		BufferedReader readWorker = null;
+		try {
+			readWorker = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)));
+			String lastLine = "";
+			String mString; 
+			try {
+				while ((mString = readWorker.readLine()) != null) {
+					lastLine = mString;
+				} 
+				String[] split=lastLine.split(",");
+				bean.setQps(Integer.parseInt(split[0].trim()));
+				bean.setMean(Integer.parseInt(split[1].trim()));
+				bean.setMin(Integer.parseInt(split[2].trim()));
+				bean.setFiftyTh(Integer.parseInt(split[3].trim()));
+				bean.setEightyTh(Integer.parseInt(split[4].trim()));
+				bean.setNintyTh(Integer.parseInt(split[5].trim()));
+				bean.setNintyNineTh(Integer.parseInt(split[6].trim()));
+				bean.setNintyNinePointNineTh(Integer.parseInt(split[7].trim()));
+				bean.setMax(Integer.parseInt(split[8].trim())); 
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("没有该文件");
+			e.printStackTrace();
+		}
+
+		return bean;
+	}
+
+	@Override
+	public ArrayList<RiscvRedisRealDataBean> readRiscvWindowQueryTimeFile(String filePath) {
+		int totalLine=0;
+		BufferedReader readWorker = null;
+		try {
+			readWorker = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)));
+			String mString="";
+			try {
+				while ((mString = readWorker.readLine()) != null) {
+					totalLine++;
+				} 
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("没有该文件");
+			e.printStackTrace();
+		}
+		ArrayList<RiscvRedisRealDataBean> result = new ArrayList<RiscvRedisRealDataBean>();
+		int startLine=totalLine-59;
+		try {
+			readWorker = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)));
+			String mString="";
+			int currentLine=0;
+			try {
+				while ((mString = readWorker.readLine()) != null) {
+					currentLine++;
+					if(currentLine>=startLine){
+						RiscvRedisRealDataBean bean=new RiscvRedisRealDataBean();
+						String[] split=mString.split(",");
+						bean.setQps(Integer.parseInt(split[0].trim()));
+						bean.setMean(Integer.parseInt(split[1].trim()));
+						bean.setMin(Integer.parseInt(split[2].trim()));
+						bean.setFiftyTh(Integer.parseInt(split[3].trim()));
+						bean.setEightyTh(Integer.parseInt(split[4].trim()));
+						bean.setNintyTh(Integer.parseInt(split[5].trim()));
+						bean.setNintyNineTh(Integer.parseInt(split[6].trim()));
+						bean.setNintyNinePointNineTh(Integer.parseInt(split[7].trim()));
+						bean.setMax(Integer.parseInt(split[8].trim()));
+						result.add(bean); 
+						if(result.size()==60){
+							break;
+						}
+					}
+				} 
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("没有该文件");
+			e.printStackTrace();
+		} 
+		return result;
+	}
+
+	public static void main(String[] args) {
+		ReadRiscvFilesImpl impl=new ReadRiscvFilesImpl();
+		impl.readRiscvQueryTimeFile("H://latency.csv");
+//		Random rand=new Random();
+//		StringBuffer strName=new StringBuffer();
+//		StringBuffer strData=new StringBuffer();
+//		StringBuffer HSeries=new StringBuffer();
+//		strName.append("{name:'曲线1',");
+//		strData.append("data:[");
+//		int size=5;
+//		for(int i=0;i<size;i++){ //拼接字符串 需要两个参数 System.currentTimeMillis作为x轴数据，rand.nextInt(20)作为y轴数据
+//			strData.append("[").append(System.currentTimeMillis()).append(",").append(rand.nextInt(20)).append("],");
+//		}
+//		strData.append("[").append(System.currentTimeMillis()).append(",").append(rand.nextInt(20)).append("]]");
+//		HSeries.append(strName).append(strData).append("}");
+//		System.out.println(HSeries.toString());
+	}
+
 }

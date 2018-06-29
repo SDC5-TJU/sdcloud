@@ -23,17 +23,13 @@
 
 <body>
 	<div id="mainDiv">
-		<div id="container1" style="display:none;"></div>
-		<div id="container2" style="display:none;"></div>
+		<div id="container1"></div>
+		<div id="container2"></div>
 		<div id="container3"></div>
-		<div id="container4"></div>
-		<div id="container5"></div>
-		<div id="container6"></div>
+		<div id="container4"></div> 
 		<div id="containerControl">
-			<span style="font-family: 微软雅黑; font-size: 14px;">线程控制:</span>
-			 
+			<span style="font-family: 微软雅黑; font-size: 14px;">线程控制:</span> 
 			<input type="button" id="startButton" value="继续" onclick="start();" style="cursor: pointer">
-			 
 		</div> 
 
 		<script type="text/javascript" src="statics/js/jquery-1.9.1.js"></script>
