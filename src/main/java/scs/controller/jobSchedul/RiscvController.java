@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties; 
+import java.util.Properties;
+import java.util.Random;
 import java.util.Set;
 
 import javax.annotation.Resource;
@@ -18,7 +19,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import net.sf.json.JSONArray;  
+import net.sf.json.JSONArray;
+import scs.pojo.CDFBean;
 import scs.pojo.RiscvLLCGroup;
 import scs.pojo.RiscvLLCPOJO;
 import scs.pojo.RiscvRedisRealDataBean;
@@ -477,9 +479,9 @@ public class RiscvController {
 			InputStream is = WebServerJobImpl.class.getResourceAsStream("/conf/sys.properties");
 			try {
 				prop.load(is);
-			} catch (IOException e) { 
+			} catch (IOException e) {
 				e.printStackTrace();
-			} 
+			}
 			RiscvRedisRealDataBean bean= read.readRiscvQueryTimeFile(prop.getProperty("riscv_redis_real_data_path").trim()+"latency.csv");
 			bean.setCollectTime(System.currentTimeMillis());
 			  
@@ -490,5 +492,70 @@ public class RiscvController {
 		}
 	}
 
+	
+	
+	
+	/**
+	 * 课题3
+	 * 进入监控页面绘制CDF
+	 */
+	@RequestMapping(value="/monitor_3.do")
+	public String monitorCDF(HttpServletRequest request,HttpServletResponse response,Model model) {
+		StringBuffer strName=new StringBuffer();
+		StringBuffer strData=new StringBuffer();
+		StringBuffer HSeries=new StringBuffer();
+		strName.append("{name:'高优先级@RISC-V Linux',");
+		CDFBean df=null;
+		try {
+			df = ReadFile.getInstance().readCDFFile("H://cdf.txt", "H://cdf_x86.txt", "H://conn_h.txt", "H://conn_h_x86.txt");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		strData.append("data:[");
+		int size=10;
+		for(int i=1;i<size-1;i++){ //拼接字符串 
+			strData.append("[").append(String.valueOf(df.getHigh_x86()[i])).append(",").append(String.valueOf(df.getCdf()[i])).append("],");
+		}
+		strData.append("[").append(String.valueOf(df.getHigh_x86()[size-1])).append(",").append(String.valueOf(df.getCdf()[size-1])).append("]]");
+		HSeries.append(strName).append(strData).append("},"); 
+		
+		strName.setLength(0);
+		strData.setLength(0); 
+		strName.append("{name:'高优先级@RISC-V-LNS',");
+		strData.append("data:[");
+		for(int i=1;i<size-1;i++){
+			strData.append("[").append(String.valueOf(df.getHigh()[i])).append(",").append(String.valueOf(df.getCdf()[i])).append("],");
+		}
+		strData.append("[").append(String.valueOf(df.getHigh()[size-1])).append(",").append(String.valueOf(df.getCdf()[size-1])).append("]]");
+		
+		HSeries.append(strName).append(strData).append("}");
+		
+		model.addAttribute("cdf_high",HSeries.toString());//封装字符串发送到前端页面
+		
+		strName.setLength(0);
+		strData.setLength(0); 
+		HSeries.setLength(0);
+		strName.append("{name:'低优先级@RISC-V Linux',");
+		strData.append("data:[");
+		for(int i=1;i<size-1;i++){ //拼接字符串 
+			strData.append("[").append(String.valueOf(df.getLow_x86()[i])).append(",").append(String.valueOf(df.getCdf()[i])).append("],");
+		}
+		strData.append("[").append(String.valueOf(df.getLow_x86()[size-1])).append(",").append(String.valueOf(df.getCdf()[size-1])).append("]]");
+		HSeries.append(strName).append(strData).append("},"); 
+		
+		strName.setLength(0);
+		strData.setLength(0); 
+		strName.append("{name:'低优先级@RISC-V-LNS',");
+		strData.append("data:[");
+		for(int i=1;i<size-1;i++){
+			strData.append("[").append(String.valueOf(df.getLow()[i])).append(",").append(String.valueOf(df.getCdf()[i])).append("],");
+		}
+		strData.append("[").append(String.valueOf(df.getLow()[size-1])).append(",").append(String.valueOf(df.getCdf()[size-1])).append("]]");
+		
+		HSeries.append(strName).append(strData).append("}");
+		
+		model.addAttribute("cdf_low",HSeries.toString());//封装字符串发送到前端页面
+		return "monitor_3";
+	}
 
 }

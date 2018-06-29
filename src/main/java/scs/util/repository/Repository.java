@@ -3,7 +3,8 @@ package scs.util.repository;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map; 
+import java.util.Map;
+import java.util.Set;
 
 import net.sf.json.JSONArray;
 import scs.pojo.AppConfigBean;
@@ -107,21 +108,21 @@ public class Repository{
 	 * 静态块
 	 */
 	static {
-		//		containerInfoMap=RepositoryDao.initContainerInfoMap();//初始化容器信息map 
-		//		System.out.println("初始化 containerInfoMap size="+containerInfoMap.size());
-		//		appInfoMap=RepositoryDao.initAppInfoMap();//初始化app信息map 
-		//		System.out.println("初始化 appInfoMap  size="+appInfoMap.size());
-		//		Set<String> appNameSet = appInfoMap.keySet(); //取出所有应用的名称
-		//		for(String appName:appNameSet){ 
-		//			appStatusMap.put(appName,false);//系统初始化,所有应用默认为未执行
-		//			System.out.println("初始化app执行状态 "+appName+"=false");
-		//		}
-		//		systemInfoMap=RepositoryDao.initSystemInfoMap();
+//				containerInfoMap=RepositoryDao.initContainerInfoMap();//初始化容器信息map 
+//				System.out.println("初始化 containerInfoMap size="+containerInfoMap.size());
+//				appInfoMap=RepositoryDao.initAppInfoMap();//初始化app信息map 
+//				System.out.println("初始化 appInfoMap  size="+appInfoMap.size());
+//				Set<String> appNameSet = appInfoMap.keySet(); //取出所有应用的名称
+//				for(String appName:appNameSet){ 
+//					appStatusMap.put(appName,false);//系统初始化,所有应用默认为未执行
+//					System.out.println("初始化app执行状态 "+appName+"=false");
+//				}
+//				systemInfoMap=RepositoryDao.initSystemInfoMap();
 		QueryData data=new QueryData();
 		for(int i=0;i<60;i++){ 
 			windowOnlineDataList.add(data);
 		}
-		LoadService.getInstance().service("192.168.1.129", 22222);//开启rmi服务端
+		//LoadService.getInstance().service("192.168.1.129", 22222);//开启rmi服务端
 	}
 	/**
 	 * 对外提供的app状态查询接口

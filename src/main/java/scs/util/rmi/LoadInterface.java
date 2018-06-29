@@ -1,6 +1,7 @@
 package scs.util.rmi;
 
-import java.rmi.Remote; 
+import java.rmi.Remote;
+import java.rmi.RemoteException; 
  
 /**
  * rmi远程调用接口类 server端实现该类 客户端不用实现,只负责调用该接口
@@ -9,5 +10,5 @@ import java.rmi.Remote;
  *
  */
 public interface LoadInterface extends Remote{  
-	public float getLcAvgLatency();
+	public float getLcAvgLatency() throws RemoteException;
 }
