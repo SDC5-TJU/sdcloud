@@ -440,6 +440,7 @@ public class RiscvController {
 			}
 			dataList=read.readRiscvWindowQueryTimeFile(prop.getProperty("riscv_redis_real_data_path").trim()+"latency.csv");
 		}
+		//绘制均值曲线
 		strName.append("{name:'riscvRealQueryData',"); 
 		strData.append("data:[");		
 		for(int i=59;i>0;i--){
@@ -448,7 +449,20 @@ public class RiscvController {
 		strData.append("[").append(curTime).append(",").append(dataList.get(59).getMean()).append("]]");
 		HSeries.append(strName).append(strData).append(",marker: {enabled: false}}");
 		model.addAttribute("redisMeanStr",HSeries.toString()); 
-
+		
+		//绘制99th曲线
+		strName.setLength(0);
+		strData.setLength(0);
+		HSeries.setLength(0);
+		strName.append("{name:'riscvRealQueryData',"); 
+		strData.append("data:[");		
+		for(int i=59;i>0;i--){
+			strData.append("[").append(curTime-i*1000).append(",").append(dataList.get(59-i).getNintyNineTh()).append("],");
+		}
+		strData.append("[").append(curTime).append(",").append(dataList.get(59).getNintyNineTh()).append("]]");
+		HSeries.append(strName).append(strData).append(",marker: {enabled: false}}");
+		model.addAttribute("redisNintyNineThStr",HSeries.toString()); 
+		
 		return "demo_riscv_real_latency_redis";
 	}
 	/**
