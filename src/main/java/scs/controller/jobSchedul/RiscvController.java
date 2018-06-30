@@ -26,6 +26,7 @@ import scs.pojo.TimeResultDiffBean;
 import scs.pojo.TwoTuple;
 import scs.pojo.XapianDataBean;
 import scs.pojo.riscv.CDFBean;
+import scs.pojo.riscv.DataProject2Bean;
 import scs.pojo.riscv.RiscvLLCGroup;
 import scs.pojo.riscv.RiscvLLCPOJO;
 import scs.pojo.riscv.RiscvRedisRealDataBean;
@@ -57,6 +58,7 @@ public class RiscvController {
 	@Resource HistoryDataService hService;
 	
 	private DataFormats dataFormat=DataFormats.getInstance();
+	private ReadRiscvFiles read=new ReadRiscvFilesImpl();
 
 	@RequestMapping("/getRiscvXapianResult.do")
 	public String getRiscvXapianResult(HttpServletRequest request,HttpServletResponse response,Model model){
@@ -179,7 +181,7 @@ public class RiscvController {
 		}
 		return "demo_riscv_latency";
 	}
-	private ReadRiscvFiles read=new ReadRiscvFilesImpl();
+	
 	/**
 	 * 进入Riscv资源监控页面
 	 * @param request
@@ -640,6 +642,83 @@ public class RiscvController {
 
 		model.addAttribute("cdf_low",HSeries.toString());//封装字符串发送到前端页面
 		return "monitor_3";
+	}
+	/**
+	 * 进入riscv redis的实时查询页面
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/goMoitor2.do")
+	public String goMoitor2(HttpServletRequest request,HttpServletResponse response,Model model){
+	
+		Properties prop = new Properties();
+		InputStream is = WebServerJobImpl.class.getResourceAsStream("/conf/sys.properties");
+		try {
+			prop.load(is);
+		} catch (IOException e) { 
+			e.printStackTrace();
+		} 
+		Long curTime=System.currentTimeMillis();
+		List<DataProject2Bean> dataList=new ArrayList<DataProject2Bean>();
+		StringBuffer strName=new StringBuffer();
+		StringBuffer strData=new StringBuffer();
+		StringBuffer HSeries=new StringBuffer();
+		while(dataList.size()<Repository.windowSize){//小于60个点 需要睡眠等待
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) { 
+				e.printStackTrace();
+			}
+			dataList=read.readRiscvWindowDataFile("H://project2.txt");
+		}
+		//绘制均值曲线
+		strName.append("{name:'Ceph',"); 
+		strData.append("data:[");		
+		for(int i=Repository.windowSize-1;i>0;i--){
+			strData.append("[").append(curTime-i*1000).append(",").append(dataList.get(Repository.windowSize-1-i).getCeph()).append("],");
+		}
+		strData.append("[").append(curTime).append(",").append(dataList.get(Repository.windowSize-1).getCeph()).append("]]");
+		HSeries.append(strName).append(strData).append(",marker: {enabled: false}},");
+		 
+		//绘制99th曲线
+		strName.setLength(0);
+		strData.setLength(0);  
+		strName.append("{name:'Gecko',"); 
+		strData.append("data:[");		
+		for(int i=Repository.windowSize-1;i>0;i--){
+			strData.append("[").append(curTime-i*1000).append(",").append(dataList.get(Repository.windowSize-1-i).getGecko()).append("],");
+		}
+		strData.append("[").append(curTime).append(",").append(dataList.get(Repository.windowSize-1).getGecko()).append("]]");
+		HSeries.append(strName).append(strData).append(",marker: {enabled: false}}");
+		model.addAttribute("cephGeckoStr",HSeries.toString()); 
+	
+		return "monitor_2";
+	}
+	/**
+	 * 查询最新的redis的响应时间数据
+	 * @param request
+	 * @param response 
+	 */
+	@RequestMapping("/getMonitor2.do")
+	public void getMonitor2(HttpServletRequest request,HttpServletResponse response){
+		try {
+			Properties prop = new Properties();
+			InputStream is = WebServerJobImpl.class.getResourceAsStream("/conf/sys.properties");
+			try {
+				prop.load(is);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			DataProject2Bean bean= read.readRiscvLatestDataFile("H://project2.txt");
+			bean.setCollectTime(System.currentTimeMillis());
+	
+			response.getWriter().write(JSONArray.fromObject(bean).toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

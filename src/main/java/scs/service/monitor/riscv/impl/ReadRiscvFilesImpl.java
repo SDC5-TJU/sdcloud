@@ -277,14 +277,77 @@ public class ReadRiscvFilesImpl implements ReadRiscvFiles {
 	
 	@Override
 	public ArrayList<DataProject2Bean> readRiscvWindowDataFile(String filePath) {
-		// TODO Auto-generated method stub
-		return null;
+		int totalLine=0;
+		BufferedReader readWorker = null;
+		try {
+			readWorker = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)));
+			String mString="";
+			try {
+				while ((mString = readWorker.readLine()) != null) {
+					totalLine++;
+				} 
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("没有该文件");
+			e.printStackTrace();
+		}
+		ArrayList<DataProject2Bean> result = new ArrayList<DataProject2Bean>();
+		int startLine=totalLine-59;
+		try {
+			readWorker = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)));
+			String mString="";
+			int currentLine=0;
+			try {
+				while ((mString = readWorker.readLine()) != null) {
+					currentLine++;
+					if(currentLine>=startLine){
+						DataProject2Bean bean=new DataProject2Bean();
+						String[] split=mString.split(",");
+						bean.setCeph(Float.parseFloat(split[0].trim()));
+						bean.setGecko(Float.parseFloat(split[1].trim()));
+						result.add(bean); 
+						if(result.size()==60){
+							break;
+						}
+					}
+				} 
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("没有该文件");
+			e.printStackTrace();
+		} 
+		return result;
 	}
 
 	@Override
 	public DataProject2Bean readRiscvLatestDataFile(String filePath) {
 		// TODO Auto-generated method stub
-		return null;
+		DataProject2Bean bean=new DataProject2Bean();
+		BufferedReader readWorker = null;
+		try {
+			readWorker = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)));
+			String lastLine = "";
+			String mString; 
+			try {
+				while ((mString = readWorker.readLine()) != null) {
+					lastLine = mString;
+				} 
+				String[] split=lastLine.split(",");
+				bean.setCeph(Float.parseFloat(split[0].trim()));
+				bean.setGecko(Float.parseFloat(split[1].trim()));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("没有该文件");
+			e.printStackTrace();
+		}
+
+		return bean;
 	}
 	
 	/**

@@ -15,7 +15,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta name="renderer" content="webkit">
-<title>物理机监控</title>
+<title>课题3展示</title>
 <link rel="stylesheet" href="statics/css/pintuer.css">
 <link rel="stylesheet" href="statics/css/admin.css">
 <link rel="stylesheet" href="statics/css/physical.css">
@@ -25,8 +25,6 @@
 	<div id="mainDiv"> 
 		<div id="container1"></div>
 		<div id="container2"></div>
-		<div id="container3"></div>
-		<div id="container4"></div>
 		<script type="text/javascript" src="statics/js/jquery-1.9.1.js"></script>
 		<script type="text/javascript" src="statics/js/highcharts.js"></script>
 		<script type="text/javascript" src="statics/js/highcharts-more.js"></script>
