@@ -1,7 +1,8 @@
 package scs.util.loadGen.loadDriver;
     
-import org.apache.http.impl.client.CloseableHttpClient; 
-import scs.pojo.QueryData; 
+import org.apache.http.impl.client.CloseableHttpClient;
+
+import scs.pojo.heracles.QueryData;
 import scs.util.repository.Repository;
 import scs.util.tools.HttpClientPool; 
 /**

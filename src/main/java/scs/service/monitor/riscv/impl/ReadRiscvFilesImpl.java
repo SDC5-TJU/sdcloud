@@ -11,28 +11,17 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import scs.pojo.RiscvLLCGroup;
-import scs.pojo.RiscvLLCPOJO;
-import scs.pojo.RiscvRedisRealDataBean;
+import scs.pojo.riscv.DataProject2Bean;
+import scs.pojo.riscv.RiscvLLCGroup;
+import scs.pojo.riscv.RiscvLLCPOJO;
+import scs.pojo.riscv.RiscvRedisRealDataBean;
 import scs.service.monitor.riscv.ReadRiscvFiles;
 
 @Service("RiscvFileMonitor")
 public class ReadRiscvFilesImpl implements ReadRiscvFiles {
 
 	@Override
-	public double readRiscvResourceUsageFile(String filePath) {
-		//		if (filePath == null || filePath == "") {
-		//			System.out.println("没有参数");
-		//		} else if (!filePath.startsWith("/")) {
-		//			System.out.println("不合法的目录");
-		//		}
-		//
-		//		if (!filePath.endsWith("/")) {
-		//			filePath += "/";
-		//		}
-		//
-		//		filePath += "mem.csv";
-
+	public double readRiscvLatestResourceUsageFile(String filePath) { 
 		BufferedReader readWorker = null;
 		double parseDouble = 0;
 		try {
@@ -199,7 +188,7 @@ public class ReadRiscvFilesImpl implements ReadRiscvFiles {
 	}
 
 	@Override
-	public RiscvRedisRealDataBean readRiscvQueryTimeFile(String filePath) {  
+	public RiscvRedisRealDataBean readRiscvLatestQueryTimeFile(String filePath) {  
 		RiscvRedisRealDataBean bean=new RiscvRedisRealDataBean();
 		BufferedReader readWorker = null;
 		try {
@@ -284,24 +273,25 @@ public class ReadRiscvFilesImpl implements ReadRiscvFiles {
 			e.printStackTrace();
 		} 
 		return result;
+	} 
+	
+	@Override
+	public ArrayList<DataProject2Bean> readRiscvWindowDataFile(String filePath) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
+	@Override
+	public DataProject2Bean readRiscvLatestDataFile(String filePath) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	/**
+	 * 单元测试主函数
+	 * @param args
+	 */
 	public static void main(String[] args) {
-		ReadRiscvFilesImpl impl=new ReadRiscvFilesImpl();
-		impl.readRiscvQueryTimeFile("H://latency.csv");
-//		Random rand=new Random();
-//		StringBuffer strName=new StringBuffer();
-//		StringBuffer strData=new StringBuffer();
-//		StringBuffer HSeries=new StringBuffer();
-//		strName.append("{name:'曲线1',");
-//		strData.append("data:[");
-//		int size=5;
-//		for(int i=0;i<size;i++){ //拼接字符串 需要两个参数 System.currentTimeMillis作为x轴数据，rand.nextInt(20)作为y轴数据
-//			strData.append("[").append(System.currentTimeMillis()).append(",").append(rand.nextInt(20)).append("],");
-//		}
-//		strData.append("[").append(System.currentTimeMillis()).append(",").append(rand.nextInt(20)).append("]]");
-//		HSeries.append(strName).append(strData).append("}");
-//		System.out.println(HSeries.toString());
+		ReadRiscvFilesImpl impl=new ReadRiscvFilesImpl();  
 	}
-
 }

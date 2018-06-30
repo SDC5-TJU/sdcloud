@@ -24,13 +24,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div> 
 		<!--图-->
 		<div id="chart">
-			<div id="websearch"
-				style="width: 1250px; height: 350px; position: absolute; left: 50px; top: 0px;"></div>
-			<div id="cpuUsage"
-				style="width: 1220px; height: 350px; position: absolute; left: 110px; top: 380px;"></div>
+			<div id="websearch" style="width: 1250px; height: 350px; position: absolute; left: 50px; top: 0px;"></div>
+			<div id="cpuUsage" style="width: 1220px; height: 350px; position: absolute; left: 110px; top: 380px;"></div>
 		</div>
-		<div id="QpsDiv"
-				style="width: 50px; height: 50px; position: absolute; left: 1250px; top: 360px;">QPS:<span id="qps"></span></div>
+		<div id="QpsDiv" style="width: 50px; height: 50px; position: absolute; left: 1250px; top: 360px;">QPS:<span id="qps"></span></div>
 	</div>
 	<script type="text/javascript" src="statics/js/jquery-1.9.1.js"></script>
 	<script type="text/javascript" src="statics/js/highcharts.js"></script>

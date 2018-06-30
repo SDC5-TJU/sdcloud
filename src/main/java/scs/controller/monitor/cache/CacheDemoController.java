@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.sf.json.JSONArray;
 import scs.controller.recordManage.RecordManageController;
-import scs.pojo.PQOSBean;
+import scs.pojo.riscv.PQOSBean;
 import scs.service.monitor.pqos.PqosResourceMonitor;
 import scs.service.monitor.system.RMISystemMonitorInterface;
 import scs.util.repository.Repository;

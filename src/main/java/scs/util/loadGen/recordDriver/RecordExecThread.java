@@ -1,6 +1,6 @@
 package scs.util.loadGen.recordDriver;
    
-import scs.pojo.QueryData; 
+import scs.pojo.heracles.QueryData;
 import scs.util.repository.Repository; 
 
 public class RecordExecThread extends Thread{

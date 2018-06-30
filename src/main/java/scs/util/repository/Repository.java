@@ -1,9 +1,12 @@
 package scs.util.repository;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import net.sf.json.JSONArray;
@@ -11,14 +14,15 @@ import scs.pojo.AppConfigBean;
 import scs.pojo.AppInfoBean;
 import scs.pojo.ContainerInfoBean;
 import scs.pojo.MemcachedDataBean;
-import scs.pojo.QueryData;
 import scs.pojo.SiloDataBean;
 import scs.pojo.SystemInfoBean;
+import scs.pojo.SystemResourceUsageBean;
 import scs.pojo.TableAppresourceusage;
 import scs.pojo.TableContainerresourceusage;
 import scs.pojo.TableSystemresourceusage;
 import scs.pojo.TwoTuple;
 import scs.pojo.XapianDataBean;
+import scs.pojo.heracles.QueryData;
 import scs.util.rmi.LoadService; 
 /**
  * 系统静态仓库类
@@ -87,8 +91,16 @@ public class Repository{
 	public static float[][] cache147 = new float[3][2];//llc缓存监控数据 物理机147
 
 	public static int cronFlag = 0; //监控开启标志，0默认关闭监控
-	public static int PhysicalMachine128 = 1; //物理机1
-	public static int PhysicalMachine147 = 2; //物理机2
+	public final static int PhysicalMachine128 = 1; //物理机1
+	public final static int PhysicalMachine147 = 2; //物理机2
+
+	/**
+	 * riscv原型系统监控
+	 */
+	public static int windowSize=60; //窗口数据量大小
+	private static int riscvWindowCpuUsageDataListCount=0;//窗口数组计数器,默认0开始,每次计数+1
+	private static List<SystemResourceUsageBean> riscvWindowCpuUsageDataList=new ArrayList<SystemResourceUsageBean>();//窗口请求数据记录数组,循环记录每秒钟的数据平均值
+	private static List<SystemResourceUsageBean> tempRiscvWindowCpuUsageDataList=new ArrayList<SystemResourceUsageBean>();//窗口请求数据记录数组,循环记录每秒钟的数据平均值
 
 
 	/**
@@ -108,22 +120,35 @@ public class Repository{
 	 * 静态块
 	 */
 	static {
-//				containerInfoMap=RepositoryDao.initContainerInfoMap();//初始化容器信息map 
-//				System.out.println("初始化 containerInfoMap size="+containerInfoMap.size());
-//				appInfoMap=RepositoryDao.initAppInfoMap();//初始化app信息map 
-//				System.out.println("初始化 appInfoMap  size="+appInfoMap.size());
-//				Set<String> appNameSet = appInfoMap.keySet(); //取出所有应用的名称
-//				for(String appName:appNameSet){ 
-//					appStatusMap.put(appName,false);//系统初始化,所有应用默认为未执行
-//					System.out.println("初始化app执行状态 "+appName+"=false");
-//				}
-//				systemInfoMap=RepositoryDao.initSystemInfoMap();
-		QueryData data=new QueryData();
-		for(int i=0;i<60;i++){ 
-			windowOnlineDataList.add(data);
-		}
+		//				containerInfoMap=RepositoryDao.initContainerInfoMap();//初始化容器信息map 
+		//				System.out.println("初始化 containerInfoMap size="+containerInfoMap.size());
+		//				appInfoMap=RepositoryDao.initAppInfoMap();//初始化app信息map 
+		//				System.out.println("初始化 appInfoMap  size="+appInfoMap.size());
+		//				Set<String> appNameSet = appInfoMap.keySet(); //取出所有应用的名称
+		//				for(String appName:appNameSet){ 
+		//					appStatusMap.put(appName,false);//系统初始化,所有应用默认为未执行
+		//					System.out.println("初始化app执行状态 "+appName+"=false");
+		//				}
+		//				systemInfoMap=RepositoryDao.initSystemInfoMap();
+
+		//Repository.getInstance().readProperties();
 		//LoadService.getInstance().service("192.168.1.129", 22222);//开启rmi服务端
 	}
+	/**
+	 * 读取配置文件的参数
+	 */
+	private void readProperties(){
+		Properties prop = new Properties();
+		InputStream is = Repository.class.getResourceAsStream("/conf/sys.properties");
+		try {
+			prop.load(is);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		Repository.windowSize=Integer.parseInt(prop.getProperty("windowSize").trim());//读取llc总路数 0xfffff 代表20路
+	}
+
 	/**
 	 * 对外提供的app状态查询接口
 	 * {app1:"true",app2:"true"...}
@@ -135,13 +160,19 @@ public class Repository{
 	}
 	/**
 	 * 向窗口数组里添加一个新的数据 
-	 * 大小60,循环赋值
+	 * 大小Repository.windowSize,循环赋值
 	 * @param data 新数据
 	 */
 	public void addWindowOnlineDataList(QueryData data){
 		latestOnlineData=data;
-		windowOnlineDataList.set(windowOnLineDataListCount%60,data);
+		if(windowOnlineDataList.size()<Repository.windowSize){
+			for(int i=0;i<Repository.windowSize;i++){
+				windowOnlineDataList.add(new QueryData());
+			}
+		}
+		windowOnlineDataList.set(windowOnLineDataListCount%Repository.windowSize,data);
 		windowOnLineDataListCount++;
+
 		//System.out.println(windowOnlineDataList.size()+" "+windowOnlineDataList.get(windowOnLineDataListCount%5).getGenerateTime()+" "+windowOnLineDataListCount%5);
 	}
 
@@ -151,8 +182,8 @@ public class Repository{
 	 */
 	public float[] getQueryTimeMetric(){
 		tempWindowOnlineDataList.clear();
-		tempWindowOnlineDataList=Repository.windowOnlineDataList;
-		int size=tempWindowOnlineDataList.size();//size 应该为固定值60
+		tempWindowOnlineDataList.addAll(Repository.windowOnlineDataList);
+		int size=tempWindowOnlineDataList.size();//size 应该为固定值Repository.windowSize
 		int avgQueryTime=0;
 		int maxQueryTime=0;
 		for(QueryData item:tempWindowOnlineDataList){
@@ -174,14 +205,53 @@ public class Repository{
 	 */
 	public float getAvgQueryTime(){  
 		tempWindowOnlineDataList.clear();
-		tempWindowOnlineDataList=Repository.windowOnlineDataList;
-		int size=tempWindowOnlineDataList.size();//size 应该为固定值60
+		tempWindowOnlineDataList.addAll(Repository.windowOnlineDataList);
+		int size=tempWindowOnlineDataList.size();//size 应该为固定值Repository.windowSize
 		int avgQueryTime=0;
 		for(QueryData item:tempWindowOnlineDataList){
 			avgQueryTime+=item.getQueryTime();
 		}
 		avgQueryTime=avgQueryTime/size; 
-		
+
 		return (float)avgQueryTime; 
 	} 
+
+	/**
+	 * 向riscv窗口数组里添加一个新的数据 
+	 * 大小Repository.windowSize,循环赋值
+	 * @param data 新数据
+	 */
+	public void addRiscvWindowCpuUsageDataList(SystemResourceUsageBean data){
+		if(riscvWindowCpuUsageDataList.size()<Repository.windowSize){
+			for(int i=0;i<Repository.windowSize;i++){
+				riscvWindowCpuUsageDataList.add(new SystemResourceUsageBean());
+			}
+		}
+		riscvWindowCpuUsageDataList.set(riscvWindowCpuUsageDataListCount%Repository.windowSize,data);
+		riscvWindowCpuUsageDataListCount++; 
+	}
+	/**
+	 * 计算riscv cpu利用率的平均值
+	 * @return 返回float类型平均值
+	 */
+	public float getRiscvAvgCpuUsage(){  
+		float avgCpuUsage=0;
+		tempRiscvWindowCpuUsageDataList.clear();
+		tempRiscvWindowCpuUsageDataList.addAll(Repository.riscvWindowCpuUsageDataList);
+
+		int size=tempRiscvWindowCpuUsageDataList.size();//size 应该为固定值Repository.windowSize
+		if(size==0){
+			avgCpuUsage=0;
+		}else{
+			for(SystemResourceUsageBean item:tempRiscvWindowCpuUsageDataList){
+				avgCpuUsage+=item.getCpuUsageRate();
+			}
+			avgCpuUsage=avgCpuUsage/size; 
+		} 
+		return avgCpuUsage; 
+	} 
+	public static void main(String[] args){
+
+
+	}
 }

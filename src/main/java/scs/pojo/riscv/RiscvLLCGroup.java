@@ -1,4 +1,4 @@
-package scs.pojo;
+package scs.pojo.riscv;
 
 import java.io.Serializable;
 import java.util.Map;

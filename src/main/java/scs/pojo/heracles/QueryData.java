@@ -1,4 +1,4 @@
-package scs.pojo;
+package scs.pojo.heracles;
 
 public class QueryData{
 

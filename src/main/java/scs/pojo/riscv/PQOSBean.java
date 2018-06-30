@@ -1,4 +1,4 @@
-package scs.pojo;
+package scs.pojo.riscv;
 
 public class PQOSBean {
 	

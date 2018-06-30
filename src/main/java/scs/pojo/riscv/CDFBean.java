@@ -1,6 +1,10 @@
-package scs.pojo;
+package scs.pojo.riscv;
 
-
+/**
+ * 课题3 
+ * @author song hui
+ *
+ */
 public class CDFBean{
 	private float[] cdf;
 	private long time;
