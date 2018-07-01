@@ -7,8 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
-import java.util.Random;
+import java.util.Properties; 
 import java.util.Set;
 
 import javax.annotation.Resource;
@@ -40,7 +39,7 @@ import scs.util.format.DataFormats;
 import scs.util.jobSchedul.jobImpl.webServer.WebServerJobImpl; 
 import scs.util.repository.Repository;
 import scs.util.tools.AdapterForResult;
-import scs.util.tools.ReadFile;
+import scs.util.tools.ReadRiscvServiceDataFile;
 import scs.util.tools.ResultDiffAnalysis; 
 
 /**
@@ -56,7 +55,7 @@ public class RiscvController {
 	@Resource AppConfigService aService;
 	@Resource RecordManageService rService;
 	@Resource HistoryDataService hService;
-	
+
 	private DataFormats dataFormat=DataFormats.getInstance();
 	private ReadRiscvFiles read=new ReadRiscvFilesImpl();
 
@@ -88,9 +87,9 @@ public class RiscvController {
 			if(file.exists()){
 				resultLableList=service.getRiscvXapianResult(riscvDataPath+"lats3.txt");
 			}
-			file=new File(riscvDataPath+".qps");
+			file=new File(riscvDataPath+"xapian.qps");
 			if(file.exists()){
-				String qps=ReadFile.getInstance().readRedisQpsFile(riscvDataPath+".qps");
+				String qps=ReadRiscvServiceDataFile.getInstance().readQpsFile(riscvDataPath+"xapian.qps");
 				model.addAttribute("qps",qps);
 			}
 			/*
@@ -151,7 +150,7 @@ public class RiscvController {
 
 			file=new File(riscvDataPath+type+".qps");
 			if(file.exists()){
-				String qps=ReadFile.getInstance().readRedisQpsFile(riscvDataPath+type+".qps");
+				String qps=ReadRiscvServiceDataFile.getInstance().readQpsFile(riscvDataPath+type+".qps");
 				model.addAttribute("qps",qps);
 			}
 			/*
@@ -181,7 +180,7 @@ public class RiscvController {
 		}
 		return "demo_riscv_latency";
 	}
-	
+
 	/**
 	 * 进入Riscv资源监控页面
 	 * @param request
@@ -281,7 +280,7 @@ public class RiscvController {
 				}
 				dataList2=read.readLLC(prop.getProperty("riscv_monitor_path").trim()+"llc_mb_"+riscvId+".csv",true);
 			}
-		 
+
 			Map<Integer,RiscvLLCPOJO> map=new HashMap<Integer,RiscvLLCPOJO>();
 			List<RiscvLLCPOJO> AvgList=new ArrayList<RiscvLLCPOJO>(); 
 			double missRate=0;
@@ -389,15 +388,7 @@ public class RiscvController {
 			e.printStackTrace();
 		}
 	}
-	public static void main(String[] args){
-		SystemResourceUsageBean bean=new SystemResourceUsageBean();
-		bean.setCollectTime(System.currentTimeMillis());
-		bean.setCpuUsageRate(53.0f);
 
-		//Repository.getInstance().addRiscvWindowCpuUsageDataList(bean);
-
-		System.out.println(JSONArray.fromObject(bean).toString().replace("}",",\"cpuAvgUsageRate\":"+85+"}"));
-	}
 	/**
 	 * 
 	 * 查询最新的llc和内存带宽使用数据
@@ -455,9 +446,6 @@ public class RiscvController {
 		} 
 		Long curTime=System.currentTimeMillis();
 		List<RiscvRedisRealDataBean> dataList=new ArrayList<RiscvRedisRealDataBean>();
-		StringBuffer strName=new StringBuffer();
-		StringBuffer strData=new StringBuffer();
-		StringBuffer HSeries=new StringBuffer();
 		while(dataList.size()<Repository.windowSize){//小于60个点 需要睡眠等待
 			try {
 				Thread.sleep(1000);
@@ -466,28 +454,87 @@ public class RiscvController {
 			}
 			dataList=read.readRiscvWindowQueryTimeFile(prop.getProperty("riscv_redis_real_data_path").trim()+"latency.csv");
 		}
+		StringBuffer strName=new StringBuffer();
+		StringBuffer strData=new StringBuffer();
+		StringBuffer HSeries=new StringBuffer();
+		//绘制min曲线
+		strName.append("{name:'min',"); 
+		strData.append("data:[");		
+		for(int i=Repository.windowSize-1;i>0;i--){
+			strData.append("[").append(curTime-i*1000).append(",").append(dataList.get(Repository.windowSize-1-i).getMin()).append("],");
+		}
+		strData.append("[").append(curTime).append(",").append(dataList.get(Repository.windowSize-1).getMin()).append("]]");
+		HSeries.append(strName).append(strData).append(",marker: {enabled: false}},");
+
 		//绘制均值曲线
-		strName.append("{name:'riscvRealQueryData',"); 
+		strName.setLength(0);strData.setLength(0);
+		strName.append("{name:'mean',"); 
 		strData.append("data:[");		
 		for(int i=Repository.windowSize-1;i>0;i--){
 			strData.append("[").append(curTime-i*1000).append(",").append(dataList.get(Repository.windowSize-1-i).getMean()).append("],");
 		}
 		strData.append("[").append(curTime).append(",").append(dataList.get(Repository.windowSize-1).getMean()).append("]]");
-		HSeries.append(strName).append(strData).append(",marker: {enabled: false}}");
-		model.addAttribute("redisMeanStr",HSeries.toString()); 
+		HSeries.append(strName).append(strData).append(",marker: {enabled: false}},");
+		//50th
+		strName.setLength(0);strData.setLength(0);
+		strName.append("{name:'50th',");
+		strData.append("data:[");
+		for(int i=Repository.windowSize-1;i>0;i--){
+			strData.append("[").append(curTime-i*1000).append(",").append(dataList.get(Repository.windowSize-1-i).getFiftyTh()).append("],");
+		}
+		strData.append("[").append(curTime).append(",").append(dataList.get(Repository.windowSize-1).getFiftyTh()).append("]]");
+		HSeries.append(strName).append(strData).append(",marker: {enabled: false}},");
+		//80th
+		strName.setLength(0);strData.setLength(0);
+		strName.append("{name:'80th',");
+		strData.append("data:[");
+		for(int i=Repository.windowSize-1;i>0;i--){
+			strData.append("[").append(curTime-i*1000).append(",").append(dataList.get(Repository.windowSize-1-i).getEightyTh()).append("],");
+		}
+		strData.append("[").append(curTime).append(",").append(dataList.get(Repository.windowSize-1).getEightyTh()).append("]]");
+		HSeries.append(strName).append(strData).append(",marker: {enabled: false}},");
+		//90th
+		strName.setLength(0);strData.setLength(0);
+		strName.append("{name:'90th',");
+		strData.append("data:[");
+		for(int i=Repository.windowSize-1;i>0;i--){
+			strData.append("[").append(curTime-i*1000).append(",").append(dataList.get(Repository.windowSize-1-i).getNintyTh()).append("],");
+		}
+		strData.append("[").append(curTime).append(",").append(dataList.get(Repository.windowSize-1).getNintyTh()).append("]]");
+		HSeries.append(strName).append(strData).append(",marker: {enabled: false}},");
 
 		//绘制99th曲线
 		strName.setLength(0);
-		strData.setLength(0);
-		HSeries.setLength(0);
-		strName.append("{name:'riscvRealQueryData',"); 
+		strData.setLength(0);  
+		strName.append("{name:'99th',"); 
 		strData.append("data:[");		
 		for(int i=Repository.windowSize-1;i>0;i--){
 			strData.append("[").append(curTime-i*1000).append(",").append(dataList.get(Repository.windowSize-1-i).getNintyNineTh()).append("],");
 		}
 		strData.append("[").append(curTime).append(",").append(dataList.get(Repository.windowSize-1).getNintyNineTh()).append("]]");
+		HSeries.append(strName).append(strData).append(",marker: {enabled: false}},");
+
+		//99.9th
+		strName.setLength(0);strData.setLength(0);
+		strName.append("{name:'99.9th',");
+		strData.append("data:[");
+		for(int i=Repository.windowSize-1;i>0;i--){
+			strData.append("[").append(curTime-i*1000).append(",").append(dataList.get(Repository.windowSize-1-i).getNintyNinePointNineTh()).append("],");
+		}
+		strData.append("[").append(curTime).append(",").append(dataList.get(Repository.windowSize-1).getNintyNinePointNineTh()).append("]]");
+		HSeries.append(strName).append(strData).append(",marker: {enabled: false}},");
+
+		//max
+		strName.setLength(0);strData.setLength(0);
+		strName.append("{name:'max',");
+		strData.append("data:[");
+		for(int i=Repository.windowSize-1;i>0;i--){
+			strData.append("[").append(curTime-i*1000).append(",").append(dataList.get(Repository.windowSize-1-i).getMax()).append("],");
+		}
+		strData.append("[").append(curTime).append(",").append(dataList.get(Repository.windowSize-1).getMax()).append("]]");
 		HSeries.append(strName).append(strData).append(",marker: {enabled: false}}");
-		model.addAttribute("redisNintyNineThStr",HSeries.toString()); 
+
+		model.addAttribute("str",HSeries.toString()); 
 
 		return "demo_riscv_real_latency_redis";
 	}
@@ -523,18 +570,23 @@ public class RiscvController {
 	 * 课题3
 	 * 进入监控页面绘制CDF
 	 */
-	@RequestMapping(value="/go_monitor_3.do")
+	@RequestMapping(value="/goMonitor3.do")
 	public String goMonitor3(HttpServletRequest request,HttpServletResponse response,Model model) {
-		StringBuffer strName=new StringBuffer();
-		StringBuffer strData=new StringBuffer();
-		StringBuffer HSeries=new StringBuffer();
-		strName.append("{name:'高优先级@RISC-V Linux',");
-		CDFBean df=null;
+		Properties prop = new Properties();
+		InputStream is = WebServerJobImpl.class.getResourceAsStream("/conf/sys.properties");
 		try {
-			df = ReadFile.getInstance().readCDFFile("H://cdf.txt", "H://cdf_x86.txt", "H://conn_h.txt", "H://conn_h_x86.txt");
+			prop.load(is);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		String filePath=prop.getProperty("riscv_project3_path").trim();
+
+		StringBuffer strName=new StringBuffer();
+		StringBuffer strData=new StringBuffer();
+		StringBuffer HSeries=new StringBuffer();
+		strName.append("{name:'高优先级@RISC-V Linux',color:Highcharts.getOptions().colors[2],");
+		CDFBean df=read.readRiscvCDFfile(filePath+"cdf.txt", filePath+"cdf_x86.txt", filePath+"conn_h.txt", filePath+"conn_h_x86.txt");
+
 		strData.append("data:[");
 		int size=10;
 		for(int i=1;i<size-1;i++){ //拼接字符串 
@@ -545,7 +597,7 @@ public class RiscvController {
 
 		strName.setLength(0);
 		strData.setLength(0); 
-		strName.append("{name:'高优先级@RISC-V-LNS',");
+		strName.append("{name:'高优先级@RISC-V-LNS',color:Highcharts.getOptions().colors[3],");
 		strData.append("data:[");
 		for(int i=1;i<size-1;i++){
 			strData.append("[").append(String.valueOf(df.getHigh()[i])).append(",").append(String.valueOf(df.getCdf()[i])).append("],");
@@ -559,7 +611,7 @@ public class RiscvController {
 		strName.setLength(0);
 		strData.setLength(0); 
 		HSeries.setLength(0);
-		strName.append("{name:'低优先级@RISC-V Linux',");
+		strName.append("{name:'低优先级@RISC-V Linux',color:Highcharts.getOptions().colors[2],");
 		strData.append("data:[");
 		for(int i=1;i<size-1;i++){ //拼接字符串 
 			strData.append("[").append(String.valueOf(df.getLow_x86()[i])).append(",").append(String.valueOf(df.getCdf()[i])).append("],");
@@ -569,7 +621,7 @@ public class RiscvController {
 
 		strName.setLength(0);
 		strData.setLength(0); 
-		strName.append("{name:'低优先级@RISC-V-LNS',");
+		strName.append("{name:'低优先级@RISC-V-LNS',color:Highcharts.getOptions().colors[3],");
 		strData.append("data:[");
 		for(int i=1;i<size-1;i++){
 			strData.append("[").append(String.valueOf(df.getLow()[i])).append(",").append(String.valueOf(df.getCdf()[i])).append("],");
@@ -585,53 +637,54 @@ public class RiscvController {
 	 * 课题3
 	 * 进入监控页面绘制CDF
 	 */
-	@RequestMapping(value="/get_monitor_3.do")
-	public String getMonitor3(HttpServletRequest request,HttpServletResponse response,Model model) {
-		StringBuffer strName=new StringBuffer();
-		StringBuffer strData=new StringBuffer();
-		StringBuffer HSeries=new StringBuffer();
-		strName.append("{name:'高优先级@RISC-V Linux',");
-		CDFBean df=null;
+	@RequestMapping(value="/getMonitor3.do")
+	public void getMonitor3(HttpServletRequest request,HttpServletResponse response,Model model) {
+		Properties prop = new Properties();
+		InputStream is = WebServerJobImpl.class.getResourceAsStream("/conf/sys.properties");
 		try {
-			df = ReadFile.getInstance().readCDFFile("H://cdf.txt", "H://cdf_x86.txt", "H://conn_h.txt", "H://conn_h_x86.txt");
+			prop.load(is);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		String filePath=prop.getProperty("riscv_project3_path").trim();
+
+		StringBuffer strName=new StringBuffer();
+		StringBuffer strData=new StringBuffer();
+		StringBuffer HSeries=new StringBuffer();
+		strName.append("{name:'高优先级@RISC-V Linux',color:Highcharts.getOptions().colors[2],");
+		CDFBean df=read.readRiscvCDFfile(filePath+"cdf.txt", filePath+"cdf_x86.txt", filePath+"conn_h.txt", filePath+"conn_h_x86.txt");
+
 		strData.append("data:[");
 		int size=10;
 		for(int i=1;i<size-1;i++){ //拼接字符串 
 			strData.append("[").append(String.valueOf(df.getHigh_x86()[i])).append(",").append(String.valueOf(df.getCdf()[i])).append("],");
 		}
 		strData.append("[").append(String.valueOf(df.getHigh_x86()[size-1])).append(",").append(String.valueOf(df.getCdf()[size-1])).append("]]");
-		HSeries.append(strName).append(strData).append("},"); 
+		HSeries.append(strName).append(strData).append("}#"); 
 
 		strName.setLength(0);
 		strData.setLength(0); 
-		strName.append("{name:'高优先级@RISC-V-LNS',");
+		strName.append("{name:'高优先级@RISC-V-LNS',color:Highcharts.getOptions().colors[3],");
 		strData.append("data:[");
 		for(int i=1;i<size-1;i++){
 			strData.append("[").append(String.valueOf(df.getHigh()[i])).append(",").append(String.valueOf(df.getCdf()[i])).append("],");
 		}
 		strData.append("[").append(String.valueOf(df.getHigh()[size-1])).append(",").append(String.valueOf(df.getCdf()[size-1])).append("]]");
-
-		HSeries.append(strName).append(strData).append("}");
-
-		model.addAttribute("cdf_high",HSeries.toString());//封装字符串发送到前端页面
+		HSeries.append(strName).append(strData).append("}#"); 
 
 		strName.setLength(0);
 		strData.setLength(0); 
-		HSeries.setLength(0);
-		strName.append("{name:'低优先级@RISC-V Linux',");
+		strName.append("{name:'低优先级@RISC-V Linux',color:Highcharts.getOptions().colors[2],");
 		strData.append("data:[");
 		for(int i=1;i<size-1;i++){ //拼接字符串 
 			strData.append("[").append(String.valueOf(df.getLow_x86()[i])).append(",").append(String.valueOf(df.getCdf()[i])).append("],");
 		}
 		strData.append("[").append(String.valueOf(df.getLow_x86()[size-1])).append(",").append(String.valueOf(df.getCdf()[size-1])).append("]]");
-		HSeries.append(strName).append(strData).append("},"); 
+		HSeries.append(strName).append(strData).append("}#"); 
 
 		strName.setLength(0);
 		strData.setLength(0); 
-		strName.append("{name:'低优先级@RISC-V-LNS',");
+		strName.append("{name:'低优先级@RISC-V-LNS',color:Highcharts.getOptions().colors[3],");
 		strData.append("data:[");
 		for(int i=1;i<size-1;i++){
 			strData.append("[").append(String.valueOf(df.getLow()[i])).append(",").append(String.valueOf(df.getCdf()[i])).append("],");
@@ -640,19 +693,23 @@ public class RiscvController {
 
 		HSeries.append(strName).append(strData).append("}");
 
-		model.addAttribute("cdf_low",HSeries.toString());//封装字符串发送到前端页面
-		return "monitor_3";
+		try {
+			response.getWriter().write(HSeries.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 	}
 	/**
-	 * 进入riscv redis的实时查询页面
+	 * 进入课题2的展示页面
 	 * @param request
 	 * @param response
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("/goMoitor2.do")
-	public String goMoitor2(HttpServletRequest request,HttpServletResponse response,Model model){
-	
+	@RequestMapping("/goMonitor2.do")
+	public String goMonitor2(HttpServletRequest request,HttpServletResponse response,Model model){
+
 		Properties prop = new Properties();
 		InputStream is = WebServerJobImpl.class.getResourceAsStream("/conf/sys.properties");
 		try {
@@ -671,7 +728,7 @@ public class RiscvController {
 			} catch (InterruptedException e) { 
 				e.printStackTrace();
 			}
-			dataList=read.readRiscvWindowDataFile("H://project2.txt");
+			dataList=read.readRiscvWindowDataFile(prop.getProperty("riscv_project2_file").trim());
 		}
 		//绘制均值曲线
 		strName.append("{name:'Ceph',"); 
@@ -681,7 +738,7 @@ public class RiscvController {
 		}
 		strData.append("[").append(curTime).append(",").append(dataList.get(Repository.windowSize-1).getCeph()).append("]]");
 		HSeries.append(strName).append(strData).append(",marker: {enabled: false}},");
-		 
+
 		//绘制99th曲线
 		strName.setLength(0);
 		strData.setLength(0);  
@@ -693,11 +750,11 @@ public class RiscvController {
 		strData.append("[").append(curTime).append(",").append(dataList.get(Repository.windowSize-1).getGecko()).append("]]");
 		HSeries.append(strName).append(strData).append(",marker: {enabled: false}}");
 		model.addAttribute("cephGeckoStr",HSeries.toString()); 
-	
+
 		return "monitor_2";
 	}
 	/**
-	 * 查询最新的redis的响应时间数据
+	 * 查询最新课题2的数据
 	 * @param request
 	 * @param response 
 	 */
@@ -711,14 +768,15 @@ public class RiscvController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			DataProject2Bean bean= read.readRiscvLatestDataFile("H://project2.txt");
+			DataProject2Bean bean= read.readRiscvLatestDataFile(prop.getProperty("riscv_project2_file").trim());
 			bean.setCollectTime(System.currentTimeMillis());
-	
+
 			response.getWriter().write(JSONArray.fromObject(bean).toString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+
 
 }

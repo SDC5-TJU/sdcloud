@@ -41,7 +41,7 @@ import scs.service.recordManage.RecordManageService;
 import scs.util.jobSchedul.jobImpl.webServer.WebServerJobImpl; 
 import scs.util.repository.Repository;
 import scs.util.tools.AdapterForResult;
-import scs.util.tools.ReadFile;
+import scs.util.tools.ReadRiscvServiceDataFile;
 import scs.util.tools.ResultDiffAnalysis; 
 
 /**

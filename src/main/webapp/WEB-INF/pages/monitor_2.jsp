@@ -23,21 +23,25 @@
 
 <body>
 	<div id="mainDiv"> 
-		<div id="container1"></div> 
+		<div id="container1" style="width: 1000px; height: 350px; "></div> 
+		<div id="containerControl">
+			<span style="font-family: 微软雅黑; font-size: 14px;">线程控制:</span> 
+			<input type="button" id="startButton" value="继续" onclick="start();" style="cursor: pointer">
+		</div>
 		<script type="text/javascript" src="statics/js/jquery-1.9.1.js"></script>
 		<script type="text/javascript" src="statics/js/highcharts.js"></script>
 		<script type="text/javascript" src="statics/js/highcharts-more.js"></script>
-		<script type="text/javascript"> 
+		<script type="text/javascript">
 		var localReturnedData = null;
-		var flag=true;//flag为true,开启曲线绘制
+		var flag=false;//flag为true,开启曲线绘制
 		
-	  	//定时函数,每隔1min执行一次,向后端请求新的数据
+	  	//定时函数,每隔1000ms执行一次,向后端请求新的数据
 		setInterval(function() {
 			if(flag==true){
 				$.ajax({
 					async:true,
 					type:"get",
-					url:"monitor_2.do",//发送的get请求
+					url:"getMonitor2.do",//发送的get请求
 					data:{},
 					dataType:"json",
 					success:function(returned) {  
@@ -101,15 +105,18 @@
                 }
             },
             title: {
-				text: '高优先级部分服务延迟CDF对比'
+				text: '存储系统尾延迟: Gecko vs. Ceph'
 			},
 			 xAxis: {
+				 title: {
+					 text:'时间'
+				 },
 	          	 type: 'datetime',
 	               tickPixelInterval: 150,
 	           },
             yAxis: {
 				title: {
-						text: 'CDF'
+						text: '99th百分比延迟(ms)'
 				}
 			},
 			legend: {
@@ -121,7 +128,7 @@
                 formatter: function () {
                     return '<b>' + this.series.name + '</b><br/>' +
                         Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
-                        Highcharts.numberFormat(this.y, 2)+'MB/s';
+                        Highcharts.numberFormat(this.y, 2)+'ms';
                 }
             },            
             exporting: {
@@ -131,6 +138,18 @@
         });
        
  });
+			
+</script>
+<script>
+function start(){
+	if(flag==true){
+		 flag=false;
+		 document.getElementById('startButton').value="继续";
+	}else{
+		 flag=true;
+		 document.getElementById('startButton').value="暂停";
+	}
+}
 </script>
 </div>
 </body>

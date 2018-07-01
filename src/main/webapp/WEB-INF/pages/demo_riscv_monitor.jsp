@@ -23,10 +23,10 @@
 
 <body>
 	<div id="mainDiv">
-		<div id="container1"></div>
-		<div id="container2"></div>
-		<div id="container3"></div>
-		<div id="container4"></div> 
+		<div id="container1" style="height: 250px;"></div>
+		<div id="container2" style="height: 250px;"></div>
+		<div id="container3" style="top:250px;height: 250px;"></div>
+		<div id="container4" style="top:250px;height: 250px;"></div> 
 		<div id="QpsDiv"
 				style="width: 150px; height: 50px; position: absolute; left: -116px; top: 24px;">平均利用率:<span id="avgUsagePerc"></span>%</div>
 	

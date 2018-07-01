@@ -120,19 +120,19 @@ public class Repository{
 	 * 静态块
 	 */
 	static {
-		//				containerInfoMap=RepositoryDao.initContainerInfoMap();//初始化容器信息map 
-		//				System.out.println("初始化 containerInfoMap size="+containerInfoMap.size());
-		//				appInfoMap=RepositoryDao.initAppInfoMap();//初始化app信息map 
-		//				System.out.println("初始化 appInfoMap  size="+appInfoMap.size());
-		//				Set<String> appNameSet = appInfoMap.keySet(); //取出所有应用的名称
-		//				for(String appName:appNameSet){ 
-		//					appStatusMap.put(appName,false);//系统初始化,所有应用默认为未执行
-		//					System.out.println("初始化app执行状态 "+appName+"=false");
-		//				}
-		//				systemInfoMap=RepositoryDao.initSystemInfoMap();
-
-		//Repository.getInstance().readProperties();
-		//LoadService.getInstance().service("192.168.1.129", 22222);//开启rmi服务端
+		Repository.getInstance().readProperties();
+//		containerInfoMap=RepositoryDao.initContainerInfoMap();//初始化容器信息map 
+//		System.out.println("初始化 containerInfoMap size="+containerInfoMap.size());
+//		appInfoMap=RepositoryDao.initAppInfoMap();//初始化app信息map 
+//		System.out.println("初始化 appInfoMap  size="+appInfoMap.size());
+//		Set<String> appNameSet = appInfoMap.keySet(); //取出所有应用的名称
+//		for(String appName:appNameSet){ 
+//			appStatusMap.put(appName,false);//系统初始化,所有应用默认为未执行
+//			System.out.println("初始化app执行状态 "+appName+"=false");
+//		}
+//		systemInfoMap=RepositoryDao.initSystemInfoMap();
+//
+//		LoadService.getInstance().service("192.168.1.129", 22222);//开启rmi服务端
 	}
 	/**
 	 * 读取配置文件的参数
@@ -145,8 +145,7 @@ public class Repository{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		Repository.windowSize=Integer.parseInt(prop.getProperty("windowSize").trim());//读取llc总路数 0xfffff 代表20路
+		Repository.windowSize=Integer.parseInt(prop.getProperty("windowSize").trim());//读取窗口大小数据量
 	}
 
 	/**

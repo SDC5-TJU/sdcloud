@@ -14,7 +14,7 @@ import scs.pojo.XapianDataBean;
 import scs.util.jobSchedul.JobSchedulDriver; 
 import scs.util.repository.Repository;
 import scs.util.tools.HttpClientPool;
-import scs.util.tools.ReadFile;
+import scs.util.tools.ReadRiscvServiceDataFile;
 
 
 @Service
@@ -168,7 +168,7 @@ public class JobSchedulServiceImpl implements JobSchedulService {
 	public List<XapianDataBean> getRiscvXapianResult(String filePath){
 		List<XapianDataBean> list=new ArrayList<XapianDataBean>();
 		try {
-			list=ReadFile.getInstance().readXapianFile(filePath);
+			list=ReadRiscvServiceDataFile.getInstance().readXapianFile(filePath);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -180,7 +180,7 @@ public class JobSchedulServiceImpl implements JobSchedulService {
 	public List<TwoTuple<Long, Integer>> getRiscvRedisResult(String filePath){
 		List<TwoTuple<Long, Integer>> list=new ArrayList<TwoTuple<Long, Integer>>();
 		try {
-			list=ReadFile.getInstance().readRedisFile(filePath);
+			list=ReadRiscvServiceDataFile.getInstance().readRedisFile(filePath);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
