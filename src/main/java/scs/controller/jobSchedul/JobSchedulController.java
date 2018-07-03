@@ -1,16 +1,8 @@
 package scs.controller.jobSchedul;
 
-import org.apache.log4j.Logger; 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Random;
-import java.util.Set;
+import org.apache.log4j.Logger;  
+import java.util.List; 
+import java.util.Random; 
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -19,29 +11,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import net.sf.json.JSONArray;
+ 
 import scs.pojo.AppConfigBean;
 import scs.pojo.MemcachedDataBean;
-import scs.pojo.SiloDataBean;
-import scs.pojo.SystemResourceUsageBean;
+import scs.pojo.SiloDataBean; 
 import scs.pojo.TestRecordBean;
 import scs.pojo.TimeResultBean;
 import scs.pojo.TimeResultDiffBean;
 import scs.pojo.TwoTuple;
-import scs.pojo.XapianDataBean;
-import scs.pojo.riscv.RiscvLLCGroup;
-import scs.pojo.riscv.RiscvLLCPOJO;
+import scs.pojo.XapianDataBean; 
 import scs.service.appConfig.AppConfigService;
 import scs.service.historyData.HistoryDataService;
-import scs.service.jobSchedul.JobSchedulService;
-import scs.service.monitor.riscv.ReadRiscvFiles;
-import scs.service.monitor.riscv.impl.ReadRiscvFilesImpl; 
-import scs.service.recordManage.RecordManageService;
-import scs.util.jobSchedul.jobImpl.webServer.WebServerJobImpl; 
+import scs.service.jobSchedul.JobSchedulService; 
+import scs.service.recordManage.RecordManageService; 
 import scs.util.repository.Repository;
-import scs.util.tools.AdapterForResult;
-import scs.util.tools.ReadRiscvServiceDataFile;
+import scs.util.tools.AdapterForResult; 
 import scs.util.tools.ResultDiffAnalysis; 
 
 /**

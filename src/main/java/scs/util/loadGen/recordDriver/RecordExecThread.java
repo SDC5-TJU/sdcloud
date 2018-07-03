@@ -18,29 +18,29 @@ public class RecordExecThread extends Thread{
 
 	@Override
 	public void run(){  
-		int sum=0;
-		QueryData data=new QueryData();
+		int avgCurSecond=0;
+	
 		Repository instance=Repository.getInstance();
 		while(Repository.onlineDataFlag){
-			Repository.tempOnlineDataList.clear();
 			while(Repository.onlineDataList.size()==0){
 				try {
-					Thread.sleep(50);
+					Thread.sleep(10);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
+			Repository.tempOnlineDataList.clear();
 			Repository.tempOnlineDataList.addAll(Repository.onlineDataList); 
 			Repository.onlineDataList.clear();
-			sum=0;
+			avgCurSecond=0;
 			for(QueryData item:Repository.tempOnlineDataList){
-				sum+=item.getQueryTime();
+				avgCurSecond+=item.getQueryTime();
 			}
-			sum=sum/Repository.tempOnlineDataList.size();//由于while循环的存在,所以分母不可能为0
-	 
-			data.setGenerateTime(Repository.tempOnlineDataList.get(Repository.tempOnlineDataList.size()-1).getGenerateTime());
-			data.setQueryTime(sum);
+			avgCurSecond=avgCurSecond/Repository.tempOnlineDataList.size();//由于while循环的存在,所以分母不可能为0
+			QueryData data=new QueryData();
+			//data.setGenerateTime(Repository.tempOnlineDataList.get(Repository.tempOnlineDataList.size()-1).getGenerateTime());
+			data.setGenerateTime(System.currentTimeMillis());
+			data.setQueryTime(avgCurSecond);
 			data.setQps(Repository.tempOnlineDataList.size());
 		
 			instance.addWindowOnlineDataList(data);

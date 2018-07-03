@@ -11,6 +11,11 @@ public class QueryData{
 		this.generateTime = generateTime;
 		this.queryTime = queryTime;
 	}
+	public QueryData(QueryData data) { 
+		this.generateTime = data.getGenerateTime();
+		this.queryTime = data.getQueryTime();
+		this.qps = data.getQps();
+	}
 	public QueryData() {
 	}
 	public long getGenerateTime() {

@@ -21,7 +21,7 @@ public class LoadExecThread extends Thread{
 	 */
 	public LoadExecThread(CloseableHttpClient httpclient,String url){
 		this.httpclient=httpclient;
-		this.url=url; 
+		this.url=url;
 	}
 
 	@Override

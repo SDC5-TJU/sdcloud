@@ -280,6 +280,33 @@ public class ReadRiscvFilesImpl implements ReadRiscvFiles {
 	} 
 	
 	@Override
+	public DataProject2Bean readRiscvLatestDataFile(String filePath) {
+		// TODO Auto-generated method stub
+		DataProject2Bean bean=new DataProject2Bean();
+		BufferedReader readWorker = null;
+		try {
+			readWorker = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)));
+			String lastLine = "";
+			String mString; 
+			try {
+				while ((mString = readWorker.readLine()) != null) {
+					lastLine = mString;
+				} 
+				String[] split=lastLine.split(",");
+				bean.setCeph(Float.parseFloat(split[0].trim()));
+				bean.setGecko(Float.parseFloat(split[1].trim()));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("没有该文件");
+			e.printStackTrace();
+		}
+	
+		return bean;
+	}
+
+	@Override
 	public ArrayList<DataProject2Bean> readRiscvWindowDataFile(String filePath) {
 		int totalLine=0;
 		BufferedReader readWorker = null;
@@ -327,32 +354,6 @@ public class ReadRiscvFilesImpl implements ReadRiscvFiles {
 		return result;
 	}
 
-	@Override
-	public DataProject2Bean readRiscvLatestDataFile(String filePath) {
-		// TODO Auto-generated method stub
-		DataProject2Bean bean=new DataProject2Bean();
-		BufferedReader readWorker = null;
-		try {
-			readWorker = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)));
-			String lastLine = "";
-			String mString; 
-			try {
-				while ((mString = readWorker.readLine()) != null) {
-					lastLine = mString;
-				} 
-				String[] split=lastLine.split(",");
-				bean.setCeph(Float.parseFloat(split[0].trim()));
-				bean.setGecko(Float.parseFloat(split[1].trim()));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		} catch (FileNotFoundException e) {
-			System.out.println("没有该文件");
-			e.printStackTrace();
-		}
-
-		return bean;
-	}
 	/**
 	 * 课题3
 	 * @param cdfFilePath

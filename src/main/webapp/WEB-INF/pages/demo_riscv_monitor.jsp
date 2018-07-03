@@ -28,7 +28,7 @@
 		<div id="container3" style="top:250px;height: 250px;"></div>
 		<div id="container4" style="top:250px;height: 250px;"></div> 
 		<div id="QpsDiv"
-				style="width: 150px; height: 50px; position: absolute; left: -116px; top: 24px;"><span id="avgUsagePerc"></span></div>
+				style="width: 150px; height: 50px; position: absolute; left: -116px; top: 24px;">平均利用率:<span id="avgUsagePerc"></span>%</div>
 	
 		<div id="containerControl">
 			<span style="font-family: 微软雅黑; font-size: 14px;">线程控制:</span> 
@@ -107,16 +107,16 @@
             						  if(returnedData!=null){
           			            	    x = returnedData[0].collectTime;
           			            	    y = returnedData[0].cpuUsageRate;
-          			            	   // z = returnedData[0].cpuAvgUsageRate;
+          			            	    z = returnedData[0].cpuAvgUsageRate;
           			            	    if(lastcollecttime==null){//如果第一次判断 直接添加点进去
           			            	    	 series.addPoint([x,y], true, true); 
           			            	    	 lastcollecttime = x; 
-          			            	    	// document.getElementById('avgUsagePerc').innerHTML=z;
+          			            	    	 document.getElementById('avgUsagePerc').innerHTML=z;
           			            	    }else{ 
           			            	    	if(lastcollecttime<x){//如果不是第一次判断，则只有上次时间小于当前时间时才添加点
           			            	    		series.addPoint([x,y], true, true); 
           				            	    	lastcollecttime = x;  
-             			            	    //	document.getElementById('avgUsagePerc').innerHTML=z;
+             			            	    	document.getElementById('avgUsagePerc').innerHTML=z;
           			            	    	}
           			            	    }
           				               

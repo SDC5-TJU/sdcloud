@@ -17,7 +17,7 @@ public class LoadInterfaceImpl extends UnicastRemoteObject implements LoadInterf
 	@Override
 	public float getLcAvgLatency() {
 		// TODO Auto-generated method stub
-		return Repository.getInstance().getAvgQueryTime();
+		return Repository.getInstance().getOnlineAvgQueryTime();
 	}
 
 	 

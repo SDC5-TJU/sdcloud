@@ -1,5 +1,8 @@
 package scs.controller.jobSchedul;
   
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse; 
 import org.springframework.stereotype.Controller;
@@ -7,7 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import net.sf.json.JSONArray;  
+import net.sf.json.JSONArray;
+import scs.pojo.heracles.QueryData;
+import scs.util.format.DataFormats;
 import scs.util.loadGen.loadDriver.WebSearchDriver;
 import scs.util.loadGen.recordDriver.RecordDriver;
 import scs.util.repository.Repository; 
@@ -19,7 +24,8 @@ import scs.util.repository.Repository;
  */
 @Controller
 public class HeraclesOnlineController { 
-  
+	private DataFormats dataFormat=DataFormats.getInstance();
+	private Repository instance=Repository.getInstance();
 	/**
 	 * 开启Heracles在线查询负载
 	 * @param request
@@ -35,9 +41,15 @@ public class HeraclesOnlineController {
 			if(intensity<=0)
 				intensity=1;
 			Repository.onlineRequestIntensity=intensity;
-			RecordDriver.getInstance().execute();
-			WebSearchDriver.getInstance().executeJob("possion");
-
+			if(Repository.onlineQueryThreadRunning==true){
+				System.out.println("online query线程已经在运行了");  
+				//线程已经在运行了
+			}else{
+				RecordDriver.getInstance().execute();
+				WebSearchDriver.getInstance().executeJob("possion");
+				Repository.onlineQueryThreadRunning=true;
+			}
+			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -86,16 +98,29 @@ public class HeraclesOnlineController {
 		StringBuffer strName=new StringBuffer();
 		StringBuffer strData=new StringBuffer();
 		StringBuffer HSeries=new StringBuffer();
-		strName.append("{name:'queryTime',"); 
+		strName.append("{name:'queryTime',");
 		strData.append("data:[");
-		int size= 60;
-		for(int i=0;i<size;i++){
-			strData.append("[").append(System.currentTimeMillis()).append(",").append(0).append("],");
+ 
+		List<QueryData> list=new ArrayList<QueryData>();
+		list.addAll(Repository.windowOnlineDataList);
+		while(list.size()<Repository.windowSize){
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			list.clear();
+			list.addAll(Repository.windowOnlineDataList);
+		} 
+		int size=list.size();
+		
+		for(int i=0;i<size-1;i++){
+			strData.append("[").append(list.get(i).getGenerateTime()).append(",").append(list.get(i).getQueryTime()).append("],");
 		}
-		strData.append("[").append(System.currentTimeMillis()).append(",").append(0).append("]]");
+		strData.append("[").append(list.get(size-1).getGenerateTime()).append(",").append(list.get(size-1).getQueryTime()).append("]]");
+	
 		HSeries.append(strName).append(strData).append("}");
-		model.addAttribute("seriesStr",HSeries.toString()); 
-
+		model.addAttribute("seriesStr",HSeries.toString());  
 		return "onlineData";
 	}
 
@@ -108,11 +133,10 @@ public class HeraclesOnlineController {
 	@RequestMapping("/getOnlineQueryTime.do")
 	public void getOnlineQueryTime(HttpServletRequest request,HttpServletResponse response){
 		try{
-			response.getWriter().write(JSONArray.fromObject(Repository.latestOnlineData).toString());
+			response.getWriter().write(JSONArray.fromObject(Repository.latestOnlineData).toString().replace("}",",\"cpuAvgUsageRate\":"+dataFormat.subFloat(instance.getOnlineAvgQueryTime(),2)+"}"));
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
-
 
 }

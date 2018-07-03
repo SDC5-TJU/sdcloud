@@ -7,8 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
-import java.util.Random;
+import java.util.Properties; 
 import java.util.Set;
 
 import javax.annotation.Resource;
@@ -59,6 +58,8 @@ public class RiscvController {
 
 	private DataFormats dataFormat=DataFormats.getInstance();
 	private ReadRiscvFiles read=new ReadRiscvFilesImpl();
+	private Repository instance=Repository.getInstance();
+
 
 	@RequestMapping("/getRiscvXapianResult.do")
 	public String getRiscvXapianResult(HttpServletRequest request,HttpServletResponse response,Model model){
@@ -204,7 +205,7 @@ public class RiscvController {
 		} catch (IOException e) { 
 			e.printStackTrace();
 		} 
-		Long curTime=System.currentTimeMillis();
+		Long curTime=0L;
 		List<Double> dataList=new ArrayList<Double>();
 		StringBuffer strName=new StringBuffer();
 		StringBuffer strData=new StringBuffer();
@@ -212,13 +213,16 @@ public class RiscvController {
 		/**
 		 * cpu
 		 */
-		if(Level>=1){
+		if(Level>=1){ 
+			dataList=read.readRiscvWindowResourceUsageFile(prop.getProperty("riscv_monitor_path").trim()+"cpu_usage_"+riscvId+".csv");
 			while(dataList.size()<Repository.windowSize){//小于60个点 需要睡眠等待
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
+				}
+				if(!new File(prop.getProperty("riscv_monitor_path").trim()+"cpu_usage_"+riscvId+".csv").exists()){
+					break;//文件不存在 直接跳出while 不然会重复抛出异常
 				}
 				dataList=read.readRiscvWindowResourceUsageFile(prop.getProperty("riscv_monitor_path").trim()+"cpu_usage_"+riscvId+".csv");
 			}
@@ -227,11 +231,12 @@ public class RiscvController {
 			HSeries.setLength(0);
 			strName.append("{name:'cpuUsage',type:'area',"); 
 			strData.append("data:[");		
+			curTime=System.currentTimeMillis();
 			for(int i=Repository.windowSize-1;i>0;i--){
 				SystemResourceUsageBean bean=new SystemResourceUsageBean();
 				bean.setCollectTime(curTime-i*1000);
 				bean.setCpuUsageRate((float)(dataList.get(Repository.windowSize-1-i)*100));
-				//Repository.getInstance().addRiscvWindowCpuUsageDataList(bean); 
+				instance.addRiscvWindowCpuUsageDataList(riscvId,bean); 
 				strData.append("[").append(curTime-i*1000).append(",").append(dataList.get(Repository.windowSize-1-i)*100).append("],");
 			}
 			strData.append("[").append(curTime).append(",").append(dataList.get(Repository.windowSize-1)*100).append("]]");
@@ -240,18 +245,20 @@ public class RiscvController {
 		}else{
 			model.addAttribute("cpuStr","{name:'cpuUsage',type:'area',data:[]}"); 
 		}
-		
+
 		if(Level>=2){
 			/**
 			 * mem
-			 */
-			dataList.clear();
+			 */ 
+			dataList=read.readRiscvWindowResourceUsageFile(prop.getProperty("riscv_monitor_path").trim()+"mem_"+riscvId+".csv");
 			while(dataList.size()<Repository.windowSize){//小于60个点 需要睡眠等待
 				try {
 					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+				} catch (InterruptedException e) { 
 					e.printStackTrace();
+				}
+				if(!new File(prop.getProperty("riscv_monitor_path").trim()+"mem_"+riscvId+".csv").exists()){
+					break;//文件不存在 直接跳出while 不然会重复抛出异常
 				}
 				dataList=read.readRiscvWindowResourceUsageFile(prop.getProperty("riscv_monitor_path").trim()+"mem_"+riscvId+".csv");
 			}
@@ -260,6 +267,7 @@ public class RiscvController {
 			HSeries.setLength(0);
 			strName.append("{name:'memUsage',type:'area',"); 
 			strData.append("data:[");		
+			curTime=System.currentTimeMillis();
 			for(int i=Repository.windowSize-1;i>0;i--){
 				strData.append("[").append(curTime-i*1000).append(",").append(dataList.get(Repository.windowSize-1-i)*100).append("],");
 			}
@@ -274,16 +282,18 @@ public class RiscvController {
 			 * llc and mem bandwidth
 			 */ 
 			ArrayList<RiscvLLCGroup> dataList2=new ArrayList<RiscvLLCGroup>();
+			dataList2=read.readLLC(prop.getProperty("riscv_monitor_path").trim()+"llc_mb_"+riscvId+".csv",true);
 			while(dataList2.size()<Repository.windowSize){//小于60个点 需要睡眠等待
 				try {
 					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+				} catch (InterruptedException e) { 
 					e.printStackTrace();
 				}
+				if(!new File(prop.getProperty("riscv_monitor_path").trim()+"llc_mb_"+riscvId+".csv").exists()){
+					break;//文件不存在 直接跳出while 不然会重复抛出异常
+				}
 				dataList2=read.readLLC(prop.getProperty("riscv_monitor_path").trim()+"llc_mb_"+riscvId+".csv",true);
-			}
-
+			} 
 			Map<Integer,RiscvLLCPOJO> map=new HashMap<Integer,RiscvLLCPOJO>();
 			List<RiscvLLCPOJO> AvgList=new ArrayList<RiscvLLCPOJO>(); 
 			double missRate=0;
@@ -383,9 +393,9 @@ public class RiscvController {
 			bean.setCollectTime(System.currentTimeMillis());
 			bean.setCpuUsageRate((float)read.readRiscvLatestResourceUsageFile(prop.getProperty("riscv_monitor_path").trim()+"cpu_usage_"+riscvId+".csv")*100);
 
-			//Repository.getInstance().addRiscvWindowCpuUsageDataList(bean);
+			instance.addRiscvWindowCpuUsageDataList(riscvId,bean);
 
-			response.getWriter().write(JSONArray.fromObject(bean).toString().replace("}",",\"cpuAvgUsageRate\":"+dataFormat.subFloat(Repository.getInstance().getRiscvAvgCpuUsage(),2)+"}"));
+			response.getWriter().write(JSONArray.fromObject(bean).toString().replace("}",",\"cpuAvgUsageRate\":"+dataFormat.subFloat(instance.getRiscvAvgCpuUsage(riscvId),2)+"}"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -566,10 +576,7 @@ public class RiscvController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-
-	private Random rand=new Random();
+	} 
 
 	/**
 	 * 课题3
@@ -593,7 +600,7 @@ public class RiscvController {
 		CDFBean df=read.readRiscvCDFfile(filePath+"cdf.txt", filePath+"cdf_x86.txt", filePath+"conn_h.txt", filePath+"conn_h_x86.txt");
 
 		strData.append("data:[");
-		 
+
 		for(int i=1;i<size-1;i++){ //拼接字符串 
 			strData.append("[").append(String.valueOf(df.getHigh_x86()[i])).append(",").append(String.valueOf(df.getCdf()[i])).append("],");
 		}
@@ -660,7 +667,7 @@ public class RiscvController {
 		CDFBean df=read.readRiscvCDFfile(filePath+"cdf.txt", filePath+"cdf_x86.txt", filePath+"conn_h.txt", filePath+"conn_h_x86.txt");
 
 		strData.append("data:[");
-	 
+
 		for(int i=1;i<size-1;i++){ //拼接字符串 
 			strData.append("[").append(String.valueOf(df.getHigh_x86()[i])).append(",").append(String.valueOf(df.getCdf()[i])).append("],");
 		}
