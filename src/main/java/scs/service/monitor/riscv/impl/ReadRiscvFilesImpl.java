@@ -204,8 +204,8 @@ public class ReadRiscvFilesImpl implements ReadRiscvFiles {
 					lastLine = mString;
 				} 
 				String[] split=lastLine.split(",");
-				bean.setQps(Integer.parseInt(split[0].trim()));
-				bean.setMean(Integer.parseInt(split[1].trim()));
+				bean.setQps((int)Float.parseFloat(split[0].trim()));
+				bean.setMean((int)Float.parseFloat(split[1].trim()));
 				bean.setMin(Integer.parseInt(split[2].trim()));
 				bean.setFiftyTh(Integer.parseInt(split[3].trim()));
 				bean.setEightyTh(Integer.parseInt(split[4].trim()));
@@ -254,8 +254,8 @@ public class ReadRiscvFilesImpl implements ReadRiscvFiles {
 					if(currentLine>=startLine){
 						RiscvRedisRealDataBean bean=new RiscvRedisRealDataBean();
 						String[] split=mString.split(",");
-						bean.setQps(Integer.parseInt(split[0].trim()));
-						bean.setMean(Integer.parseInt(split[1].trim()));
+						bean.setQps((int)Float.parseFloat(split[0].trim()));
+						bean.setMean((int)Float.parseFloat(split[1].trim()));
 						bean.setMin(Integer.parseInt(split[2].trim()));
 						bean.setFiftyTh(Integer.parseInt(split[3].trim()));
 						bean.setEightyTh(Integer.parseInt(split[4].trim()));

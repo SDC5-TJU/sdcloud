@@ -46,7 +46,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <th style="background:#f9f9f9" width="10%">变化率</th>
                     </tr>
                     <tr>
-                    	<td style="background:#f1f5fa">响应时间90th /ms</td>
+                    	<td style="background:#f1f5fa">响应时间90th /us</td>
                         <td style="background:#f9f9f9">${BaseResult.nintyTh}</td>
                         <td style="background:#f1f5fa">${Result.nintyTh}</td>
                         <c:choose>
@@ -74,7 +74,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</c:choose>
                     </tr>
                     <tr>
-                    	<td style="background:#f1f5fa">响应时间95th /ms</td>						 
+                    	<td style="background:#f1f5fa">响应时间95th /us</td>						 
                          <td style="background:#f9f9f9">${BaseResult.nintyFiveTh}</td>
                         <td style="background:#f1f5fa">${Result.nintyFiveTh}</td>
                         <c:choose>
@@ -102,7 +102,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</c:choose>		
                     </tr>
                     <tr>
-                    	<td style="background:#f1f5fa"> 响应时间99th /ms</td>
+                    	<td style="background:#f1f5fa"> 响应时间99th /us</td>
                         <td style="background:#f9f9f9">${BaseResult.nintyNineTh}</td>
                         <td style="background:#f1f5fa">${Result.nintyNineTh}</td>
                         <c:choose>
@@ -158,7 +158,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</c:choose>	
                     </tr>
                     <tr>
-                   	 	<td style="background:#f1f5fa"> 响应时间平均值 /ms</td>                                        
+                   	 	<td style="background:#f1f5fa"> 响应时间平均值 /us</td>                                        
                          <td style="background:#f9f9f9">${BaseResult.mean}</td>
                         <td style="background:#f1f5fa">${Result.mean}</td>
                         <c:choose>
@@ -186,7 +186,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</c:choose>
                     </tr>
                     <tr>
-                   	 	<td style="background:#f1f5fa"> 响应时间最小值 /ms</td>  						  
+                   	 	<td style="background:#f1f5fa"> 响应时间最小值 /us</td>  						  
                          <td style="background:#f9f9f9">${BaseResult.min}</td>
                         <td style="background:#f1f5fa">${Result.min}</td>
                         <c:choose>
@@ -214,7 +214,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</c:choose>
                     </tr>
                     <tr>
-                    	<td style="background:#f1f5fa"> 响应时间最大值 /ms</td>  
+                    	<td style="background:#f1f5fa"> 响应时间最大值 /us</td>  
                          <td style="background:#f9f9f9">${BaseResult.max}</td>
                         <td style="background:#f1f5fa">${Result.max}</td>
                         <c:choose>
@@ -241,7 +241,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							</c:otherwise>
 						</c:choose>
                     </tr>
-                    <tr>
+                   <%--  <tr>
                     	<td style="background:#f1f5fa"> 体验可用性</td> 						
                          <td style="background:#f9f9f9">${BaseResult.EA}</td>
                         <td style="background:#f1f5fa">${Result.EA}</td>
@@ -268,7 +268,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							   <td style="background:#f9f9f9">${diffBean2.EADiff}%</td>														
 							</c:otherwise>
 						</c:choose>
-                    </tr>
+                    </tr> --%>
                 </table>
             </div>
         </form>
@@ -302,7 +302,7 @@ Highcharts.setOptions({ global: { useUTC: false } });
 
             xAxis: {
                 title: {
-                    text: '响应时间/ms'
+                    text: '响应时间/us'
                 },
                 min:0
             },
@@ -377,7 +377,7 @@ Highcharts.setOptions({ global: { useUTC: false } });
             plotOptions: {
                 series: {
                     marker: {
-                        radius: 2
+                        radius: 1
                     }
                 }
             },
@@ -396,12 +396,12 @@ Highcharts.setOptions({ global: { useUTC: false } });
             } ,
             yAxis: {
                 title: {
-                    text: '响应时间/ms'
+                    text: '响应时间/us'
                 },
             },
             tooltip: {
                 formatter:function(){
-                    return'<strong>'+this.series.name+'</strong><br/><br/>'+'响应时间：'+this.y+' ms';
+                    return'<strong>'+this.series.name+'</strong><br/><br/>'+'响应时间：'+this.y+' us';
                 },
             },
             series: [${diffBean1.baseTimeStr}]
@@ -419,7 +419,7 @@ Highcharts.setOptions({ global: { useUTC: false } });
             plotOptions: {
                 series: {
                     marker: {
-                        radius: 2
+                        radius: 1
                     }
                 }
             },
@@ -439,12 +439,12 @@ Highcharts.setOptions({ global: { useUTC: false } });
             colors: ['#ff3300'],
             yAxis: {
                 title: {
-                    text: '响应时间/ms'
+                    text: '响应时间/us'
                 },
             },
             tooltip: {
                 formatter:function(){
-                    return'<strong>'+this.series.name+'</strong><br/><br/>'+'响应时间：'+this.y+' ms';
+                    return'<strong>'+this.series.name+'</strong><br/><br/>'+'响应时间：'+this.y+' us';
                 },
             },
             series: [${diffBean1.timeStr}]
@@ -460,7 +460,7 @@ Highcharts.setOptions({ global: { useUTC: false } });
             plotOptions: {
                 series: {
                     marker: {
-                        radius: 2
+                        radius: 1
                     }
                 }
             },
@@ -480,12 +480,12 @@ Highcharts.setOptions({ global: { useUTC: false } });
             colors: ['#12d423'],
             yAxis: {
                 title: {
-                    text: '响应时间/ms'
+                    text: '响应时间/us'
                 },
             },
             tooltip: {
                 formatter:function(){
-                	 return'<strong>'+this.series.name+'</strong><br/><br/>'+'响应时间：'+this.y+' ms';
+                	 return'<strong>'+this.series.name+'</strong><br/><br/>'+'响应时间：'+this.y+' us';
                 },
             },
             series: [${diffBean2.timeStr}]

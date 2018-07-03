@@ -24,6 +24,7 @@
 <body>
 	<div id="mainDiv"> 
 		<div id="container1" style="width: 1000px; height: 350px; "></div> 
+		<div id="container2" style="top:350px; width: 350px; height: 350px; left:-300px"><img src="statics/images/sdc2.jpg " style="width: 500px; height: 500px; "/></div> 
 		<div id="containerControl">
 			<span style="font-family: 微软雅黑; font-size: 14px;">线程控制:</span> 
 			<input type="button" id="startButton" value="继续" onclick="start();" style="cursor: pointer">

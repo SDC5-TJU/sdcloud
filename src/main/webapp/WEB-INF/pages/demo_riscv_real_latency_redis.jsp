@@ -24,10 +24,10 @@
 <body>
 	<div id="mainDiv">
 		<div id="container1" style="width:1200px;height:550px;top:20px;left:-700px"></div> 
-		 <div id="QpsDiv" style="width: 50px; height: 50px; position: absolute; left: 309px; top: 27px;">QPS:<span id="qps"></span></div>
+		 <div id="QpsDiv" style="width: 100px; height: 50px; position: absolute; left: 309px; top: 27px;">QPS:<span id="qps"></span></div>
 		<div id="containerControl">
 			<span style="font-family: 微软雅黑; font-size: 14px;">线程控制:</span> 
-			<input type="button" id="startButton" value="继续" onclick="start();" style="cursor: pointer">
+			<input type="button" id="startButton" value="暂停" onclick="start();" style="cursor: pointer">
 		</div> 
 
 		<script type="text/javascript" src="statics/js/jquery-1.9.1.js"></script>
@@ -35,14 +35,15 @@
 		<script type="text/javascript" src="statics/js/highcharts-more.js"></script>
 		<script type="text/javascript">
 		 
-		var flag=false;
+		var flag=true;
 		var returnedRealData = null; 
+		//var type='${type}';
 		setInterval(function() {
 			if(flag==true){
 				$.ajax({
 					async:true,
 					type:"get",
-					url:"getRiscvRedisRealQueryData.do",
+					url:"getRiscvRedisRealQueryData.do?type=${type}",
 					data:{},
 					dataType:"json",
 					success:function(returned) {  
@@ -161,7 +162,7 @@
         },
         yAxis: {
             title: {
-                text: '响应时间 /ms'
+                text: '响应时间 /us'
             },
             plotLines: [{
                 value: 0,
@@ -174,7 +175,7 @@
             formatter: function () {
                 return '<b>' + this.series.name + '</b><br/>' +
                     Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
-                    Highcharts.numberFormat(this.y,0)+'ms';
+                    Highcharts.numberFormat(this.y,0)+'us';
             }
         },
         legend: {

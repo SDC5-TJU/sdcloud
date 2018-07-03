@@ -220,7 +220,7 @@ public class Repository{
 	 * 大小Repository.windowSize,循环赋值
 	 * @param data 新数据
 	 */
-	public void addRiscvWindowCpuUsageDataList(SystemResourceUsageBean data){
+	/*public void addRiscvWindowCpuUsageDataList(SystemResourceUsageBean data){
 		if(riscvWindowCpuUsageDataList.size()<Repository.windowSize){
 			for(int i=0;i<Repository.windowSize;i++){
 				riscvWindowCpuUsageDataList.add(new SystemResourceUsageBean());
@@ -228,12 +228,12 @@ public class Repository{
 		}
 		riscvWindowCpuUsageDataList.set(riscvWindowCpuUsageDataListCount%Repository.windowSize,data);
 		riscvWindowCpuUsageDataListCount++; 
-	}
+	}*/
 	/**
 	 * 计算riscv cpu利用率的平均值
 	 * @return 返回float类型平均值
 	 */
-	public float getRiscvAvgCpuUsage(){  
+	public float getRiscvAvgCpuUsage(){
 		float avgCpuUsage=0;
 		tempRiscvWindowCpuUsageDataList.clear();
 		tempRiscvWindowCpuUsageDataList.addAll(Repository.riscvWindowCpuUsageDataList);
@@ -248,7 +248,8 @@ public class Repository{
 			avgCpuUsage=avgCpuUsage/size; 
 		} 
 		return avgCpuUsage; 
-	} 
+	}
+	
 	public static void main(String[] args){
 
 

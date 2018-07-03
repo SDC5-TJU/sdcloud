@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties; 
+import java.util.Properties;
+import java.util.Random;
 import java.util.Set;
 
 import javax.annotation.Resource;
@@ -135,17 +136,17 @@ public class RiscvController {
 				e.printStackTrace();
 			}
 			String riscvDataPath=prop.getProperty("riscv_redis_data_path").trim();
-			File file=new File(riscvDataPath+type+"1.lats");
+			File file=new File(riscvDataPath+type+"1.lat");
 			if(file.exists()){
-				resultBaseList=service.getRiscvRedisResult(riscvDataPath+type+"1.lats"); 
+				resultBaseList=service.getRiscvRedisResult(riscvDataPath+type+"1.lat"); 
 			}
-			file=new File(riscvDataPath+type+"2.lats");
+			file=new File(riscvDataPath+type+"2.lat");
 			if(file.exists()){
-				resultList=service.getRiscvRedisResult(riscvDataPath+type+"2.lats"); 
+				resultList=service.getRiscvRedisResult(riscvDataPath+type+"2.lat"); 
 			}
-			file=new File(riscvDataPath+type+"3.lats");
+			file=new File(riscvDataPath+type+"3.lat");
 			if(file.exists()){
-				resultLableList=service.getRiscvRedisResult(riscvDataPath+type+"3.lats"); 
+				resultLableList=service.getRiscvRedisResult(riscvDataPath+type+"3.lat"); 
 			}
 
 			file=new File(riscvDataPath+type+".qps");
@@ -230,7 +231,7 @@ public class RiscvController {
 				SystemResourceUsageBean bean=new SystemResourceUsageBean();
 				bean.setCollectTime(curTime-i*1000);
 				bean.setCpuUsageRate((float)(dataList.get(Repository.windowSize-1-i)*100));
-				Repository.getInstance().addRiscvWindowCpuUsageDataList(bean); 
+				//Repository.getInstance().addRiscvWindowCpuUsageDataList(bean); 
 				strData.append("[").append(curTime-i*1000).append(",").append(dataList.get(Repository.windowSize-1-i)*100).append("],");
 			}
 			strData.append("[").append(curTime).append(",").append(dataList.get(Repository.windowSize-1)*100).append("]]");
@@ -239,10 +240,12 @@ public class RiscvController {
 		}else{
 			model.addAttribute("cpuStr","{name:'cpuUsage',type:'area',data:[]}"); 
 		}
+		
 		if(Level>=2){
 			/**
 			 * mem
 			 */
+			dataList.clear();
 			while(dataList.size()<Repository.windowSize){//小于60个点 需要睡眠等待
 				try {
 					Thread.sleep(1000);
@@ -269,7 +272,7 @@ public class RiscvController {
 		if(Level>=3){
 			/**
 			 * llc and mem bandwidth
-			 */
+			 */ 
 			ArrayList<RiscvLLCGroup> dataList2=new ArrayList<RiscvLLCGroup>();
 			while(dataList2.size()<Repository.windowSize){//小于60个点 需要睡眠等待
 				try {
@@ -380,7 +383,7 @@ public class RiscvController {
 			bean.setCollectTime(System.currentTimeMillis());
 			bean.setCpuUsageRate((float)read.readRiscvLatestResourceUsageFile(prop.getProperty("riscv_monitor_path").trim()+"cpu_usage_"+riscvId+".csv")*100);
 
-			Repository.getInstance().addRiscvWindowCpuUsageDataList(bean);
+			//Repository.getInstance().addRiscvWindowCpuUsageDataList(bean);
 
 			response.getWriter().write(JSONArray.fromObject(bean).toString().replace("}",",\"cpuAvgUsageRate\":"+dataFormat.subFloat(Repository.getInstance().getRiscvAvgCpuUsage(),2)+"}"));
 		} catch (IOException e) {
@@ -435,7 +438,8 @@ public class RiscvController {
 	 * @return
 	 */
 	@RequestMapping("/goRiscvRedisRealQueryData.do")
-	public String goRiscvRedisRealQueryData(HttpServletRequest request,HttpServletResponse response,Model model){
+	public String goRiscvRedisRealQueryData(HttpServletRequest request,HttpServletResponse response,Model model,
+			@RequestParam(value="type",required=true) String type){
 
 		Properties prop = new Properties();
 		InputStream is = WebServerJobImpl.class.getResourceAsStream("/conf/sys.properties");
@@ -452,7 +456,7 @@ public class RiscvController {
 			} catch (InterruptedException e) { 
 				e.printStackTrace();
 			}
-			dataList=read.readRiscvWindowQueryTimeFile(prop.getProperty("riscv_redis_real_data_path").trim()+"latency.csv");
+			dataList=read.readRiscvWindowQueryTimeFile(prop.getProperty("riscv_redis_real_data_path").trim()+"redis_cluster_latency_"+type+".csv");
 		}
 		StringBuffer strName=new StringBuffer();
 		StringBuffer strData=new StringBuffer();
@@ -535,7 +539,7 @@ public class RiscvController {
 		HSeries.append(strName).append(strData).append(",marker: {enabled: false}}");
 
 		model.addAttribute("str",HSeries.toString()); 
-
+		model.addAttribute("type",type);
 		return "demo_riscv_real_latency_redis";
 	}
 	/**
@@ -544,7 +548,8 @@ public class RiscvController {
 	 * @param response 
 	 */
 	@RequestMapping("/getRiscvRedisRealQueryData.do")
-	public void getRiscvRedisRealQueryData(HttpServletRequest request,HttpServletResponse response){
+	public void getRiscvRedisRealQueryData(HttpServletRequest request,HttpServletResponse response,
+			@RequestParam(value="type",required=true) String type){
 		try {
 			Properties prop = new Properties();
 			InputStream is = WebServerJobImpl.class.getResourceAsStream("/conf/sys.properties");
@@ -553,7 +558,7 @@ public class RiscvController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			RiscvRedisRealDataBean bean= read.readRiscvLatestQueryTimeFile(prop.getProperty("riscv_redis_real_data_path").trim()+"latency.csv");
+			RiscvRedisRealDataBean bean= read.readRiscvLatestQueryTimeFile(prop.getProperty("riscv_redis_real_data_path").trim()+"redis_cluster_latency_"+type+".csv");
 			bean.setCollectTime(System.currentTimeMillis());
 
 			response.getWriter().write(JSONArray.fromObject(bean).toString());
@@ -564,7 +569,7 @@ public class RiscvController {
 	}
 
 
-
+	private Random rand=new Random();
 
 	/**
 	 * 课题3
@@ -580,7 +585,7 @@ public class RiscvController {
 			e.printStackTrace();
 		}
 		String filePath=prop.getProperty("riscv_project3_path").trim();
-
+		int size=Integer.parseInt(prop.getProperty("riscv_project3_series_size").trim());
 		StringBuffer strName=new StringBuffer();
 		StringBuffer strData=new StringBuffer();
 		StringBuffer HSeries=new StringBuffer();
@@ -588,7 +593,7 @@ public class RiscvController {
 		CDFBean df=read.readRiscvCDFfile(filePath+"cdf.txt", filePath+"cdf_x86.txt", filePath+"conn_h.txt", filePath+"conn_h_x86.txt");
 
 		strData.append("data:[");
-		int size=10;
+		 
 		for(int i=1;i<size-1;i++){ //拼接字符串 
 			strData.append("[").append(String.valueOf(df.getHigh_x86()[i])).append(",").append(String.valueOf(df.getCdf()[i])).append("],");
 		}
@@ -647,7 +652,7 @@ public class RiscvController {
 			e.printStackTrace();
 		}
 		String filePath=prop.getProperty("riscv_project3_path").trim();
-
+		int size=Integer.parseInt(prop.getProperty("riscv_project3_series_size").trim());
 		StringBuffer strName=new StringBuffer();
 		StringBuffer strData=new StringBuffer();
 		StringBuffer HSeries=new StringBuffer();
@@ -655,7 +660,7 @@ public class RiscvController {
 		CDFBean df=read.readRiscvCDFfile(filePath+"cdf.txt", filePath+"cdf_x86.txt", filePath+"conn_h.txt", filePath+"conn_h_x86.txt");
 
 		strData.append("data:[");
-		int size=10;
+	 
 		for(int i=1;i<size-1;i++){ //拼接字符串 
 			strData.append("[").append(String.valueOf(df.getHigh_x86()[i])).append(",").append(String.valueOf(df.getCdf()[i])).append("],");
 		}
