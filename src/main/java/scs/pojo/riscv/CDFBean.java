@@ -7,6 +7,7 @@ package scs.pojo.riscv;
  */
 public class CDFBean{
 	private float[] cdf;
+    private float[] cdf_x86;
 	private long time;
 //	private float[] total;
 	private float[] high;
@@ -16,8 +17,9 @@ public class CDFBean{
 	private float   connection;
 	private float   connection_x86;
 
-	public CDFBean(float[] cdf, float[] high, float[] low, float connection, float[] high_x86, float[] low_x86, float connection_x86){
+	public CDFBean(float[] cdf, float[] high, float[] low, float connection, float[] cdf_x86, float[] high_x86, float[] low_x86, float connection_x86){
 		this.cdf = cdf;
+		this.cdf_x86 = cdf_x86;
 		this.high = high;
 		this.low = low;
         //this.average = average;
@@ -31,6 +33,9 @@ public class CDFBean{
       }
 	public void setCdf(float[] cdf){
             this.cdf = cdf;
+      }
+	public void setCdf_x86(float[] cdf){
+            this.cdf_x86 = cdf_x86;
       }
 	public void setHigh(float[] high){
             this.high = high;
@@ -56,6 +61,9 @@ public class CDFBean{
 	}
 	public float[] getCdf(){
 		return cdf;
+	}
+	public float[] getCdf_x86(){
+		return cdf_x86;
 	}
 	public float[] getHigh(){
 		return high;

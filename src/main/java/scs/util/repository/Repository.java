@@ -108,7 +108,8 @@ public class Repository{
 	 */
 	public static boolean onlineDataFlag=false; //在线请求查询标志,false默认关闭 
 	public static boolean onlineQueryThreadRunning=false;//在线查询的线程是否启动
-	public static int onlineRequestIntensity=10; //在线请求每秒钟请求数 QPS
+	public static int onlineRequestIntensity=10; //在线请求每秒钟请求数 QPS 理论值
+	public static int realRequestIntensity=10; //在线每秒钟请求数真实 QPS 实际值
 	private static int windowOnLineDataListCount=0;//窗口数组计数器,默认0开始,每次计数+1
 	public static List<QueryData> onlineDataList=new ArrayList<QueryData>();//负载产生器一直填充的数组
 	public static List<QueryData> tempOnlineDataList=new ArrayList<QueryData>();//计算每秒钟的请求响应时间均值时存储数据的临时数组
@@ -120,20 +121,20 @@ public class Repository{
 	 * 静态块
 	 */
 	static {
-		Repository.getInstance().readProperties();
-		containerInfoMap=RepositoryDao.initContainerInfoMap();//初始化容器信息map 
-		System.out.println("初始化 containerInfoMap size="+containerInfoMap.size());
-		appInfoMap=RepositoryDao.initAppInfoMap();//初始化app信息map 
-		System.out.println("初始化 appInfoMap  size="+appInfoMap.size());
-		Set<String> appNameSet = appInfoMap.keySet(); //取出所有应用的名称
-		for(String appName:appNameSet){ 
-			appStatusMap.put(appName,false);//系统初始化,所有应用默认为未执行
-			System.out.println("初始化app执行状态 "+appName+"=false");
-		}
-		systemInfoMap=RepositoryDao.initSystemInfoMap();
-
-		LoadService.getInstance().service("192.168.1.129", 22222);//开启rmi服务端
-		Repository.getInstance().initRiscvWindowCpuUsageDataList();
+		//		Repository.getInstance().readProperties();
+		//		containerInfoMap=RepositoryDao.initContainerInfoMap();//初始化容器信息map 
+		//		System.out.println("初始化 containerInfoMap size="+containerInfoMap.size());
+		//		appInfoMap=RepositoryDao.initAppInfoMap();//初始化app信息map 
+		//		System.out.println("初始化 appInfoMap  size="+appInfoMap.size());
+		//		Set<String> appNameSet = appInfoMap.keySet(); //取出所有应用的名称
+		//		for(String appName:appNameSet){ 
+		//			appStatusMap.put(appName,false);//系统初始化,所有应用默认为未执行
+		//			System.out.println("初始化app执行状态 "+appName+"=false");
+		//		}
+		//		systemInfoMap=RepositoryDao.initSystemInfoMap();
+		//
+		LoadService.getInstance().service("192.168.1.129", 22222);//开启heracles rmi服务端
+		//		Repository.getInstance().initRiscvWindowCpuUsageDataList();
 	}
 	/**
 	 * 读取配置文件的参数

@@ -31,7 +31,7 @@ public class RecordExecThread extends Thread{
 			}
 			Repository.tempOnlineDataList.clear();
 			Repository.tempOnlineDataList.addAll(Repository.onlineDataList); 
-			Repository.onlineDataList.clear();
+			Repository.onlineDataList.clear(); 
 			avgCurSecond=0;
 			for(QueryData item:Repository.tempOnlineDataList){
 				avgCurSecond+=item.getQueryTime();

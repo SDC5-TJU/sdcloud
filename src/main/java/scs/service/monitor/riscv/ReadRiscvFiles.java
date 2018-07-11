@@ -1,8 +1,7 @@
 package scs.service.monitor.riscv;
  
 import java.util.ArrayList;
-
-import scs.pojo.riscv.CDFBean;
+ 
 import scs.pojo.riscv.DataProject2Bean;
 import scs.pojo.riscv.RiscvLLCGroup;
 import scs.pojo.riscv.RiscvRedisRealDataBean;
@@ -19,7 +18,9 @@ public interface ReadRiscvFiles {
 	
 	public ArrayList<DataProject2Bean> readRiscvWindowDataFile(String filePath);//课题2 读取riscv 文件数据,返回窗口大小(60)数量的数据
 	public DataProject2Bean readRiscvLatestDataFile(String filePath);//课题2 读取riscv 文件数据,返回最新的1条数据
-	 
-	public CDFBean readRiscvCDFfile(String cdfFilePath, String cdf_x86FilePath, String connFilePath, String conn_x86FilePath);//课题3读取cdf数据
+	public ArrayList<DataProject2Bean> readx86WindowDataFile(String filePath);//课题2 读取riscv 文件数据,返回窗口大小(60)数量的数据
+	public DataProject2Bean readx86LatestDataFile(String filePath);//课题2 读取riscv 文件数据,返回最新的1条数据
 	
+	public float[][] readRiscvCDFfile(String cdfFilePath);//课题3
+	public float readRiscvConnfile(String connFilePath); //课题3
 }

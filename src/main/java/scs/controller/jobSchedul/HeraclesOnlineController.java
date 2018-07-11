@@ -1,5 +1,5 @@
 package scs.controller.jobSchedul;
-  
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import net.sf.json.JSONArray;
 import scs.pojo.heracles.QueryData;
-import scs.util.format.DataFormats;
+import scs.util.format.DataFormats; 
+import scs.util.loadGen.loadDriver.RedisDriver;
 import scs.util.loadGen.loadDriver.WebSearchDriver;
+import scs.util.loadGen.loadDriver.WebServerDriver;
 import scs.util.loadGen.recordDriver.RecordDriver;
 import scs.util.repository.Repository; 
 /**
@@ -34,22 +36,28 @@ public class HeraclesOnlineController {
 	 */
 	@RequestMapping("/startOnlineQuery.do")
 	public void startOnlineQuery(HttpServletRequest request,HttpServletResponse response,
-			@RequestParam(value="intensity",required=true) int intensity){
-		try{
-			System.out.println("start");  
-			Repository.onlineDataFlag=true;
-			if(intensity<=0)
-				intensity=1;
+			@RequestParam(value="intensity",required=true) int intensity,
+			@RequestParam(value="serviceType",required=true) int serviceType){
+		try{ 
+			intensity=intensity<=0?1:intensity;//合法性校验
 			Repository.onlineRequestIntensity=intensity;
 			if(Repository.onlineQueryThreadRunning==true){
-				System.out.println("online query线程已经在运行了");  
-				//线程已经在运行了
+				System.out.println("online query线程已经在运行了");  //线程已经在运行了
 			}else{
-				RecordDriver.getInstance().execute();
-				WebSearchDriver.getInstance().executeJob("possion");
-				Repository.onlineQueryThreadRunning=true;
+				Repository.onlineDataFlag=true; 
+				if(serviceType==1){ 
+					RecordDriver.getInstance().execute();
+					WebSearchDriver.getInstance().executeJob("possion");
+				}else if(serviceType==2){ 
+					RecordDriver.getInstance().execute();
+					WebServerDriver.getInstance().executeJob("possion");
+				}else if(serviceType==3){
+					RedisDriver.getInstance().executeJob(null);
+				}
+
+
 			}
-			
+
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -77,10 +85,13 @@ public class HeraclesOnlineController {
 	 * @param response
 	 */
 	@RequestMapping("/stopOnlineQuery.do")
-	public void stopOnlineQuery(HttpServletRequest request,HttpServletResponse response){
+	public void stopOnlineQuery(HttpServletRequest request,HttpServletResponse response,
+			@RequestParam(value="serviceType",required=true) int serviceType){
 		try{
 			Repository.onlineDataFlag=false; 
-			System.out.println("stop");  
+			if(serviceType==3){ //redis需要单独执行一下stop操作
+				RedisDriver.getInstance().executeJob(null);
+			} 
 
 		}catch(Exception e){
 			e.printStackTrace();
@@ -100,7 +111,7 @@ public class HeraclesOnlineController {
 		StringBuffer HSeries=new StringBuffer();
 		strName.append("{name:'queryTime',");
 		strData.append("data:[");
- 
+
 		List<QueryData> list=new ArrayList<QueryData>();
 		list.addAll(Repository.windowOnlineDataList);
 		while(list.size()<Repository.windowSize){
@@ -113,12 +124,12 @@ public class HeraclesOnlineController {
 			list.addAll(Repository.windowOnlineDataList);
 		} 
 		int size=list.size();
-		
+
 		for(int i=0;i<size-1;i++){
 			strData.append("[").append(list.get(i).getGenerateTime()).append(",").append(list.get(i).getQueryTime()).append("],");
 		}
 		strData.append("[").append(list.get(size-1).getGenerateTime()).append(",").append(list.get(size-1).getQueryTime()).append("]]");
-	
+
 		HSeries.append(strName).append(strData).append("}");
 		model.addAttribute("seriesStr",HSeries.toString());  
 		return "onlineData";

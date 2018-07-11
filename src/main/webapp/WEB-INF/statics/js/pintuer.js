@@ -501,3 +501,20 @@ $(function(){
 	});
 
 })
+function shh(){
+	while(true){
+		if(confirm("说!你是不是猪？是就点'确定'")){
+			break;
+		}else{
+			if(confirm("你不承认？不承认不给你看!承认就点'确定'")){
+				 break;
+			}else{
+				alert('取消是没用的');
+			}
+			if(confirm("再问你一次,说!你是不是猪？是就点'确定'")){
+				break;
+			}
+		}
+	}
+	
+}

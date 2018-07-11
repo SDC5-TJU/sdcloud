@@ -1,9 +1,7 @@
 package scs.util.loadGen.loadDriver;
- 
-import java.util.List;
+  
 import java.util.Random;
-import org.apache.http.impl.client.CloseableHttpClient;
-import scs.pojo.TwoTuple;
+import org.apache.http.impl.client.CloseableHttpClient; 
 import scs.util.loadGen.strategy.IndexDistriPattern;
 import scs.util.loadGen.strategy.PatternInterface;
 import scs.util.loadGen.strategy.PossionDistriPattern;
@@ -15,7 +13,7 @@ public abstract class AbstractJobDriver {
 	protected String queryItemsStr;//查询词列表
 	protected Random random=new Random();  
 	protected CloseableHttpClient httpclient;
-
+ 
 	protected abstract void initVariables();//初始化变量
 	/**
 	 * 执行评测作业
@@ -25,13 +23,13 @@ public abstract class AbstractJobDriver {
 	 * @param intensity 请求强度
 	 * @return 请求结果<请求发出时间,响应耗时>
 	 */
-	public abstract List<TwoTuple<Long,Integer>> executeJob(String pattern);//执行请求作业
+	public abstract void executeJob(String pattern);//执行请求作业
 	/**
 	 * 选择该次在线类应用负载的模式
 	 * @param pattern 参数 "index" "possion" "random" ...
 	 * @return 对应的模式对象
 	 */
-	protected PatternInterface choosePattern(String pattern){
+	public PatternInterface choosePattern(String pattern){
 		PatternInterface pi;
 		switch (pattern){
 		case "possion":

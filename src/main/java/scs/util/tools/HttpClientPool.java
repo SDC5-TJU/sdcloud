@@ -31,8 +31,8 @@ import scs.util.jobSchedul.jobImpl.bonnie.BonnieJobImpl;
   */
 public class HttpClientPool {
 	private PoolingHttpClientConnectionManager poolConnManager;
-	private final int maxTotalPool = 100;
-	private final int maxConPerRoute = 100;
+	private final int maxTotalPool = 5000;
+	private final int maxConPerRoute = 5000;
 	private final int socketTimeout = 30000;
 	private final int connectionRequestTimeout = 30000;
 	private final int connectTimeout = 30000;

@@ -1,8 +1,9 @@
 package scs.util.loadGen.loadDriver;
- 
+
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;  
+import java.util.concurrent.Executors; 
+
 import scs.util.loadGen.strategy.PatternInterface;
 import scs.util.repository.Repository;
 import scs.util.tools.HttpClientPool; 
@@ -11,15 +12,15 @@ import scs.util.tools.HttpClientPool;
  * @author yanan
  *
  */
-public class WebSearchDriver extends AbstractJobDriver{
+public class WebServerDriver extends AbstractJobDriver{
 	/**
 	 * 单例代码块
 	 */
-	private static WebSearchDriver driver=null;
-	public WebSearchDriver(){initVariables();}
-	public synchronized static WebSearchDriver getInstance() {
+	private static WebServerDriver driver=null;
+	public WebServerDriver(){initVariables();}
+	public synchronized static WebServerDriver getInstance() {
 		if (driver == null) {  
-			driver = new WebSearchDriver();
+			driver = new WebServerDriver();
 		}  
 		return driver;
 	}
@@ -27,7 +28,8 @@ public class WebSearchDriver extends AbstractJobDriver{
 	@Override
 	public void initVariables() {
 		httpclient=HttpClientPool.getInstance().getConnection();
-		queryItemsStr="http://192.168.1.109:18080/Ibeacon/test2.action?rand=";  
+		//queryItemsStr="http://192.168.1.109:18080/Ibeacon/test2.action?rand=";
+		queryItemsStr="http://192.168.1.128:18080/servlet/TPCW_product_detail_servlet?I_ID=";
 	}
 
 
@@ -40,13 +42,14 @@ public class WebSearchDriver extends AbstractJobDriver{
 	@Override
 	public void executeJob(String strategy) {
 		System.out.println("--- generate thread start-----");
-		Random rand=new Random(); 
+		Random rand=new Random();
+
 		PatternInterface pattern=this.choosePattern(strategy);//选择访问策略
 		ExecutorService executor = Executors.newCachedThreadPool();
 
-		 /**
-		  *  onlineDataFlag标志为true时执行,
-		  */
+		/**
+		 *  onlineDataFlag标志为true时执行,
+		 */
 		Repository.onlineQueryThreadRunning=true;
 		while(Repository.onlineDataFlag==true){
 			while(Repository.onlineDataList.size()>=3000){ //同时如果请求数据达到3000后没有处理,则保护内存不再提交请求
@@ -63,8 +66,10 @@ public class WebSearchDriver extends AbstractJobDriver{
 				e.printStackTrace();
 			}
 		}
-		executor.shutdown();//停止提交任务 
-		//检测全部的线程是否都已经运行结束 
+		executor.shutdown();//停止提交任务
+
+		//检测全部的线程是否都已经运行结束
+
 		while(!executor.isTerminated()){
 			try {
 				Thread.sleep(5000);
@@ -73,11 +78,9 @@ public class WebSearchDriver extends AbstractJobDriver{
 			}
 		}  
 		Repository.onlineQueryThreadRunning=false;
-		System.out.println("--- generate thread shutdown-----");
- 
-
+		System.out.println("--- generate thread shutdown-----"); 
 	}
-	 
+
 
 
 

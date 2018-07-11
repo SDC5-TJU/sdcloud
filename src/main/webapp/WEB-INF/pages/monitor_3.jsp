@@ -21,18 +21,37 @@
 <link rel="stylesheet" href="statics/css/physical.css">
 </head>
 
-<body>
+<h1 align="center" style="font-family: 黑体; font-size:60px">课题3展示——标签化网络栈</h1>
+
+<body onload="shh()">
 	<div id="mainDiv"> 
-		<div id="container1" style="width: 500px; height: 350px; "></div>
-		<div id="container2" style="width: 500px; height: 350px; "></div>
-		 
+		<div id="container1" style="width: 500px; height: 350px; top:50px"></div>
+		<div id="container2" style="width: 500px; height: 350px; top:50px"></div>
+		<div id="high99thDiv"
+				style="width: 450px; height: 80px; font-family:黑体; font-size:20px; position: absolute; left: -402px; bottom: 108px;">高优先级 99th延迟</div>
+		<div id="highLinux99thDiv"
+				style="width: 450px; height: 80px; font-family:黑体; font-size:20px; color:#438c2a; position: absolute; left: -402px; bottom: 28px;">Linux标准栈: <span id="highLinux99th">${dataMetric.highLinux99th}</span> ms</div>
+		<div id="highLNS99thDiv"
+				style="width: 450px; height: 80px; font-family:黑体; font-size:20px; color:#f7a35c; position: absolute; left: -402px; bottom: 68px;">标签化网络栈: <span id="highLNS99th">${dataMetric.highLNS99th}</span> ms</div>
+		<div id="low99thDiv"
+				style="width: 450px; height: 80px; font-family:黑体; font-size:20px; position: absolute; left: 202px; bottom: 108px;">低优先级 99th延迟</div>
+		<div id="lowLinux99thDiv"
+				style="width: 450px; height: 80px;font-family:黑体; font-size:20px; color:#438c2a; position: absolute; left: 202px; bottom: 28px;">Linux标准栈: <span id="lowLinux99th">${dataMetric.lowLinux99th}</span> ms</div>
+		<div id="lowLNS99thDiv"
+				style="width: 450px; height: 80px; font-family:黑体; font-size:20px; color:#f7a35c;position: absolute; left: 202px; bottom: 68px;">标签化网络栈: <span id="lowLNS99th">${dataMetric.lowLinux99th}</span> ms</div>
+	
 		<div id="containerControl">
-			<span style="font-family: 微软雅黑; font-size: 14px;">线程控制:</span> 
+			<span style="font-family: 微软雅黑; font-size: 14px;">自动绘制:</span> 
 			<input type="button" id="startButton" value="继续" onclick="start();" style="cursor: pointer">
+		</div>
+		<div id="drawControl" style=" position: absolute; width: 100px; left: 548px;top: 8px;height: 20px;">
+			<span style="font-family: 微软雅黑; font-size: 14px;">清除:</span> 
+			<input type="button" id="viewButton" value="清除" onclick="clearSeries();" style="cursor: pointer">
 		</div>
 		<script type="text/javascript" src="statics/js/jquery-1.9.1.js"></script>
 		<script type="text/javascript" src="statics/js/highcharts.js"></script>
 		<script type="text/javascript" src="statics/js/highcharts-more.js"></script>
+		<script type="text/javascript" src="statics/js/pintuer.js"></script>
 		<script type="text/javascript"> 
 		var localReturnedData = null;  
 		 var splitData;
@@ -46,11 +65,11 @@
 					type:"get",
 					url:"getMonitor3.do",//发送的get请求
 					data:{},
-					dataType:"text",
+					dataType:"json",
 					success:function(returned) {   
 						if(returned!=null&&returned!=""&&returned!="null"){
 							localReturnedData = returned; //用当前页面的临时变量接受该返回值 
-							splitData=localReturnedData.split("#");
+							splitData=localReturnedData[0].seriesStr.split("#");
 						}
 					}	
 				}); 
@@ -95,6 +114,8 @@
                     		 eval("chart0.addSeries("+splitData[0]+", false);");
                     		 eval("chart0.addSeries("+splitData[1]+", false);");
                     		 chart0.redraw();
+                    		 document.getElementById('highLinux99th').innerHTML=localReturnedData[0].highLinux99th;
+                    		 document.getElementById('highLNS99th').innerHTML=localReturnedData[0].highLNS99th;
                           }
                        }, 1000);
                    }
@@ -164,6 +185,8 @@
                        		 eval("chart1.addSeries("+splitData[2]+", false);");
                        		 eval("chart1.addSeries("+splitData[3]+", false);");
                        		 chart1.redraw();
+                       		 document.getElementById('lowLinux99th').innerHTML=localReturnedData[0].lowLinux99th;
+                   		     document.getElementById('lowLNS99th').innerHTML=localReturnedData[0].lowLNS99th;
                              }
                           }, 1000);
                       }
@@ -213,6 +236,22 @@ function start(){
 		 document.getElementById('startButton').value="暂停";
 	}
 }
+function clearSeries(){
+	 var series_0 = chart0.series;
+     while(series_0.length > 0) {
+    	 series_0[0].remove(false);
+     }  
+     document.getElementById('highLinux99th').innerHTML='';
+	 document.getElementById('highLNS99th').innerHTML='';
+     var series_1 = chart1.series;
+     while(series_1.length > 0) {
+    	 series_1[0].remove(false);
+     }  
+     document.getElementById('lowLinux99th').innerHTML='';
+	 document.getElementById('lowLNS99th').innerHTML='';
+	 
+}
+
 </script>
 </div>
 </body>
