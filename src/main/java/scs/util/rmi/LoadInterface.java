@@ -10,6 +10,8 @@ import java.rmi.RemoteException;
  */
 public interface LoadInterface extends Remote{  
 	public float getLcAvgLatency() throws RemoteException; 
+	public float getLcCurLatency() throws RemoteException; 
 	public int setIntensity(int intensity) throws RemoteException; 
 	public int getRealIntensity() throws RemoteException;
+	public void execRedisLoader(int flag) throws RemoteException;
 }

@@ -3,6 +3,7 @@ package scs.util.rmi;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
+import scs.util.loadGen.loadDriver.RedisDriver;
 import scs.util.repository.Repository; 
 
 public class LoadInterfaceImpl extends UnicastRemoteObject implements LoadInterface {
@@ -21,6 +22,12 @@ public class LoadInterfaceImpl extends UnicastRemoteObject implements LoadInterf
 	}
 
 	@Override
+	public float getLcCurLatency() throws RemoteException {
+		// TODO Auto-generated method stub
+		return Repository.latestOnlineData.getQueryTime();
+	}
+
+	@Override
 	public int setIntensity(int intensity){
 		// TODO Auto-generated method stub
 		Repository.onlineRequestIntensity=intensity;
@@ -31,6 +38,17 @@ public class LoadInterfaceImpl extends UnicastRemoteObject implements LoadInterf
 	public int getRealIntensity() throws RemoteException {
 		// TODO Auto-generated method stub
 		return Repository.realRequestIntensity;
+	}
+
+	@Override
+	public void execRedisLoader(int flag) throws RemoteException {
+		// TODO Auto-generated method stub
+		if(flag==1){
+			Repository.onlineDataFlag=true;
+		}else{
+			Repository.onlineDataFlag=false;
+		}
+		RedisDriver.getInstance().executeJob(null);
 	}
 
 

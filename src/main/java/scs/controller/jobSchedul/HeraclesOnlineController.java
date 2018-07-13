@@ -144,7 +144,7 @@ public class HeraclesOnlineController {
 	@RequestMapping("/getOnlineQueryTime.do")
 	public void getOnlineQueryTime(HttpServletRequest request,HttpServletResponse response){
 		try{
-			response.getWriter().write(JSONArray.fromObject(Repository.latestOnlineData).toString().replace("}",",\"cpuAvgUsageRate\":"+dataFormat.subFloat(instance.getOnlineAvgQueryTime(),2)+"}"));
+			response.getWriter().write(JSONArray.fromObject(Repository.latestOnlineData).toString().replace("}",",\"OnlineAvgQueryTime\":"+dataFormat.subFloat(instance.getOnlineAvgQueryTime(),2)+"}"));
 		}catch(Exception e){
 			e.printStackTrace();
 		}

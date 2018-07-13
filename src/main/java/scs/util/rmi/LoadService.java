@@ -20,7 +20,7 @@ public class LoadService {
 		return loadService;
 	}  
 	public void service(String ip,int port) {
-		try { 
+		try {
 			killProcess(getProcessId(port));//清除之前的端口占用
 
 			System.setProperty("java.rmi.server.hostname",ip);
@@ -73,10 +73,10 @@ public class LoadService {
 	 * @param pid pid号
 	 */
 	private void killProcess(String pid){ 
-		String[] cmd = {"/bin/sh","-c","kill -9 "+pid};   
+		System.out.println("kill "+pid);  
 		String line = null,err;
 		try { 
-			Process process = Runtime.getRuntime().exec(cmd); 
+			Process process = Runtime.getRuntime().exec("kill -9 "+pid); 
 			BufferedReader br = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 			InputStreamReader isr = new InputStreamReader(process.getInputStream());
 			LineNumberReader input = new LineNumberReader(isr); 

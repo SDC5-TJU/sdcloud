@@ -71,7 +71,7 @@ $(document).ready(function() {
             						x = returned[0].generateTime;
             						queryTime = returned[0].queryTime;
     							    qps = returned[0].qps;
-    							    avg = returned[0].cpuAvgUsageRate;
+    							    avg = returned[0].OnlineAvgQueryTime;
             						if(lastcollecttime==null){//如果第一次判断 直接添加点进去
       			            	    	 series.addPoint([x,queryTime], true, true); 
       			            	    	 elementQps.innerHTML=qps;

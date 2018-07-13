@@ -49,9 +49,10 @@ public class RedisDriver extends AbstractJobDriver{
 		}
 		this.scriptDir=prop.getProperty("sdc_script_dir").trim();//读取脚本的路径
 		if(Repository.onlineDataFlag==true){
-			this.startQuery("sh "+scriptDir+"redis/StartContainer.sh 9999999999 "+Repository.onlineRequestIntensity);
-	
+			System.out.println("sh "+scriptDir+"redis/StartContainer.sh "+Repository.onlineRequestIntensity*3000*Repository.windowSize+" "+Repository.onlineRequestIntensity);
+			this.startQuery("sh "+scriptDir+"redis/StartContainer.sh "+Repository.onlineRequestIntensity*3000*Repository.windowSize+" "+Repository.onlineRequestIntensity);
 		}else{
+			System.out.println("sh "+scriptDir+"redis/StopContainer.sh");
 			this.stopQuery("sh "+scriptDir+"redis/StopContainer.sh");
 		}
 	}
@@ -59,33 +60,32 @@ public class RedisDriver extends AbstractJobDriver{
 	 * 开启查询
 	 * @param scriptPath 脚本路径
 	 */
-	private void startQuery(String scriptPath){ 
-		try { 
-			System.out.println(scriptPath);
+	private void startQuery(String scriptPath){
+		try {  
 			Repository instance=Repository.getInstance();
 			Process process = Runtime.getRuntime().exec(scriptPath); 
 			InputStream is = process.getInputStream();
 			InputStreamReader isr = new InputStreamReader(is); 
 			BufferedReader br = new BufferedReader(isr);
 			String line=null;
-			String[] split=new String[2];
+
 			Repository.onlineQueryThreadRunning=true;
-			while((line = br.readLine()) != null ) {
-					split=line.trim().split("  ");
-					QueryData data=new QueryData();
-					data.setGenerateTime(System.currentTimeMillis());
-					data.setQps((int)Float.parseFloat((split[0])));
-					data.setQueryTime((int)Float.parseFloat(split[1]));
-					instance.addWindowOnlineDataList(data);
-			}
-			Repository.onlineQueryThreadRunning=false;
+			while((line = br.readLine()) != null ) {  
+				String[] split=line.trim().split("\\s+");
+				QueryData data=new QueryData();
+				data.setGenerateTime(System.currentTimeMillis());
+				data.setQps((int)Float.parseFloat((split[0])));
+				data.setQueryTime((int)Float.parseFloat(split[2]));//取99分位数 [QPS MEAN 95th 99th 99.9th 100th]
+				instance.addWindowOnlineDataList(data);
+			} 
 			br.close(); 
 			isr.close();
 			is.close(); 
 		} catch (IOException e) {
 			e.printStackTrace();
-		}    
-		System.out.println("--- generate thread shutdown-----");
+		} finally {
+			Repository.onlineQueryThreadRunning=false;
+		}
 	}
 	/**
 	 * 关闭查询
@@ -100,7 +100,7 @@ public class RedisDriver extends AbstractJobDriver{
 			LineNumberReader input = new LineNumberReader(isr);   
 			while (((err = br.readLine()) != null||(line = input.readLine()) != null)) {
 				if(err==null){
-					//System.out.println(line); 
+					System.out.println(line); 
 				}else{
 					System.out.println(err);
 				}
@@ -109,5 +109,6 @@ public class RedisDriver extends AbstractJobDriver{
 			e.printStackTrace();
 		}    
 	}
-  
+
+
 }

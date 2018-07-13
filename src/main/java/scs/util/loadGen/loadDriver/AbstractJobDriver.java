@@ -1,5 +1,7 @@
 package scs.util.loadGen.loadDriver;
   
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import org.apache.http.impl.client.CloseableHttpClient; 
 import scs.util.loadGen.strategy.IndexDistriPattern;
@@ -10,7 +12,8 @@ import scs.util.loadGen.strategy.UniformDistriPattern;
  
 
 public abstract class AbstractJobDriver {
-	protected String queryItemsStr;//查询词列表
+	protected List<String> queryItemsList=new ArrayList<String>();//查询词列表
+	//protected String queryItemsStr;//查询词链接
 	protected Random random=new Random();  
 	protected CloseableHttpClient httpclient;
  

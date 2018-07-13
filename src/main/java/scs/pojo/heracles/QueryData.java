@@ -1,9 +1,11 @@
 package scs.pojo.heracles;
 
+import scs.util.format.DataFormats;
+
 public class QueryData{
 
 	private long generateTime;
-	private int queryTime;
+	private float queryTime;
 	private int qps; 
 
 	public QueryData(long generateTime, int queryTime) {
@@ -24,10 +26,10 @@ public class QueryData{
 	public void setGenerateTime(long generateTime) {
 		this.generateTime = generateTime;
 	}
-	public int getQueryTime() {
+	public float getQueryTime() {
 		return queryTime;
 	}
-	public void setQueryTime(int queryTime) {
+	public void setQueryTime(float queryTime) {
 		this.queryTime = queryTime;
 	}
 	public int getQps(){

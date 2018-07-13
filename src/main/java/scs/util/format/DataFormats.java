@@ -1,8 +1,8 @@
 package scs.util.format;
 
- 
 import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.util.ArrayList; 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -90,9 +90,6 @@ public class DataFormats {
 		String binStr=Integer.toHexString(decimal).toUpperCase();//10进制转2进制
 		return zeroStr.substring(0,length-binStr.length())+binStr;//进行补位操作,左端补0凑成8位二进制数
 	}
-	public static void main(String[] args){
-		System.out.println(DataFormats.getInstance().decimalToHex(65535,4));
-	}
 	/**
 	 * 字符串倒置输出 8位一组 倒置输出
 	 * @param oldStr 旧字符串 例如:"111111112222222"
@@ -111,6 +108,24 @@ public class DataFormats {
 			newStr.append(rowsList.get(i));
 		return newStr.toString();
 	}
-
+	/**
+	 * 计算p分位数
+	 * @param data
+	 * @param p 0-1
+	 * @return
+	 */
+	public float percentile(ArrayList<Float> data,float p){
+	    int n = data.size();  
+	    Collections.sort(data);  
+	    float px =  p*(n-1);  
+	    int i = (int)java.lang.Math.floor(px);  
+	    Float g = px - i;  
+	    if(g==0){   
+	        return data.get(i);  
+	    }else{  
+	        return ((1-g)*data.get(i)+g*data.get(i+1));  
+	    }  
+	} 
+ 
 
 }

@@ -121,7 +121,7 @@ public class Repository{
 	 * 静态块
 	 */
 	static {
-		//		Repository.getInstance().readProperties();
+		readProperties();
 		//		containerInfoMap=RepositoryDao.initContainerInfoMap();//初始化容器信息map 
 		//		System.out.println("初始化 containerInfoMap size="+containerInfoMap.size());
 		//		appInfoMap=RepositoryDao.initAppInfoMap();//初始化app信息map 
@@ -139,7 +139,7 @@ public class Repository{
 	/**
 	 * 读取配置文件的参数
 	 */
-	private void readProperties(){
+	private static void readProperties(){
 		Properties prop = new Properties();
 		InputStream is = Repository.class.getResourceAsStream("/conf/sys.properties");
 		try {

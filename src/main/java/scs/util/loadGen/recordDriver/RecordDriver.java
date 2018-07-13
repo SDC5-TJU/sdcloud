@@ -15,8 +15,7 @@ public class RecordDriver{
 	/**
 	 * 开启记录线程
 	 */
-	public void execute() {
-		System.out.println("--- record thread startup-----"); 
+	public void execute() { 
 		new RecordExecThread(1000).start();//start 是异步执行
 	}
 
